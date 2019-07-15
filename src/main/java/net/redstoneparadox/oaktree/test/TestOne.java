@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.nodes.BoxNode;
 import net.redstoneparadox.oaktree.client.gui.nodes.ColorRectNode;
+import net.redstoneparadox.oaktree.client.gui.nodes.LabelNode;
 import net.redstoneparadox.oaktree.client.gui.nodes.SplitBoxNode;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
@@ -44,8 +45,12 @@ public class TestOne {
             SplitBoxNode root = (SplitBoxNode) new SplitBoxNode().addLeftChild(
                     new ColorRectNode().setColor(RGBAColor.red()).setExpand(true)
             ).addRightChild(
-                    new ColorRectNode().setColor(RGBAColor.blue()).setExpand(true)
-            ).setLeftMargin(10.0f).setRightMargin(10.0f).setVertical(true).setExpand(true);
+                    new SplitBoxNode().setLeftMargin(10.0f).setRightMargin(10.0f).setVertical(true).addRightChild(
+                            new ColorRectNode().setColor(RGBAColor.blue()).setExpand(true)
+                    ).addLeftChild(
+                            new LabelNode().setText("Hello, Oak Tree!")
+                    ).setSplitPercent(30.0f).setExpand(true)
+            ).setLeftMargin(10.0f).setExpand(true);
             MinecraftClient.getInstance().openScreen(new OakTreeScreen(root));
 
             return true;

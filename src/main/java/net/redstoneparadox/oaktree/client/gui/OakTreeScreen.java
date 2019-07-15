@@ -29,6 +29,17 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     public void render(int int_1, int int_2, float float_1) {
         root.preDraw(this, 0, 0, width, height);
         root.draw(int_1, int_2, float_1, this,0, 0, width, height);
+
     }
 
+    @Override
+    public void drawString(String string, float xPos, float yPos, boolean withShadow) {
+
+        if (withShadow) {
+            font.drawWithShadow(string, xPos, yPos, 0);
+        }
+        else {
+            font.draw(string, xPos, yPos, 0);
+        }
+    }
 }
