@@ -42,6 +42,16 @@ public class SplitBoxNode extends Node {
         return this;
     }
 
+    public SplitBoxNode setLeftMargin(float value) {
+        left.setMargin(value);
+        return this;
+    }
+
+    public SplitBoxNode setRightMargin(float value) {
+        right.setMargin(value);
+        return this;
+    }
+
     @Override
     public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight);
@@ -70,19 +80,24 @@ public class SplitBoxNode extends Node {
     @Override
     public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
 
+        float actualX = x + offsetX;
+        float actualY = y + offsetY;
+
         if (vertical) {
             float leftHeight = (splitPercent/100.0f) * height;
             float rightHeight = height - leftHeight;
+            float rightY = leftHeight + actualY;
 
-            left.draw(int_1, int_2, float_1, gui, offsetX, offsetY, width, leftHeight);
-            right.draw(int_1, int_2, float_1, gui, offsetX, offsetY, width, rightHeight);
+            left.draw(int_1, int_2, float_1, gui, actualX, actualY, width, leftHeight);
+            right.draw(int_1, int_2, float_1, gui, actualX, rightY, width, rightHeight);
         }
         else {
             float leftWidth = (splitPercent/100.0f) * width;
             float rightWidth = width - leftWidth;
+            float rightX = leftWidth + actualX;
 
-            left.draw(int_1, int_2, float_1, gui, offsetX, offsetY, leftWidth, height);
-            right.draw(int_1, int_2, float_1, gui, offsetX, offsetY, rightWidth, height);
+            left.draw(int_1, int_2, float_1, gui, actualX, actualY, leftWidth, height);
+            right.draw(int_1, int_2, float_1, gui, rightX, actualY, rightWidth, height);
         }
     }
 }

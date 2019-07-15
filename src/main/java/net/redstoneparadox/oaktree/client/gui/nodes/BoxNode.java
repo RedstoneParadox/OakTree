@@ -34,14 +34,14 @@ public class BoxNode extends Node {
     @Override
     public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight);
-        float actualLeft = x + leftMargin + offsetX;
-        float actualTop = y + topMargin + offsetY;
+        float actualX = x + leftMargin + offsetX;
+        float actualY = y + topMargin + offsetY;
 
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
 
         if (child != null) {
-            child.preDraw(gui, actualLeft, actualTop, actualWidth, actualHeight);
+            child.preDraw(gui, actualX, actualY, actualWidth, actualHeight);
         }
     }
 
@@ -50,8 +50,11 @@ public class BoxNode extends Node {
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
 
+        float actualX = x + leftMargin + offsetX;
+        float actualY = y + topMargin + offsetY;
+
         if (child != null) {
-            child.draw(int_1, int_2, float_1, gui, x, y, actualWidth, actualHeight);
+            child.draw(int_1, int_2, float_1, gui, actualX, actualY, actualWidth, actualHeight);
         }
     }
 }
