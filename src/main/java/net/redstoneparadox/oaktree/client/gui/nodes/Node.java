@@ -41,8 +41,6 @@ public class Node {
 
     public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         if (expand) {
-            x = offsetX;
-            y = offsetY;
             width = containerWidth;
             height = containerHeight;
         }
