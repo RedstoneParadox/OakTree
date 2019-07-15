@@ -4,6 +4,9 @@ import net.minecraft.client.MinecraftClient;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.Alignment;
 
+/**
+ * The base class for all nodes.
+ */
 public class Node {
 
     public float x = 0.0f;

@@ -2,6 +2,9 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
+/**
+ * BoxNodes can have a child and margins.
+ */
 public class BoxNode extends Node {
 
     public float topMargin = 0.0f;
@@ -9,7 +12,7 @@ public class BoxNode extends Node {
     public float leftMargin = 0.0f;
     public float rightMargin = 0.0f;
 
-    public Node child;
+    public Node child = null;
 
     public BoxNode setMargin(float margin) {
         if (margin <= 0.0f) {
@@ -37,7 +40,9 @@ public class BoxNode extends Node {
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
 
-        child.preDraw(gui, actualLeft, actualTop, actualWidth, actualHeight);
+        if (child != null) {
+            child.preDraw(gui, actualLeft, actualTop, actualWidth, actualHeight);
+        }
     }
 
     @Override
@@ -45,6 +50,8 @@ public class BoxNode extends Node {
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
 
-        child.draw(int_1, int_2, float_1, gui, x, y, actualWidth, actualHeight);
+        if (child != null) {
+            child.draw(int_1, int_2, float_1, gui, x, y, actualWidth, actualHeight);
+        }
     }
 }
