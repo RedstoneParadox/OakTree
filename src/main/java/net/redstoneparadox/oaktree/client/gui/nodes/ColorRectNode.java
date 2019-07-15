@@ -15,10 +15,6 @@ public class ColorRectNode extends Node {
 
     RGBAColor color;
 
-    public ColorRectNode() {
-        super();
-    }
-
     public ColorRectNode setColor(RGBAColor newColor) {
         color = newColor;
         return this;

@@ -16,10 +16,6 @@ public class Node {
 
     boolean expand = false;
 
-    public Node() {
-
-    }
-
     public Node setPosition(float posX, float posY) {
         x = posX;
         y = posY;
@@ -38,7 +34,6 @@ public class Node {
     }
 
     public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2) {
-
     }
 
     public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {

@@ -2,6 +2,7 @@ package net.redstoneparadox.oaktree.client.gui;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.redstoneparadox.oaktree.client.gui.nodes.Node;
@@ -14,47 +15,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     Node root;
 
     public OakTreeScreen(Node treeRoot) {
-        super(new Text() {
-            @Override
-            public Text setStyle(Style var1) {
-                return null;
-            }
-
-            @Override
-            public Style getStyle() {
-                return null;
-            }
-
-            @Override
-            public Text append(Text var1) {
-                return null;
-            }
-
-            @Override
-            public String asString() {
-                return "";
-            }
-
-            @Override
-            public List<Text> getSiblings() {
-                return null;
-            }
-
-            @Override
-            public Stream<Text> stream() {
-                return null;
-            }
-
-            @Override
-            public Text copy() {
-                return null;
-            }
-
-            @Override
-            public String getString() {
-                return "gui";
-            }
-        });
+        super(new LiteralText("gui"));
         root = treeRoot;
     }
 

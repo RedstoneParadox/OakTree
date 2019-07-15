@@ -11,10 +11,6 @@ public class ContainerNode extends Node {
 
     public Node child;
 
-    public ContainerNode() {
-        super();
-    }
-
     public ContainerNode setMargin(float margin) {
         if (margin <= 0.0f) {
             margin = 0.0f;
