@@ -1,8 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
@@ -16,11 +14,6 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 public class ColorRectNode extends Node {
 
     RGBAColor color;
-
-    public ColorRectNode(float xPos, float yPos, float nodeWidth, float nodeHeight, RGBAColor rectColor) {
-        super(xPos, yPos, nodeWidth, nodeHeight);
-        color = rectColor;
-    }
 
     public ColorRectNode() {
         super();

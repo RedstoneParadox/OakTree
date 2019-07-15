@@ -11,9 +11,8 @@ public class ContainerNode extends Node {
 
     public Node child;
 
-    public ContainerNode(float xPos, float yPos, float nodeWidth, float nodeHeight, Node childNode) {
-        super(xPos, yPos, nodeWidth, nodeHeight);
-        child = childNode;
+    public ContainerNode() {
+        super();
     }
 
     public ContainerNode setMargin(float margin) {
@@ -29,7 +28,25 @@ public class ContainerNode extends Node {
     }
 
     @Override
-    public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight);
+        float actualLeft = x + leftMargin + offsetX;
+        float actualTop = y + topMargin + offsetY;
 
+        float actualWidth = width - leftMargin - rightMargin;
+        float actualHeight = height - topMargin - bottomMargin;
+
+        child.preDraw(gui, actualLeft, actualTop, actualWidth, actualHeight);
+    }
+
+    @Override
+    public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        float actualLeft = x + leftMargin + offsetX;
+        float actualTop = y + topMargin + offsetY;
+
+        float actualWidth = width - leftMargin - rightMargin;
+        float actualHeight = height - topMargin - bottomMargin;
+
+        child.draw(int_1, int_2, float_1, gui, actualLeft, actualTop, actualWidth, actualHeight);
     }
 }

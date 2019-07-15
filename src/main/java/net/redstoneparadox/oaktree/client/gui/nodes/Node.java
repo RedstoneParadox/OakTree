@@ -20,13 +20,6 @@ public class Node {
 
     }
 
-    public Node(float xPos, float yPos, float nodeWidth, float nodeHeight) {
-        x = xPos;
-        y = yPos;
-        width = nodeWidth;
-        height = nodeHeight;
-    }
-
     public Node setPosition(float posX, float posY) {
         x = posX;
         y = posY;
