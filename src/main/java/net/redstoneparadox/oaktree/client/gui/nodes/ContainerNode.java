@@ -37,12 +37,9 @@ public class ContainerNode extends Node {
 
     @Override
     public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        float actualLeft = x + leftMargin + offsetX;
-        float actualTop = y + topMargin + offsetY;
-
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
 
-        child.draw(int_1, int_2, float_1, gui, actualLeft, actualTop, actualWidth, actualHeight);
+        child.draw(int_1, int_2, float_1, gui, x, y, actualWidth, actualHeight);
     }
 }
