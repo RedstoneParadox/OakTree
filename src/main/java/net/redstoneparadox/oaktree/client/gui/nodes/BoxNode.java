@@ -2,7 +2,7 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
-public class ContainerNode extends Node {
+public class BoxNode extends Node {
 
     public float topMargin = 0.0f;
     public float bottomMargin = 0.0f;
@@ -11,7 +11,7 @@ public class ContainerNode extends Node {
 
     public Node child;
 
-    public ContainerNode setMargin(float margin) {
+    public BoxNode setMargin(float margin) {
         if (margin <= 0.0f) {
             margin = 0.0f;
         }
@@ -20,6 +20,11 @@ public class ContainerNode extends Node {
         bottomMargin = margin;
         leftMargin = margin;
         rightMargin = margin;
+        return this;
+    }
+
+    public BoxNode addChild(Node newChild) {
+        child = newChild;
         return this;
     }
 

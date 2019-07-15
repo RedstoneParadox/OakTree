@@ -14,8 +14,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.nodes.ColorRectNode;
-import net.redstoneparadox.oaktree.client.gui.nodes.ContainerNode;
-import net.redstoneparadox.oaktree.client.gui.util.Alignment;
+import net.redstoneparadox.oaktree.client.gui.nodes.BoxNode;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
 public class TestOne {
@@ -34,10 +33,10 @@ public class TestOne {
 
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
-            ContainerNode containerNode = (ContainerNode) new ContainerNode().setMargin(5.0f).setExpand(true);
-            ColorRectNode rect = (ColorRectNode) new ColorRectNode().setColor(RGBAColor.white()).setExpand(true);
-            containerNode.child = rect;
-            MinecraftClient.getInstance().openScreen(new OakTreeScreen(containerNode));
+            BoxNode boxNode = ((BoxNode) new BoxNode().setMargin(5.0f).setExpand(true)).addChild(
+                new ColorRectNode().setColor(RGBAColor.white()).setExpand(true)
+            );
+            MinecraftClient.getInstance().openScreen(new OakTreeScreen(boxNode));
             return true;
         }
     }
