@@ -1,7 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class SplitBoxNode extends Node {
 
@@ -10,7 +9,7 @@ public class SplitBoxNode extends Node {
 
     public float splitPercent = 50.0f;
 
-    public boolean rotated = false;
+    public boolean vertical = false;
 
     public SplitBoxNode() {
         left.expand = true;
@@ -25,6 +24,11 @@ public class SplitBoxNode extends Node {
             percent = 100.0f;
         }
         splitPercent = percent;
+        return this;
+    }
+
+    public SplitBoxNode setVertical(boolean value) {
+        vertical = value;
         return this;
     }
 
@@ -45,8 +49,13 @@ public class SplitBoxNode extends Node {
         float actualX = x + offsetX;
         float actualY = y + offsetY;
 
-        if (rotated) {
-            throw new NotImplementedException();
+        if (vertical) {
+            float leftHeight = (splitPercent/100.0f) * height;
+            float rightHeight = height - leftHeight;
+            float rightY = leftHeight + actualY;
+
+            left.preDraw(gui, actualX, actualY, width, leftHeight);
+            right.preDraw(gui, actualX, rightY, width, rightHeight);
         }
         else {
             float leftWidth = (splitPercent/100.0f) * width;
@@ -61,8 +70,12 @@ public class SplitBoxNode extends Node {
     @Override
     public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
 
-        if (rotated) {
-            throw new NotImplementedException();
+        if (vertical) {
+            float leftHeight = (splitPercent/100.0f) * height;
+            float rightHeight = height - leftHeight;
+
+            left.draw(int_1, int_2, float_1, gui, offsetX, offsetY, width, leftHeight);
+            right.draw(int_1, int_2, float_1, gui, offsetX, offsetY, width, rightHeight);
         }
         else {
             float leftWidth = (splitPercent/100.0f) * width;
