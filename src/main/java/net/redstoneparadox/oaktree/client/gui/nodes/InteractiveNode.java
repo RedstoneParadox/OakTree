@@ -2,7 +2,6 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
@@ -11,10 +10,9 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 public abstract class InteractiveNode extends Node {
 
     @Override
-    public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(gui, window, offsetX, offsetY, containerWidth, containerHeight);
         MinecraftClient client = MinecraftClient.getInstance();
-        Window window = client.window;
         Mouse mouse = client.mouse;
 
         ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
@@ -23,10 +21,8 @@ public abstract class InteractiveNode extends Node {
         float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
         float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
 
-        if (mouseWithin((float) mouse.getX(), window.getWidth(), gui.getWidth(), trueX, width) && mouseWithin((float) mouse.getY(), window.getHeight(), gui.getHeight(), trueY, height)) {
-            updateListeners(mouse, client, window);
-            InputUtil.fromName("").getKeyCode();
-        }
+        boolean mouseWithin = (mouseWithin((float) mouse.getX(), window.getWidth(), gui.getWidth(), trueX, width) && mouseWithin((float) mouse.getY(), window.getHeight(), gui.getHeight(), trueY, height));
+        updateListeners(mouse, client, window, gui, mouseWithin);
     }
 
     private boolean mouseWithin(float mouseCoord, float windowSize, float screenSize, float nodeCoord, float nodeLength) {
@@ -34,7 +30,7 @@ public abstract class InteractiveNode extends Node {
         return trueMouseCoord > nodeCoord && trueMouseCoord < nodeLength;
     }
 
-    public abstract void updateListeners(Mouse mouse, MinecraftClient client, Window window);
+    public abstract void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin);
 
     public int keyFromName(String key) {
         String fullName = "key.keyboard." + key;

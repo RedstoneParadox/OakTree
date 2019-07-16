@@ -1,5 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
+import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
 public class SplitBoxNode extends Node {
@@ -53,8 +54,8 @@ public class SplitBoxNode extends Node {
     }
 
     @Override
-    public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(gui, window, offsetX, offsetY, containerWidth, containerHeight);
 
         float actualX = x + offsetX;
         float actualY = y + offsetY;
@@ -64,16 +65,16 @@ public class SplitBoxNode extends Node {
             float rightHeight = height - leftHeight;
             float rightY = leftHeight + actualY;
 
-            left.preDraw(gui, actualX, actualY, width, leftHeight);
-            right.preDraw(gui, actualX, rightY, width, rightHeight);
+            left.preDraw(gui, window, actualX, actualY, width, leftHeight);
+            right.preDraw(gui, window, actualX, rightY, width, rightHeight);
         }
         else {
             float leftWidth = (splitPercent/100.0f) * width;
             float rightWidth = width - leftWidth;
             float rightX = leftWidth + actualX;
 
-            left.preDraw(gui, actualX, actualY, leftWidth, height);
-            right.preDraw(gui, rightX, actualY, rightWidth, height);
+            left.preDraw(gui, window, actualX, actualY, leftWidth, height);
+            right.preDraw(gui, window, rightX, actualY, rightWidth, height);
         }
     }
 

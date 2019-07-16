@@ -1,5 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
+import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
 /**
@@ -32,8 +33,8 @@ public class BoxNode extends Node {
     }
 
     @Override
-    public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(gui, window, offsetX, offsetY, containerWidth, containerHeight);
         float actualX = x + leftMargin + offsetX;
         float actualY = y + topMargin + offsetY;
 
@@ -41,7 +42,7 @@ public class BoxNode extends Node {
         float actualHeight = height - topMargin - bottomMargin;
 
         if (child != null) {
-            child.preDraw(gui, actualX, actualY, actualWidth, actualHeight);
+            child.preDraw(gui, window, actualX, actualY, actualWidth, actualHeight);
         }
     }
 

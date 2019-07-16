@@ -1,6 +1,7 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.Alignment;
 
@@ -39,7 +40,7 @@ public class Node {
     public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2) {
     }
 
-    public void preDraw(OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         if (expand) {
             width = containerWidth;
             height = containerHeight;

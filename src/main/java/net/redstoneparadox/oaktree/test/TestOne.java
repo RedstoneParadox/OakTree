@@ -13,10 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
-import net.redstoneparadox.oaktree.client.gui.nodes.BoxNode;
-import net.redstoneparadox.oaktree.client.gui.nodes.ColorRectNode;
-import net.redstoneparadox.oaktree.client.gui.nodes.LabelNode;
-import net.redstoneparadox.oaktree.client.gui.nodes.SplitBoxNode;
+import net.redstoneparadox.oaktree.client.gui.nodes.*;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
 public class TestOne {
@@ -41,14 +38,13 @@ public class TestOne {
             );
             MinecraftClient.getInstance().openScreen(new OakTreeScreen(root));
             */
-
             SplitBoxNode root = (SplitBoxNode) new SplitBoxNode().addLeftChild(
                     new ColorRectNode().setColor(RGBAColor.red()).setExpand(true)
             ).addRightChild(
                     new SplitBoxNode().setLeftMargin(10.0f).setRightMargin(10.0f).setVertical(true).addRightChild(
                             new ColorRectNode().setColor(RGBAColor.blue()).setExpand(true)
                     ).addLeftChild(
-                            new LabelNode().setText("Hello, Oak Tree!")
+                            new HoverNode().addMouseHoverListener((client, mouse, gui) -> System.out.print("Hello, world!")).setExpand(true)
                     ).setSplitPercent(30.0f).setExpand(true)
             ).setLeftMargin(10.0f).setExpand(true);
             MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
