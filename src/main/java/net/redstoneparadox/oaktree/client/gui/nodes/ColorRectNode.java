@@ -13,7 +13,7 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
  */
 public class ColorRectNode extends Node {
 
-    RGBAColor color;
+    RGBAColor color = RGBAColor.white();
 
     public ColorRectNode setColor(RGBAColor newColor) {
         color = newColor;
