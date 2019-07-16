@@ -18,7 +18,7 @@ public class RGBAColor {
     }
 
     public RGBAColor(float red, float green, float blue) {
-        this(red, blue, green, 1.0f);
+        this(red, green, blue, 1.0f);
     }
 
     public static RGBAColor white() {
