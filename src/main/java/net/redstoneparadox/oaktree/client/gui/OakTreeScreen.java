@@ -14,9 +14,16 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     Node root;
 
-    public OakTreeScreen(Node treeRoot) {
+    boolean shouldPause;
+
+    public OakTreeScreen(Node treeRoot, boolean pause) {
         super(new LiteralText("gui"));
         root = treeRoot;
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return shouldPause;
     }
 
     @Override

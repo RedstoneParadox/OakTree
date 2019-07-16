@@ -51,7 +51,7 @@ public class TestOne {
                             new LabelNode().setText("Hello, Oak Tree!")
                     ).setSplitPercent(30.0f).setExpand(true)
             ).setLeftMargin(10.0f).setExpand(true);
-            MinecraftClient.getInstance().openScreen(new OakTreeScreen(root));
+            MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
 
             return true;
         }
