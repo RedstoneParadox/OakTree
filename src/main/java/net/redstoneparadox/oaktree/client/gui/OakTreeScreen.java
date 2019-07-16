@@ -46,7 +46,13 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
+    public void drawTexture(int posX, int posY, int left, int top, int width, int height) {
+        blit(posX, posY, left, top, width, height);
+    }
+
+    @Override
     public float getWidth() {
+
         return width;
     }
 

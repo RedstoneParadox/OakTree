@@ -14,6 +14,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.nodes.*;
+import net.redstoneparadox.oaktree.client.gui.util.Alignment;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
 public class TestOne {
@@ -32,21 +33,15 @@ public class TestOne {
 
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
-            /*
-            BoxNode root = ((BoxNode) new BoxNode().setMargin(5.0f).setExpand(true)).addChild(
-                    new ColorRectNode().setColor(RGBAColor.white()).setExpand(true)
-            );
-            MinecraftClient.getInstance().openScreen(new OakTreeScreen(root));
-            */
             SplitBoxNode root = (SplitBoxNode) new SplitBoxNode().addLeftChild(
-                    new ColorRectNode().setColor(RGBAColor.red()).setExpand(true)
+                    new TextureRectNode("textures/gui/container/shulker_box.png").setSize(256.0f, 256.0f).setAnchorAlignment(Alignment.CENTER).setDrawAlignment(Alignment.CENTER)
             ).addRightChild(
                     new SplitBoxNode().setLeftMargin(10.0f).setRightMargin(10.0f).setVertical(true).addRightChild(
                             new ColorRectNode().setColor(RGBAColor.blue()).setExpand(true)
                     ).addLeftChild(
-                            new HoverNode().addMouseHoverListener((client, mouse, gui) -> System.out.print("Hello, world!")).setExpand(true)
+                            new HoverNode().addMouseHoverListener((client, mouse, gui) -> System.out.println("Hello, world!")).setExpand(true)
                     ).setSplitPercent(30.0f).setExpand(true)
-            ).setLeftMargin(10.0f).setExpand(true);
+            ).setLeftMargin(10.0f).setSplitPercent(65.0f).setExpand(true);
             MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
 
             return true;
