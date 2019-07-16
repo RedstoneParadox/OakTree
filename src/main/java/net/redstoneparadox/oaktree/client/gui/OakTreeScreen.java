@@ -49,4 +49,14 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
             font.draw(string, xPos, yPos, 0);
         }
     }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    @Override
+    public float getHeight() {
+        return height;
+    }
 }

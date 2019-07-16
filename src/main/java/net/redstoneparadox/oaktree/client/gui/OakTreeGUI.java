@@ -8,4 +8,8 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 public interface OakTreeGUI {
 
     void drawString(String string, float xPos, float yPos, boolean withShadow);
+
+    float getWidth();
+
+    float getHeight();
 }
