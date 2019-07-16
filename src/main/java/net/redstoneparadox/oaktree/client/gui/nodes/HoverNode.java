@@ -20,7 +20,7 @@ public class HoverNode extends InteractiveNode{
     @Override
     public void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin) {
         if (!mouseCurrentlyWithin && mouseWithin) {
-            mouseCurrentlyWithin = true;
+                mouseCurrentlyWithin = true;
             mouseEnterListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui));
         }
         else if (mouseCurrentlyWithin && !mouseWithin) {

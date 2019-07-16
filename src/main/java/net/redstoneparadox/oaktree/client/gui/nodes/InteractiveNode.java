@@ -27,7 +27,7 @@ public abstract class InteractiveNode extends Node {
 
     private boolean mouseWithin(float mouseCoord, float windowSize, float screenSize, float nodeCoord, float nodeLength) {
         float trueMouseCoord = (mouseCoord * screenSize)/windowSize;
-        return trueMouseCoord > nodeCoord && trueMouseCoord < nodeLength;
+        return trueMouseCoord > nodeCoord && trueMouseCoord < (nodeLength + mouseCoord);
     }
 
     public abstract void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin);
