@@ -52,7 +52,6 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public float getWidth() {
-
         return width;
     }
 

@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.Alignment;
+import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
  * The base class for all nodes.
@@ -37,6 +38,16 @@ public class Node {
         return this;
     }
 
+    public Node setDrawAlignment(Alignment newAligment) {
+        drawAlignment = newAligment;
+        return this;
+    }
+
+    public Node setAnchorAlignment(Alignment newAligment) {
+        anchorAlignment = newAligment;
+        return this;
+    }
+
     public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2) {
     }
 
@@ -51,13 +62,4 @@ public class Node {
 
     }
 
-    public Node setDrawAlignment(Alignment newAligment) {
-        drawAlignment = newAligment;
-        return this;
-    }
-
-    public Node setAnchorAlignment(Alignment newAligment) {
-        anchorAlignment = newAligment;
-        return this;
-    }
 }
