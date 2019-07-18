@@ -54,7 +54,7 @@ public class Tests {
                         new SplitBoxNode().setLeftMargin(10.0f).setRightMargin(10.0f).setVertical(true).addRightChild(
                                 new ColorRectNode().setColor(RGBAColor.blue()).setExpand(true)
                         ).addLeftChild(
-                                new HoverNode().addMouseHoverListener((client, mouse, gui) -> System.out.println("Hello, world!")).setExpand(true)
+                                new LabelNode().setText("Hello, Oak Tree!").setStyle(new ColorStyleBox(RGBAColor.black()))
                         ).setSplitPercent(30.0f).setExpand(true)
                 ).setLeftMargin(10.0f).setSplitPercent(65.0f).setExpand(true);
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));

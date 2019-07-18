@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.LiteralText;
 import net.redstoneparadox.oaktree.client.gui.nodes.Node;
+import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
 import java.awt.*;
 import java.util.Optional;
@@ -38,13 +39,19 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
-    public void drawString(String string, float xPos, float yPos, boolean withShadow) {
+    public void drawString(String string, float xPos, float yPos, boolean withShadow, RGBAColor fontColor) {
+
+        int redInt = ((int) fontColor.redChannel * 255) << 16;
+        int greenInt = ((int) fontColor.greenChannel * 255) << 8;
+        int blueInt = (int) fontColor.blueChannel * 255;
+
+        int colorInt = redInt + greenInt + blueInt;
 
         if (withShadow) {
-            font.drawWithShadow(string, xPos, yPos, 0);
+            font.drawWithShadow(string, xPos, yPos, colorInt);
         }
         else {
-            font.draw(string, xPos, yPos, 0);
+            font.draw(string, xPos, yPos, colorInt);
         }
     }
 
