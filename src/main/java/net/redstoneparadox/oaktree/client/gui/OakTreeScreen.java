@@ -5,6 +5,9 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.LiteralText;
 import net.redstoneparadox.oaktree.client.gui.nodes.Node;
 
+import java.awt.*;
+import java.util.Optional;
+
 public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     Node root;
@@ -58,5 +61,10 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     @Override
     public float getHeight() {
         return height;
+    }
+
+    @Override
+    public Optional<Container> getContainer() {
+        return Optional.empty();
     }
 }

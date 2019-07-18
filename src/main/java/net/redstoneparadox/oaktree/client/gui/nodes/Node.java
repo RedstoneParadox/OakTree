@@ -3,6 +3,7 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.Alignment;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
@@ -18,6 +19,8 @@ public class Node {
 
     Alignment drawAlignment = Alignment.TOP_LEFT;
     Alignment anchorAlignment = Alignment.TOP_LEFT;
+
+    StyleBox styleBox = null;
 
     boolean expand = false;
 
@@ -35,6 +38,11 @@ public class Node {
 
     public Node setExpand(boolean value) {
         expand = value;
+        return this;
+    }
+
+    public Node setStyle(StyleBox style) {
+        styleBox = style;
         return this;
     }
 
@@ -59,7 +67,15 @@ public class Node {
     }
 
     public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (styleBox != null) {
+            ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
+            ScreenVec drawOffset = drawAlignment.getOffset(width, height);
 
+            float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
+            float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
+
+            styleBox.draw(trueX, trueY, width, height, gui);
+        }
     }
 
 }

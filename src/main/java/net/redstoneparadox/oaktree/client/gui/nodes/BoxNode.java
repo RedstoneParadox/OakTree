@@ -48,6 +48,7 @@ public class BoxNode extends Node {
 
     @Override
     public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.draw(int_1, int_2, float_1, gui, offsetX, offsetY, containerWidth, containerHeight);
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
 

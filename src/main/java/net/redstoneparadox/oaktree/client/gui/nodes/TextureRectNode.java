@@ -6,6 +6,12 @@ import net.minecraft.util.Identifier;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
+/**
+ * A node that can be used to draw a texture on screen. It is suggested
+ * that you use a regular node and a StyleBox instead as this class may
+ * get removed in a future update.
+ */
+@Deprecated
 public class TextureRectNode extends Node {
 
     public Identifier textureID;

@@ -9,8 +9,11 @@ import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
- * A node that can be used to either draw a color or texture on the screen.
+ * A node that can be used to draw a colored rectangle on the screen.
+ * As this may get removed in the future, it is suggested to use a
+ * regular node and a stylebox instead.
  */
+@Deprecated
 public class ColorRectNode extends Node {
 
     RGBAColor color = RGBAColor.white();

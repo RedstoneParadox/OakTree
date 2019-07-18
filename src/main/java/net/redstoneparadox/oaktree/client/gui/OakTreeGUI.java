@@ -5,6 +5,9 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
+import java.awt.*;
+import java.util.Optional;
+
 public interface OakTreeGUI {
 
     void drawString(String string, float xPos, float yPos, boolean withShadow);
@@ -14,4 +17,6 @@ public interface OakTreeGUI {
     float getWidth();
 
     float getHeight();
+
+    Optional<Container> getContainer();
 }
