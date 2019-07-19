@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class HoverNode extends InteractiveNode{
 
-    private ArrayList<InteractionListener> mouseEnterListeners = new ArrayList<>();
-    private ArrayList<InteractionListener> mouseExitListeners = new ArrayList<>();
-    private ArrayList<InteractionListener> mouseHoverListeners = new ArrayList<>();
+    private ArrayList<InteractionListener<HoverNode>> mouseEnterListeners = new ArrayList<>();
+    private ArrayList<InteractionListener<HoverNode>> mouseExitListeners = new ArrayList<>();
+    private ArrayList<InteractionListener<HoverNode>> mouseHoverListeners = new ArrayList<>();
 
     private boolean mouseCurrentlyWithin = false;
 
@@ -24,34 +24,34 @@ public class HoverNode extends InteractiveNode{
         return this;
     }
 
-    public HoverNode onMouseEnter(InteractionListener listener) {
+    public HoverNode onMouseEnter(InteractionListener<HoverNode> listener) {
         mouseEnterListeners.add(listener);
         return this;
     }
 
-    public HoverNode onMouseExit(InteractionListener listener) {
+    public HoverNode onMouseExit(InteractionListener<HoverNode> listener) {
         mouseExitListeners.add(listener);
         return this;
     }
 
-    public HoverNode whileMouseHovers(InteractionListener listener) {
+    public HoverNode whileMouseHovers(InteractionListener<HoverNode> listener) {
         mouseHoverListeners.add(listener);
         return this;
     }
 
     @Override
-    public void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin) {
+    public void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
         if (!mouseCurrentlyWithin && mouseWithin) {
             mouseCurrentlyWithin = true;
-            mouseEnterListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui));
+            mouseEnterListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui, this));
         }
         else if (mouseCurrentlyWithin && !mouseWithin) {
             mouseCurrentlyWithin = false;
-            mouseEnterListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui));
+            mouseEnterListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui, this));
         }
 
         if (mouseCurrentlyWithin) {
-            mouseHoverListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui));
+            mouseHoverListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui, this));
         }
     }
 
