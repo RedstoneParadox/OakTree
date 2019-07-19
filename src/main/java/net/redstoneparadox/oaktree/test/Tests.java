@@ -54,7 +54,7 @@ public class Tests {
                         new SplitBoxNode().setLeftMargin(10.0f).setRightMargin(10.0f).setVertical(true).addRightChild(
                                 new ColorRectNode().setColor(RGBAColor.blue()).setExpand(true)
                         ).addLeftChild(
-                                new LabelNode().setText("Hello, Oak Tree!").setStyle(new ColorStyleBox(RGBAColor.black()))
+                                new LabelNode().setText("Hello, Oak Tree!").setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                         ).setSplitPercent(30.0f).setExpand(true)
                 ).setLeftMargin(10.0f).setSplitPercent(65.0f).setExpand(true);
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
@@ -92,13 +92,21 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                Node root = new Node().setAnchorAlignment(Alignment.CENTER).setDrawAlignment(Alignment.CENTER).setSize(176.0f, 166.0f).setStyle(
-                  new TextureStyleBox("textures/gui/container/shulker_box.png")
-                );
+                Node root = new SplitBoxNode()
+                        .addLeftChild(
+                        new HoverNode()
+                                .whileMouseHovers((client, mouse, gui) -> System.out.println("It really works!"))
+                                .setHoverStyle(new ColorStyleBox(RGBAColor.black()))
+                                .setDefaultStyle(new ColorStyleBox(RGBAColor.white()))
+                                .setExpand(true)
+                )
+                        .setLeftMargin(25.0f)
+                        .setExpand(true);
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
             }
 
             return true;
         }
     }
+
 }

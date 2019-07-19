@@ -3,8 +3,10 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.Alignment;
+import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
@@ -20,9 +22,11 @@ public class Node {
     Alignment drawAlignment = Alignment.TOP_LEFT;
     Alignment anchorAlignment = Alignment.TOP_LEFT;
 
-    StyleBox styleBox = null;
+    StyleBox defaultStyle = null;
 
     boolean expand = false;
+
+    StyleBox currentStyle = null;
 
     public Node setPosition(float posX, float posY) {
         x = posX;
@@ -42,7 +46,7 @@ public class Node {
     }
 
     public Node setDefaultStyle(StyleBox style) {
-        styleBox = style;
+        defaultStyle = style;
         return this;
     }
 
@@ -64,17 +68,18 @@ public class Node {
             width = containerWidth;
             height = containerHeight;
         }
+        currentStyle = defaultStyle;
     }
 
     public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        if (styleBox != null) {
+        if (currentStyle != null) {
             ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
             ScreenVec drawOffset = drawAlignment.getOffset(width, height);
 
             float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
             float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
 
-            styleBox.draw(trueX, trueY, width, height, gui);
+            currentStyle.draw(trueX, trueY, width, height, gui);
         }
     }
 
