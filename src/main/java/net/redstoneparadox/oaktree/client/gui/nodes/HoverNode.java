@@ -6,7 +6,6 @@ import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
-import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 import java.util.ArrayList;
 
@@ -57,8 +56,8 @@ public class HoverNode extends InteractiveNode{
     }
 
     @Override
-    public void preDraw(OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(gui, window, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
         if (mouseCurrentlyWithin && hoverStyle != null) {
             currentStyle = hoverStyle;
         }

@@ -35,7 +35,7 @@ public class TextureRectNode extends Node {
     }
 
     @Override
-    public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
         ScreenVec drawOffset = drawAlignment.getOffset(width, height);
 

@@ -33,7 +33,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public void render(int int_1, int int_2, float float_1) {
-        root.preDraw(this, minecraft.window, 0, 0, width, height);
+        root.preDraw(int_1, int_2, float_1, this, minecraft.window, 0, 0, width, height);
         root.draw(int_1, int_2, float_1, this,0, 0, width, height);
 
     }

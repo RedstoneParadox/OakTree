@@ -54,8 +54,8 @@ public class SplitBoxNode extends Node {
     }
 
     @Override
-    public void preDraw(OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(gui, window, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
 
         float actualX = x + offsetX;
         float actualY = y + offsetY;
@@ -65,22 +65,22 @@ public class SplitBoxNode extends Node {
             float rightHeight = height - leftHeight;
             float rightY = leftHeight + actualY;
 
-            left.preDraw(gui, window, actualX, actualY, width, leftHeight);
-            right.preDraw(gui, window, actualX, rightY, width, rightHeight);
+            left.preDraw(, , , gui, window, actualX, actualY, width, leftHeight);
+            right.preDraw(, , , gui, window, actualX, rightY, width, rightHeight);
         }
         else {
             float leftWidth = (splitPercent/100.0f) * width;
             float rightWidth = width - leftWidth;
             float rightX = leftWidth + actualX;
 
-            left.preDraw(gui, window, actualX, actualY, leftWidth, height);
-            right.preDraw(gui, window, rightX, actualY, rightWidth, height);
+            left.preDraw(, , , gui, window, actualX, actualY, leftWidth, height);
+            right.preDraw(, , , gui, window, rightX, actualY, rightWidth, height);
         }
     }
 
     @Override
-    public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.draw(int_1, int_2, float_1, gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
         float actualX = x + offsetX;
         float actualY = y + offsetY;
@@ -90,16 +90,16 @@ public class SplitBoxNode extends Node {
             float rightHeight = height - leftHeight;
             float rightY = leftHeight + actualY;
 
-            left.draw(int_1, int_2, float_1, gui, actualX, actualY, width, leftHeight);
-            right.draw(int_1, int_2, float_1, gui, actualX, rightY, width, rightHeight);
+            left.draw(mouseX, mouseY, deltaTime, gui, actualX, actualY, width, leftHeight);
+            right.draw(mouseX, mouseY, deltaTime, gui, actualX, rightY, width, rightHeight);
         }
         else {
             float leftWidth = (splitPercent/100.0f) * width;
             float rightWidth = width - leftWidth;
             float rightX = leftWidth + actualX;
 
-            left.draw(int_1, int_2, float_1, gui, actualX, actualY, leftWidth, height);
-            right.draw(int_1, int_2, float_1, gui, rightX, actualY, rightWidth, height);
+            left.draw(mouseX, mouseY, deltaTime, gui, actualX, actualY, leftWidth, height);
+            right.draw(mouseX, mouseY, deltaTime, gui, rightX, actualY, rightWidth, height);
         }
     }
 }

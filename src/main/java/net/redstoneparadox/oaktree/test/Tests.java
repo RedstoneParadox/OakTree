@@ -98,7 +98,9 @@ public class Tests {
                                 .whileMouseHovers((client, mouse, gui) -> System.out.println("It really works!"))
                                 .setHoverStyle(new ColorStyleBox(RGBAColor.black()))
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.white()))
-                                .setExpand(true)
+                                .setDrawAlignment(Alignment.CENTER)
+                                .setAnchorAlignment(Alignment.CENTER)
+                                .setSize(25.0f, 25.0f)
                 )
                         .setLeftMargin(25.0f)
                         .setExpand(true);

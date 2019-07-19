@@ -30,8 +30,8 @@ public class LabelNode extends Node {
     }
 
     @Override
-    public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.draw(int_1, int_2, float_1, gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         float actualX = offsetX + x;
         float actualY = offsetY + y;
         gui.drawString(text, actualX, actualY, false, fontColor);

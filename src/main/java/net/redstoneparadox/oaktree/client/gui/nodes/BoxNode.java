@@ -33,8 +33,8 @@ public class BoxNode extends Node {
     }
 
     @Override
-    public void preDraw(OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(gui, window, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
         float actualX = x + leftMargin + offsetX;
         float actualY = y + topMargin + offsetY;
 
@@ -42,13 +42,13 @@ public class BoxNode extends Node {
         float actualHeight = height - topMargin - bottomMargin;
 
         if (child != null) {
-            child.preDraw(gui, window, actualX, actualY, actualWidth, actualHeight);
+            child.preDraw(, , , gui, window, actualX, actualY, actualWidth, actualHeight);
         }
     }
 
     @Override
-    public void draw(int int_1, int int_2, float float_1, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.draw(int_1, int_2, float_1, gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
 
@@ -56,7 +56,7 @@ public class BoxNode extends Node {
         float actualY = y + topMargin + offsetY;
 
         if (child != null) {
-            child.draw(int_1, int_2, float_1, gui, actualX, actualY, actualWidth, actualHeight);
+            child.draw(mouseX, mouseY, deltaTime, gui, actualX, actualY, actualWidth, actualHeight);
         }
     }
 }
