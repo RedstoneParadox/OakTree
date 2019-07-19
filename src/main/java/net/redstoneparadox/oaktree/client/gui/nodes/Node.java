@@ -41,7 +41,7 @@ public class Node {
         return this;
     }
 
-    public Node setStyle(StyleBox style) {
+    public Node setDefaultStyle(StyleBox style) {
         styleBox = style;
         return this;
     }
