@@ -58,7 +58,7 @@ public class Node {
         return this;
     }
 
-    public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2) {
+    public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2, OakTreeGUI gui) {
     }
 
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {

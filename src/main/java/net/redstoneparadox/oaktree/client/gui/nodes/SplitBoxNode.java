@@ -65,16 +65,16 @@ public class SplitBoxNode extends Node {
             float rightHeight = height - leftHeight;
             float rightY = leftHeight + actualY;
 
-            left.preDraw(, , , gui, window, actualX, actualY, width, leftHeight);
-            right.preDraw(, , , gui, window, actualX, rightY, width, rightHeight);
+            left.preDraw(mouseX, mouseY, deltaTime, gui, window, actualX, actualY, width, leftHeight);
+            right.preDraw(mouseX, mouseY, deltaTime, gui, window, actualX, rightY, width, rightHeight);
         }
         else {
             float leftWidth = (splitPercent/100.0f) * width;
             float rightWidth = width - leftWidth;
             float rightX = leftWidth + actualX;
 
-            left.preDraw(, , , gui, window, actualX, actualY, leftWidth, height);
-            right.preDraw(, , , gui, window, rightX, actualY, rightWidth, height);
+            left.preDraw(mouseX, mouseY, deltaTime, gui, window, actualX, actualY, leftWidth, height);
+            right.preDraw(mouseX, mouseY, deltaTime, gui, window, rightX, actualY, rightWidth, height);
         }
     }
 

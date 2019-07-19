@@ -42,7 +42,7 @@ public class BoxNode extends Node {
         float actualHeight = height - topMargin - bottomMargin;
 
         if (child != null) {
-            child.preDraw(, , , gui, window, actualX, actualY, actualWidth, actualHeight);
+            child.preDraw(mouseX, mouseY, deltaTime, gui, window, actualX, actualY, actualWidth, actualHeight);
         }
     }
 
