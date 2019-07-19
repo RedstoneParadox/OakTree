@@ -33,17 +33,17 @@ public class HoverNode extends InteractiveNode{
         }
     }
 
-    public HoverNode addMouseEnterListener(InteractionListener listener) {
+    public HoverNode onMouseEnter(InteractionListener listener) {
         mouseEnterListeners.add(listener);
         return this;
     }
 
-    public HoverNode addMouseExitListener(InteractionListener listener) {
+    public HoverNode onMouseExit(InteractionListener listener) {
         mouseExitListeners.add(listener);
         return this;
     }
 
-    public HoverNode addMouseHoverListener(InteractionListener listener) {
+    public HoverNode whileMouseHovers(InteractionListener listener) {
         mouseHoverListeners.add(listener);
         return this;
     }
