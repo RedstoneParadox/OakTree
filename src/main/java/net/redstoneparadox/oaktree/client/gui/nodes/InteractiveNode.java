@@ -10,9 +10,6 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public abstract class InteractiveNode extends Node {
 
-
-    private int count = 0;
-
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
@@ -25,12 +22,11 @@ public abstract class InteractiveNode extends Node {
         float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
         float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
 
-        boolean mouseWithin = (mouseX >= x && mouseX <= (width + x)) && (mouseY >= y && mouseY <= (height + y));
-        updateListeners(mouse, client, window, gui, mouseWithin);
-        count++;
+        boolean mouseWithin = (mouseX >= trueX && mouseX <= (width + trueX)) && (mouseY >= trueY && mouseY <= (height + trueY));
+        updateListeners(mouse, client, window, gui, mouseWithin, mouseX, mouseY);
     }
 
-    public abstract void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin);
+    public abstract void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY);
 
     public int keyFromName(String key) {
         String fullName = "key.keyboard." + key;
@@ -42,7 +38,7 @@ public abstract class InteractiveNode extends Node {
     }
 
     public int mouseButtonFromName(String key) {
-        String fullName = "key.mouse" + key;
+        String fullName = "key.mouse." + key;
         return InputUtil.fromName(fullName).getKeyCode();
     }
 }

@@ -8,6 +8,7 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 import java.awt.*;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public interface OakTreeGUI {
 
@@ -20,4 +21,8 @@ public interface OakTreeGUI {
     float getHeight();
 
     Optional<Container> getContainer();
+
+    boolean mouseButtonHeld(String mouseButton);
+
+    boolean mouseButtonJustClicked(String mouseButton);
 }

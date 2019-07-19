@@ -92,18 +92,22 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                Node root = new SplitBoxNode()
-                        .addLeftChild(
-                        new HoverNode()
-                                .whileMouseHovers((client, mouse, gui) -> System.out.println("It really works!"))
-                                .setHoverStyle(new ColorStyleBox(RGBAColor.black()))
+                Node root = new SplitBoxNode().addLeftChild(
+                        new ButtonNode()
+                                .setHeldStyle(new ColorStyleBox(RGBAColor.black()))
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.white()))
-                                .setDrawAlignment(Alignment.CENTER)
+                                .setSize(50.0f, 50.0f)
                                 .setAnchorAlignment(Alignment.CENTER)
-                                .setSize(25.0f, 25.0f)
-                )
-                        .setLeftMargin(25.0f)
-                        .setExpand(true);
+                                .setDrawAlignment(Alignment.CENTER)
+                ).addRightChild(
+                        new ButtonNode()
+                                .setToggleable(true)
+                                .setHeldStyle(new ColorStyleBox(RGBAColor.blue()))
+                                .setDefaultStyle(new ColorStyleBox(RGBAColor.red()))
+                                .setSize(50.0f, 50.0f)
+                                .setAnchorAlignment(Alignment.CENTER)
+                                .setDrawAlignment(Alignment.CENTER)
+                        ).setExpand(true);
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
             }
 

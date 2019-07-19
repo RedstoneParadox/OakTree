@@ -7,13 +7,18 @@ import net.redstoneparadox.oaktree.client.gui.nodes.Node;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     Node root;
 
     boolean shouldPause;
+
+    boolean leftMouseButton;
+    boolean leftMouseJustPressed;
 
     public OakTreeScreen(Node treeRoot, boolean pause) {
         super(new LiteralText("gui"));
@@ -28,14 +33,14 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     @Override
     public void init(MinecraftClient minecraftClient_1, int int_1, int int_2) {
         super.init(minecraftClient_1, int_1, int_2);
-        root.setup(minecraftClient_1, int_1, int_2);
+        root.setup(minecraftClient_1, int_1, int_2, this);
     }
 
     @Override
     public void render(int int_1, int int_2, float float_1) {
         root.preDraw(int_1, int_2, float_1, this, minecraft.window, 0, 0, width, height);
         root.draw(int_1, int_2, float_1, this,0, 0, width, height);
-
+        leftMouseJustPressed = false;
     }
 
     @Override
@@ -74,4 +79,56 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     public Optional<Container> getContainer() {
         return Optional.empty();
     }
+
+    @Override
+    public boolean mouseButtonHeld(String mouseButton) {
+
+        switch (mouseButton) {
+            case "left":
+                return leftMouseButton;
+            case "right":
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean mouseButtonJustClicked(String mouseButton) {
+
+        switch (mouseButton) {
+            case "left":
+                return leftMouseJustPressed;
+            case "right":
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean mouseClicked(double double_1, double double_2, int int_1) {
+        super.mouseClicked(double_1, double_2, int_1);
+
+        if (int_1 == 0) {
+            leftMouseButton = true;
+            leftMouseJustPressed = true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean mouseReleased(double double_1, double double_2, int int_1) {
+        super.mouseReleased(double_1, double_2, int_1);
+
+        if (int_1 == 0) {
+            leftMouseButton = false;
+            leftMouseJustPressed = false;
+        }
+
+        return true;
+    }
+
+
 }
