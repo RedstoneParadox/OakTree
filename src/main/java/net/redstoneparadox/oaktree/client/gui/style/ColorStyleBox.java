@@ -6,6 +6,9 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+
+import java.util.HashMap;
 
 public class ColorStyleBox extends StyleBox {
 
@@ -25,16 +28,31 @@ public class ColorStyleBox extends StyleBox {
         GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.color4f(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
 
-        builder.begin(7, VertexFormats.POSITION);
-        if (mirroredHorizontal) {
+        ScreenVec vert1 = new ScreenVec(x, y);
+        ScreenVec vert2 = new ScreenVec(x, y + height);
+        ScreenVec vert3 = new ScreenVec(x + width, y + height);
+        ScreenVec vert4 = new ScreenVec(x + width, y);
 
+        if (mirroredHorizontal) {
+            vert1.x = vert1.x - width;
+            vert2.x = vert2.x - width;
+            vert3.x = vert3.x - width;
+            vert4.x = vert4.x - width;
         }
-        else {
-            builder.vertex(x, y, 0.0).next();
-            builder.vertex(x, (y + height), 0.0).next();
-            builder.vertex((x + width), (y + height), 0.0).next();
-            builder.vertex((x + width), y, 0.0).next();
+
+        if (mirroredVertical) {
+            vert1.y = vert1.y - height;
+            vert2.y = vert2.y - height;
+            vert3.y = vert3.y - height;
+            vert4.y = vert4.y - height;
         }
+
+        builder.begin(7, VertexFormats.POSITION);
+        builder.vertex(vert1.x, vert1.y, 0.0).next();
+        builder.vertex(vert2.x, vert2.y, 0.0).next();
+        builder.vertex(vert3.x, vert3.y, 0.0).next();
+        builder.vertex(vert4.x, vert4.y, 0.0).next();
+
         tessellator.draw();
 
         GlStateManager.enableTexture();
