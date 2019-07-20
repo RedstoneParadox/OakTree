@@ -1,6 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.util;
 
-public enum Alignment {
+public enum NodeAlignment {
     TOP_LEFT,
     TOP_CENTER,
     TOP_RIGHT,

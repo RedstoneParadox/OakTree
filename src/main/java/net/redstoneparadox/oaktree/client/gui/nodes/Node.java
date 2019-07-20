@@ -4,7 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
-import net.redstoneparadox.oaktree.client.gui.util.Alignment;
+import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
@@ -17,8 +17,8 @@ public class Node {
     public float width = 0.1f;
     public float height = 0.1f;
 
-    Alignment drawAlignment = Alignment.TOP_LEFT;
-    Alignment anchorAlignment = Alignment.TOP_LEFT;
+    NodeAlignment drawAlignment = NodeAlignment.TOP_LEFT;
+    NodeAlignment anchorAlignment = NodeAlignment.TOP_LEFT;
 
     StyleBox defaultStyle = null;
 
@@ -48,12 +48,12 @@ public class Node {
         return this;
     }
 
-    public Node setDrawAlignment(Alignment newAligment) {
+    public Node setDrawAlignment(NodeAlignment newAligment) {
         drawAlignment = newAligment;
         return this;
     }
 
-    public Node setAnchorAlignment(Alignment newAligment) {
+    public Node setAnchorAlignment(NodeAlignment newAligment) {
         anchorAlignment = newAligment;
         return this;
     }
@@ -77,7 +77,7 @@ public class Node {
             float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
             float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
 
-            currentStyle.draw(trueX, trueY, width, height, gui);
+            currentStyle.draw(trueX, trueY, width, height, gui, false);
         }
     }
 

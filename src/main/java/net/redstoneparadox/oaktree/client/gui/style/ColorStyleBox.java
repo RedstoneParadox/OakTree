@@ -16,7 +16,7 @@ public class ColorStyleBox extends StyleBox {
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, OakTreeGUI gui) {
+    public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirrored) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBufferBuilder();
 
