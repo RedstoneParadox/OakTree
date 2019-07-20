@@ -62,13 +62,13 @@ public class ProgressBarNode extends Node {
 
         switch (barDirection) {
             case UP:
-                barStyle.draw(barX, barY, barWidth, barHeight * (percentFilled/100.0f), gui);
+                barStyle.draw(barX, barY + barHeight, barWidth, barHeight * (percentFilled/100.0f), gui, false, true);
                 break;
             case DOWN:
                 barStyle.draw(barX, barY, barWidth, barHeight * (percentFilled/100.0f), gui);
                 break;
             case LEFT:
-                barStyle.draw(barX, barY, barWidth * (percentFilled/100.0f), barHeight, gui);
+                barStyle.draw(barX + barWidth, barY, barWidth * (percentFilled/100.0f), barHeight, gui, true, false);
                 break;
             case RIGHT:
                 barStyle.draw(barX, barY, barWidth * (percentFilled/100.0f), barHeight, gui);
