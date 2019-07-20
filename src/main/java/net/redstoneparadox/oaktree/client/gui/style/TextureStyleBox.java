@@ -23,7 +23,7 @@ public class TextureStyleBox extends StyleBox {
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirrored) {
+    public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         GlStateManager.color4f(1.0f,1.0f, 1.0f, 1.0f);
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
         gui.drawTexture((int)x, (int)y, drawLeft, drawTop, (int)width, (int)height);

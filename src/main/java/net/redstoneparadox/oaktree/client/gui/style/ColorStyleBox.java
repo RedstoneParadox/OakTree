@@ -16,7 +16,7 @@ public class ColorStyleBox extends StyleBox {
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirrored) {
+    public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBufferBuilder();
 
@@ -26,10 +26,15 @@ public class ColorStyleBox extends StyleBox {
         GlStateManager.color4f(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
 
         builder.begin(7, VertexFormats.POSITION);
-        builder.vertex(x, y, 0.0).next();
-        builder.vertex(x, (y + height), 0.0).next();
-        builder.vertex((x + width), (y + height), 0.0).next();
-        builder.vertex((x + width), y, 0.0).next();
+        if (mirroredHorizontal) {
+
+        }
+        else {
+            builder.vertex(x, y, 0.0).next();
+            builder.vertex(x, (y + height), 0.0).next();
+            builder.vertex((x + width), (y + height), 0.0).next();
+            builder.vertex((x + width), y, 0.0).next();
+        }
         tessellator.draw();
 
         GlStateManager.enableTexture();

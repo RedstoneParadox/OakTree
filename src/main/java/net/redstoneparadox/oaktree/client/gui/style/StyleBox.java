@@ -9,5 +9,9 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
  */
 public abstract class StyleBox {
 
-    public abstract void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirrored);
+    public abstract void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical);
+
+    public void draw(float x, float y, float width, float height, OakTreeGUI gui) {
+        draw(x, y, width, height, gui, false, false);
+    }
 }

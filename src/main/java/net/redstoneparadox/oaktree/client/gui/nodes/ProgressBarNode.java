@@ -53,25 +53,26 @@ public class ProgressBarNode extends Node {
         float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
         float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
 
-        float centerX = trueX + (width/2);
-        float centerY = trueY + (height/2);
-
-        float barX = centerX - (barWidth/2);
-        float barY = centerY - (barHeight/2);
+        float barX = trueX + ((width/2) - (barWidth/2));
+        float barY = trueY + ((height/2) - (barHeight/2));
 
         if (unfilledBarStyle != null) {
-            unfilledBarStyle.draw(barX, barY, barWidth, barHeight, gui, false);
+            unfilledBarStyle.draw(barX, barY, barWidth, barHeight, gui);
         }
 
         switch (barDirection) {
             case UP:
-                barStyle.draw(barX, barY, barWidth, barHeight * (percentFilled/100.0f), gui, true);
+                barStyle.draw(barX, barY, barWidth, barHeight * (percentFilled/100.0f), gui);
+                break;
             case DOWN:
-                barStyle.draw(barX, barY, barWidth, barHeight * (percentFilled/100.0f), gui, false);
+                barStyle.draw(barX, barY, barWidth, barHeight * (percentFilled/100.0f), gui);
+                break;
             case LEFT:
-                barStyle.draw(barX, barY, barWidth * (percentFilled/100.0f), barHeight, gui, true);
+                barStyle.draw(barX, barY, barWidth * (percentFilled/100.0f), barHeight, gui);
+                break;
             case RIGHT:
-                barStyle.draw(barX, barY, barWidth * (percentFilled/100.0f), barHeight, gui, false);
+                barStyle.draw(barX, barY, barWidth * (percentFilled/100.0f), barHeight, gui);
+                break;
         }
     }
 }

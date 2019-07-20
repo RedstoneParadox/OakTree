@@ -77,7 +77,7 @@ public class Node {
             float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
             float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
 
-            currentStyle.draw(trueX, trueY, width, height, gui, false);
+            currentStyle.draw(trueX, trueY, width, height, gui);
         }
     }
 

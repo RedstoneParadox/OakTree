@@ -162,8 +162,8 @@ public class Tests {
                                     .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                     .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                                     .setSize(20.0f, 120.0f)
-                                        .setDrawAlignment(NodeAlignment.CENTER)
-                                        .setAnchorAlignment(NodeAlignment.CENTER)
+                                    .setDrawAlignment(NodeAlignment.CENTER)
+                                    .setAnchorAlignment(NodeAlignment.CENTER)
                             ).addRightChild(
                                 new ProgressBarNode()
                                     .setPercent(50.0f)
@@ -172,8 +172,8 @@ public class Tests {
                                     .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                     .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                                     .setSize(20.0f, 120.0f)
-                                        .setDrawAlignment(NodeAlignment.CENTER)
-                                        .setAnchorAlignment(NodeAlignment.CENTER)
+                                    .setDrawAlignment(NodeAlignment.CENTER)
+                                    .setAnchorAlignment(NodeAlignment.CENTER)
                             ).setExpand(true)
                 ).setExpand(true);
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
