@@ -2,14 +2,12 @@ package net.redstoneparadox.oaktree.client.gui;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.container.Container;
 import net.minecraft.text.LiteralText;
 import net.redstoneparadox.oaktree.client.gui.nodes.Node;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public class OakTreeScreen extends Screen implements OakTreeGUI {
 
@@ -19,6 +17,8 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     boolean leftMouseButton;
     boolean leftMouseJustPressed;
+
+    Character lastChar = null;
 
     public OakTreeScreen(Node treeRoot, boolean pause) {
         super(new LiteralText("gui"));
@@ -41,6 +41,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
         root.preDraw(int_1, int_2, float_1, this, minecraft.window, 0, 0, width, height);
         root.draw(int_1, int_2, float_1, this,0, 0, width, height);
         leftMouseJustPressed = false;
+        lastChar = null;
     }
 
     @Override
@@ -107,6 +108,15 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
+    public Optional<Character> getLastChar() {
+        if (lastChar != null) {
+            return Optional.of(lastChar);
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
     public boolean mouseClicked(double double_1, double double_2, int int_1) {
         super.mouseClicked(double_1, double_2, int_1);
 
@@ -130,5 +140,9 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
         return true;
     }
 
-
+    @Override
+    public boolean charTyped(char char_1, int int_1) {
+        lastChar = char_1;
+        return true;
+    }
 }

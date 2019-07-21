@@ -1,14 +1,9 @@
 package net.redstoneparadox.oaktree.client.gui;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.Window;
+import net.minecraft.container.Container;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
-import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-import java.awt.*;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public interface OakTreeGUI {
 
@@ -25,4 +20,6 @@ public interface OakTreeGUI {
     boolean mouseButtonHeld(String mouseButton);
 
     boolean mouseButtonJustClicked(String mouseButton);
+
+    Optional<Character> getLastChar();
 }
