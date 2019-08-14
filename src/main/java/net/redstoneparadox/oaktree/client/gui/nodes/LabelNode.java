@@ -3,6 +3,7 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.minecraft.client.gui.screen.Screen;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class LabelNode extends Node {
     public String text = "";
@@ -32,8 +33,11 @@ public class LabelNode extends Node {
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
-        float actualX = offsetX + x;
-        float actualY = offsetY + y;
-        gui.drawString(text, actualX, actualY, false, fontColor);
+        ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
+        ScreenVec drawOffset = drawAlignment.getOffset(width, height);
+
+        float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
+        float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
+        gui.drawString(text, trueX, trueY, false, fontColor);
     }
 }

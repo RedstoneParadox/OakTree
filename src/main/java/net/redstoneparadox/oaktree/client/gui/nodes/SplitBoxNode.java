@@ -2,6 +2,7 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class SplitBoxNode extends Node {
 
@@ -82,8 +83,11 @@ public class SplitBoxNode extends Node {
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
-        float actualX = x + offsetX;
-        float actualY = y + offsetY;
+        ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
+        ScreenVec drawOffset = drawAlignment.getOffset(width, height);
+
+        float actualX = x + anchorOffset.x + offsetX - drawOffset.x;
+        float actualY = y + anchorOffset.y + offsetY - drawOffset.y;
 
         if (vertical) {
             float leftHeight = (splitPercent/100.0f) * height;
