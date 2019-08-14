@@ -4,7 +4,7 @@ import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public class SplitBoxNode extends Node {
+public class SplitBoxNode extends Node<SplitBoxNode> {
 
     public final BoxNode left = new BoxNode();
     public final BoxNode right = new BoxNode();

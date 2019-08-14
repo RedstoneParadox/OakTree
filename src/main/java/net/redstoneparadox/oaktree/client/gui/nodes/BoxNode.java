@@ -7,7 +7,7 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 /**
  * BoxNodes can have a child and margins.
  */
-public class BoxNode extends Node {
+public class BoxNode extends Node<BoxNode> {
 
     public float topMargin = 0.0f;
     public float bottomMargin = 0.0f;

@@ -10,7 +10,7 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 /**
  * The base class for all nodes.
  */
-public class Node {
+public class Node<T extends Node> {
 
     public float x = 0.0f;
     public float y = 0.0f;
@@ -26,36 +26,36 @@ public class Node {
 
     StyleBox currentStyle = null;
 
-    public Node setPosition(float posX, float posY) {
+    public T setPosition(float posX, float posY) {
         x = posX;
         y = posY;
-        return this;
+        return (T)this;
     }
 
-    public Node setSize(float sizeWidth, float sizeHeight) {
+    public T setSize(float sizeWidth, float sizeHeight) {
         width = sizeWidth;
         height = sizeHeight;
-        return this;
+        return (T)this;
     }
 
-    public Node setExpand(boolean value) {
+    public T setExpand(boolean value) {
         expand = value;
-        return this;
+        return (T)this;
     }
 
-    public Node setDefaultStyle(StyleBox style) {
+    public T setDefaultStyle(StyleBox style) {
         defaultStyle = style;
-        return this;
+        return (T)this;
     }
 
-    public Node setDrawAlignment(NodeAlignment newAligment) {
+    public T setDrawAlignment(NodeAlignment newAligment) {
         drawAlignment = newAligment;
-        return this;
+        return (T)this;
     }
 
-    public Node setAnchorAlignment(NodeAlignment newAligment) {
+    public T setAnchorAlignment(NodeAlignment newAligment) {
         anchorAlignment = newAligment;
-        return this;
+        return (T)this;
     }
 
     public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2, OakTreeGUI gui) {

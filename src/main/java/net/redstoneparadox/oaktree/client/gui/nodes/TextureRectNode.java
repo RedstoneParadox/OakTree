@@ -12,7 +12,7 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
  * get removed in a future update.
  */
 @Deprecated
-public class TextureRectNode extends Node {
+public class TextureRectNode extends Node<TextureRectNode> {
 
     public Identifier textureID;
 

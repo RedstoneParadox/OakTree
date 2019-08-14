@@ -5,7 +5,7 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public class LabelNode extends Node {
+public class LabelNode extends Node<LabelNode> {
     public String text = "";
     public RGBAColor fontColor = RGBAColor.white();
 

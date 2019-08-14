@@ -5,7 +5,7 @@ import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public class ProgressBarNode extends Node {
+public class ProgressBarNode extends Node<ProgressBarNode> {
 
     StyleBox barStyle = null;
     StyleBox unfilledBarStyle = null;

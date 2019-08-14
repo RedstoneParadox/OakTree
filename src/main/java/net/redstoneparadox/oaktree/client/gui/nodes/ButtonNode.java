@@ -9,7 +9,7 @@ import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
 
 import java.util.ArrayList;
 
-public class ButtonNode extends InteractiveNode {
+public class ButtonNode extends InteractiveNode<ButtonNode> {
 
     private ArrayList<InteractionListener> clickListeners = new ArrayList<>();
     private ArrayList<InteractionListener> heldListeners = new ArrayList<>();

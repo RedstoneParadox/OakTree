@@ -9,7 +9,7 @@ import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
 
 import java.util.ArrayList;
 
-public class HoverNode extends InteractiveNode{
+public class HoverNode extends InteractiveNode<HoverNode> {
 
     private ArrayList<InteractionListener<HoverNode>> mouseEnterListeners = new ArrayList<>();
     private ArrayList<InteractionListener<HoverNode>> mouseExitListeners = new ArrayList<>();

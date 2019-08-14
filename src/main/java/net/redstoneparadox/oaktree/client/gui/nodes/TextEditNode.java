@@ -5,7 +5,7 @@ import net.minecraft.client.Mouse;
 import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
-public class TextEditNode extends InteractiveNode {
+public class TextEditNode extends InteractiveNode<TextEditNode> {
 
     String defaultText = "";
     String text = "";

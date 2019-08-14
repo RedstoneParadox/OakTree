@@ -14,7 +14,7 @@ import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
  * regular node and a stylebox instead.
  */
 @Deprecated
-public class ColorRectNode extends Node {
+public class ColorRectNode extends Node<ColorRectNode> {
 
     RGBAColor color = RGBAColor.white();
 
