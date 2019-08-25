@@ -1,6 +1,7 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
 
 /**
  * BoxNode is a type of Node that can have a single child
@@ -30,6 +31,35 @@ public class BoxNode extends Node<BoxNode> {
         bottomMargin = margin;
         leftMargin = margin;
         rightMargin = margin;
+        return this;
+    }
+
+    /**
+     * Sets one of the four margins based on the passed direction.
+     * A direction value is passed so that nodes such as
+     * {@link SplitBoxNode} which encapsulate multiple BoxNodes
+     * don't have confusing/verbose method names such as
+     * `setLeftMarginOfFirst`.
+     *
+     * @param direction Direction representing the margin to set.
+     * @param margin The size of the margin. Values are in pixels.
+     * @return the node itself.
+     */
+    public BoxNode setMargin(NodeDirection direction, float margin) {
+        switch (direction) {
+            case UP:
+                topMargin = margin;
+                break;
+            case DOWN:
+                bottomMargin = margin;
+                break;
+            case LEFT:
+                leftMargin = margin;
+                break;
+            case RIGHT:
+                rightMargin = margin;
+                break;
+        }
         return this;
     }
 

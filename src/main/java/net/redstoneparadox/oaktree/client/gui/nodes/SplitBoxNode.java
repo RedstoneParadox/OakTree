@@ -1,19 +1,20 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
 
 public class SplitBoxNode extends Node<SplitBoxNode> {
 
-    public final BoxNode left = new BoxNode();
-    public final BoxNode right = new BoxNode();
+    public final BoxNode first = new BoxNode();
+    public final BoxNode second = new BoxNode();
 
     public float splitPercent = 50.0f;
 
     public boolean vertical = false;
 
     public SplitBoxNode() {
-        left.expand = true;
-        right.expand = true;
+        first.expand = true;
+        second.expand = true;
     }
 
     public SplitBoxNode setSplitPercent(float percent) {
@@ -32,23 +33,33 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
         return this;
     }
 
-    public SplitBoxNode setLeftChild(Node child) {
-        left.setChild(child);
+    public SplitBoxNode setFirstChild(Node child) {
+        first.setChild(child);
         return this;
     }
 
-    public SplitBoxNode setRightChild(Node child) {
-        right.setChild(child);
+    public SplitBoxNode setSecondChild(Node child) {
+        second.setChild(child);
         return this;
     }
 
-    public SplitBoxNode setLeftMargin(float value) {
-        left.setMargin(value);
+    public SplitBoxNode setFirstMargin(float value) {
+        first.setMargin(value);
         return this;
     }
 
-    public SplitBoxNode setRightMargin(float value) {
-        right.setMargin(value);
+    public SplitBoxNode setFirstMargin(NodeDirection direction, float margin) {
+        first.setMargin(direction, margin);
+        return this;
+    }
+
+    public SplitBoxNode setSecondMargin(float value) {
+        second.setMargin(value);
+        return this;
+    }
+
+    public SplitBoxNode setSecondMargin(NodeDirection direction, float margin) {
+        second.setMargin(direction, margin);
         return this;
     }
 
@@ -80,15 +91,15 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
             rightY = trueY;
         }
 
-        left.preDraw(mouseX, mouseY, deltaTime, gui, trueX, trueY, leftWidth, leftHeight);
-        right.preDraw(mouseX, mouseY, deltaTime, gui, rightX, rightY, rightWidth, rightHeight);
+        first.preDraw(mouseX, mouseY, deltaTime, gui, trueX, trueY, leftWidth, leftHeight);
+        second.preDraw(mouseX, mouseY, deltaTime, gui, rightX, rightY, rightWidth, rightHeight);
     }
 
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         super.draw(mouseX, mouseY, deltaTime, gui);
 
-        left.draw(mouseX, mouseY, deltaTime, gui);
-        right.draw(mouseX, mouseY, deltaTime, gui);
+        first.draw(mouseX, mouseY, deltaTime, gui);
+        second.draw(mouseX, mouseY, deltaTime, gui);
     }
 }
