@@ -20,7 +20,7 @@ public class Node<T extends Node> {
     NodeAlignment alignment = NodeAlignment.TOP_LEFT;
     NodeAlignment anchor = NodeAlignment.TOP_LEFT;
 
-    NodeFunction<T> onTick = (client, mouse, gui, node) -> {};
+    NodeFunction<T> onTick = (gui, node) -> {};
 
     StyleBox defaultStyle = null;
 
@@ -123,10 +123,11 @@ public class Node<T extends Node> {
     }
 
     /**
+     * Sets a function to run every time this
+     * node is ticked.
      *
-     *
-     * @param function
-     * @return
+     * @param function the function to run.
+     * @return The node itself.
      */
     public T onTick(NodeFunction<T> function) {
         onTick = function;
@@ -138,7 +139,7 @@ public class Node<T extends Node> {
     }
 
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-
+        onTick.invoke(gui, (T)this);
 
         if (!expand) {
             ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
