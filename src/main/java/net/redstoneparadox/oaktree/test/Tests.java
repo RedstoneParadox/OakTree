@@ -43,7 +43,7 @@ public class Tests {
         Registry.register(Registry.BLOCK, new Identifier("oak_tree", "test_" + testNum + "_block"), block);
     }
 
-    private class TestOneBlock extends Block {
+    private static class TestOneBlock extends Block {
 
         TestOneBlock(Settings block$Settings_1) {
             super(block$Settings_1);
@@ -52,7 +52,7 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                SplitBoxNode root = (SplitBoxNode) new SplitBoxNode().addLeftChild(
+                SplitBoxNode root = new SplitBoxNode().addLeftChild(
                         new TextureRectNode("textures/gui/container/shulker_box.png").setSize(176.0f, 166.0f).setAnchorAlignment(NodeAlignment.CENTER).setDrawAlignment(NodeAlignment.CENTER)
                 ).addRightChild(
                         new SplitBoxNode().setLeftMargin(10.0f).setRightMargin(10.0f).setVertical(true).addRightChild(
@@ -68,16 +68,16 @@ public class Tests {
         }
     }
 
-    private class TestTwoBlock extends Block {
+    private static class TestTwoBlock extends Block {
 
-        public TestTwoBlock(Settings block$Settings_1) {
+        TestTwoBlock(Settings block$Settings_1) {
             super(block$Settings_1);
         }
 
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                BoxNode root = (BoxNode) new BoxNode().addChild(
+                BoxNode root = new BoxNode().addChild(
                         new TextureRectNode("textures/gui/container/shulker_box.png").setSize(176.0f, 166.0f).setAnchorAlignment(NodeAlignment.CENTER).setDrawAlignment(NodeAlignment.CENTER)
                 ).setExpand(true);
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
@@ -87,7 +87,7 @@ public class Tests {
         }
     }
 
-    private class TestThreeBlock extends Block {
+    private static class TestThreeBlock extends Block {
 
         TestThreeBlock(Settings block$Settings_1) {
             super(block$Settings_1);
@@ -119,7 +119,7 @@ public class Tests {
         }
     }
 
-    private class TestFourBlock extends Block {
+    private static class TestFourBlock extends Block {
 
         TestFourBlock(Settings block$Settings_1) {
             super(block$Settings_1);
