@@ -1,16 +1,14 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.Mouse;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 
 public class HoverNode extends InteractiveNode<HoverNode> {
 
-    private NodeFunction<HoverNode> mouseEnter = ((client, mouse, gui, node) -> {});
-    private NodeFunction<HoverNode> mouseExit = ((client, mouse, gui, node) -> {});
-    private NodeFunction<HoverNode> whileHovered = ((client, mouse, gui, node) -> {});
+    private NodeFunction<HoverNode> mouseEnter = ((gui, node) -> {});
+    private NodeFunction<HoverNode> mouseExit = ((gui, node) -> {});
+    private NodeFunction<HoverNode> whileHovered = ((gui, node) -> {});
 
     private boolean mouseCurrentlyWithin = false;
 
@@ -37,18 +35,18 @@ public class HoverNode extends InteractiveNode<HoverNode> {
     }
 
     @Override
-    public void updateListeners(Mouse mouse, MinecraftClient client, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
+    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
         if (!mouseCurrentlyWithin && mouseWithin) {
             mouseCurrentlyWithin = true;
-            mouseEnter.invoke(client, mouse, gui, this);
+            mouseEnter.invoke(gui, this);
         }
         else if (mouseCurrentlyWithin && !mouseWithin) {
             mouseCurrentlyWithin = false;
-            mouseExit.invoke(client, mouse, gui, this);
+            mouseExit.invoke(gui, this);
         }
 
         if (mouseCurrentlyWithin) {
-            whileHovered.invoke(client, mouse, gui, this);
+            whileHovered.invoke(gui, this);
         }
     }
 

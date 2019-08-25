@@ -154,7 +154,7 @@ public class Tests {
                                 .setPercent(0.0f))
                         .setLeftChild(new ButtonNode()
                                 .setExpand(true)
-                                .onClick(((client, mouse, gui, node) -> {
+                                .onClick(((gui, node) -> {
                                     bar.percentFilled += 10.0f;
                                     if (bar.percentFilled > 100.0f) {
                                         bar.percentFilled = 0.0f;

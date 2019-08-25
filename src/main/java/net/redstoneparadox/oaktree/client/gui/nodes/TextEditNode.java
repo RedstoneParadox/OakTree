@@ -1,7 +1,5 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.Mouse;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
@@ -13,7 +11,7 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
     private String text = "";
 
     private TypingListener<TextEditNode> onCharTyped = (toType, node) -> toType;
-    private NodeFunction<TextEditNode> onFocused = (client, mouse, gui, node) -> {};
+    private NodeFunction<TextEditNode> onFocused = (gui, node) -> {};
 
     public TextEditNode onCharTyped(TypingListener<TextEditNode> listener) {
         onCharTyped = listener;
@@ -26,7 +24,7 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
     }
 
     @Override
-    public void updateListeners(Mouse mouse, MinecraftClient client, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
+    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
         gui.getLastChar().ifPresent((character -> {
             Character toType = onCharTyped.invoke(character, this);
             if (toType != null) {
