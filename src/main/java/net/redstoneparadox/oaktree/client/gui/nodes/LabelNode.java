@@ -5,9 +5,9 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public class LabelNode extends Node<LabelNode> {
-    public String text = "";
-    public RGBAColor fontColor = RGBAColor.white();
+public class LabelNode extends Node<LabelNode> implements TextNode {
+    private String text = "";
+    private RGBAColor fontColor = RGBAColor.white();
 
     public LabelNode setText(String value) {
         text = value;
@@ -38,6 +38,6 @@ public class LabelNode extends Node<LabelNode> {
 
         float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
         float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
-        gui.drawString(text, trueX, trueY, false, fontColor);
+        drawString(text, gui, trueX, trueY, null, false, fontColor);
     }
 }

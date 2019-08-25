@@ -9,7 +9,7 @@ import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.redstoneparadox.oaktree.client.gui.util.TypingListener;
 
-public class TextEditNode extends InteractiveNode<TextEditNode> {
+public class TextEditNode extends InteractiveNode<TextEditNode> implements TextNode {
 
     private String defaultText = "";
     private String text = "";
@@ -47,6 +47,6 @@ public class TextEditNode extends InteractiveNode<TextEditNode> {
         float trueX = x + anchorOffset.x + offsetX - alignmentOffset.x;
         float trueY = y + anchorOffset.y + offsetY - alignmentOffset.y;
 
-        gui.drawString(text, trueX, trueY, false, RGBAColor.red());
+        drawString(text, gui, trueX, trueY, null, false, RGBAColor.red());
     }
 }

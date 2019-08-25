@@ -45,23 +45,6 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
-    public void drawString(String string, float xPos, float yPos, boolean withShadow, RGBAColor fontColor) {
-
-        int redInt = (int) fontColor.redChannel * 255;
-        int greenInt = (int) fontColor.greenChannel * 255;
-        int blueInt = (int) fontColor.blueChannel * 255;
-
-        int colorInt = redInt << 16 | greenInt << 8 | blueInt;
-
-        if (withShadow) {
-            font.drawWithShadow(string, xPos, yPos, colorInt);
-        }
-        else {
-            font.draw(string, xPos, yPos, colorInt);
-        }
-    }
-
-    @Override
     public void drawTexture(int posX, int posY, int left, int top, int width, int height) {
         blit(posX, posY, left, top, width, height);
     }
