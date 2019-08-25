@@ -109,7 +109,7 @@ public class Node<T extends Node> {
      * @param anchor The {@link NodeAlignment} to anchor to.
      * @return The node itself.
      */
-    public T setAnchorAlignment(NodeAlignment anchor) {
+    public T setAnchor(NodeAlignment anchor) {
         this.anchor = anchor;
         return (T)this;
     }
