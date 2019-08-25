@@ -19,8 +19,6 @@ import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
 import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
-import javax.swing.*;
-
 public class Tests {
 
     private final Block TEST_ONE_BLOCK = new TestOneBlock(testSettings());
@@ -51,19 +49,6 @@ public class Tests {
 
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
-            if (world_1.isClient()) {
-                SplitBoxNode root = new SplitBoxNode().addLeftChild(
-                        new TextureRectNode("textures/gui/container/shulker_box.png").setSize(176.0f, 166.0f).setAnchorAlignment(NodeAlignment.CENTER).setDrawAlignment(NodeAlignment.CENTER)
-                ).addRightChild(
-                        new SplitBoxNode().setLeftMargin(10.0f).setRightMargin(10.0f).setVertical(true).addRightChild(
-                                new ColorRectNode().setColor(RGBAColor.blue()).setExpand(true)
-                        ).addLeftChild(
-                                new LabelNode().setText("Hello, Oak Tree!").setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
-                        ).setSplitPercent(30.0f).setExpand(true)
-                ).setLeftMargin(10.0f).setSplitPercent(65.0f).setExpand(true);
-                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
-            }
-
             return true;
         }
     }
@@ -76,13 +61,6 @@ public class Tests {
 
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
-            if (world_1.isClient()) {
-                BoxNode root = new BoxNode().addChild(
-                        new TextureRectNode("textures/gui/container/shulker_box.png").setSize(176.0f, 166.0f).setAnchorAlignment(NodeAlignment.CENTER).setDrawAlignment(NodeAlignment.CENTER)
-                ).setExpand(true);
-                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
-            }
-
             return true;
         }
     }
@@ -101,16 +79,16 @@ public class Tests {
                                 .setHeldStyle(new ColorStyleBox(RGBAColor.black()))
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.white()))
                                 .setSize(50.0f, 50.0f)
-                                .setAnchorAlignment(NodeAlignment.CENTER)
-                                .setDrawAlignment(NodeAlignment.CENTER)
+                                .setAnchor(NodeAlignment.CENTER)
+                                .setAlignment(NodeAlignment.CENTER)
                 ).addRightChild(
                         new ButtonNode()
                                 .setToggleable(true)
                                 .setHeldStyle(new ColorStyleBox(RGBAColor.blue()))
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.red()))
                                 .setSize(50.0f, 50.0f)
-                                .setAnchorAlignment(NodeAlignment.CENTER)
-                                .setDrawAlignment(NodeAlignment.CENTER)
+                                .setAnchor(NodeAlignment.CENTER)
+                                .setAlignment(NodeAlignment.CENTER)
                         ).setExpand(true);
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
             }
@@ -138,8 +116,8 @@ public class Tests {
                                     .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                     .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                                     .setSize(120.0f, 20.0f)
-                                    .setDrawAlignment(NodeAlignment.CENTER)
-                                    .setAnchorAlignment(NodeAlignment.CENTER)
+                                    .setAlignment(NodeAlignment.CENTER)
+                                    .setAnchor(NodeAlignment.CENTER)
                             ).addRightChild(
                                 new ProgressBarNode()
                                     .setPercent(50.0f)
@@ -148,8 +126,8 @@ public class Tests {
                                     .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                     .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                                     .setSize(120.0f, 20.0f)
-                                    .setDrawAlignment(NodeAlignment.CENTER)
-                                    .setAnchorAlignment(NodeAlignment.CENTER)
+                                    .setAlignment(NodeAlignment.CENTER)
+                                    .setAnchor(NodeAlignment.CENTER)
                             ).setExpand(true)
                 ).addRightChild(
                         new SplitBoxNode()
@@ -162,8 +140,8 @@ public class Tests {
                                     .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                     .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                                     .setSize(20.0f, 120.0f)
-                                    .setDrawAlignment(NodeAlignment.CENTER)
-                                    .setAnchorAlignment(NodeAlignment.CENTER)
+                                    .setAlignment(NodeAlignment.CENTER)
+                                    .setAnchor(NodeAlignment.CENTER)
                             ).addRightChild(
                                 new ProgressBarNode()
                                     .setPercent(50.0f)
@@ -172,8 +150,8 @@ public class Tests {
                                     .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                     .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                                     .setSize(20.0f, 120.0f)
-                                    .setDrawAlignment(NodeAlignment.CENTER)
-                                    .setAnchorAlignment(NodeAlignment.CENTER)
+                                    .setAlignment(NodeAlignment.CENTER)
+                                    .setAnchor(NodeAlignment.CENTER)
                             ).setExpand(true)
                 ).setExpand(true);
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
@@ -182,5 +160,4 @@ public class Tests {
             return true;
         }
     }
-
 }
