@@ -7,13 +7,11 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
 
-import java.util.ArrayList;
-
 public class ButtonNode extends InteractiveNode<ButtonNode> {
 
-    private ArrayList<InteractionListener> clickListeners = new ArrayList<>();
-    private ArrayList<InteractionListener> heldListeners = new ArrayList<>();
-    private ArrayList<InteractionListener> releaseListeners = new ArrayList<>();
+    private InteractionListener<ButtonNode> onClick = (((client, mouse, gui, node) -> {}));
+    private InteractionListener<ButtonNode> whileHeld = (((client, mouse, gui, node) -> {}));
+    private InteractionListener<ButtonNode> onRelease = (((client, mouse, gui, node) -> {}));
 
     private boolean toggleable = false;
 
@@ -32,17 +30,17 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
     }
 
     public ButtonNode onClick(InteractionListener<ButtonNode> listener) {
-        clickListeners.add(listener);
+        onClick = listener;
         return this;
     }
 
     public ButtonNode whileHeld(InteractionListener<ButtonNode> listener) {
-        heldListeners.add(listener);
+        whileHeld = listener;
         return this;
     }
 
     public ButtonNode onRelease(InteractionListener<ButtonNode> listener) {
-        releaseListeners.add(listener);
+        onRelease = listener;
         return this;
     }
 
@@ -54,14 +52,14 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
                     held = !held;
 
                     if (held) {
-                        clickListeners.iterator().forEachRemaining((listener -> listener.invoke(client, mouse, gui, this)));
+                        whileHeld.invoke(client, mouse, gui, this);
                     }
                     else {
-                        releaseListeners.iterator().forEachRemaining((listener -> listener.invoke(client, mouse, gui, this)));
+                        onRelease.invoke(client, mouse, gui, this);
                     }
                 }
                 else if (gui.mouseButtonHeld("left") && held) {
-                    heldListeners.iterator().forEachRemaining((listener -> listener.invoke(client, mouse, gui, this)));
+                    whileHeld.invoke(client, mouse, gui, this);
                 }
             }
         }
@@ -69,19 +67,19 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
             if (mouseWithin) {
                 if (gui.mouseButtonHeld("left") && !held) {
                     held = true;
-                    clickListeners.iterator().forEachRemaining((listener -> listener.invoke(client, mouse, gui, this)));
+                    onClick.invoke(client, mouse, gui, this);
                 }
                 else if (held && gui.mouseButtonHeld("left")) {
-                    heldListeners.iterator().forEachRemaining((listener -> listener.invoke(client, mouse, gui, this)));
+                    whileHeld.invoke(client, mouse, gui, this);
                 }
                 else if (held && !gui.mouseButtonHeld("left")) {
                     held = false;
-                    releaseListeners.iterator().forEachRemaining((listener -> listener.invoke(client, mouse, gui, this)));
+                    onRelease.invoke(client, mouse, gui, this);
                 }
             }
             else if (held) {
                 held = false;
-                releaseListeners.iterator().forEachRemaining((listener -> listener.invoke(client, mouse, gui, this)));
+                onRelease.invoke(client, mouse, gui, this);
             }
         }
     }
