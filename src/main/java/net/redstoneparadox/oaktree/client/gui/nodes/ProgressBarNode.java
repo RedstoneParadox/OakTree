@@ -4,41 +4,68 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
 
+/**
+ * A node representing a percent-based progress bar.
+ */
 public class ProgressBarNode extends Node<ProgressBarNode> {
 
     StyleBox barStyle = null;
-    StyleBox unfilledBarStyle = null;
 
-    public float percentFilled = 100.0f;
+    public float percent = 100.0f;
 
     float barWidth = 0.1f;
     float barHeight = 0.1f;
 
-    NodeDirection barDirection = NodeDirection.RIGHT;
+    NodeDirection direction = NodeDirection.RIGHT;
 
+    /**
+     * Sets the {@link StyleBox} for the progress bar.
+     *
+     * @param value The {@link StyleBox} to draw.
+     * @return The node itself.
+     */
     public ProgressBarNode setBarStyle(StyleBox value) {
         barStyle = value;
         return this;
     }
 
-    public ProgressBarNode setUnfilledBarStyle(StyleBox value) {
-        unfilledBarStyle = value;
+    /**
+     * Sets the percentage of the progress bar.
+     *
+     * @param percent The percentage.
+     * @return The node itself.
+     */
+    public ProgressBarNode setPercent(float percent) {
+        this.percent = percent;
         return this;
     }
 
-    public ProgressBarNode setPercent(float value) {
-        percentFilled = value;
-        return this;
-    }
-
+    /**
+     * Sets the width and height of the progress bar. It
+     * is suggested to make it smaller than the node
+     * itself.
+     *
+     * @param width The width of the progress bar.
+     * @param height The height of the progress bar.
+     * @return The node itself.
+     */
     public ProgressBarNode setBarSize(float width, float height) {
         barWidth = width;
         barHeight = height;
         return this;
     }
 
-    public ProgressBarNode setBarDirection(NodeDirection value) {
-        barDirection = value;
+    /**
+     * Sets the {@link NodeDirection} for the bar to be
+     * drawn in. A values of {@link NodeDirection#DOWN}
+     * means that the progress bar will be drawn
+     * downwards.
+     *
+     * @param direction The direction to face.
+     * @return The node itself.
+     */
+    public ProgressBarNode setDirection(NodeDirection direction) {
+        this.direction = direction;
         return this;
     }
 
@@ -49,22 +76,18 @@ public class ProgressBarNode extends Node<ProgressBarNode> {
         float barX = trueX + ((trueWidth/2) - (barWidth/2));
         float barY = trueY + ((trueHeight/2) - (barHeight/2));
 
-        if (unfilledBarStyle != null) {
-            unfilledBarStyle.draw(barX, barY, barWidth, barHeight, gui);
-        }
-
-        switch (barDirection) {
+        switch (direction) {
             case UP:
-                barStyle.draw(barX, barY + barHeight, barWidth, barHeight * (percentFilled/100.0f), gui, false, true);
+                barStyle.draw(barX, barY + barHeight, barWidth, barHeight * (this.percent/100.0f), gui, false, true);
                 break;
             case DOWN:
-                barStyle.draw(barX, barY, barWidth, barHeight * (percentFilled/100.0f), gui);
+                barStyle.draw(barX, barY, barWidth, barHeight * (this.percent/100.0f), gui);
                 break;
             case LEFT:
-                barStyle.draw(barX + barWidth, barY, barWidth * (percentFilled/100.0f), barHeight, gui, true, false);
+                barStyle.draw(barX + barWidth, barY, barWidth * (this.percent/100.0f), barHeight, gui, true, false);
                 break;
             case RIGHT:
-                barStyle.draw(barX, barY, barWidth * (percentFilled/100.0f), barHeight, gui);
+                barStyle.draw(barX, barY, barWidth * (this.percent/100.0f), barHeight, gui);
                 break;
         }
     }
