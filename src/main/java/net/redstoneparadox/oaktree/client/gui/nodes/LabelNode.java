@@ -33,11 +33,6 @@ public class LabelNode extends Node<LabelNode> implements TextNode {
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
-        ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-        ScreenVec drawOffset = alignment.getOffset(width, height);
-
-        float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
-        float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
         drawString(text, gui, trueX, trueY, null, false, fontColor);
     }
 }

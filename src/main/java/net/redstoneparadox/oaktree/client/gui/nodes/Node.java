@@ -26,6 +26,10 @@ public class Node<T extends Node> {
 
     StyleBox currentStyle = null;
 
+
+    float trueX = 0.0f;
+    float trueY = 0.0f;
+
     /**
      * Sets the position of the node on the screen relative to the parent.
      * Values are in pixels. Due to the way screen coordinates work,
@@ -130,8 +134,8 @@ public class Node<T extends Node> {
             ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
             ScreenVec alignmentOffset = alignment.getOffset(width, height);
 
-            float trueX = x + anchorOffset.x + offsetX - alignmentOffset.x;
-            float trueY = y + anchorOffset.y + offsetY - alignmentOffset.y;
+            trueX = x + anchorOffset.x + offsetX - alignmentOffset.x;
+            trueY = y + anchorOffset.y + offsetY - alignmentOffset.y;
 
             currentStyle.draw(trueX, trueY, width, height, gui);
         }

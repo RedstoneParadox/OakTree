@@ -40,13 +40,6 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
-
-        ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-        ScreenVec alignmentOffset = alignment.getOffset(width, height);
-
-        float trueX = x + anchorOffset.x + offsetX - alignmentOffset.x;
-        float trueY = y + anchorOffset.y + offsetY - alignmentOffset.y;
-
         drawString(text, gui, trueX, trueY, null, false, RGBAColor.red());
     }
 }

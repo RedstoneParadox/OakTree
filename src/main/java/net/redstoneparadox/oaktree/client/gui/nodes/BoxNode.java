@@ -51,11 +51,6 @@ public class BoxNode extends Node<BoxNode> {
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
-        ScreenVec anchorOffset = alignment.getOffset(containerWidth, containerHeight);
-        ScreenVec drawOffset = alignment.getOffset(width, height);
-
-        float trueX = x + leftMargin + anchorOffset.x + offsetX - drawOffset.x;
-        float trueY = y + topMargin + anchorOffset.y + offsetY - drawOffset.y;
 
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
@@ -71,11 +66,11 @@ public class BoxNode extends Node<BoxNode> {
         float actualWidth = width - leftMargin - rightMargin;
         float actualHeight = height - topMargin - bottomMargin;
 
-        float actualX = x + leftMargin + offsetX;
-        float actualY = y + topMargin + offsetY;
+        float innerX = trueX + leftMargin;
+        float innerY = trueY + topMargin;
 
         if (child != null) {
-            child.draw(mouseX, mouseY, deltaTime, gui, actualX, actualY, actualWidth, actualHeight);
+            child.draw(mouseX, mouseY, deltaTime, gui, innerX, innerY, actualWidth, actualHeight);
         }
     }
 }

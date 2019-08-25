@@ -83,27 +83,21 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
-        ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-        ScreenVec drawOffset = alignment.getOffset(width, height);
-
-        float actualX = x + anchorOffset.x + offsetX - drawOffset.x;
-        float actualY = y + anchorOffset.y + offsetY - drawOffset.y;
-
         if (vertical) {
             float leftHeight = (splitPercent/100.0f) * height;
             float rightHeight = height - leftHeight;
-            float rightY = leftHeight + actualY;
+            float rightY = leftHeight + trueY;
 
-            left.draw(mouseX, mouseY, deltaTime, gui, actualX, actualY, width, leftHeight);
-            right.draw(mouseX, mouseY, deltaTime, gui, actualX, rightY, width, rightHeight);
+            left.draw(mouseX, mouseY, deltaTime, gui, trueX, trueY, width, leftHeight);
+            right.draw(mouseX, mouseY, deltaTime, gui, trueX, rightY, width, rightHeight);
         }
         else {
             float leftWidth = (splitPercent/100.0f) * width;
             float rightWidth = width - leftWidth;
-            float rightX = leftWidth + actualX;
+            float rightX = leftWidth + trueX;
 
-            left.draw(mouseX, mouseY, deltaTime, gui, actualX, actualY, leftWidth, height);
-            right.draw(mouseX, mouseY, deltaTime, gui, rightX, actualY, rightWidth, height);
+            left.draw(mouseX, mouseY, deltaTime, gui, trueX, trueY, leftWidth, height);
+            right.draw(mouseX, mouseY, deltaTime, gui, rightX, trueY, rightWidth, height);
         }
     }
 }
