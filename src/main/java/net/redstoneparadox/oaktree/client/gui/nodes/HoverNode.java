@@ -7,8 +7,6 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
 
-import java.util.ArrayList;
-
 public class HoverNode extends InteractiveNode<HoverNode> {
 
     private InteractionListener<HoverNode> mouseEnter = ((client, mouse, gui, node) -> {});
