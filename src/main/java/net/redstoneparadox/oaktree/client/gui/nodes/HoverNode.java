@@ -4,13 +4,13 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
-import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
+import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 
 public class HoverNode extends InteractiveNode<HoverNode> {
 
-    private InteractionListener<HoverNode> mouseEnter = ((client, mouse, gui, node) -> {});
-    private InteractionListener<HoverNode> mouseExit = ((client, mouse, gui, node) -> {});
-    private InteractionListener<HoverNode> whileHovered = ((client, mouse, gui, node) -> {});
+    private NodeFunction<HoverNode> mouseEnter = ((client, mouse, gui, node) -> {});
+    private NodeFunction<HoverNode> mouseExit = ((client, mouse, gui, node) -> {});
+    private NodeFunction<HoverNode> whileHovered = ((client, mouse, gui, node) -> {});
 
     private boolean mouseCurrentlyWithin = false;
 
@@ -21,17 +21,17 @@ public class HoverNode extends InteractiveNode<HoverNode> {
         return this;
     }
 
-    public HoverNode onMouseEnter(InteractionListener<HoverNode> listener) {
+    public HoverNode onMouseEnter(NodeFunction<HoverNode> listener) {
         mouseEnter = listener;
         return this;
     }
 
-    public HoverNode onMouseExit(InteractionListener<HoverNode> listener) {
+    public HoverNode onMouseExit(NodeFunction<HoverNode> listener) {
         mouseExit = listener;
         return this;
     }
 
-    public HoverNode whileMouseHovers(InteractionListener<HoverNode> listener) {
+    public HoverNode whileMouseHovers(NodeFunction<HoverNode> listener) {
         whileHovered = listener;
         return this;
     }

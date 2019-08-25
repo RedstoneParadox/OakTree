@@ -4,13 +4,13 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
-import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
+import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 
 public class ButtonNode extends InteractiveNode<ButtonNode> {
 
-    private InteractionListener<ButtonNode> onClick = (((client, mouse, gui, node) -> {}));
-    private InteractionListener<ButtonNode> whileHeld = (((client, mouse, gui, node) -> {}));
-    private InteractionListener<ButtonNode> onRelease = (((client, mouse, gui, node) -> {}));
+    private NodeFunction<ButtonNode> onClick = (((client, mouse, gui, node) -> {}));
+    private NodeFunction<ButtonNode> whileHeld = (((client, mouse, gui, node) -> {}));
+    private NodeFunction<ButtonNode> onRelease = (((client, mouse, gui, node) -> {}));
 
     private boolean toggleable = false;
 
@@ -28,17 +28,17 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
         return this;
     }
 
-    public ButtonNode onClick(InteractionListener<ButtonNode> listener) {
+    public ButtonNode onClick(NodeFunction<ButtonNode> listener) {
         onClick = listener;
         return this;
     }
 
-    public ButtonNode whileHeld(InteractionListener<ButtonNode> listener) {
+    public ButtonNode whileHeld(NodeFunction<ButtonNode> listener) {
         whileHeld = listener;
         return this;
     }
 
-    public ButtonNode onRelease(InteractionListener<ButtonNode> listener) {
+    public ButtonNode onRelease(NodeFunction<ButtonNode> listener) {
         onRelease = listener;
         return this;
     }

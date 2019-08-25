@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
+import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
@@ -18,6 +19,8 @@ public class Node<T extends Node> {
 
     NodeAlignment alignment = NodeAlignment.TOP_LEFT;
     NodeAlignment anchor = NodeAlignment.TOP_LEFT;
+
+    NodeFunction<T> onTick = (client, mouse, gui, node) -> {};
 
     StyleBox defaultStyle = null;
 
@@ -119,11 +122,24 @@ public class Node<T extends Node> {
         return (T)this;
     }
 
+    /**
+     *
+     *
+     * @param function
+     * @return
+     */
+    public T onTick(NodeFunction<T> function) {
+        onTick = function;
+        return (T)this;
+    }
+
     @Deprecated
     public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2, OakTreeGUI gui) {
     }
 
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+
+
         if (!expand) {
             ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
             ScreenVec alignmentOffset = alignment.getOffset(width, height);

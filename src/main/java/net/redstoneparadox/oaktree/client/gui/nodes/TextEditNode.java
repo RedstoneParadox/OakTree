@@ -3,7 +3,7 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
+import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.TypingListener;
 
@@ -13,14 +13,14 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
     private String text = "";
 
     private TypingListener<TextEditNode> onCharTyped = (toType, node) -> toType;
-    private InteractionListener<TextEditNode> onFocused = (client, mouse, gui, node) -> {};
+    private NodeFunction<TextEditNode> onFocused = (client, mouse, gui, node) -> {};
 
     public TextEditNode onCharTyped(TypingListener<TextEditNode> listener) {
         onCharTyped = listener;
         return this;
     }
 
-    public TextEditNode onFocused(InteractionListener<TextEditNode> listener) {
+    public TextEditNode onFocused(NodeFunction<TextEditNode> listener) {
         onFocused = listener;
         return this;
     }

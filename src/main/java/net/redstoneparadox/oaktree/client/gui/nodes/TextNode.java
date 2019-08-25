@@ -3,7 +3,6 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.TextAlignment;
 import net.redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
