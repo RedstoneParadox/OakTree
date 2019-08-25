@@ -83,7 +83,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
-        ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
+        ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
         ScreenVec drawOffset = drawAlignment.getOffset(width, height);
 
         float actualX = x + anchorOffset.x + offsetX - drawOffset.x;

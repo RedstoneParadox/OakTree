@@ -15,7 +15,7 @@ public abstract class InteractiveNode<T extends InteractiveNode> extends Node<T>
         MinecraftClient client = MinecraftClient.getInstance();
         Mouse mouse = client.mouse;
 
-        ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
+        ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
         ScreenVec drawOffset = drawAlignment.getOffset(width, height);
 
         float trueX = x + anchorOffset.x + offsetX - drawOffset.x;

@@ -5,7 +5,8 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
- * BoxNodes can have a child and margins.
+ * BoxNode is a type of Node that can have a single child
+ * node and internal draw margins.
  */
 public class BoxNode extends Node<BoxNode> {
 
@@ -16,6 +17,12 @@ public class BoxNode extends Node<BoxNode> {
 
     public Node child = null;
 
+    /**
+     * Sets all 4 internal margins for this BoxNode.
+     *
+     * @param margin The new margin.
+     * @return The node itself.
+     */
     public BoxNode setMargin(float margin) {
         if (margin <= 0.0f) {
             margin = 0.0f;
@@ -28,16 +35,24 @@ public class BoxNode extends Node<BoxNode> {
         return this;
     }
 
-    public BoxNode addChild(Node newChild) {
-        child = newChild;
+    /**
+     * Sets the child node of this node. The child node
+     * will be drawn relative to this node within the box
+     * created by the internal margins.
+     *
+     * @param child The node that is being added as a child.
+     * @return The node itself.
+     */
+    public BoxNode setChild(Node child) {
+        this.child = child;
         return this;
     }
 
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
-        ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
-        ScreenVec drawOffset = drawAlignment.getOffset(width, height);
+        ScreenVec anchorOffset = alignment.getOffset(containerWidth, containerHeight);
+        ScreenVec drawOffset = alignment.getOffset(width, height);
 
         float trueX = x + leftMargin + anchorOffset.x + offsetX - drawOffset.x;
         float trueY = y + topMargin + anchorOffset.y + offsetY - drawOffset.y;
