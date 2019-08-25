@@ -49,6 +49,15 @@ public class Tests {
 
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+            if (world_1.isClient()) {
+                TextEditNode root = new TextEditNode()
+                        .setSize(64, 16)
+                        .setAnchor(NodeAlignment.CENTER)
+                        .setAlignment(NodeAlignment.CENTER);
+
+                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
+            }
+
             return true;
         }
     }
@@ -61,6 +70,7 @@ public class Tests {
 
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+
             return true;
         }
     }
