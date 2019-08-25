@@ -2,11 +2,9 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
-import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.InteractionListener;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
-import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.redstoneparadox.oaktree.client.gui.util.TypingListener;
 
 public class TextEditNode extends InteractiveNode<TextEditNode> implements TextNode {
@@ -28,7 +26,7 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
     }
 
     @Override
-    public void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
+    public void updateListeners(Mouse mouse, MinecraftClient client, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
         gui.getLastChar().ifPresent((character -> {
             Character toType = onCharTyped.invoke(character, this);
             if (toType != null) {
@@ -38,8 +36,8 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        super.draw(mouseX, mouseY, deltaTime, gui);
         drawString(text, gui, trueX, trueY, null, false, RGBAColor.red());
     }
 }

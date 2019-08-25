@@ -5,7 +5,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.container.Container;
 import net.minecraft.text.LiteralText;
 import net.redstoneparadox.oaktree.client.gui.nodes.Node;
-import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
 import java.util.Optional;
 
@@ -38,8 +37,8 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public void render(int int_1, int int_2, float float_1) {
-        root.preDraw(int_1, int_2, float_1, this, minecraft.window, 0, 0, width, height);
-        root.draw(int_1, int_2, float_1, this,0, 0, width, height);
+        root.preDraw(int_1, int_2, float_1, this, 0, 0, width, height);
+        root.draw(int_1, int_2, float_1, this);
         leftMouseJustPressed = false;
         lastChar = null;
     }

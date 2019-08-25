@@ -1,8 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
-import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class SplitBoxNode extends Node<SplitBoxNode> {
 
@@ -34,12 +32,12 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
         return this;
     }
 
-    public SplitBoxNode addLeftChild(Node child) {
+    public SplitBoxNode setLeftChild(Node child) {
         left.setChild(child);
         return this;
     }
 
-    public SplitBoxNode addRightChild(Node child) {
+    public SplitBoxNode setRightChild(Node child) {
         right.setChild(child);
         return this;
     }
@@ -55,49 +53,42 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
-        float actualX = x + offsetX;
-        float actualY = y + offsetY;
+        float rightX = 0.0f;
+        float rightY = 0.0f;
+        float leftWidth = 0.0f;
+        float rightWidth = 0.0f;
+        float leftHeight = 0.0f;
+        float rightHeight = 0.0f;
 
         if (vertical) {
-            float leftHeight = (splitPercent/100.0f) * height;
-            float rightHeight = height - leftHeight;
-            float rightY = leftHeight + actualY;
-
-            left.preDraw(mouseX, mouseY, deltaTime, gui, window, actualX, actualY, width, leftHeight);
-            right.preDraw(mouseX, mouseY, deltaTime, gui, window, actualX, rightY, width, rightHeight);
+            leftWidth = trueWidth;
+            leftHeight = (splitPercent/100.0f) * trueHeight;
+            rightWidth = trueWidth;
+            rightHeight = trueHeight - leftHeight;
+            rightX = trueX;
+            rightY = leftHeight + trueY;
         }
         else {
-            float leftWidth = (splitPercent/100.0f) * width;
-            float rightWidth = width - leftWidth;
-            float rightX = leftWidth + actualX;
-
-            left.preDraw(mouseX, mouseY, deltaTime, gui, window, actualX, actualY, leftWidth, height);
-            right.preDraw(mouseX, mouseY, deltaTime, gui, window, rightX, actualY, rightWidth, height);
+            leftWidth = (splitPercent/100.0f) * trueWidth;
+            leftHeight = trueHeight;
+            rightWidth = trueWidth - leftWidth;
+            rightHeight = trueHeight;
+            rightX = leftWidth + trueX;
+            rightY = trueY;
         }
+
+        left.preDraw(mouseX, mouseY, deltaTime, gui, trueX, trueY, leftWidth, leftHeight);
+        right.preDraw(mouseX, mouseY, deltaTime, gui, rightX, rightY, rightWidth, rightHeight);
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        super.draw(mouseX, mouseY, deltaTime, gui);
 
-        if (vertical) {
-            float leftHeight = (splitPercent/100.0f) * height;
-            float rightHeight = height - leftHeight;
-            float rightY = leftHeight + trueY;
-
-            left.draw(mouseX, mouseY, deltaTime, gui, trueX, trueY, width, leftHeight);
-            right.draw(mouseX, mouseY, deltaTime, gui, trueX, rightY, width, rightHeight);
-        }
-        else {
-            float leftWidth = (splitPercent/100.0f) * width;
-            float rightWidth = width - leftWidth;
-            float rightX = leftWidth + trueX;
-
-            left.draw(mouseX, mouseY, deltaTime, gui, trueX, trueY, leftWidth, height);
-            right.draw(mouseX, mouseY, deltaTime, gui, rightX, trueY, rightWidth, height);
-        }
+        left.draw(mouseX, mouseY, deltaTime, gui);
+        right.draw(mouseX, mouseY, deltaTime, gui);
     }
 }

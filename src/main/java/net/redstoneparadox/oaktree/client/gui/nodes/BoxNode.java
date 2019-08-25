@@ -1,8 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
-import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
  * BoxNode is a type of Node that can have a single child
@@ -15,7 +13,7 @@ public class BoxNode extends Node<BoxNode> {
     public float leftMargin = 0.0f;
     public float rightMargin = 0.0f;
 
-    public Node child = null;
+    private Node child = null;
 
     /**
      * Sets all 4 internal margins for this BoxNode.
@@ -49,28 +47,24 @@ public class BoxNode extends Node<BoxNode> {
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
-        float actualWidth = width - leftMargin - rightMargin;
-        float actualHeight = height - topMargin - bottomMargin;
-
-        if (child != null) {
-            child.preDraw(mouseX, mouseY, deltaTime, gui, window, trueX, trueY, actualWidth, actualHeight);
-        }
-    }
-
-    @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
-        float actualWidth = width - leftMargin - rightMargin;
-        float actualHeight = height - topMargin - bottomMargin;
+        float innerWidth = trueWidth - leftMargin - rightMargin;
+        float innerHeight = trueHeight - topMargin - bottomMargin;
 
         float innerX = trueX + leftMargin;
         float innerY = trueY + topMargin;
 
+        child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, innerWidth, innerHeight);
+    }
+
+    @Override
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        super.draw(mouseX, mouseY, deltaTime, gui);
+
         if (child != null) {
-            child.draw(mouseX, mouseY, deltaTime, gui, innerX, innerY, actualWidth, actualHeight);
+            child.draw(mouseX, mouseY, deltaTime, gui);
         }
     }
 }

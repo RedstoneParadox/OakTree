@@ -3,14 +3,13 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
-import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class ProgressBarNode extends Node<ProgressBarNode> {
 
     StyleBox barStyle = null;
     StyleBox unfilledBarStyle = null;
 
-    float percentFilled = 100.0f;
+    public float percentFilled = 100.0f;
 
     float barWidth = 0.1f;
     float barHeight = 0.1f;
@@ -44,11 +43,11 @@ public class ProgressBarNode extends Node<ProgressBarNode> {
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        super.draw(mouseX, mouseY, deltaTime, gui);
 
-        float barX = trueX + ((width/2) - (barWidth/2));
-        float barY = trueY + ((height/2) - (barHeight/2));
+        float barX = trueX + ((trueWidth/2) - (barWidth/2));
+        float barY = trueY + ((trueHeight/2) - (barHeight/2));
 
         if (unfilledBarStyle != null) {
             unfilledBarStyle.draw(barX, barY, barWidth, barHeight, gui);

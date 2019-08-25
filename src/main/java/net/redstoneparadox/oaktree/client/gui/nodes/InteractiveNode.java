@@ -3,29 +3,21 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public abstract class InteractiveNode<T extends InteractiveNode> extends Node<T> {
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(mouseX, mouseY, deltaTime, gui, window, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         MinecraftClient client = MinecraftClient.getInstance();
         Mouse mouse = client.mouse;
 
-        ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-        ScreenVec drawOffset = alignment.getOffset(width, height);
-
-        float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
-        float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
-
-        boolean mouseWithin = (mouseX >= trueX && mouseX <= (width + trueX)) && (mouseY >= trueY && mouseY <= (height + trueY));
-        updateListeners(mouse, client, window, gui, mouseWithin, mouseX, mouseY);
+        boolean mouseWithin = (mouseX >= trueX && mouseX <= (trueWidth + trueX)) && (mouseY >= trueY && mouseY <= (trueHeight + trueY));
+        updateListeners(mouse, client, gui, mouseWithin, mouseX, mouseY);
     }
 
-    public abstract void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY);
+    public abstract void updateListeners(Mouse mouse, MinecraftClient client, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY);
 
     public int keyFromName(String key) {
         String fullName = "key.keyboard." + key;

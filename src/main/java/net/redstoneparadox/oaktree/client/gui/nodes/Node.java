@@ -1,7 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.Window;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
@@ -14,8 +13,8 @@ public class Node<T extends Node> {
 
     public float x = 0.0f;
     public float y = 0.0f;
-    public float width = 0.1f;
-    public float height = 0.1f;
+    float width = 0.1f;
+    float height = 0.1f;
 
     NodeAlignment alignment = NodeAlignment.TOP_LEFT;
     NodeAlignment anchor = NodeAlignment.TOP_LEFT;
@@ -29,6 +28,8 @@ public class Node<T extends Node> {
 
     float trueX = 0.0f;
     float trueY = 0.0f;
+    float trueWidth = 0.0f;
+    float trueHeight = 0.0f;
 
     /**
      * Sets the position of the node on the screen relative to the parent.
@@ -118,26 +119,34 @@ public class Node<T extends Node> {
         return (T)this;
     }
 
+    @Deprecated
     public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2, OakTreeGUI gui) {
     }
 
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, Window window, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        if (expand) {
-            width = containerWidth;
-            height = containerHeight;
-        }
-        currentStyle = defaultStyle;
-    }
-
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        if (currentStyle != null) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (!expand) {
             ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
             ScreenVec alignmentOffset = alignment.getOffset(width, height);
 
             trueX = x + anchorOffset.x + offsetX - alignmentOffset.x;
             trueY = y + anchorOffset.y + offsetY - alignmentOffset.y;
 
-            currentStyle.draw(trueX, trueY, width, height, gui);
+            trueWidth = width;
+            trueHeight = height;
+        }
+        else {
+            trueX = offsetX;
+            trueY = offsetY;
+
+            trueWidth = containerWidth;
+            trueHeight = containerHeight;
+        }
+        currentStyle = defaultStyle;
+    }
+
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        if (currentStyle != null) {
+            currentStyle.draw(trueX, trueY, trueWidth, trueHeight, gui);
         }
     }
 
