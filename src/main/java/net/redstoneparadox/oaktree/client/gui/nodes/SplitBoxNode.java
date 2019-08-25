@@ -35,12 +35,12 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
     }
 
     public SplitBoxNode addLeftChild(Node child) {
-        left.addChild(child);
+        left.setChild(child);
         return this;
     }
 
     public SplitBoxNode addRightChild(Node child) {
-        right.addChild(child);
+        right.setChild(child);
         return this;
     }
 
@@ -84,7 +84,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
         super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
         ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-        ScreenVec drawOffset = drawAlignment.getOffset(width, height);
+        ScreenVec drawOffset = alignment.getOffset(width, height);
 
         float actualX = x + anchorOffset.x + offsetX - drawOffset.x;
         float actualY = y + anchorOffset.y + offsetY - drawOffset.y;

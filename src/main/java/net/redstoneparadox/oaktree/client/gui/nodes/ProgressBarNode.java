@@ -47,8 +47,8 @@ public class ProgressBarNode extends Node<ProgressBarNode> {
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.draw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
-        ScreenVec anchorOffset = anchorAlignment.getOffset(containerWidth, containerHeight);
-        ScreenVec drawOffset = drawAlignment.getOffset(width, height);
+        ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
+        ScreenVec drawOffset = alignment.getOffset(width, height);
 
         float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
         float trueY = y + anchorOffset.y + offsetY - drawOffset.y;

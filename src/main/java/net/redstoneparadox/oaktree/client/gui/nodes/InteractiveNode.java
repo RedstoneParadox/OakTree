@@ -16,7 +16,7 @@ public abstract class InteractiveNode<T extends InteractiveNode> extends Node<T>
         Mouse mouse = client.mouse;
 
         ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-        ScreenVec drawOffset = drawAlignment.getOffset(width, height);
+        ScreenVec drawOffset = alignment.getOffset(width, height);
 
         float trueX = x + anchorOffset.x + offsetX - drawOffset.x;
         float trueY = y + anchorOffset.y + offsetY - drawOffset.y;
