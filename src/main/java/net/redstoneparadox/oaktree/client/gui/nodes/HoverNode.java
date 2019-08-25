@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class HoverNode extends InteractiveNode<HoverNode> {
 
-    private ArrayList<InteractionListener<HoverNode>> mouseEnterListeners = new ArrayList<>();
-    private ArrayList<InteractionListener<HoverNode>> mouseExitListeners = new ArrayList<>();
-    private ArrayList<InteractionListener<HoverNode>> mouseHoverListeners = new ArrayList<>();
+    private InteractionListener<HoverNode> mouseEnter = ((client, mouse, gui, node) -> {});
+    private InteractionListener<HoverNode> mouseExit = ((client, mouse, gui, node) -> {});
+    private InteractionListener<HoverNode> whileHovered = ((client, mouse, gui, node) -> {});
 
     private boolean mouseCurrentlyWithin = false;
 
@@ -25,17 +25,17 @@ public class HoverNode extends InteractiveNode<HoverNode> {
     }
 
     public HoverNode onMouseEnter(InteractionListener<HoverNode> listener) {
-        mouseEnterListeners.add(listener);
+        mouseEnter = listener;
         return this;
     }
 
     public HoverNode onMouseExit(InteractionListener<HoverNode> listener) {
-        mouseExitListeners.add(listener);
+        mouseExit = listener;
         return this;
     }
 
     public HoverNode whileMouseHovers(InteractionListener<HoverNode> listener) {
-        mouseHoverListeners.add(listener);
+        whileHovered = listener;
         return this;
     }
 
@@ -43,15 +43,15 @@ public class HoverNode extends InteractiveNode<HoverNode> {
     public void updateListeners(Mouse mouse, MinecraftClient client, Window window, OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
         if (!mouseCurrentlyWithin && mouseWithin) {
             mouseCurrentlyWithin = true;
-            mouseEnterListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui, this));
+            mouseEnter.invoke(client, mouse, gui, this);
         }
         else if (mouseCurrentlyWithin && !mouseWithin) {
             mouseCurrentlyWithin = false;
-            mouseEnterListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui, this));
+            mouseExit.invoke(client, mouse, gui, this);
         }
 
         if (mouseCurrentlyWithin) {
-            mouseHoverListeners.iterator().forEachRemaining(listener -> listener.invoke(client, mouse, gui, this));
+            whileHovered.invoke(client, mouse, gui, this);
         }
     }
 
