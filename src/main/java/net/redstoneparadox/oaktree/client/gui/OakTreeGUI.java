@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface OakTreeGUI {
 
-    Optional<Container> getContainer();
+    Optional<Container> getScreenContainer();
 
     boolean mouseButtonHeld(String mouseButton);
 

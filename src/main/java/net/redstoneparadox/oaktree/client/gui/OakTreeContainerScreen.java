@@ -1,44 +1,46 @@
 package net.redstoneparadox.oaktree.client.gui;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
 import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
-import net.minecraft.text.LiteralText;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.text.Text;
 import net.redstoneparadox.oaktree.client.gui.nodes.Node;
 
 import java.util.Optional;
 
-public class OakTreeScreen extends Screen implements OakTreeGUI {
+public class OakTreeContainerScreen<T extends Container> extends AbstractContainerScreen<T> implements OakTreeGUI {
 
-    Node root;
+    private Node root;
 
-    boolean shouldPause;
+    private boolean isPauseScreen;
 
-    boolean leftMouseButton;
-    boolean leftMouseJustPressed;
+    private boolean leftMouseButton;
+    private boolean leftMouseJustPressed;
 
-    Character lastChar = null;
+    private Character lastChar = null;
 
-    public OakTreeScreen(Node treeRoot, boolean pause) {
-        super(new LiteralText("gui"));
-        root = treeRoot;
-        shouldPause = pause;
+    public OakTreeContainerScreen(Node root, boolean isPauseScreen, T container, PlayerInventory playerInventory, Text text) {
+        super(container, playerInventory, text);
+        this.root = root;
+        this.isPauseScreen = isPauseScreen;
     }
 
     @Override
     public boolean isPauseScreen() {
-        return shouldPause;
+        return isPauseScreen;
     }
 
     @Override
-    public void init(MinecraftClient minecraftClient_1, int int_1, int int_2) {
-        super.init(minecraftClient_1, int_1, int_2);
-        root.setup(minecraftClient_1, int_1, int_2, this);
+    protected void drawBackground(float var1, int var2, int var3) {
+
     }
 
     @Override
     public void render(int int_1, int int_2, float float_1) {
+        super.render(int_1, int_2, float_1);
+
         Window clientWindow  = MinecraftClient.getInstance().window;
 
         root.preDraw(int_1, int_2, float_1, this, 0, 0, clientWindow.getWidth(), clientWindow.getHeight());
@@ -48,11 +50,9 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
         width = (int)root.trueWidth;
         height = (int)root.trueHeight;
-    }
 
-    @Override
-    public Optional<Container> getScreenContainer() {
-        return Optional.empty();
+        left = (int)root.trueX;
+        top = (int)root.trueY;
     }
 
     @Override
@@ -91,6 +91,11 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
+    public Optional<Container> getScreenContainer() {
+        return Optional.of(container);
+    }
+
+    @Override
     public boolean mouseClicked(double double_1, double double_2, int int_1) {
         super.mouseClicked(double_1, double_2, int_1);
 
@@ -118,5 +123,10 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     public boolean charTyped(char char_1, int int_1) {
         lastChar = char_1;
         return true;
+    }
+
+    @Override
+    protected boolean isClickOutsideBounds(double double_1, double double_2, int int_1, int int_2, int int_3) {
+        return false;
     }
 }

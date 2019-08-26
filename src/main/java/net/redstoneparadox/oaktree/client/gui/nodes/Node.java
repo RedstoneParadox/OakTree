@@ -29,10 +29,10 @@ public class Node<T extends Node> {
     StyleBox currentStyle = null;
 
 
-    float trueX = 0.0f;
-    float trueY = 0.0f;
-    float trueWidth = 0.0f;
-    float trueHeight = 0.0f;
+    public float trueX = 0.0f;
+    public float trueY = 0.0f;
+    public float trueWidth = 0.0f;
+    public float trueHeight = 0.0f;
 
     /**
      * Sets the position of the node on the screen relative to the parent.

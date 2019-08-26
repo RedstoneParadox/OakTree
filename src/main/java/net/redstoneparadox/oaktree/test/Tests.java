@@ -1,17 +1,25 @@
 package net.redstoneparadox.oaktree.test;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.container.Container;
+import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.redstoneparadox.oaktree.client.gui.OakTreeContainerScreen;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.nodes.*;
 import net.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
@@ -19,6 +27,7 @@ import net.redstoneparadox.oaktree.client.gui.style.ItemStyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
 import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import net.redstoneparadox.oaktree.networking.OakTreeNetworking;
 
 public class Tests {
 
@@ -27,6 +36,9 @@ public class Tests {
     private final Block TEST_THREE_BLOCK = new TestThreeBlock(testSettings());
     private final Block TEST_FOUR_BLOCK = new TestFourBlock(testSettings());
     private final Block TEST_FIVE_BLOCK = new TestFiveBlock(testSettings());
+    private final Block TEST_SIX_BLOCK = new TestSixBlock(testSettings());
+
+    static Identifier TEST_SIX = new Identifier("oak_tree", "test_six");
 
     public void init() {
         register(TEST_ONE_BLOCK, "one");
@@ -34,6 +46,25 @@ public class Tests {
         register(TEST_THREE_BLOCK, "three");
         register(TEST_FOUR_BLOCK, "four");
         register(TEST_FIVE_BLOCK, "five");
+        register(TEST_SIX_BLOCK, "six");
+
+        ScreenProviderRegistry.INSTANCE.registerFactory(TEST_SIX, ((int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) -> {
+            BlockPos pos = buf.readBlockPos();
+            BoxNode root = new BoxNode()
+                    .setAlignment(NodeAlignment.CENTER)
+                    .setAnchor(NodeAlignment.CENTER)
+                    .setExpand(true)
+                    .setChild(new ItemSlotNode(0, syncId)
+                            .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));
+            return new OakTreeContainerScreen<>(root, false, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
+        }));
+
+        ContainerProviderRegistry.INSTANCE.registerFactory(TEST_SIX, ((int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buff) -> {
+            BlockPos pos = buff.readBlockPos();
+            Container container = new TestSixContainer(syncId, pos, player);
+            OakTreeNetworking.addContainerForSyncing(container);
+            return container;
+        }));
     }
 
     private Block.Settings testSettings() {
@@ -177,7 +208,7 @@ public class Tests {
 
     private static class TestFiveBlock extends Block {
 
-        public TestFiveBlock(Settings block$Settings_1) {
+        TestFiveBlock(Settings block$Settings_1) {
             super(block$Settings_1);
         }
 
@@ -198,6 +229,41 @@ public class Tests {
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
             }
 
+            return true;
+        }
+    }
+
+    //Test 6
+    private static class TestSixBlock extends Block {
+
+        TestSixBlock(Settings block$Settings_1) {
+            super(block$Settings_1);
+        }
+
+        @Override
+        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+            if (!world_1.isClient()) {
+                ContainerProviderRegistry.INSTANCE.openContainer(TEST_SIX, playerEntity_1, (packetByteBuf -> packetByteBuf.writeBlockPos(blockPos_1)));
+            }
+
+            return true;
+        }
+    }
+
+    private static class TestSixContainer extends Container {
+        final PlayerInventory playerInventory;
+        BlockPos pos;
+
+        TestSixContainer(int syncID, BlockPos pos, PlayerEntity player) {
+            super(null, syncID);
+            this.pos = pos;
+            playerInventory = player.inventory;
+
+            this.addSlot(new Slot(playerInventory, 0, 0, 0));
+        }
+
+        @Override
+        public boolean canUse(PlayerEntity var1) {
             return true;
         }
     }
