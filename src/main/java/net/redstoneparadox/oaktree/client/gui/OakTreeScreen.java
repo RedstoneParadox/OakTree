@@ -45,7 +45,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     public void render(int int_1, int int_2, float float_1) {
         Window clientWindow  = MinecraftClient.getInstance().window;
 
-        root.preDraw(int_1, int_2, float_1, this, 0, 0, clientWindow.getWidth(), clientWindow.getHeight());
+        root.preDraw(int_1, int_2, float_1, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
         root.draw(int_1, int_2, float_1, this);
         leftMouseJustPressed = false;
         lastChar = null;
