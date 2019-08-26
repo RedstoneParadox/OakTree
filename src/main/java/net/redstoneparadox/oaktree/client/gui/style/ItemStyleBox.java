@@ -31,10 +31,10 @@ public class ItemStyleBox extends StyleBox {
         Item item = Registry.ITEM.get(itemID);
         GuiLighting.enableForItems();
         ItemStack stack = new ItemStack(item);
-        renderer.renderGuiItem(stack, (int)x, (int)y);
+        renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);
         if (gui instanceof Screen) {
             TextRenderer font = ((ScreenAccessor)gui).getFont();
-            renderer.renderGuiItemOverlay(font, stack, (int)x, (int)y);
+            renderer.renderGuiItemOverlay(font, stack, (int)x - 7, (int)y - 7);
         }
     }
 }
