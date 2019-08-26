@@ -48,16 +48,17 @@ public class Tests {
         register(TEST_FIVE_BLOCK, "five");
         register(TEST_SIX_BLOCK, "six");
 
-        ScreenProviderRegistry.INSTANCE.registerFactory(TEST_SIX, ((int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) -> {
+        ScreenProviderRegistry.INSTANCE.registerFactory(TEST_SIX, (int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) -> {
             BlockPos pos = buf.readBlockPos();
-            BoxNode root = new BoxNode()
-                    .setAlignment(NodeAlignment.CENTER)
+            return new GridNode()
+                    .setCellSize(16.0f, 16.0f)
+                    .setRows(3)
+                    .setColumns(3)
                     .setAnchor(NodeAlignment.CENTER)
-                    .setExpand(true)
-                    .setChild(new ItemSlotNode(0)
-                            .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));
-            return new OakTreeContainerScreen<>(root, false, null, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
-        }));
+                    .setAlignment(NodeAlignment.CENTER)
+                    .forEachCell((gridNode, integer) -> gridNode.setCell(integer, new ItemSlotNode(integer)))
+                    .toContainerScreen(false, null, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
+        });
 
         ContainerProviderRegistry.INSTANCE.registerFactory(TEST_SIX, ((int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buff) -> {
             BlockPos pos = buff.readBlockPos();
@@ -259,7 +260,9 @@ public class Tests {
             this.pos = pos;
             playerInventory = player.inventory;
 
-            this.addSlot(new Slot(playerInventory, 0, 0, 0));
+            for (int i = 0; i < 8; i++) {
+                this.addSlot(new Slot(playerInventory, i, 0, 0));
+            }
         }
 
         @Override
