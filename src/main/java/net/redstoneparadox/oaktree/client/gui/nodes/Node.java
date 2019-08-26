@@ -1,7 +1,15 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
+import net.minecraft.container.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.text.Text;
+import net.redstoneparadox.oaktree.client.gui.OakTreeContainerScreen;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
@@ -132,6 +140,45 @@ public class Node<T extends Node> {
     public T onTick(NodeFunction<T> function) {
         onTick = function;
         return (T)this;
+    }
+
+    /**
+     * Helper method for taking a tree of nodes and using
+     * them to automatically open a new
+     * {@link OakTreeScreen}.
+     *
+     * @param isPauseScreen Whether the screen should pause
+     *                      the game.
+     * @param parentScreen The screen to open after this one
+     *                     is closed. Can be null.
+     */
+    public void openAsScreen(boolean isPauseScreen, Screen parentScreen) {
+        MinecraftClient.getInstance().openScreen(new OakTreeScreen(this, isPauseScreen, parentScreen));
+    }
+
+    /**
+     * Helper method for taking a tree of nodes and using
+     * them to automatically create a new
+     * {@link OakTreeContainerScreen}. Unlike the previous
+     * method, the screen will not be opened due to the
+     * way Fabric API requires you to open container
+     * screens.
+     *
+     * @param isPauseScreen Whether the screen should pause
+     *                      the game.
+     * @param parentScreen The screen to open after this
+     *                     one is closed. Can be null.
+     * @param container The {@link Container} of the
+     *                  container screen.
+     * @param playerInventory The inventory of the player
+     *                        that opened the screen.
+     * @param text The title of the inventory.
+     * @param <C> The type of {@link Container} that uses
+     *           this screen.
+     * @return The resulting {@link OakTreeContainerScreen}.
+     */
+    public <C extends Container> AbstractContainerScreen<C> toContainerScreen(boolean isPauseScreen, Screen parentScreen, C container, PlayerInventory playerInventory, Text text) {
+        return new OakTreeContainerScreen<>(this, isPauseScreen, parentScreen, container, playerInventory, text);
     }
 
     @Deprecated

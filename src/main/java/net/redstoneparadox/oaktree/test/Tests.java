@@ -56,7 +56,7 @@ public class Tests {
                     .setExpand(true)
                     .setChild(new ItemSlotNode(0, syncId)
                             .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));
-            return new OakTreeContainerScreen<>(root, false, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
+            return new OakTreeContainerScreen<>(root, false, null, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
         }));
 
         ContainerProviderRegistry.INSTANCE.registerFactory(TEST_SIX, ((int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buff) -> {
@@ -92,7 +92,7 @@ public class Tests {
                         .setMargin(15.0f);
 
 
-                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
+                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
             return true;
@@ -120,7 +120,7 @@ public class Tests {
                                         .setExpand(true)
                                         .setDefaultStyle(new ColorStyleBox(RGBAColor.blue())));
 
-                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
+                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
             return true;
@@ -154,7 +154,7 @@ public class Tests {
                                 .setExpand(true)
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.blue())));
 
-                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
+                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
             return true;
@@ -199,7 +199,7 @@ public class Tests {
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.blue()))
                                 .setHeldStyle(new ColorStyleBox(RGBAColor.red())));
 
-                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
+                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
             return true;
@@ -226,7 +226,7 @@ public class Tests {
                                 .setAnchor(NodeAlignment.CENTER)
                                 .setAlignment(NodeAlignment.CENTER));
 
-                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
+                MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
             return true;

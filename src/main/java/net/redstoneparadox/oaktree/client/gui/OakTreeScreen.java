@@ -13,22 +13,26 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     Node root;
 
-    boolean shouldPause;
+    boolean isPauseScreen;
 
     boolean leftMouseButton;
     boolean leftMouseJustPressed;
 
     Character lastChar = null;
 
-    public OakTreeScreen(Node treeRoot, boolean pause) {
+    Screen parentScreen;
+
+
+    public OakTreeScreen(Node root, boolean isPauseScreen, Screen parentScreen) {
         super(new LiteralText("gui"));
-        root = treeRoot;
-        shouldPause = pause;
+        this.root = root;
+        this.isPauseScreen = isPauseScreen;
+        this.parentScreen = parentScreen;
     }
 
     @Override
     public boolean isPauseScreen() {
-        return shouldPause;
+        return isPauseScreen;
     }
 
     @Override
@@ -118,5 +122,10 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     public boolean charTyped(char char_1, int int_1) {
         lastChar = char_1;
         return true;
+    }
+
+    @Override
+    public void onClose() {
+        minecraft.openScreen(parentScreen);
     }
 }

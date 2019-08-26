@@ -1,6 +1,7 @@
 package net.redstoneparadox.oaktree.client.gui;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
 import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
@@ -21,10 +22,13 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
 
     private Character lastChar = null;
 
-    public OakTreeContainerScreen(Node root, boolean isPauseScreen, T container, PlayerInventory playerInventory, Text text) {
+    Screen parentScreen;
+
+    public OakTreeContainerScreen(Node root, boolean isPauseScreen, Screen parentScreen, T container, PlayerInventory playerInventory, Text text) {
         super(container, playerInventory, text);
         this.root = root;
         this.isPauseScreen = isPauseScreen;
+        this.parentScreen = parentScreen;
     }
 
     @Override
@@ -128,5 +132,10 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     @Override
     protected boolean isClickOutsideBounds(double double_1, double double_2, int int_1, int int_2, int int_3) {
         return false;
+    }
+
+    @Override
+    public void onClose() {
+        minecraft.openScreen(parentScreen);
     }
 }
