@@ -11,11 +11,9 @@ import net.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
 public class ItemSlotNode extends Node<ItemSlotNode> {
 
     private final int index;
-    private final int syncID;
 
-    public ItemSlotNode(int index, int syncID) {
+    public ItemSlotNode(int index) {
         this.index = index;
-        this.syncID = syncID;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class ItemSlotNode extends Node<ItemSlotNode> {
                 slot.xPosition = (int)trueX;
                 slot.yPosition = (int)trueY;
 
-                OakTreeClientNetworking.syncSlot((int)trueX, (int)trueY, index, syncID);
+                OakTreeClientNetworking.syncSlot((int)trueX, (int)trueY, index, container.syncId);
             }
         });
     }

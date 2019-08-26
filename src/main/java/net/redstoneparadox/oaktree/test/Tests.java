@@ -54,7 +54,7 @@ public class Tests {
                     .setAlignment(NodeAlignment.CENTER)
                     .setAnchor(NodeAlignment.CENTER)
                     .setExpand(true)
-                    .setChild(new ItemSlotNode(0, syncId)
+                    .setChild(new ItemSlotNode(0)
                             .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));
             return new OakTreeContainerScreen<>(root, false, null, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
         }));
