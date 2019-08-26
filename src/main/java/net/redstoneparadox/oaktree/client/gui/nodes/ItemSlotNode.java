@@ -18,9 +18,8 @@ public class ItemSlotNode extends Node<ItemSlotNode> {
 
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
-        super.draw(mouseX, mouseY, deltaTime, gui);
-
         gui.getScreenContainer().ifPresent(container -> {
+            super.draw(mouseX, mouseY, deltaTime, gui);
             if (index < container.slotList.size()) {
                 Slot slot = container.slotList.get(index);
                 slot.xPosition = (int)trueX;
