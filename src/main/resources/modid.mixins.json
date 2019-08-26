@@ -5,6 +5,7 @@
   "mixins": [
   ],
   "client": [
+    "client.gui.DrawableHelperAccessor",
     "client.gui.screen.ScreenAccessor"
   ],
   "injectors": {

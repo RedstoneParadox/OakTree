@@ -2,8 +2,10 @@ package net.redstoneparadox.oaktree.client.gui.style;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.util.Identifier;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.mixin.client.gui.DrawableHelperAccessor;
 
 public class TextureStyleBox extends StyleBox {
 
@@ -26,6 +28,8 @@ public class TextureStyleBox extends StyleBox {
     public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         GlStateManager.color4f(1.0f,1.0f, 1.0f, 1.0f);
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
-        gui.drawTexture((int)x, (int)y, drawLeft, drawTop, (int)width, (int)height);
+        if (gui instanceof DrawableHelper) {
+            ((DrawableHelperAccessor) gui).invokeBlit((int)x, (int)y, drawLeft, drawTop, (int)width, (int)height);
+        }
     }
 }

@@ -184,10 +184,16 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                Node root = new Node()
-                        .setDefaultStyle(new ItemStyleBox("stone"))
+                BoxNode root = new BoxNode()
+                        .setSize(16, 16)
+                        .setAlignment(NodeAlignment.CENTER)
                         .setAnchor(NodeAlignment.CENTER)
-                        .setAlignment(NodeAlignment.CENTER);
+                        .setSize(16, 16)
+                        .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
+                        .setChild(new Node()
+                                .setDefaultStyle(new ItemStyleBox("stone"))
+                                .setAnchor(NodeAlignment.CENTER)
+                                .setAlignment(NodeAlignment.CENTER));
 
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false));
             }
