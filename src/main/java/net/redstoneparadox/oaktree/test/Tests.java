@@ -54,8 +54,7 @@ public class Tests {
                     .setCellSize(16.0f, 16.0f)
                     .setRows(3)
                     .setColumns(3)
-                    .setAnchor(NodeAlignment.CENTER)
-                    .setAlignment(NodeAlignment.CENTER)
+                    .setExpand(true)
                     .forEachCell((gridNode, integer) -> gridNode.setCell(integer, new ItemSlotNode(integer)))
                     .toContainerScreen(false, null, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
         });

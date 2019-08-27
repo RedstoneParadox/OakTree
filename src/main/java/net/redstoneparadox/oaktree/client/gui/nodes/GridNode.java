@@ -23,8 +23,8 @@ public class GridNode extends Node<GridNode> {
     }
 
     public GridNode setCellSize(float cellWidth, float cellHeight) {
-        this.cellWidth = width;
-        this.cellHeight = height;
+        this.cellWidth = cellWidth;
+        this.cellHeight = cellHeight;
         return this;
     }
 
@@ -69,10 +69,12 @@ public class GridNode extends Node<GridNode> {
         for (int row = 0; row < rows; row++) {
             float cellY = trueY + (cellHeight * (float)row);
 
-            for (int column = 0; column < columns; columns++) {
+            for (int column = 0; column < columns; column++) {
                 float cellX = trueX + (cellWidth * (float)column);
 
                 children.get(cellIndex).preDraw(mouseX, mouseY, deltaTime, gui, cellX, cellY, cellWidth, cellHeight);
+
+                cellIndex++;
             }
         }
     }
