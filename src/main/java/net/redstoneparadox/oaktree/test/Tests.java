@@ -52,6 +52,7 @@ public class Tests {
             BlockPos pos = buf.readBlockPos();
             return new GridNode()
                     .setCellSize(16.0f, 16.0f)
+                    .setCellSpacing(10.0f, 10.0f)
                     .setRows(3)
                     .setColumns(3)
                     .setExpand(true)
@@ -259,7 +260,7 @@ public class Tests {
             this.pos = pos;
             playerInventory = player.inventory;
 
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 9; i++) {
                 this.addSlot(new Slot(playerInventory, i, 0, 0));
             }
         }
