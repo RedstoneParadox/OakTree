@@ -1,6 +1,7 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.util.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +50,10 @@ public class GridNode extends Node<GridNode> {
 
     public GridNode setCell(int index, Node child) {
         if (index >= children.size()) {
-            children.add(child);
+            ListUtils.growList(children, index + 1);
         }
-        else {
-            children.set(index, child);
-        }
+
+        children.set(index, child);
         return this;
     }
 
@@ -81,7 +81,10 @@ public class GridNode extends Node<GridNode> {
             for (int column = 0; column < columns; column++) {
                 float cellX = trueX + ((cellWidth + horizontalCellSpacing) * (float)column);
 
-                children.get(cellIndex).preDraw(mouseX, mouseY, deltaTime, gui, cellX, cellY, cellWidth, cellHeight);
+                Node child = children.get(cellIndex);
+                if (child != null) {
+                    child.preDraw(mouseX, mouseY, deltaTime, gui, cellX, cellY, cellWidth, cellHeight);
+                }
 
                 cellIndex++;
             }
@@ -94,7 +97,10 @@ public class GridNode extends Node<GridNode> {
 
         int cellCount = rows * columns;
         for (int i = 0; i < cellCount; i++) {
-            children.get(i).draw(mouseX, mouseY, deltaTime, gui);
+            Node child = children.get(i);
+            if (child != null) {
+                child.draw(mouseX, mouseY, deltaTime, gui);
+            }
         }
     }
 }
