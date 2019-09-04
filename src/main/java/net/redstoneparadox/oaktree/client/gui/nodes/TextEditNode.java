@@ -24,7 +24,7 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
     }
 
     @Override
-    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
+    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY, float containerX, float containerY, float containerWidth, float containerHeight) {
         gui.getLastChar().ifPresent((character -> {
             Character toType = onCharTyped.invoke(character, this);
             if (toType != null) {

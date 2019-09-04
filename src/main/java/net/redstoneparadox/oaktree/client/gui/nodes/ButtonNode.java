@@ -42,7 +42,7 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
     }
 
     @Override
-    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
+    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY, float containerX, float containerY, float containerWidth, float containerHeight) {
         if (toggleable) {
             if (mouseWithin) {
                 if (gui.mouseButtonJustClicked("left")) {

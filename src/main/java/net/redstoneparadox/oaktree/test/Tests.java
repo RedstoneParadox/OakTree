@@ -37,6 +37,7 @@ public class Tests {
     private final Block TEST_FOUR_BLOCK = new TestFourBlock(testSettings());
     private final Block TEST_FIVE_BLOCK = new TestFiveBlock(testSettings());
     private final Block TEST_SIX_BLOCK = new TestSixBlock(testSettings());
+    private final Block TEST_SEVEN_BLOCK = new TestSevenBlock(testSettings());
 
     static Identifier TEST_SIX = new Identifier("oak_tree", "test_six");
 
@@ -47,6 +48,7 @@ public class Tests {
         register(TEST_FOUR_BLOCK, "four");
         register(TEST_FIVE_BLOCK, "five");
         register(TEST_SIX_BLOCK, "six");
+        register(TEST_SEVEN_BLOCK, "seven");
 
         ScreenProviderRegistry.INSTANCE.registerFactory(TEST_SIX, (int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) -> {
             BlockPos pos = buf.readBlockPos();
@@ -267,6 +269,29 @@ public class Tests {
 
         @Override
         public boolean canUse(PlayerEntity var1) {
+            return true;
+        }
+    }
+
+    private static class TestSevenBlock extends Block {
+
+        public TestSevenBlock(Settings block$Settings_1) {
+            super(block$Settings_1);
+        }
+
+        @Override
+        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+            if (world_1.isClient) {
+                BoxNode root = new BoxNode()
+                        .setExpand(true)
+                        .setChild(new DraggableNode()
+                        .whileHeld((gui, node) -> System.out.println("I'm being dragged!"))
+                        .setSize(16.0f, 16.0f)
+                        .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));
+
+                root.openAsScreen(false, null);
+            }
+
             return true;
         }
     }

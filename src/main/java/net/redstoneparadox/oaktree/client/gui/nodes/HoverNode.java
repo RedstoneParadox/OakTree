@@ -35,7 +35,7 @@ public class HoverNode extends InteractiveNode<HoverNode> {
     }
 
     @Override
-    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY) {
+    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY, float containerX, float containerY, float containerWidth, float containerHeight) {
         if (!mouseCurrentlyWithin && mouseWithin) {
             mouseCurrentlyWithin = true;
             mouseEnter.invoke(gui, this);

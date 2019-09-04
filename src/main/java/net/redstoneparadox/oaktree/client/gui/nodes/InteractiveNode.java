@@ -1,7 +1,5 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.Mouse;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
 public abstract class InteractiveNode<T extends InteractiveNode> extends Node<T> {
@@ -11,8 +9,8 @@ public abstract class InteractiveNode<T extends InteractiveNode> extends Node<T>
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
         boolean mouseWithin = (mouseX >= trueX && mouseX <= (trueWidth + trueX)) && (mouseY >= trueY && mouseY <= (trueHeight + trueY));
-        updateListeners(gui, mouseWithin, mouseX, mouseY);
+        updateListeners(gui, mouseWithin, mouseX, mouseY, offsetX, offsetY, containerWidth, containerHeight);
     }
 
-    public abstract void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY);
+    public abstract void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY, float containerX, float containerY, float containerWidth, float containerHeight);
 }
