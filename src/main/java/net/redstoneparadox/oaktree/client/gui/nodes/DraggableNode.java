@@ -1,6 +1,8 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
+import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
+import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class DraggableNode extends InteractiveNode<DraggableNode> {
 
@@ -25,9 +27,40 @@ public class DraggableNode extends InteractiveNode<DraggableNode> {
         return this;
     }
 
-    private float clampPosition(float lowest, float target, float highest) {
-        if (target <= lowest) return lowest;
-        else if (target >= highest) return highest;
+    @Override
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+        if (isMouseWithin) {
+            ScreenVec mousePos = relativeMousePosition(mouseX, mouseY);
+
+            if (isMouseWithin) {
+                if (gui.mouseButtonHeld("left") && !held) {
+                    held = true;
+                    onClick.invoke(gui, this);
+                }
+                else if (held && gui.mouseButtonHeld("left")) {
+                    whileHeld.invoke(gui, this);
+                }
+                else if (held && !gui.mouseButtonHeld("left")) {
+                    held = false;
+                    onRelease.invoke(gui, this);
+                }
+
+                if (held) {
+                    x = clampPosition(mousePos.x, trueWidth);
+                    y = clampPosition(mousePos.y, trueHeight);
+                }
+            }
+            else if (held) {
+                held = false;
+                onRelease.invoke(gui, this);
+            }
+        }
+    }
+
+    private float clampPosition(float target, float highest) {
+        if ((int)target <= 0) return 0;
+        else if ((int)target >= (int)highest) return highest;
         return target;
     }
 }

@@ -1,6 +1,7 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public abstract class InteractiveNode<T extends InteractiveNode> extends Node<T> {
 
@@ -12,4 +13,7 @@ public abstract class InteractiveNode<T extends InteractiveNode> extends Node<T>
         isMouseWithin = (mouseX >= trueX && mouseX <= (trueWidth + trueX)) && (mouseY >= trueY && mouseY <= (trueHeight + trueY));
     }
 
+    protected ScreenVec relativeMousePosition(float mouseX, float mouseY) {
+        return new ScreenVec(mouseX - trueX, mouseY - trueY);
+    }
 }
