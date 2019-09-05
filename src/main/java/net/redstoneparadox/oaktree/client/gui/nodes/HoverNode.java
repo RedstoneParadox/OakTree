@@ -35,12 +35,14 @@ public class HoverNode extends InteractiveNode<HoverNode> {
     }
 
     @Override
-    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY, float containerX, float containerY, float containerWidth, float containerHeight) {
-        if (!mouseCurrentlyWithin && mouseWithin) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+
+        if (!mouseCurrentlyWithin && isMouseWithin) {
             mouseCurrentlyWithin = true;
             mouseEnter.invoke(gui, this);
         }
-        else if (mouseCurrentlyWithin && !mouseWithin) {
+        else if (mouseCurrentlyWithin && !isMouseWithin) {
             mouseCurrentlyWithin = false;
             mouseExit.invoke(gui, this);
         }
@@ -48,11 +50,7 @@ public class HoverNode extends InteractiveNode<HoverNode> {
         if (mouseCurrentlyWithin) {
             whileHovered.invoke(gui, this);
         }
-    }
 
-    @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         if (mouseCurrentlyWithin && hoverStyle != null) {
             currentStyle = hoverStyle;
         }

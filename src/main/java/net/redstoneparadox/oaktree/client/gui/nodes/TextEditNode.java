@@ -24,18 +24,14 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
     }
 
     @Override
-    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY, float containerX, float containerY, float containerWidth, float containerHeight) {
+    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        super.draw(mouseX, mouseY, deltaTime, gui);
         gui.getLastChar().ifPresent((character -> {
             Character toType = onCharTyped.invoke(character, this);
             if (toType != null) {
                 text = text + toType;
             }
         }));
-    }
-
-    @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
-        super.draw(mouseX, mouseY, deltaTime, gui);
         drawString(text, gui, trueX, trueY, null, false, RGBAColor.red());
     }
 }

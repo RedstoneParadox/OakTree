@@ -284,10 +284,11 @@ public class Tests {
             if (world_1.isClient) {
                 BoxNode root = new BoxNode()
                         .setExpand(true)
+                        .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                         .setChild(new DraggableNode()
-                        .whileHeld((gui, node) -> System.out.println("I'm being dragged!"))
-                        .setSize(16.0f, 16.0f)
-                        .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));
+                                .whileHeld((gui, node) -> System.out.println("I'm being dragged!"))
+                                .setSize(16.0f, 16.0f)
+                                .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));
 
                 root.openAsScreen(false, null);
             }

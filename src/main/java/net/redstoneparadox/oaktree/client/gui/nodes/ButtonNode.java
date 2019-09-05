@@ -41,10 +41,12 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
         return this;
     }
 
+
     @Override
-    public void updateListeners(OakTreeGUI gui, boolean mouseWithin, double mouseX, double mouseY, float containerX, float containerY, float containerWidth, float containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         if (toggleable) {
-            if (mouseWithin) {
+            if (isMouseWithin) {
                 if (gui.mouseButtonJustClicked("left")) {
                     held = !held;
 
@@ -60,8 +62,8 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
                 }
             }
         }
-       else {
-            if (mouseWithin) {
+        else {
+            if (isMouseWithin) {
                 if (gui.mouseButtonHeld("left") && !held) {
                     held = true;
                     onClick.invoke(gui, this);
@@ -79,11 +81,8 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
                 onRelease.invoke(gui, this);
             }
         }
-    }
 
-    @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
-        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+
         if (held && heldStyle != null) {
             currentStyle = heldStyle;
         }
