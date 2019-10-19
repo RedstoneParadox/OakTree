@@ -6,6 +6,7 @@ import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public abstract class AbstractListNode<T extends AbstractListNode> extends Node<T> {
 
     private final List<BoxNode> listBoxes = new ArrayList<>();
