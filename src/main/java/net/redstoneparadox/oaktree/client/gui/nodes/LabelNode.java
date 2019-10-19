@@ -30,6 +30,7 @@ public class LabelNode extends Node<LabelNode> implements TextNode {
 
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         drawString(text, gui, trueX, trueY, null, false, fontColor);
     }

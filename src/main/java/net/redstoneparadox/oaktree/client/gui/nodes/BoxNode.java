@@ -78,6 +78,7 @@ public class BoxNode extends Node<BoxNode> {
 
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
         float innerWidth = trueWidth - leftMargin - rightMargin;
@@ -91,6 +92,7 @@ public class BoxNode extends Node<BoxNode> {
 
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
 
         if (child != null) {

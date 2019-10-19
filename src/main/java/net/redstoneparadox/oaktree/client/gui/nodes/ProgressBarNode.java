@@ -71,6 +71,7 @@ public class ProgressBarNode extends Node<ProgressBarNode> {
 
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
 
         float barX = trueX + ((trueWidth/2) - (barWidth/2));

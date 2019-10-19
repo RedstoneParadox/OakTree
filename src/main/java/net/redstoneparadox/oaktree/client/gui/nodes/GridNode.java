@@ -69,6 +69,7 @@ public class GridNode extends Node<GridNode> {
 
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (!visible) return;
         this.width = cellWidth * columns + horizontalCellSpacing * (columns - 1);
         this.height = cellHeight * rows + verticalCellSpacing * (columns - 1);
 

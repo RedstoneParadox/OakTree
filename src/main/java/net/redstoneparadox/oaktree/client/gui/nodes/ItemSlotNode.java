@@ -29,10 +29,17 @@ public class ItemSlotNode extends Node<ItemSlotNode> {
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         gui.getScreenContainer().ifPresent(container -> {
             super.draw(mouseX, mouseY, deltaTime, gui);
+            int slotX = (int)trueX;
+            int slotY = (int)trueY;
+            if (!visible) {
+                slotX = -32;
+                slotY = -32;
+            }
+
             if (index < container.slotList.size()) {
                 Slot slot = container.slotList.get(index);
-                slot.xPosition = (int)trueX;
-                slot.yPosition = (int)trueY;
+                slot.xPosition = slotX;
+                slot.yPosition = slotY;
 
                 OakTreeClientNetworking.syncSlot((int)trueX, (int)trueY, index, container.syncId);
             }

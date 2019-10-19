@@ -5,6 +5,9 @@ import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.TypingListener;
 
+/**
+ * Work in Progress: Do not use!
+ */
 public class TextEditNode extends InteractiveNode<TextEditNode> implements TextNode {
 
     private String defaultText = "";
@@ -25,6 +28,7 @@ public class TextEditNode extends InteractiveNode<TextEditNode> implements TextN
 
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         gui.getLastChar().ifPresent((character -> {
             Character toType = onCharTyped.invoke(character, this);

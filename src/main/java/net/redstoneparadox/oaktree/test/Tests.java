@@ -19,7 +19,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.redstoneparadox.oaktree.client.gui.OakTreeContainerScreen;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.nodes.*;
 import net.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
@@ -58,6 +57,7 @@ public class Tests {
                     .setRows(3)
                     .setColumns(3)
                     .setExpand(true)
+                    .setVisible(false)
                     .forEachCell((gridNode, integer) -> gridNode.setCell(integer, new ItemSlotNode(integer)))
                     .toContainerScreen(false, null, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
         });
@@ -192,6 +192,8 @@ public class Tests {
                         .setFirstChild(new ButtonNode()
                                 .setExpand(true)
                                 .onClick(((gui, node) -> {
+                                    System.out.println("I was clicked!");
+                                    node.setVisible(false);
                                     bar.percent += 10.0f;
                                     if (bar.percent > 100.0f) {
                                         bar.percent = 0.0f;

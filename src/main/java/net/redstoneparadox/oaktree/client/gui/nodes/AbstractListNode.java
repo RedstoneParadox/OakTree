@@ -45,6 +45,7 @@ public abstract class AbstractListNode<T extends AbstractListNode> extends Node<
 
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
     }
 }

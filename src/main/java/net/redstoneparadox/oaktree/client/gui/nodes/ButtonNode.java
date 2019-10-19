@@ -44,6 +44,7 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
 
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         if (toggleable) {
             if (isMouseWithin) {

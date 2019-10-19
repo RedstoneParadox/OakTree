@@ -24,6 +24,7 @@ public class SliderNode extends InteractiveNode<SliderNode> {
 
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
         ScreenVec relativeMousePos = relativeMousePosition(mouseX, mouseY);

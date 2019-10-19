@@ -29,6 +29,7 @@ public class DraggableNode extends InteractiveNode<DraggableNode> {
 
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         if (isMouseWithin) {
             ScreenVec mousePos = relativeMousePosition(mouseX, mouseY);

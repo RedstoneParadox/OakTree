@@ -4,7 +4,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
 import net.minecraft.container.Container;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.redstoneparadox.oaktree.client.gui.OakTreeContainerScreen;
@@ -25,17 +24,18 @@ public class Node<T extends Node> {
     float width = 0.1f;
     float height = 0.1f;
 
+    boolean visible = true;
+
     NodeAlignment alignment = NodeAlignment.TOP_LEFT;
     NodeAlignment anchor = NodeAlignment.TOP_LEFT;
 
     NodeFunction<T> onTick = (gui, node) -> {};
 
-    StyleBox defaultStyle = null;
+    private StyleBox defaultStyle = null;
 
     boolean expand = false;
 
     StyleBox currentStyle = null;
-
 
     public float trueX = 0.0f;
     public float trueY = 0.0f;
@@ -72,6 +72,19 @@ public class Node<T extends Node> {
     public T setSize(float width, float height) {
         this.width = width;
         this.height = height;
+        return (T)this;
+    }
+
+    /**
+     * Sets whether or not this node should be visible. Any nodes that
+     * are not visible will not be drawn, cannot be interacted with,
+     * and will cause their children to not be drawn (if they have any).
+     *
+     * @param value Whether or not this node should be visible.
+     * @return The node itself.
+     */
+    public T setVisible(boolean value) {
+        this.visible = value;
         return (T)this;
     }
 
@@ -186,6 +199,8 @@ public class Node<T extends Node> {
     }
 
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+        if (!visible) return;
+
         onTick.invoke(gui, (T)this);
 
         if (!expand) {
@@ -209,6 +224,8 @@ public class Node<T extends Node> {
     }
 
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        if (!visible) return;
+
         if (currentStyle != null) {
             currentStyle.draw(trueX, trueY, trueWidth, trueHeight, gui);
         }
