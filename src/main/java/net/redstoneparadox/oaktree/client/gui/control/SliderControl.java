@@ -3,12 +3,12 @@ package net.redstoneparadox.oaktree.client.gui.control;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.ControlDirection;
-import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
+import net.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class SliderControl extends InteractiveControl<SliderControl> {
 
-    private NodeFunction<SliderControl> onDrag = (gui, node) -> {};
+    private GuiFunction<SliderControl> onDrag = (gui, node) -> {};
     private ControlDirection direction = ControlDirection.RIGHT;
     private final Control dragControl = new Control();
 

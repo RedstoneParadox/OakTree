@@ -11,13 +11,13 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
-import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
+import net.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
  * The base class for all nodes.
  */
-public class Control<T extends Control> {
+public class Control<C extends Control> {
 
     public float x = 0.0f;
     public float y = 0.0f;
@@ -26,10 +26,9 @@ public class Control<T extends Control> {
 
     boolean visible = true;
 
-    ControlAnchor alignment = ControlAnchor.TOP_LEFT;
     ControlAnchor anchor = ControlAnchor.TOP_LEFT;
 
-    NodeFunction<T> onTick = (gui, node) -> {};
+    GuiFunction<C> onTick = (gui, control) -> {};
 
     private StyleBox defaultStyle = null;
 
@@ -53,10 +52,10 @@ public class Control<T extends Control> {
      * @param posY The new y position in pixels.
      * @return The node itself.
      */
-    public T setPosition(float posX, float posY) {
+    public C setPosition(float posX, float posY) {
         x = posX;
         y = posY;
-        return (T)this;
+        return (C)this;
     }
 
     /**
@@ -69,10 +68,10 @@ public class Control<T extends Control> {
      * @param height The new height of this node in pixels.
      * @return The node itself.
      */
-    public T setSize(float width, float height) {
+    public C setSize(float width, float height) {
         this.width = width;
         this.height = height;
-        return (T)this;
+        return (C)this;
     }
 
     /**
@@ -83,9 +82,9 @@ public class Control<T extends Control> {
      * @param value Whether or not this node should be visible.
      * @return The node itself.
      */
-    public T setVisible(boolean value) {
+    public C setVisible(boolean value) {
         this.visible = value;
-        return (T)this;
+        return (C)this;
     }
 
     /**
@@ -96,9 +95,9 @@ public class Control<T extends Control> {
      * @param value
      * @return The node itself.
      */
-    public T setExpand(boolean value) {
+    public C setExpand(boolean value) {
         expand = value;
-        return (T)this;
+        return (C)this;
     }
 
     /**
@@ -109,23 +108,9 @@ public class Control<T extends Control> {
      * @param style The StyleBox for this node.
      * @return The node itself.
      */
-    public T setDefaultStyle(StyleBox style) {
+    public C setDefaultStyle(StyleBox style) {
         defaultStyle = style;
-        return (T)this;
-    }
-
-    /**
-     * Sets the alignment of the node relative to it's position
-     * using a {@link ControlAnchor}. For example, a value of
-     * {@link ControlAnchor#CENTER} will cause the node to be
-     * drawn centered on its position.
-     *
-     * @param alignment
-     * @return
-     */
-    public T setAlignment(ControlAnchor alignment) {
-        this.alignment = alignment;
-        return (T)this;
+        return (C)this;
     }
 
     /**
@@ -138,9 +123,9 @@ public class Control<T extends Control> {
      * @param anchor The {@link ControlAnchor} to anchor to.
      * @return The node itself.
      */
-    public T setAnchor(ControlAnchor anchor) {
+    public C setAnchor(ControlAnchor anchor) {
         this.anchor = anchor;
-        return (T)this;
+        return (C)this;
     }
 
     /**
@@ -150,9 +135,9 @@ public class Control<T extends Control> {
      * @param function the function to run.
      * @return The node itself.
      */
-    public T onTick(NodeFunction<T> function) {
+    public C onTick(GuiFunction<C> function) {
         onTick = function;
-        return (T)this;
+        return (C)this;
     }
 
     /**
@@ -201,14 +186,13 @@ public class Control<T extends Control> {
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         if (!visible) return;
 
-        onTick.invoke(gui, (T)this);
+        onTick.invoke(gui, (C)this);
 
         if (!expand) {
             ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-            ScreenVec alignmentOffset = alignment.getOffset(width, height);
 
-            trueX = x + anchorOffset.x + offsetX - alignmentOffset.x;
-            trueY = y + anchorOffset.y + offsetY - alignmentOffset.y;
+            trueX = x + anchorOffset.x + offsetX;
+            trueY = y + anchorOffset.y + offsetY;
 
             trueWidth = width;
             trueHeight = height;

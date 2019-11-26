@@ -2,13 +2,13 @@ package net.redstoneparadox.oaktree.client.gui.control;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
-import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
+import net.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 
 public class ButtonControl extends InteractiveControl<ButtonControl> {
 
-    private NodeFunction<ButtonControl> onClick = (((gui, node) -> {}));
-    private NodeFunction<ButtonControl> whileHeld = (((gui, node) -> {}));
-    private NodeFunction<ButtonControl> onRelease = (((gui, node) -> {}));
+    private GuiFunction<ButtonControl> onClick = (((gui, node) -> {}));
+    private GuiFunction<ButtonControl> whileHeld = (((gui, node) -> {}));
+    private GuiFunction<ButtonControl> onRelease = (((gui, node) -> {}));
 
     private boolean toggleable = false;
 
@@ -26,17 +26,17 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
         return this;
     }
 
-    public ButtonControl onClick(NodeFunction<ButtonControl> listener) {
+    public ButtonControl onClick(GuiFunction<ButtonControl> listener) {
         onClick = listener;
         return this;
     }
 
-    public ButtonControl whileHeld(NodeFunction<ButtonControl> listener) {
+    public ButtonControl whileHeld(GuiFunction<ButtonControl> listener) {
         whileHeld = listener;
         return this;
     }
 
-    public ButtonControl onRelease(NodeFunction<ButtonControl> listener) {
+    public ButtonControl onRelease(GuiFunction<ButtonControl> listener) {
         onRelease = listener;
         return this;
     }

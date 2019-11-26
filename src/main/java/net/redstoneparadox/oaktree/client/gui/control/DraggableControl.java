@@ -1,28 +1,28 @@
 package net.redstoneparadox.oaktree.client.gui.control;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
+import net.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class DraggableControl extends InteractiveControl<DraggableControl> {
 
-    private NodeFunction<DraggableControl> onClick = (gui, node) -> {};
-    private NodeFunction<DraggableControl> whileHeld = (gui, node) -> {};
-    private NodeFunction<DraggableControl> onRelease = (((gui, node) -> {}));
+    private GuiFunction<DraggableControl> onClick = (gui, node) -> {};
+    private GuiFunction<DraggableControl> whileHeld = (gui, node) -> {};
+    private GuiFunction<DraggableControl> onRelease = (((gui, node) -> {}));
 
     private boolean held = false;
 
-    public DraggableControl onClick(NodeFunction<DraggableControl> listener) {
+    public DraggableControl onClick(GuiFunction<DraggableControl> listener) {
         onClick = listener;
         return this;
     }
 
-    public DraggableControl whileHeld(NodeFunction<DraggableControl> listener) {
+    public DraggableControl whileHeld(GuiFunction<DraggableControl> listener) {
         whileHeld = listener;
         return this;
     }
 
-    public DraggableControl onRelease(NodeFunction<DraggableControl> listener) {
+    public DraggableControl onRelease(GuiFunction<DraggableControl> listener) {
         onRelease = listener;
         return this;
     }

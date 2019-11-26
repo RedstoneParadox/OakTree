@@ -1,7 +1,7 @@
 package net.redstoneparadox.oaktree.client.gui.control;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
+import net.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.TypingListener;
 
@@ -14,14 +14,14 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private String text = "";
 
     private TypingListener<TextEditControl> onCharTyped = (toType, node) -> toType;
-    private NodeFunction<TextEditControl> onFocused = (gui, node) -> {};
+    private GuiFunction<TextEditControl> onFocused = (gui, node) -> {};
 
     public TextEditControl onCharTyped(TypingListener<TextEditControl> listener) {
         onCharTyped = listener;
         return this;
     }
 
-    public TextEditControl onFocused(NodeFunction<TextEditControl> listener) {
+    public TextEditControl onFocused(GuiFunction<TextEditControl> listener) {
         onFocused = listener;
         return this;
     }
