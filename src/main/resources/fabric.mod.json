@@ -23,7 +23,7 @@
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "oaktree.mixins.json"
   ],
 
   "depends": {
