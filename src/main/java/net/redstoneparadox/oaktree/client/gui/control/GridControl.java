@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+/**
+ * @apiNote You probably shouldn't use this at this time.
+ */
 public class GridControl extends Control<GridControl> {
 
     private int rows = 1;

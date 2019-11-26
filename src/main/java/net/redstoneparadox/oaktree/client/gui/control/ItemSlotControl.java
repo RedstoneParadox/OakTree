@@ -11,6 +11,8 @@ import net.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
  *
  * If attached to a {@link Screen} that does not
  * have a container, it will not be drawn.
+ *
+ * @apiNote You probably shouldn't use this at this time.
  */
 public class ItemSlotControl extends Control<ItemSlotControl> {
 

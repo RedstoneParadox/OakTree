@@ -4,6 +4,9 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
+/**
+ * @apiNote You probably shouldn't use this at this time.
+ */
 public class DraggableControl extends InteractiveControl<DraggableControl> {
 
     private GuiFunction<DraggableControl> onClick = (gui, node) -> {};

@@ -6,7 +6,7 @@ import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.client.gui.util.TypingListener;
 
 /**
- * Work in Progress: Do not use!
+ * @apiNote  Work in Progress!
  */
 public class TextEditControl extends InteractiveControl<TextEditControl> implements TextNode {
 
