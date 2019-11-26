@@ -21,11 +21,11 @@ public class ColorStyleBox extends StyleBox {
     @Override
     public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder builder = tessellator.getBufferBuilder();
+        BufferBuilder builder = tessellator.getBuffer();
 
         GlStateManager.enableBlend();
         GlStateManager.disableTexture();
-        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_COLOR.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
         GlStateManager.color4f(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
 
         ScreenVec vert1 = new ScreenVec(x, y);

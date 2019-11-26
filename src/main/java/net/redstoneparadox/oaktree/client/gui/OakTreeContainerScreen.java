@@ -45,7 +45,7 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     public void render(int int_1, int int_2, float float_1) {
         super.render(int_1, int_2, float_1);
 
-        Window clientWindow  = MinecraftClient.getInstance().window;
+        Window clientWindow  = MinecraftClient.getInstance().getWindow();
 
         root.preDraw(int_1, int_2, float_1, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
         root.draw(int_1, int_2, float_1, this);

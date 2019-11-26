@@ -12,6 +12,7 @@ import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
@@ -85,12 +86,13 @@ public class Tests {
         }
 
         @Override
-        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+        public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 BoxControl root = new BoxControl()
                         .setChild(new Control()
-                            .setExpand(true)
-                            .setDefaultStyle(new ColorStyleBox(RGBAColor.red())))
+                            .setDefaultStyle(new ColorStyleBox(RGBAColor.red()))
+                            .setSize(75.0f, 50.0f)
+                            .setAnchor(ControlAnchor.CENTER))
                         .setExpand(true)
                         .setMargin(15.0f);
 
@@ -98,7 +100,7 @@ public class Tests {
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
-            return true;
+            return ActionResult.SUCCESS;
         }
     }
 
@@ -109,7 +111,7 @@ public class Tests {
         }
 
         @Override
-        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+        public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 SplitBoxControl root = new SplitBoxControl()
                         .setExpand(true)
@@ -126,7 +128,7 @@ public class Tests {
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
-            return true;
+            return ActionResult.SUCCESS;
         }
     }
 
@@ -137,7 +139,7 @@ public class Tests {
         }
 
         @Override
-        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+        public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 SplitBoxControl root = new SplitBoxControl()
                         .setExpand(true)
@@ -149,7 +151,6 @@ public class Tests {
                                 .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                 .setSize(20.0f, 100.0f)
                                 .setBarSize(16.0f, 96.0f)
-                                .setAlignment(ControlAnchor.CENTER)
                                 .setAnchor(ControlAnchor.CENTER)
                                 .setDirection(ControlDirection.DOWN)
                                 .setPercent(50.0f))
@@ -160,7 +161,7 @@ public class Tests {
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
-            return true;
+            return ActionResult.SUCCESS;
         }
     }
 
@@ -171,7 +172,7 @@ public class Tests {
         }
 
         @Override
-        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+        public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 ProgressBarControl bar = new ProgressBarControl();
 
@@ -185,7 +186,6 @@ public class Tests {
                                 .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                 .setSize(20.0f, 100.0f)
                                 .setBarSize(16.0f, 96.0f)
-                                .setAlignment(ControlAnchor.CENTER)
                                 .setAnchor(ControlAnchor.CENTER)
                                 .setDirection(ControlDirection.DOWN)
                                 .setPercent(0.0f))
@@ -199,7 +199,6 @@ public class Tests {
                                         bar.percent = 0.0f;
                                     }
                                 }))
-                                .setAlignment(ControlAnchor.CENTER)
                                 .setAnchor(ControlAnchor.CENTER)
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.blue()))
                                 .setHeldStyle(new ColorStyleBox(RGBAColor.red())));
@@ -207,7 +206,7 @@ public class Tests {
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
-            return true;
+            return ActionResult.SUCCESS;
         }
     }
 
@@ -218,23 +217,21 @@ public class Tests {
         }
 
         @Override
-        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+        public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 BoxControl root = new BoxControl()
                         .setSize(16, 16)
-                        .setAlignment(ControlAnchor.CENTER)
                         .setAnchor(ControlAnchor.CENTER)
                         .setSize(16, 16)
                         .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                         .setChild(new Control()
                                 .setDefaultStyle(new ItemStyleBox("stone"))
-                                .setAnchor(ControlAnchor.CENTER)
-                                .setAlignment(ControlAnchor.CENTER));
+                                .setAnchor(ControlAnchor.CENTER));
 
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
 
-            return true;
+            return ActionResult.SUCCESS;
         }
     }
 
@@ -246,12 +243,12 @@ public class Tests {
         }
 
         @Override
-        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+        public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (!world_1.isClient()) {
                 ContainerProviderRegistry.INSTANCE.openContainer(TEST_SIX, playerEntity_1, (packetByteBuf -> packetByteBuf.writeBlockPos(blockPos_1)));
             }
 
-            return true;
+            return ActionResult.SUCCESS;
         }
     }
 
@@ -282,7 +279,7 @@ public class Tests {
         }
 
         @Override
-        public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+        public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient) {
                 BoxControl root = new BoxControl()
                         .setExpand(true)
@@ -295,7 +292,7 @@ public class Tests {
                 root.openAsScreen(false, null);
             }
 
-            return true;
+            return ActionResult.SUCCESS;
         }
     }
 }

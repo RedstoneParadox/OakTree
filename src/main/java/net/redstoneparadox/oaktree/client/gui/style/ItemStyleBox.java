@@ -6,6 +6,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -29,7 +30,7 @@ public class ItemStyleBox extends StyleBox {
     public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
         Item item = Registry.ITEM.get(itemID);
-        GuiLighting.enableForItems();
+        GuiLighting.enableForItems(new Matrix4f());
         ItemStack stack = new ItemStack(item);
         renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);
         if (gui instanceof Screen) {
