@@ -7,7 +7,7 @@ import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
-import net.redstoneparadox.oaktree.client.gui.nodes.Control;
+import net.redstoneparadox.oaktree.client.gui.control.Control;
 
 import java.util.Optional;
 

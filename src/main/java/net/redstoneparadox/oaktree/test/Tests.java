@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
-import net.redstoneparadox.oaktree.client.gui.nodes.*;
+import net.redstoneparadox.oaktree.client.gui.control.*;
 import net.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import net.redstoneparadox.oaktree.client.gui.style.ItemStyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.ControlAnchor;

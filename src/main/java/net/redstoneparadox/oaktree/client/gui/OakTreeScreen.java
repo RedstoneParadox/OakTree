@@ -5,7 +5,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
 import net.minecraft.text.LiteralText;
-import net.redstoneparadox.oaktree.client.gui.nodes.Control;
+import net.redstoneparadox.oaktree.client.gui.control.Control;
 
 import java.util.Optional;
 

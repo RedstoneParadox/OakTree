@@ -1,4 +1,4 @@
-package net.redstoneparadox.oaktree.client.gui.nodes;
+package net.redstoneparadox.oaktree.client.gui.control;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;

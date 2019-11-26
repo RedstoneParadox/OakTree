@@ -1,4 +1,4 @@
-package net.redstoneparadox.oaktree.client.gui.nodes;
+package net.redstoneparadox.oaktree.client.gui.control;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
