@@ -1,31 +1,31 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
+import net.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 
 /**
- * A SplitBoxNode encapsulates two {@link BoxNode} instances,
+ * A SplitBoxNode encapsulates two {@link BoxControl} instances,
  * maintaining a percentage-based split between them. The
  * width or height of the first box takes up the specified
  * percentage of the total width while the second box takes
  * up the remainder.
  *
- * The {@link BoxNode#setMargin(float)},
- * {@link BoxNode#setMargin(NodeDirection, float)}, and
- * {@link BoxNode#setChild(Node)} are encapsulated by the
+ * The {@link BoxControl#setMargin(float)},
+ * {@link BoxControl#setMargin(ControlDirection, float)}, and
+ * {@link BoxControl#setChild(Control)} are encapsulated by the
  * SplitBoxNode as well, so there is no need to access
  * them directly.
  */
-public class SplitBoxNode extends Node<SplitBoxNode> {
+public class SplitBoxControl extends Control<SplitBoxControl> {
 
-    private final BoxNode first = new BoxNode();
-    private final BoxNode second = new BoxNode();
+    private final BoxControl first = new BoxControl();
+    private final BoxControl second = new BoxControl();
 
     public float splitPercent = 50.0f;
 
     public boolean vertical = false;
 
-    public SplitBoxNode() {
+    public SplitBoxControl() {
         first.expand = true;
         second.expand = true;
     }
@@ -37,7 +37,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
      * @param percent The percent of the split. Values are in pixels.
      * @return The node itself.
      */
-    public SplitBoxNode setSplitPercent(float percent) {
+    public SplitBoxControl setSplitPercent(float percent) {
         if (percent <= 0.0f) {
             percent = 0.0f;
         }
@@ -56,7 +56,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
      *                 oriented vertically.
      * @return The node itself.
      */
-    public SplitBoxNode setVertical(boolean vertical) {
+    public SplitBoxControl setVertical(boolean vertical) {
         this.vertical = vertical;
         return this;
     }
@@ -69,7 +69,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
      * @param child The first child.
      * @return The node itself.
      */
-    public SplitBoxNode setFirstChild(Node child) {
+    public SplitBoxControl setFirstChild(Control child) {
         first.setChild(child);
         return this;
     }
@@ -83,7 +83,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
      * @param child The second child.
      * @return The node itself.
      */
-    public SplitBoxNode setSecondChild(Node child) {
+    public SplitBoxControl setSecondChild(Control child) {
         second.setChild(child);
         return this;
     }
@@ -95,7 +95,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
      * @param margin The size of the margin in pixels.
      * @return The node itself
      */
-    public SplitBoxNode setFirstMargin(float margin) {
+    public SplitBoxControl setFirstMargin(float margin) {
         first.setMargin(margin);
         return this;
     }
@@ -109,7 +109,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
      * @param margin The size of the margin in pixels.
      * @return The node itself.
      */
-    public SplitBoxNode setFirstMargin(NodeDirection direction, float margin) {
+    public SplitBoxControl setFirstMargin(ControlDirection direction, float margin) {
         first.setMargin(direction, margin);
         return this;
     }
@@ -121,7 +121,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
      * @param margin The size of the margin in pixels.
      * @return The node itself.
      */
-    public SplitBoxNode setSecondMargin(float margin) {
+    public SplitBoxControl setSecondMargin(float margin) {
         second.setMargin(margin);
         return this;
     }
@@ -135,7 +135,7 @@ public class SplitBoxNode extends Node<SplitBoxNode> {
      * @param margin The size of the margin in pixels.
      * @return The node itself.
      */
-    public SplitBoxNode setSecondMargin(NodeDirection direction, float margin) {
+    public SplitBoxControl setSecondMargin(ControlDirection direction, float margin) {
         second.setMargin(direction, margin);
         return this;
     }

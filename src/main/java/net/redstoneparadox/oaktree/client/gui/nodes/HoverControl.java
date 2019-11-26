@@ -4,32 +4,32 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 
-public class HoverNode extends InteractiveNode<HoverNode> {
+public class HoverControl extends InteractiveControl<HoverControl> {
 
-    private NodeFunction<HoverNode> mouseEnter = ((gui, node) -> {});
-    private NodeFunction<HoverNode> mouseExit = ((gui, node) -> {});
-    private NodeFunction<HoverNode> whileHovered = ((gui, node) -> {});
+    private NodeFunction<HoverControl> mouseEnter = ((gui, node) -> {});
+    private NodeFunction<HoverControl> mouseExit = ((gui, node) -> {});
+    private NodeFunction<HoverControl> whileHovered = ((gui, node) -> {});
 
     private boolean mouseCurrentlyWithin = false;
 
     private StyleBox hoverStyle = null;
 
-    public HoverNode setHoverStyle(StyleBox value) {
+    public HoverControl setHoverStyle(StyleBox value) {
         hoverStyle = value;
         return this;
     }
 
-    public HoverNode onMouseEnter(NodeFunction<HoverNode> listener) {
+    public HoverControl onMouseEnter(NodeFunction<HoverControl> listener) {
         mouseEnter = listener;
         return this;
     }
 
-    public HoverNode onMouseExit(NodeFunction<HoverNode> listener) {
+    public HoverControl onMouseExit(NodeFunction<HoverControl> listener) {
         mouseExit = listener;
         return this;
     }
 
-    public HoverNode whileMouseHovers(NodeFunction<HoverNode> listener) {
+    public HoverControl whileMouseHovers(NodeFunction<HoverControl> listener) {
         whileHovered = listener;
         return this;
     }

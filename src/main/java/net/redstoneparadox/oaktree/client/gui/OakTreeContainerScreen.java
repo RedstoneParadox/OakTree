@@ -7,13 +7,13 @@ import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
-import net.redstoneparadox.oaktree.client.gui.nodes.Node;
+import net.redstoneparadox.oaktree.client.gui.nodes.Control;
 
 import java.util.Optional;
 
 public class OakTreeContainerScreen<T extends Container> extends AbstractContainerScreen<T> implements OakTreeGUI {
 
-    private Node root;
+    private Control root;
 
     private boolean isPauseScreen;
 
@@ -24,7 +24,7 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
 
     Screen parentScreen;
 
-    public OakTreeContainerScreen(Node root, boolean isPauseScreen, Screen parentScreen, T container, PlayerInventory playerInventory, Text text) {
+    public OakTreeContainerScreen(Control root, boolean isPauseScreen, Screen parentScreen, T container, PlayerInventory playerInventory, Text text) {
         super(container, playerInventory, text);
         this.root = root;
         this.isPauseScreen = isPauseScreen;

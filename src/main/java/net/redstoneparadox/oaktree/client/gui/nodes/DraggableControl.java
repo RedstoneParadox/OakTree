@@ -4,25 +4,25 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public class DraggableNode extends InteractiveNode<DraggableNode> {
+public class DraggableControl extends InteractiveControl<DraggableControl> {
 
-    private NodeFunction<DraggableNode> onClick = (gui, node) -> {};
-    private NodeFunction<DraggableNode> whileHeld = (gui, node) -> {};
-    private NodeFunction<DraggableNode> onRelease = (((gui, node) -> {}));
+    private NodeFunction<DraggableControl> onClick = (gui, node) -> {};
+    private NodeFunction<DraggableControl> whileHeld = (gui, node) -> {};
+    private NodeFunction<DraggableControl> onRelease = (((gui, node) -> {}));
 
     private boolean held = false;
 
-    public DraggableNode onClick(NodeFunction<DraggableNode> listener) {
+    public DraggableControl onClick(NodeFunction<DraggableControl> listener) {
         onClick = listener;
         return this;
     }
 
-    public DraggableNode whileHeld(NodeFunction<DraggableNode> listener) {
+    public DraggableControl whileHeld(NodeFunction<DraggableControl> listener) {
         whileHeld = listener;
         return this;
     }
 
-    public DraggableNode onRelease(NodeFunction<DraggableNode> listener) {
+    public DraggableControl onRelease(NodeFunction<DraggableControl> listener) {
         onRelease = listener;
         return this;
     }

@@ -23,8 +23,8 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.nodes.*;
 import net.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import net.redstoneparadox.oaktree.client.gui.style.ItemStyleBox;
-import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
-import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
+import net.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
+import net.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.redstoneparadox.oaktree.networking.OakTreeNetworking;
 
@@ -51,14 +51,14 @@ public class Tests {
 
         ScreenProviderRegistry.INSTANCE.registerFactory(TEST_SIX, (int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) -> {
             BlockPos pos = buf.readBlockPos();
-            return new GridNode()
+            return new GridControl()
                     .setCellSize(16.0f, 16.0f)
                     .setCellSpacing(10.0f, 10.0f)
                     .setRows(3)
                     .setColumns(3)
                     .setExpand(true)
                     .setVisible(false)
-                    .forEachCell((gridNode, integer) -> gridNode.setCell(integer, new ItemSlotNode(integer)))
+                    .forEachCell((gridNode, integer) -> gridNode.setCell(integer, new ItemSlotControl(integer)))
                     .toContainerScreen(false, null, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
         });
 
@@ -87,8 +87,8 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                BoxNode root = new BoxNode()
-                        .setChild(new Node()
+                BoxControl root = new BoxControl()
+                        .setChild(new Control()
                             .setExpand(true)
                             .setDefaultStyle(new ColorStyleBox(RGBAColor.red())))
                         .setExpand(true)
@@ -111,15 +111,15 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                SplitBoxNode root = new SplitBoxNode()
+                SplitBoxControl root = new SplitBoxControl()
                         .setExpand(true)
                         .setSplitPercent(50.0f)
                         .setFirstMargin(10.0f)
                         .setSecondMargin(10.0f)
-                        .setFirstChild(new Node()
+                        .setFirstChild(new Control()
                                         .setExpand(true)
                                         .setDefaultStyle(new ColorStyleBox(RGBAColor.red())))
-                        .setSecondChild(new Node()
+                        .setSecondChild(new Control()
                                         .setExpand(true)
                                         .setDefaultStyle(new ColorStyleBox(RGBAColor.blue())));
 
@@ -139,21 +139,21 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                SplitBoxNode root = new SplitBoxNode()
+                SplitBoxControl root = new SplitBoxControl()
                         .setExpand(true)
                         .setSplitPercent(50.0f)
                         .setFirstMargin(10.0f)
                         .setSecondMargin(10.0f)
-                        .setFirstChild(new ProgressBarNode()
+                        .setFirstChild(new ProgressBarControl()
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
                                 .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                 .setSize(20.0f, 100.0f)
                                 .setBarSize(16.0f, 96.0f)
-                                .setAlignment(NodeAlignment.CENTER)
-                                .setAnchor(NodeAlignment.CENTER)
-                                .setDirection(NodeDirection.DOWN)
+                                .setAlignment(ControlAnchor.CENTER)
+                                .setAnchor(ControlAnchor.CENTER)
+                                .setDirection(ControlDirection.DOWN)
                                 .setPercent(50.0f))
-                        .setSecondChild(new Node()
+                        .setSecondChild(new Control()
                                 .setExpand(true)
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.blue())));
 
@@ -173,9 +173,9 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                ProgressBarNode bar = new ProgressBarNode();
+                ProgressBarControl bar = new ProgressBarControl();
 
-                SplitBoxNode root = new SplitBoxNode()
+                SplitBoxControl root = new SplitBoxControl()
                         .setExpand(true)
                         .setSplitPercent(50.0f)
                         .setFirstMargin(10.0f)
@@ -185,11 +185,11 @@ public class Tests {
                                 .setBarStyle(new ColorStyleBox(RGBAColor.red()))
                                 .setSize(20.0f, 100.0f)
                                 .setBarSize(16.0f, 96.0f)
-                                .setAlignment(NodeAlignment.CENTER)
-                                .setAnchor(NodeAlignment.CENTER)
-                                .setDirection(NodeDirection.DOWN)
+                                .setAlignment(ControlAnchor.CENTER)
+                                .setAnchor(ControlAnchor.CENTER)
+                                .setDirection(ControlDirection.DOWN)
                                 .setPercent(0.0f))
-                        .setFirstChild(new ButtonNode()
+                        .setFirstChild(new ButtonControl()
                                 .setExpand(true)
                                 .onClick(((gui, node) -> {
                                     System.out.println("I was clicked!");
@@ -199,8 +199,8 @@ public class Tests {
                                         bar.percent = 0.0f;
                                     }
                                 }))
-                                .setAlignment(NodeAlignment.CENTER)
-                                .setAnchor(NodeAlignment.CENTER)
+                                .setAlignment(ControlAnchor.CENTER)
+                                .setAnchor(ControlAnchor.CENTER)
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.blue()))
                                 .setHeldStyle(new ColorStyleBox(RGBAColor.red())));
 
@@ -220,16 +220,16 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
-                BoxNode root = new BoxNode()
+                BoxControl root = new BoxControl()
                         .setSize(16, 16)
-                        .setAlignment(NodeAlignment.CENTER)
-                        .setAnchor(NodeAlignment.CENTER)
+                        .setAlignment(ControlAnchor.CENTER)
+                        .setAnchor(ControlAnchor.CENTER)
                         .setSize(16, 16)
                         .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
-                        .setChild(new Node()
+                        .setChild(new Control()
                                 .setDefaultStyle(new ItemStyleBox("stone"))
-                                .setAnchor(NodeAlignment.CENTER)
-                                .setAlignment(NodeAlignment.CENTER));
+                                .setAnchor(ControlAnchor.CENTER)
+                                .setAlignment(ControlAnchor.CENTER));
 
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
@@ -284,10 +284,10 @@ public class Tests {
         @Override
         public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient) {
-                BoxNode root = new BoxNode()
+                BoxControl root = new BoxControl()
                         .setExpand(true)
                         .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
-                        .setChild(new DraggableNode()
+                        .setChild(new DraggableControl()
                                 .whileHeld((gui, node) -> System.out.println("I'm being dragged!"))
                                 .setSize(16.0f, 16.0f)
                                 .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));

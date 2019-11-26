@@ -4,11 +4,11 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 
-public class ButtonNode extends InteractiveNode<ButtonNode> {
+public class ButtonControl extends InteractiveControl<ButtonControl> {
 
-    private NodeFunction<ButtonNode> onClick = (((gui, node) -> {}));
-    private NodeFunction<ButtonNode> whileHeld = (((gui, node) -> {}));
-    private NodeFunction<ButtonNode> onRelease = (((gui, node) -> {}));
+    private NodeFunction<ButtonControl> onClick = (((gui, node) -> {}));
+    private NodeFunction<ButtonControl> whileHeld = (((gui, node) -> {}));
+    private NodeFunction<ButtonControl> onRelease = (((gui, node) -> {}));
 
     private boolean toggleable = false;
 
@@ -16,27 +16,27 @@ public class ButtonNode extends InteractiveNode<ButtonNode> {
 
     private StyleBox heldStyle = null;
 
-    public ButtonNode setToggleable(boolean value) {
+    public ButtonControl setToggleable(boolean value) {
         toggleable = value;
         return this;
     }
 
-    public ButtonNode setHeldStyle(StyleBox value) {
+    public ButtonControl setHeldStyle(StyleBox value) {
         heldStyle = value;
         return this;
     }
 
-    public ButtonNode onClick(NodeFunction<ButtonNode> listener) {
+    public ButtonControl onClick(NodeFunction<ButtonControl> listener) {
         onClick = listener;
         return this;
     }
 
-    public ButtonNode whileHeld(NodeFunction<ButtonNode> listener) {
+    public ButtonControl whileHeld(NodeFunction<ButtonControl> listener) {
         whileHeld = listener;
         return this;
     }
 
-    public ButtonNode onRelease(NodeFunction<ButtonNode> listener) {
+    public ButtonControl onRelease(NodeFunction<ButtonControl> listener) {
         onRelease = listener;
         return this;
     }

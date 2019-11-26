@@ -3,7 +3,7 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public abstract class InteractiveNode<T extends InteractiveNode> extends Node<T> {
+public abstract class InteractiveControl<T extends InteractiveControl> extends Control<T> {
 
     protected boolean isMouseWithin = false;
 

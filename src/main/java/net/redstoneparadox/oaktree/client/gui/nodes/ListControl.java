@@ -1,14 +1,14 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
+import net.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 
 import java.util.ArrayList;
 
 /**
  *
  */
-public class ListNode extends Node<ListNode> {
+public class ListControl extends Control<ListControl> {
 
     float boxWidth = 0.1f;
     float boxHeight = 0.1f;
@@ -18,9 +18,9 @@ public class ListNode extends Node<ListNode> {
     int displayCount = 1;
     int offset = 0;
 
-    NodeDirection listDirection = NodeDirection.DOWN;
+    ControlDirection listDirection = ControlDirection.DOWN;
 
-    private ArrayList<Node> children = new ArrayList<>();
+    private ArrayList<Control> children = new ArrayList<>();
 
     /**
      * Sets the size of the box for each list box.
@@ -29,7 +29,7 @@ public class ListNode extends Node<ListNode> {
      * @param boxHeight The height of the box.
      * @return The node itself.
      */
-    public ListNode setBoxSize(float boxWidth, float boxHeight) {
+    public ListControl setBoxSize(float boxWidth, float boxHeight) {
         this.boxHeight = boxHeight;
         this.boxWidth = boxWidth;
         return this;
@@ -44,7 +44,7 @@ public class ListNode extends Node<ListNode> {
      * @param wrap Whether or not this ListNode should wrap.
      * @return The node itself.
      */
-    public ListNode setWrap(boolean wrap) {
+    public ListControl setWrap(boolean wrap) {
         this.wrap = wrap;
         return this;
     }
@@ -55,7 +55,7 @@ public class ListNode extends Node<ListNode> {
      * @param displayCount The amount to be displayed.
      * @return The node itself.
      */
-    public ListNode setDisplayCount(int displayCount) {
+    public ListControl setDisplayCount(int displayCount) {
         this.displayCount = displayCount;
         return this;
     }
@@ -69,7 +69,7 @@ public class ListNode extends Node<ListNode> {
      * @param offset The offset.
      * @return The node itself.
      */
-    public ListNode setOffset(int offset) {
+    public ListControl setOffset(int offset) {
         if (!wrap && offset >= children.size() - (displayCount - 1)) {
             this.offset = children.size();
         }
@@ -86,7 +86,7 @@ public class ListNode extends Node<ListNode> {
      * @param amount The amount to scroll
      * @return The node itself.
      */
-    public ListNode scroll(int amount) {
+    public ListControl scroll(int amount) {
         int newOffset = this.offset + amount;
         if (wrap) {
             while (newOffset < 0) {
@@ -105,7 +105,7 @@ public class ListNode extends Node<ListNode> {
      * @param listDirection The direction.
      * @return The node itself.
      */
-    public ListNode setListDirection(NodeDirection listDirection) {
+    public ListControl setListDirection(ControlDirection listDirection) {
         this.listDirection = listDirection;
         return this;
     }

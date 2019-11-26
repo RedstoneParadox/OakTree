@@ -5,13 +5,13 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
 import net.minecraft.text.LiteralText;
-import net.redstoneparadox.oaktree.client.gui.nodes.Node;
+import net.redstoneparadox.oaktree.client.gui.nodes.Control;
 
 import java.util.Optional;
 
 public class OakTreeScreen extends Screen implements OakTreeGUI {
 
-    Node root;
+    Control root;
 
     boolean isPauseScreen;
 
@@ -23,7 +23,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     Screen parentScreen;
 
 
-    public OakTreeScreen(Node root, boolean isPauseScreen, Screen parentScreen) {
+    public OakTreeScreen(Control root, boolean isPauseScreen, Screen parentScreen) {
         super(new LiteralText("gui"));
         this.root = root;
         this.isPauseScreen = isPauseScreen;

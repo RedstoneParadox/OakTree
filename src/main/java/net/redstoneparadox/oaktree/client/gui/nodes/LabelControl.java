@@ -3,16 +3,16 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
-public class LabelNode extends Node<LabelNode> implements TextNode {
+public class LabelControl extends Control<LabelControl> implements TextNode {
     private String text = "";
     private RGBAColor fontColor = RGBAColor.white();
 
-    public LabelNode setText(String value) {
+    public LabelControl setText(String value) {
         text = value;
         return this;
     }
 
-    public LabelNode clear() {
+    public LabelControl clear() {
         text = "";
         return this;
     }
@@ -23,7 +23,7 @@ public class LabelNode extends Node<LabelNode> implements TextNode {
      *
      * @param fontColor The RGBA Color
      */
-    public LabelNode setFontColor(RGBAColor fontColor) {
+    public LabelControl setFontColor(RGBAColor fontColor) {
         this.fontColor = fontColor;
         return this;
     }

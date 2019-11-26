@@ -1,6 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.util;
 
-public enum NodeDirection {
+public enum ControlDirection {
     UP,
     DOWN,
     LEFT,

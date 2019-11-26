@@ -8,20 +8,20 @@ import net.redstoneparadox.oaktree.client.gui.util.TypingListener;
 /**
  * Work in Progress: Do not use!
  */
-public class TextEditNode extends InteractiveNode<TextEditNode> implements TextNode {
+public class TextEditControl extends InteractiveControl<TextEditControl> implements TextNode {
 
     private String defaultText = "";
     private String text = "";
 
-    private TypingListener<TextEditNode> onCharTyped = (toType, node) -> toType;
-    private NodeFunction<TextEditNode> onFocused = (gui, node) -> {};
+    private TypingListener<TextEditControl> onCharTyped = (toType, node) -> toType;
+    private NodeFunction<TextEditControl> onFocused = (gui, node) -> {};
 
-    public TextEditNode onCharTyped(TypingListener<TextEditNode> listener) {
+    public TextEditControl onCharTyped(TypingListener<TextEditControl> listener) {
         onCharTyped = listener;
         return this;
     }
 
-    public TextEditNode onFocused(NodeFunction<TextEditNode> listener) {
+    public TextEditControl onFocused(NodeFunction<TextEditControl> listener) {
         onFocused = listener;
         return this;
     }

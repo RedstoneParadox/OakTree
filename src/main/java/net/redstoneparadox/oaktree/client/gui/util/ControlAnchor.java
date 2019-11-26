@@ -1,6 +1,6 @@
 package net.redstoneparadox.oaktree.client.gui.util;
 
-public enum NodeAlignment {
+public enum ControlAnchor {
     TOP_LEFT,
     TOP_CENTER,
     TOP_RIGHT,

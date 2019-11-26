@@ -1,20 +1,20 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
+import net.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 
 /**
  * BoxNode is a type of Node that can have a single child
  * node and internal draw margins.
  */
-public class BoxNode extends Node<BoxNode> {
+public class BoxControl extends Control<BoxControl> {
 
     public float topMargin = 0.0f;
     public float bottomMargin = 0.0f;
     public float leftMargin = 0.0f;
     public float rightMargin = 0.0f;
 
-    private Node child = null;
+    private Control child = null;
 
     /**
      * Sets all 4 internal margins for this BoxNode.
@@ -22,7 +22,7 @@ public class BoxNode extends Node<BoxNode> {
      * @param margin The new margin.
      * @return The node itself.
      */
-    public BoxNode setMargin(float margin) {
+    public BoxControl setMargin(float margin) {
         if (margin <= 0.0f) {
             margin = 0.0f;
         }
@@ -37,7 +37,7 @@ public class BoxNode extends Node<BoxNode> {
     /**
      * Sets one of the four margins based on the passed direction.
      * A direction value is passed so that nodes such as
-     * {@link SplitBoxNode} which encapsulate multiple BoxNodes
+     * {@link SplitBoxControl} which encapsulate multiple BoxNodes
      * don't have confusing/verbose method names such as
      * `setLeftMarginOfFirst`.
      *
@@ -45,7 +45,7 @@ public class BoxNode extends Node<BoxNode> {
      * @param margin The size of the margin. Values are in pixels.
      * @return the node itself.
      */
-    public BoxNode setMargin(NodeDirection direction, float margin) {
+    public BoxControl setMargin(ControlDirection direction, float margin) {
         switch (direction) {
             case UP:
                 topMargin = margin;
@@ -71,7 +71,7 @@ public class BoxNode extends Node<BoxNode> {
      * @param child The node that is being added as a child.
      * @return The node itself.
      */
-    public BoxNode setChild(Node child) {
+    public BoxControl setChild(Control child) {
         this.child = child;
         return this;
     }

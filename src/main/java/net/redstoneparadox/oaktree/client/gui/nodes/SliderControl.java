@@ -2,23 +2,23 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
-import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
+import net.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public class SliderNode extends InteractiveNode<SliderNode> {
+public class SliderControl extends InteractiveControl<SliderControl> {
 
-    private NodeFunction<SliderNode> onDrag = (gui, node) -> {};
-    private NodeDirection direction = NodeDirection.RIGHT;
-    private final Node dragNode = new Node();
+    private NodeFunction<SliderControl> onDrag = (gui, node) -> {};
+    private ControlDirection direction = ControlDirection.RIGHT;
+    private final Control dragControl = new Control();
 
-    public SliderNode setDragNodeStyle(StyleBox style) {
-        dragNode.setDefaultStyle(style);
+    public SliderControl setDragNodeStyle(StyleBox style) {
+        dragControl.setDefaultStyle(style);
         return this;
     }
 
-    public SliderNode setDragNodeSize(float width, float height) {
-        dragNode.setSize(width, height);
+    public SliderControl setDragNodeSize(float width, float height) {
+        dragControl.setSize(width, height);
         return this;
     }
 

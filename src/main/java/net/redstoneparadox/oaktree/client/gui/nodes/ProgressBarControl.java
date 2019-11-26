@@ -2,12 +2,12 @@ package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
-import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
+import net.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 
 /**
  * A node representing a percent-based progress bar.
  */
-public class ProgressBarNode extends Node<ProgressBarNode> {
+public class ProgressBarControl extends Control<ProgressBarControl> {
 
     StyleBox barStyle = null;
 
@@ -16,7 +16,7 @@ public class ProgressBarNode extends Node<ProgressBarNode> {
     float barWidth = 0.1f;
     float barHeight = 0.1f;
 
-    NodeDirection direction = NodeDirection.RIGHT;
+    ControlDirection direction = ControlDirection.RIGHT;
 
     /**
      * Sets the {@link StyleBox} for the progress bar.
@@ -24,7 +24,7 @@ public class ProgressBarNode extends Node<ProgressBarNode> {
      * @param value The {@link StyleBox} to draw.
      * @return The node itself.
      */
-    public ProgressBarNode setBarStyle(StyleBox value) {
+    public ProgressBarControl setBarStyle(StyleBox value) {
         barStyle = value;
         return this;
     }
@@ -35,7 +35,7 @@ public class ProgressBarNode extends Node<ProgressBarNode> {
      * @param percent The percentage.
      * @return The node itself.
      */
-    public ProgressBarNode setPercent(float percent) {
+    public ProgressBarControl setPercent(float percent) {
         this.percent = percent;
         return this;
     }
@@ -49,22 +49,22 @@ public class ProgressBarNode extends Node<ProgressBarNode> {
      * @param height The height of the progress bar.
      * @return The node itself.
      */
-    public ProgressBarNode setBarSize(float width, float height) {
+    public ProgressBarControl setBarSize(float width, float height) {
         barWidth = width;
         barHeight = height;
         return this;
     }
 
     /**
-     * Sets the {@link NodeDirection} for the bar to be
-     * drawn in. A values of {@link NodeDirection#DOWN}
+     * Sets the {@link ControlDirection} for the bar to be
+     * drawn in. A values of {@link ControlDirection#DOWN}
      * means that the progress bar will be drawn
      * downwards.
      *
      * @param direction The direction to face.
      * @return The node itself.
      */
-    public ProgressBarNode setDirection(NodeDirection direction) {
+    public ProgressBarControl setDirection(ControlDirection direction) {
         this.direction = direction;
         return this;
     }

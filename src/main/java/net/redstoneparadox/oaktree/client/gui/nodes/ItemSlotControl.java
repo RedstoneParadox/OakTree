@@ -12,7 +12,7 @@ import net.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
  * If attached to a {@link Screen} that does not
  * have a container, it will not be drawn.
  */
-public class ItemSlotNode extends Node<ItemSlotNode> {
+public class ItemSlotControl extends Control<ItemSlotControl> {
 
     private final int index;
 
@@ -21,7 +21,7 @@ public class ItemSlotNode extends Node<ItemSlotNode> {
      *              container's slot list, not the
      *              index value of the slot.
      */
-    public ItemSlotNode(int index) {
+    public ItemSlotControl(int index) {
         this.index = index;
     }
 

@@ -1,20 +1,20 @@
 package net.redstoneparadox.oaktree.client.gui.nodes;
 
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import net.redstoneparadox.oaktree.client.gui.util.NodeDirection;
+import net.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Deprecated
-public abstract class AbstractListNode<T extends AbstractListNode> extends Node<T> {
+public abstract class AbstractListControl<T extends AbstractListControl> extends Control<T> {
 
-    private final List<BoxNode> listBoxes = new ArrayList<>();
+    private final List<BoxControl> listBoxes = new ArrayList<>();
 
     private float listDimensionLength = 0.0f;
-    private NodeDirection drawingDirection;
+    private ControlDirection drawingDirection;
 
-    protected AbstractListNode(NodeDirection drawingDirection) {
+    protected AbstractListControl(ControlDirection drawingDirection) {
         this.drawingDirection = drawingDirection;
     }
 
@@ -22,12 +22,12 @@ public abstract class AbstractListNode<T extends AbstractListNode> extends Node<
      * Adds a child node at the specified index.
      *
      * @param index The index of the list.
-     * @param child The child {@link Node} to add
+     * @param child The child {@link Control} to add
      * @return The node itself.
      */
-    public T addChild(int index, Node child) {
+    public T addChild(int index, Control child) {
         if (index >= listBoxes.size()) {
-            listBoxes.add(new BoxNode().setChild(child));
+            listBoxes.add(new BoxControl().setChild(child));
         }
         else {
             listBoxes.get(index).setChild(child);

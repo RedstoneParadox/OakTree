@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class GridNode extends Node<GridNode> {
+public class GridControl extends Control<GridControl> {
 
     private int rows = 1;
     private int columns = 1;
@@ -18,37 +18,37 @@ public class GridNode extends Node<GridNode> {
     private float verticalCellSpacing = 0.0f;
     private float horizontalCellSpacing = 0.0f;
 
-    private List<Node> children = new ArrayList<>();
+    private List<Control> children = new ArrayList<>();
 
     @Override
-    public GridNode setSize(float width, float height) {
+    public GridControl setSize(float width, float height) {
         System.out.println("The size of a GridNode is calculated based on cell sizes and spacing and cannot be set with Node#setSize().");
         return this;
     }
 
-    public GridNode setCellSize(float cellWidth, float cellHeight) {
+    public GridControl setCellSize(float cellWidth, float cellHeight) {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
         return this;
     }
 
-    public GridNode setCellSpacing(float horizontalCellSpacing, float verticalCellSpacing) {
+    public GridControl setCellSpacing(float horizontalCellSpacing, float verticalCellSpacing) {
         this.verticalCellSpacing = verticalCellSpacing;
         this.horizontalCellSpacing = horizontalCellSpacing;
         return this;
     }
 
-    public GridNode setRows(int rows) {
+    public GridControl setRows(int rows) {
         this.rows = rows;
         return this;
     }
 
-    public GridNode setColumns(int columns) {
+    public GridControl setColumns(int columns) {
         this.columns = columns;
         return this;
     }
 
-    public GridNode setCell(int index, Node child) {
+    public GridControl setCell(int index, Control child) {
         if (index >= children.size()) {
             ListUtils.growList(children, index + 1);
         }
@@ -57,7 +57,7 @@ public class GridNode extends Node<GridNode> {
         return this;
     }
 
-    public GridNode forEachCell(BiConsumer<GridNode, Integer> consumer) {
+    public GridControl forEachCell(BiConsumer<GridControl, Integer> consumer) {
         int cellCount = rows * columns;
 
         for (int i = 0; i < cellCount; i++) {
@@ -82,7 +82,7 @@ public class GridNode extends Node<GridNode> {
             for (int column = 0; column < columns; column++) {
                 float cellX = trueX + ((cellWidth + horizontalCellSpacing) * (float)column);
 
-                Node child = children.get(cellIndex);
+                Control child = children.get(cellIndex);
                 if (child != null) {
                     child.preDraw(mouseX, mouseY, deltaTime, gui, cellX, cellY, cellWidth, cellHeight);
                 }
@@ -98,7 +98,7 @@ public class GridNode extends Node<GridNode> {
 
         int cellCount = rows * columns;
         for (int i = 0; i < cellCount; i++) {
-            Node child = children.get(i);
+            Control child = children.get(i);
             if (child != null) {
                 child.draw(mouseX, mouseY, deltaTime, gui);
             }

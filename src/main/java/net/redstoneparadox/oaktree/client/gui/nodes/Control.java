@@ -10,14 +10,14 @@ import net.redstoneparadox.oaktree.client.gui.OakTreeContainerScreen;
 import net.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import net.redstoneparadox.oaktree.client.gui.OakTreeScreen;
 import net.redstoneparadox.oaktree.client.gui.style.StyleBox;
-import net.redstoneparadox.oaktree.client.gui.util.NodeAlignment;
+import net.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import net.redstoneparadox.oaktree.client.gui.util.NodeFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
  * The base class for all nodes.
  */
-public class Node<T extends Node> {
+public class Control<T extends Control> {
 
     public float x = 0.0f;
     public float y = 0.0f;
@@ -26,8 +26,8 @@ public class Node<T extends Node> {
 
     boolean visible = true;
 
-    NodeAlignment alignment = NodeAlignment.TOP_LEFT;
-    NodeAlignment anchor = NodeAlignment.TOP_LEFT;
+    ControlAnchor alignment = ControlAnchor.TOP_LEFT;
+    ControlAnchor anchor = ControlAnchor.TOP_LEFT;
 
     NodeFunction<T> onTick = (gui, node) -> {};
 
@@ -116,29 +116,29 @@ public class Node<T extends Node> {
 
     /**
      * Sets the alignment of the node relative to it's position
-     * using a {@link NodeAlignment}. For example, a value of
-     * {@link NodeAlignment#CENTER} will cause the node to be
+     * using a {@link ControlAnchor}. For example, a value of
+     * {@link ControlAnchor#CENTER} will cause the node to be
      * drawn centered on its position.
      *
      * @param alignment
      * @return
      */
-    public T setAlignment(NodeAlignment alignment) {
+    public T setAlignment(ControlAnchor alignment) {
         this.alignment = alignment;
         return (T)this;
     }
 
     /**
      * Anchors the position of this node relative to the parent using
-     * a {@link NodeAlignment}. For example, a value of
-     * {@link NodeAlignment#CENTER} and a position of (10, 0)
+     * a {@link ControlAnchor}. For example, a value of
+     * {@link ControlAnchor#CENTER} and a position of (10, 0)
      * will result in the node being placed 10 pixels to the left of
      * the parent node's center.
      *
-     * @param anchor The {@link NodeAlignment} to anchor to.
+     * @param anchor The {@link ControlAnchor} to anchor to.
      * @return The node itself.
      */
-    public T setAnchor(NodeAlignment anchor) {
+    public T setAnchor(ControlAnchor anchor) {
         this.anchor = anchor;
         return (T)this;
     }
