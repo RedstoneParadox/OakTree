@@ -15,7 +15,7 @@ import net.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 /**
- * The base class for all nodes.
+ * The base class for all controls.
  */
 public class Control<C extends Control> {
 
