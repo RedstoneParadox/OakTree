@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "oak_tree",
-  "version": "${version}",
+  "version": "0.1.0-alpha",
 
   "name": "Oak Tree",
   "description": "Oak Tree is a GUI toolkit for Minecraft Fabric.",
@@ -9,12 +9,17 @@
     "RedstoneParadox"
   ],
 
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/RedstoneParadox/OakTree"
+  },
+
   "license": "MIT",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.redstoneparadox.oaktree.OakTree"
+      "redstoneparadox.oaktree.OakTree"
     ]
   },
   "mixins": [
