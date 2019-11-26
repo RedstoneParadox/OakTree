@@ -190,9 +190,10 @@ public class Control<C extends Control> {
 
         if (!expand) {
             ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
+            ScreenVec drawOffset = anchor.getOffset(width, height);
 
-            trueX = x + anchorOffset.x + offsetX;
-            trueY = y + anchorOffset.y + offsetY;
+            trueX = x + anchorOffset.x + offsetX - drawOffset.x;
+            trueY = y + anchorOffset.y + offsetY - drawOffset.y;
 
             trueWidth = width;
             trueHeight = height;
