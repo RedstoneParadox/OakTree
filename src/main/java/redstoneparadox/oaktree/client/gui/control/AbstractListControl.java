@@ -27,10 +27,10 @@ public abstract class AbstractListControl<T extends AbstractListControl> extends
      */
     public T addChild(int index, Control child) {
         if (index >= listBoxes.size()) {
-            listBoxes.add(new BoxControl().setChild(child));
+            listBoxes.add(new BoxControl().child(child));
         }
         else {
-            listBoxes.get(index).setChild(child);
+            listBoxes.get(index).child(child);
         }
         return (T)this;
     }

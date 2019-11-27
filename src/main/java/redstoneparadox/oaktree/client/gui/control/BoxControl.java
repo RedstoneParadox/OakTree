@@ -9,10 +9,10 @@ import redstoneparadox.oaktree.client.gui.util.ControlDirection;
  */
 public class BoxControl extends Control<BoxControl> {
 
-    public float topMargin = 0.0f;
-    public float bottomMargin = 0.0f;
-    public float leftMargin = 0.0f;
-    public float rightMargin = 0.0f;
+    public float topPadding = 0.0f;
+    public float bottomPadding = 0.0f;
+    public float leftPadding = 0.0f;
+    public float rightPadding = 0.0f;
 
     private Control child = null;
 
@@ -22,15 +22,15 @@ public class BoxControl extends Control<BoxControl> {
      * @param margin The new margin.
      * @return The node itself.
      */
-    public BoxControl setMargin(float margin) {
+    public BoxControl padding(float margin) {
         if (margin <= 0.0f) {
             margin = 0.0f;
         }
 
-        topMargin = margin;
-        bottomMargin = margin;
-        leftMargin = margin;
-        rightMargin = margin;
+        topPadding = margin;
+        bottomPadding = margin;
+        leftPadding = margin;
+        rightPadding = margin;
         return this;
     }
 
@@ -45,19 +45,19 @@ public class BoxControl extends Control<BoxControl> {
      * @param margin The size of the margin. Values are in pixels.
      * @return the node itself.
      */
-    public BoxControl setMargin(ControlDirection direction, float margin) {
+    public BoxControl padding(ControlDirection direction, float margin) {
         switch (direction) {
             case UP:
-                topMargin = margin;
+                topPadding = margin;
                 break;
             case DOWN:
-                bottomMargin = margin;
+                bottomPadding = margin;
                 break;
             case LEFT:
-                leftMargin = margin;
+                leftPadding = margin;
                 break;
             case RIGHT:
-                rightMargin = margin;
+                rightPadding = margin;
                 break;
         }
         return this;
@@ -71,7 +71,7 @@ public class BoxControl extends Control<BoxControl> {
      * @param child The node that is being added as a child.
      * @return The node itself.
      */
-    public BoxControl setChild(Control child) {
+    public BoxControl child(Control child) {
         this.child = child;
         return this;
     }
@@ -81,11 +81,11 @@ public class BoxControl extends Control<BoxControl> {
         if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
-        float innerWidth = trueWidth - leftMargin - rightMargin;
-        float innerHeight = trueHeight - topMargin - bottomMargin;
+        float innerWidth = trueWidth - leftPadding - rightPadding;
+        float innerHeight = trueHeight - topPadding - bottomPadding;
 
-        float innerX = trueX + leftMargin;
-        float innerY = trueY + topMargin;
+        float innerX = trueX + leftPadding;
+        float innerY = trueY + topPadding;
 
         child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, innerWidth, innerHeight);
     }

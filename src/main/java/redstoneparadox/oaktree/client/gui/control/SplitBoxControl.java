@@ -10,9 +10,9 @@ import redstoneparadox.oaktree.client.gui.util.ControlDirection;
  * percentage of the total width while the second box takes
  * up the remainder.
  *
- * The {@link BoxControl#setMargin(float)},
- * {@link BoxControl#setMargin(ControlDirection, float)}, and
- * {@link BoxControl#setChild(Control)} are encapsulated by the
+ * The {@link BoxControl#padding(float)},
+ * {@link BoxControl#padding(ControlDirection, float)}, and
+ * {@link BoxControl#child(Control)} are encapsulated by the
  * SplitBoxNode as well, so there is no need to access
  * them directly.
  */
@@ -70,7 +70,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @return The node itself.
      */
     public SplitBoxControl setFirstChild(Control child) {
-        first.setChild(child);
+        first.child(child);
         return this;
     }
 
@@ -84,7 +84,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @return The node itself.
      */
     public SplitBoxControl setSecondChild(Control child) {
-        second.setChild(child);
+        second.child(child);
         return this;
     }
 
@@ -96,7 +96,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @return The node itself
      */
     public SplitBoxControl setFirstMargin(float margin) {
-        first.setMargin(margin);
+        first.padding(margin);
         return this;
     }
 
@@ -110,7 +110,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @return The node itself.
      */
     public SplitBoxControl setFirstMargin(ControlDirection direction, float margin) {
-        first.setMargin(direction, margin);
+        first.padding(direction, margin);
         return this;
     }
 
@@ -122,7 +122,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @return The node itself.
      */
     public SplitBoxControl setSecondMargin(float margin) {
-        second.setMargin(margin);
+        second.padding(margin);
         return this;
     }
 
@@ -136,7 +136,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @return The node itself.
      */
     public SplitBoxControl setSecondMargin(ControlDirection direction, float margin) {
-        second.setMargin(direction, margin);
+        second.padding(direction, margin);
         return this;
     }
 
