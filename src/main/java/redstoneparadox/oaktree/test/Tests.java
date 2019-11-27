@@ -62,7 +62,7 @@ public class Tests {
                             .setColumns(3)
                             .setExpand(true)
                             .setVisible(false)
-                            .forEachCell((gridNode, integer) -> gridNode.setCell(integer, new ItemSlotControl(integer)))
+                            .cells((row, column, index) -> new ItemSlotControl(index))
                     )
                     .container(new TestSixContainer(syncId, pos, player))
                     .playerInventory(player.inventory)

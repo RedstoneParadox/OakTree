@@ -2,13 +2,14 @@ package redstoneparadox.oaktree.client.gui.control;
 
 import redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import redstoneparadox.oaktree.util.ListUtils;
+import redstoneparadox.oaktree.util.TriFunction;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
- * @apiNote You probably shouldn't use this at this time.
+ * @apiNote Work-in-progress.
  */
 public class GridControl extends Control<GridControl> {
 
@@ -60,6 +61,7 @@ public class GridControl extends Control<GridControl> {
         return this;
     }
 
+    @Deprecated
     public GridControl forEachCell(BiConsumer<GridControl, Integer> consumer) {
         int cellCount = rows * columns;
 
@@ -67,6 +69,18 @@ public class GridControl extends Control<GridControl> {
             consumer.accept(this, i);
         }
 
+        return this;
+    }
+
+    public GridControl cells(TriFunction<Integer, Integer, Integer, Control<?>> function) {
+        int cellIndex = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                setCell(cellIndex, function.apply(i, j, cellIndex));
+                cellIndex++;
+            }
+        }
         return this;
     }
 
