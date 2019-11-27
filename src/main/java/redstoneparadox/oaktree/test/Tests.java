@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.container.Container;
 import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import redstoneparadox.oaktree.client.gui.OakTreeScreen;
+import redstoneparadox.oaktree.client.gui.ScreenBuilder;
 import redstoneparadox.oaktree.client.gui.control.*;
 import redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import redstoneparadox.oaktree.client.gui.style.ItemStyleBox;
@@ -52,15 +54,20 @@ public class Tests {
 
         ScreenProviderRegistry.INSTANCE.registerFactory(TEST_SIX, (int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) -> {
             BlockPos pos = buf.readBlockPos();
-            return new GridControl()
-                    .setCellSize(16.0f, 16.0f)
-                    .setCellSpacing(10.0f, 10.0f)
-                    .setRows(3)
-                    .setColumns(3)
-                    .setExpand(true)
-                    .setVisible(false)
-                    .forEachCell((gridNode, integer) -> gridNode.setCell(integer, new ItemSlotControl(integer)))
-                    .toContainerScreen(false, null, new TestSixContainer(syncId, pos, player), player.inventory, new LiteralText("Test Six GUI"));
+            return new ScreenBuilder(
+                    new GridControl()
+                            .setCellSize(16.0f, 16.0f)
+                            .setCellSpacing(10.0f, 10.0f)
+                            .setRows(3)
+                            .setColumns(3)
+                            .setExpand(true)
+                            .setVisible(false)
+                            .forEachCell((gridNode, integer) -> gridNode.setCell(integer, new ItemSlotControl(integer)))
+                    )
+                    .container(new TestSixContainer(syncId, pos, player))
+                    .playerInventory(player.inventory)
+                    .text(new LiteralText("Test Six GUI"))
+                    .buildContainerScreen();
         });
 
         ContainerProviderRegistry.INSTANCE.registerFactory(TEST_SIX, ((int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buff) -> {
@@ -281,15 +288,17 @@ public class Tests {
         @Override
         public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient) {
-                BoxControl root = new BoxControl()
-                        .setExpand(true)
-                        .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
-                        .setChild(new DraggableControl()
-                                .whileHeld((gui, node) -> System.out.println("I'm being dragged!"))
-                                .setSize(16.0f, 16.0f)
-                                .setDefaultStyle(new ColorStyleBox(RGBAColor.white())));
+                Screen screen = new ScreenBuilder(
+                        new BoxControl()
+                                .setExpand(true)
+                                .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
+                                .setChild(new DraggableControl()
+                                        .whileHeld((gui, node) -> System.out.println("I'm being dragged!"))
+                                        .setSize(16.0f, 16.0f)
+                                        .setDefaultStyle(new ColorStyleBox(RGBAColor.white())))
+                ).build();
 
-                root.openAsScreen(false, null);
+                MinecraftClient.getInstance().openScreen(screen);
             }
 
             return ActionResult.SUCCESS;

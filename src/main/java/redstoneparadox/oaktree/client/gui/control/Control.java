@@ -140,41 +140,12 @@ public class Control<C extends Control> {
         return (C)this;
     }
 
-    /**
-     * Helper method for taking a tree of nodes and using
-     * them to automatically open a new
-     * {@link OakTreeScreen}.
-     *
-     * @param isPauseScreen Whether the screen should pause
-     *                      the game.
-     * @param parentScreen The screen to open after this one
-     *                     is closed. Can be null.
-     */
+    @Deprecated
     public void openAsScreen(boolean isPauseScreen, Screen parentScreen) {
         MinecraftClient.getInstance().openScreen(new OakTreeScreen(this, isPauseScreen, parentScreen));
     }
 
-    /**
-     * Helper method for taking a tree of nodes and using
-     * them to automatically create a new
-     * {@link OakTreeContainerScreen}. Unlike the previous
-     * method, the screen will not be opened due to the
-     * way Fabric API requires you to open container
-     * screens.
-     *
-     * @param isPauseScreen Whether the screen should pause
-     *                      the game.
-     * @param parentScreen The screen to open after this
-     *                     one is closed. Can be null.
-     * @param container The {@link Container} of the
-     *                  container screen.
-     * @param playerInventory The inventory of the player
-     *                        that opened the screen.
-     * @param text The title of the inventory.
-     * @param <C> The type of {@link Container} that uses
-     *           this screen.
-     * @return The resulting {@link OakTreeContainerScreen}.
-     */
+    @Deprecated
     public <C extends Container> AbstractContainerScreen<C> toContainerScreen(boolean isPauseScreen, Screen parentScreen, C container, PlayerInventory playerInventory, Text text) {
         return new OakTreeContainerScreen<>(this, isPauseScreen, parentScreen, container, playerInventory, text);
     }
