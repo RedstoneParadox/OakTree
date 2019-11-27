@@ -60,8 +60,8 @@ public class Tests {
                             .setCellSpacing(10.0f, 10.0f)
                             .setRows(3)
                             .setColumns(3)
-                            .setExpand(true)
-                            .setVisible(false)
+                            .expand(true)
+                            .visible(false)
                             .cells((row, column, index) -> new ItemSlotControl(index))
                     )
                     .container(new TestSixContainer(syncId, pos, player))
@@ -96,12 +96,12 @@ public class Tests {
         public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 BoxControl root = new BoxControl()
-                        .setChild(new Control()
-                            .setDefaultStyle(new ColorStyleBox(RGBAColor.red()))
-                            .setSize(75.0f, 50.0f)
-                            .setAnchor(ControlAnchor.CENTER))
-                        .setExpand(true)
-                        .setMargin(15.0f);
+                        .child(new Control()
+                            .defaultStyle(new ColorStyleBox(RGBAColor.red()))
+                            .size(75.0f, 50.0f)
+                            .anchor(ControlAnchor.CENTER))
+                        .expand(true)
+                        .padding(15.0f);
 
 
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
@@ -121,16 +121,16 @@ public class Tests {
         public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 SplitBoxControl root = new SplitBoxControl()
-                        .setExpand(true)
+                        .expand(true)
                         .setSplitPercent(50.0f)
                         .setFirstMargin(10.0f)
                         .setSecondMargin(10.0f)
                         .setFirstChild(new Control()
-                                        .setExpand(true)
-                                        .setDefaultStyle(new ColorStyleBox(RGBAColor.red())))
+                                        .expand(true)
+                                        .defaultStyle(new ColorStyleBox(RGBAColor.red())))
                         .setSecondChild(new Control()
-                                        .setExpand(true)
-                                        .setDefaultStyle(new ColorStyleBox(RGBAColor.blue())));
+                                        .expand(true)
+                                        .defaultStyle(new ColorStyleBox(RGBAColor.blue())));
 
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
@@ -149,21 +149,21 @@ public class Tests {
         public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 SplitBoxControl root = new SplitBoxControl()
-                        .setExpand(true)
+                        .expand(true)
                         .setSplitPercent(50.0f)
                         .setFirstMargin(10.0f)
                         .setSecondMargin(10.0f)
                         .setFirstChild(new ProgressBarControl()
-                                .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
-                                .setBarStyle(new ColorStyleBox(RGBAColor.red()))
-                                .setSize(20.0f, 100.0f)
-                                .setBarSize(16.0f, 96.0f)
-                                .setAnchor(ControlAnchor.CENTER)
-                                .setDirection(ControlDirection.DOWN)
-                                .setPercent(50.0f))
+                                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                                .barStyle(new ColorStyleBox(RGBAColor.red()))
+                                .size(20.0f, 100.0f)
+                                .barSize(16.0f, 96.0f)
+                                .anchor(ControlAnchor.CENTER)
+                                .drawDirection(ControlDirection.DOWN)
+                                .percent(50.0f))
                         .setSecondChild(new Control()
-                                .setExpand(true)
-                                .setDefaultStyle(new ColorStyleBox(RGBAColor.blue())));
+                                .expand(true)
+                                .defaultStyle(new ColorStyleBox(RGBAColor.blue())));
 
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
@@ -184,31 +184,31 @@ public class Tests {
                 ProgressBarControl bar = new ProgressBarControl();
 
                 SplitBoxControl root = new SplitBoxControl()
-                        .setExpand(true)
+                        .expand(true)
                         .setSplitPercent(50.0f)
                         .setFirstMargin(10.0f)
                         .setSecondMargin(10.0f)
                         .setSecondChild(bar
-                                .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
-                                .setBarStyle(new ColorStyleBox(RGBAColor.red()))
-                                .setSize(20.0f, 100.0f)
-                                .setBarSize(16.0f, 96.0f)
-                                .setAnchor(ControlAnchor.CENTER)
-                                .setDirection(ControlDirection.DOWN)
-                                .setPercent(0.0f))
+                                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                                .barStyle(new ColorStyleBox(RGBAColor.red()))
+                                .size(20.0f, 100.0f)
+                                .barSize(16.0f, 96.0f)
+                                .anchor(ControlAnchor.CENTER)
+                                .drawDirection(ControlDirection.DOWN)
+                                .percent(0.0f))
                         .setFirstChild(new ButtonControl()
-                                .setExpand(true)
+                                .expand(true)
                                 .onClick(((gui, node) -> {
                                     System.out.println("I was clicked!");
-                                    node.setVisible(false);
+                                    node.visible(false);
                                     bar.percent += 10.0f;
                                     if (bar.percent > 100.0f) {
                                         bar.percent = 0.0f;
                                     }
                                 }))
-                                .setAnchor(ControlAnchor.CENTER)
-                                .setDefaultStyle(new ColorStyleBox(RGBAColor.blue()))
-                                .setHeldStyle(new ColorStyleBox(RGBAColor.red())));
+                                .anchor(ControlAnchor.CENTER)
+                                .defaultStyle(new ColorStyleBox(RGBAColor.blue()))
+                                .heldStyle(new ColorStyleBox(RGBAColor.red())));
 
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
@@ -227,13 +227,13 @@ public class Tests {
         public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient()) {
                 BoxControl root = new BoxControl()
-                        .setSize(16, 16)
-                        .setAnchor(ControlAnchor.CENTER)
-                        .setSize(16, 16)
-                        .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
-                        .setChild(new Control()
-                                .setDefaultStyle(new ItemStyleBox("stone"))
-                                .setAnchor(ControlAnchor.CENTER));
+                        .size(16, 16)
+                        .anchor(ControlAnchor.CENTER)
+                        .size(16, 16)
+                        .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                        .child(new Control()
+                                .defaultStyle(new ItemStyleBox("stone"))
+                                .anchor(ControlAnchor.CENTER));
 
                 MinecraftClient.getInstance().openScreen(new OakTreeScreen(root, false, null));
             }
@@ -290,12 +290,12 @@ public class Tests {
             if (world_1.isClient) {
                 Screen screen = new ScreenBuilder(
                         new BoxControl()
-                                .setExpand(true)
-                                .setDefaultStyle(new ColorStyleBox(RGBAColor.black()))
-                                .setChild(new DraggableControl()
+                                .expand(true)
+                                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                                .child(new DraggableControl()
                                         .whileHeld((gui, node) -> System.out.println("I'm being dragged!"))
-                                        .setSize(16.0f, 16.0f)
-                                        .setDefaultStyle(new ColorStyleBox(RGBAColor.white())))
+                                        .size(16.0f, 16.0f)
+                                        .defaultStyle(new ColorStyleBox(RGBAColor.white())))
                 ).build();
 
                 MinecraftClient.getInstance().openScreen(screen);

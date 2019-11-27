@@ -7,6 +7,7 @@ import redstoneparadox.oaktree.client.gui.util.ScreenVec;
 /**
  * @apiNote You probably shouldn't use this at this time.
  */
+@Deprecated
 public class DraggableControl extends InteractiveControl<DraggableControl> {
 
     private GuiFunction<DraggableControl> onClick = (gui, node) -> {};

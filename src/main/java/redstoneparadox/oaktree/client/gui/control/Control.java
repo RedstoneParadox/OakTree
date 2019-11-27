@@ -52,7 +52,7 @@ public class Control<C extends Control> {
      * @param posY The new y position in pixels.
      * @return The node itself.
      */
-    public C setPosition(float posX, float posY) {
+    public C position(float posX, float posY) {
         x = posX;
         y = posY;
         return (C)this;
@@ -68,7 +68,7 @@ public class Control<C extends Control> {
      * @param height The new height of this node in pixels.
      * @return The node itself.
      */
-    public C setSize(float width, float height) {
+    public C size(float width, float height) {
         this.width = width;
         this.height = height;
         return (C)this;
@@ -82,7 +82,7 @@ public class Control<C extends Control> {
      * @param value Whether or not this node should be visible.
      * @return The node itself.
      */
-    public C setVisible(boolean value) {
+    public C visible(boolean value) {
         this.visible = value;
         return (C)this;
     }
@@ -95,7 +95,7 @@ public class Control<C extends Control> {
      * @param value
      * @return The node itself.
      */
-    public C setExpand(boolean value) {
+    public C expand(boolean value) {
         expand = value;
         return (C)this;
     }
@@ -108,7 +108,7 @@ public class Control<C extends Control> {
      * @param style The StyleBox for this node.
      * @return The node itself.
      */
-    public C setDefaultStyle(StyleBox style) {
+    public C defaultStyle(StyleBox style) {
         defaultStyle = style;
         return (C)this;
     }
@@ -123,7 +123,7 @@ public class Control<C extends Control> {
      * @param anchor The {@link ControlAnchor} to anchor to.
      * @return The node itself.
      */
-    public C setAnchor(ControlAnchor anchor) {
+    public C anchor(ControlAnchor anchor) {
         this.anchor = anchor;
         return (C)this;
     }

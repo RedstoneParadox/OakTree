@@ -21,11 +21,11 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
     /**
      * Sets the {@link StyleBox} for the progress bar.
      *
-     * @param value The {@link StyleBox} to draw.
+     * @param style The {@link StyleBox} to draw.
      * @return The node itself.
      */
-    public ProgressBarControl setBarStyle(StyleBox value) {
-        barStyle = value;
+    public ProgressBarControl barStyle(StyleBox style) {
+        barStyle = style;
         return this;
     }
 
@@ -35,7 +35,7 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
      * @param percent The percentage.
      * @return The node itself.
      */
-    public ProgressBarControl setPercent(float percent) {
+    public ProgressBarControl percent(float percent) {
         this.percent = percent;
         return this;
     }
@@ -49,7 +49,7 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
      * @param height The height of the progress bar.
      * @return The node itself.
      */
-    public ProgressBarControl setBarSize(float width, float height) {
+    public ProgressBarControl barSize(float width, float height) {
         barWidth = width;
         barHeight = height;
         return this;
@@ -64,7 +64,7 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
      * @param direction The direction to face.
      * @return The node itself.
      */
-    public ProgressBarControl setDirection(ControlDirection direction) {
+    public ProgressBarControl drawDirection(ControlDirection direction) {
         this.direction = direction;
         return this;
     }

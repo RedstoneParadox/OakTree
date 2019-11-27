@@ -25,8 +25,8 @@ public class GridControl extends Control<GridControl> {
     private List<Control> children = new ArrayList<>();
 
     @Override
-    public GridControl setSize(float width, float height) {
-        System.out.println("The size of a GridNode is calculated based on cell sizes and spacing and cannot be set with Node#setSize().");
+    public GridControl size(float width, float height) {
+        System.out.println("The size of a GridNode is calculated based on cell sizes and spacing and cannot be set with Node#size().");
         return this;
     }
 

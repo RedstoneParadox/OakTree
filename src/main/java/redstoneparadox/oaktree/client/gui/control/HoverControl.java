@@ -14,7 +14,7 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 
     private StyleBox hoverStyle = null;
 
-    public HoverControl setHoverStyle(StyleBox value) {
+    public HoverControl hoverStyle(StyleBox value) {
         hoverStyle = value;
         return this;
     }

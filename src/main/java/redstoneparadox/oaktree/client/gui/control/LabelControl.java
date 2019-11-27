@@ -7,7 +7,7 @@ public class LabelControl extends Control<LabelControl> implements TextNode {
     private String text = "";
     private RGBAColor fontColor = RGBAColor.white();
 
-    public LabelControl setText(String value) {
+    public LabelControl text(String value) {
         text = value;
         return this;
     }

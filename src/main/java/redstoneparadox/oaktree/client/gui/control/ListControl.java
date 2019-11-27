@@ -63,10 +63,10 @@ public class ListControl extends Control<ListControl> {
     /**
      * Sets the index of the first child to be displayed.
      * For example, having a display count of 3, 6 children
-     * and an offset of 1 will display the 2nd, 3rd, and 4th
+     * and an position of 1 will display the 2nd, 3rd, and 4th
      * children.
      *
-     * @param offset The offset.
+     * @param offset The position.
      * @return The node itself.
      */
     public ListControl setOffset(int offset) {

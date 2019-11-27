@@ -16,13 +16,13 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 
     private StyleBox heldStyle = null;
 
-    public ButtonControl setToggleable(boolean value) {
-        toggleable = value;
+    public ButtonControl toggleable(boolean toggleable) {
+        this.toggleable = toggleable;
         return this;
     }
 
-    public ButtonControl setHeldStyle(StyleBox value) {
-        heldStyle = value;
+    public ButtonControl heldStyle(StyleBox style) {
+        heldStyle = style;
         return this;
     }
 

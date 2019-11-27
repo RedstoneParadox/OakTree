@@ -13,12 +13,12 @@ public class SliderControl extends InteractiveControl<SliderControl> {
     private final Control dragControl = new Control();
 
     public SliderControl setDragNodeStyle(StyleBox style) {
-        dragControl.setDefaultStyle(style);
+        dragControl.defaultStyle(style);
         return this;
     }
 
     public SliderControl setDragNodeSize(float width, float height) {
-        dragControl.setSize(width, height);
+        dragControl.size(width, height);
         return this;
     }
 
