@@ -15,22 +15,44 @@ import redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
 
 public class ItemStyleBox extends StyleBox {
 
-    private Identifier itemID;
+    private ItemStack stack;
 
-    public ItemStyleBox(Identifier itemID) {
-        this.itemID = itemID;
+    public ItemStyleBox(Identifier identifier, int count) {
+        this.stack = new ItemStack(Registry.ITEM.get(identifier), count);
     }
 
-    public ItemStyleBox(String itemID) {
-        this(new Identifier(itemID));
+    public ItemStyleBox(Identifier identifier) {
+        this(identifier, 1);
+    }
+
+    public ItemStyleBox(String identifier) {
+        this(new Identifier(identifier), 1);
+    }
+
+    public ItemStyleBox(String identifier, int count) {
+        this(new Identifier(identifier), count);
+    }
+
+    public int getCount() {
+        return stack.getCount();
+    }
+
+    public void setCount(int count) {
+        stack.setCount(count);
+    }
+
+    public Item getItem() {
+        return stack.getItem();
+    }
+
+    public void setItem(Item item) {
+        stack = new ItemStack(item, stack.getCount());
     }
 
     @Override
     public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
-        Item item = Registry.ITEM.get(itemID);
         GuiLighting.enableForItems(new Matrix4f());
-        ItemStack stack = new ItemStack(item);
         renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);
         if (gui instanceof Screen) {
             TextRenderer font = ((ScreenAccessor)gui).getFont();
