@@ -11,16 +11,18 @@ import java.util.Optional;
 
 public class OakTreeScreen extends Screen implements OakTreeGUI {
 
-    Control root;
+    private Control root;
 
-    boolean isPauseScreen;
+    private boolean isPauseScreen;
 
-    boolean leftMouseButton;
-    boolean leftMouseJustPressed;
+    private boolean leftMouseButton;
+    private boolean leftMouseJustPressed;
 
-    Character lastChar = null;
+    private Character lastChar = null;
 
-    Screen parentScreen;
+    private Screen parentScreen;
+
+    private Control<?> focused = null;
 
 
     private boolean backspace = false;
@@ -123,6 +125,16 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
             default:
                 return false;
         }
+    }
+
+    @Override
+    public boolean hasFocus(Control<?> control) {
+        return control == focused;
+    }
+
+    @Override
+    public void stealFocus(Control<?> control) {
+        focused = control;
     }
 
     @Override

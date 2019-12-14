@@ -22,7 +22,9 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
 
     private Character lastChar = null;
 
-    Screen parentScreen;
+    private Screen parentScreen;
+
+    private Control<?> focused = null;
 
     public OakTreeContainerScreen(Control root, boolean isPauseScreen, Screen parentScreen, T container, PlayerInventory playerInventory, Text text) {
         super(container, playerInventory, text);
@@ -97,6 +99,16 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     @Override
     public boolean isKeyPressed(String key) {
         return false;
+    }
+
+    @Override
+    public boolean hasFocus(Control<?> control) {
+        return control == focused;
+    }
+
+    @Override
+    public void stealFocus(Control<?> control) {
+        focused = control;
     }
 
     @Override

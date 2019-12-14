@@ -20,8 +20,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private RGBAColor fontColor = RGBAColor.white();
     private int maxLines = 1;
 
-    private TypingListener<TextEditControl> onCharTyped = (toType, node) -> toType;
-    private GuiFunction<TextEditControl> onFocused = (gui, node) -> {};
+    private TypingListener<TextEditControl> onCharTyped = (toType, control) -> toType;
+    private GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
 
     private List<String> lines = Lists.newArrayList("");
 
@@ -77,9 +77,13 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         String currentLine = lines.get(index);
         TextRenderer font = ((ScreenAccessor)gui).getFont();
 
+        if (isMouseWithin && gui.mouseButtonJustClicked("left")) gui.stealFocus(this);
+        if (!gui.hasFocus(this)) return;
+        onFocused.invoke(gui, this);
+
         if (gui.getLastChar().isPresent()) {
-            Character character = gui.getLastChar().get();
-            if (font.getStringWidth(currentLine + character) < trueWidth) {
+            Character character = onCharTyped.invoke(gui.getLastChar().get(), this);
+            if (character != null || font.getStringWidth(currentLine + character) < trueWidth) {
                 currentLine = currentLine + character;
             }
         }
