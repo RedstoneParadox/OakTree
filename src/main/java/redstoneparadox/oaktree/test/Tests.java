@@ -318,13 +318,13 @@ public class Tests {
             if (world_1.isClient) {
                 Screen screen = new ScreenBuilder(
                         new BoxControl()
-                                .size(80, 50)
+                                .size(180, 250)
                                 .anchor(ControlAnchor.CENTER)
                                 .defaultStyle(new ColorStyleBox(new RGBAColor(0.5f, 0.5f, 0.5f)))
                                 .child(
                                     new TextEditControl()
                                             .anchor(ControlAnchor.CENTER)
-                                            .size(70, 20)
+                                            .size(160, 230)
                                             .defaultStyle(new ColorStyleBox(RGBAColor.black()))
                                 )
                 ).build();

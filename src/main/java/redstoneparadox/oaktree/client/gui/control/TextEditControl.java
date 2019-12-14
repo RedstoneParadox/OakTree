@@ -1,19 +1,23 @@
 package redstoneparadox.oaktree.client.gui.control;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.font.TextRenderer;
 import redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import redstoneparadox.oaktree.client.gui.util.TypingListener;
 import redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @apiNote  Work in Progress!
  */
 public class TextEditControl extends InteractiveControl<TextEditControl> implements TextNode {
 
-    private String defaultText = "";
-    private String text = "";
+    private List<String> lines = Lists.newArrayList("");
 
     private TypingListener<TextEditControl> onCharTyped = (toType, node) -> toType;
     private GuiFunction<TextEditControl> onFocused = (gui, node) -> {};
@@ -32,23 +36,38 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
-        gui.getLastChar().ifPresent((character -> {
-            Character typed = onCharTyped.invoke(character, this);
-            if (typed != null) {
-                String str = text + typed;
-                TextRenderer font = ((ScreenAccessor)gui).getFont();
-                int stringWidth = font.getStringWidth(str);
+        int index = lines.size() - 1;
+        String currentLine = lines.get(index);
+        TextRenderer font = ((ScreenAccessor)gui).getFont();
 
-                if (stringWidth <= trueWidth) {
-                    text = str;
-                }
+        if (gui.getLastChar().isPresent()) {
+            Character character = gui.getLastChar().get();
+            if (font.getStringWidth(currentLine + character) < trueWidth) {
+                currentLine = currentLine + character;
             }
-        }));
-
-        if (gui.isKeyPressed("backspace") && text.length() > 0) {
-            text = text.substring(0, text.length() - 1);
         }
 
-        drawString(text, gui, trueX, trueY, null, false, RGBAColor.red());
+        boolean removed = false;
+        if (gui.isKeyPressed("backspace")) {
+            if (currentLine.length() > 1) {
+                currentLine = currentLine.substring(0, currentLine.length() - 1);
+            }
+            else {
+                currentLine = "";
+                if (lines.size() > 1) {
+                    lines.remove(index);
+                    removed = true;
+                }
+            }
+        }
+        if (gui.isKeyPressed("enter")) lines.add("");
+
+        if (!removed) lines.set(index, currentLine);
+
+        int offset = 0;
+        for (String line: lines) {
+            drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, false, RGBAColor.red());
+            offset += 1;
+        }
     }
 }
