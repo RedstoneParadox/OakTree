@@ -36,6 +36,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 text = text + toType;
             }
         }));
+
         drawString(text, gui, trueX, trueY, null, false, RGBAColor.red());
     }
 }

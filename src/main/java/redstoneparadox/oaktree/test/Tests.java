@@ -40,6 +40,7 @@ public class Tests {
     private final Block TEST_FIVE_BLOCK = new TestFiveBlock(testSettings());
     private final Block TEST_SIX_BLOCK = new TestSixBlock(testSettings());
     private final Block TEST_SEVEN_BLOCK = new TestSevenBlock(testSettings());
+    private final Block TEST_EIGHT_BLOCK = new TestEightBlock(testSettings());
 
     static Identifier TEST_SIX = new Identifier("oak_tree", "test_six");
 
@@ -51,6 +52,7 @@ public class Tests {
         register(TEST_FIVE_BLOCK, "five");
         register(TEST_SIX_BLOCK, "six");
         register(TEST_SEVEN_BLOCK, "seven");
+        register(TEST_EIGHT_BLOCK, "eight");
 
         ScreenProviderRegistry.INSTANCE.registerFactory(TEST_SIX, (int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) -> {
             BlockPos pos = buf.readBlockPos();
@@ -296,6 +298,35 @@ public class Tests {
                                         .whileHeld((gui, node) -> System.out.println("I'm being dragged!"))
                                         .size(16.0f, 16.0f)
                                         .defaultStyle(new ColorStyleBox(RGBAColor.white())))
+                ).build();
+
+                MinecraftClient.getInstance().openScreen(screen);
+            }
+
+            return ActionResult.SUCCESS;
+        }
+    }
+
+    private static class TestEightBlock extends Block {
+
+        public TestEightBlock(Settings block$Settings_1) {
+            super(block$Settings_1);
+        }
+
+        @Override
+        public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+            if (world_1.isClient) {
+                Screen screen = new ScreenBuilder(
+                        new BoxControl()
+                                .size(80, 50)
+                                .anchor(ControlAnchor.CENTER)
+                                .defaultStyle(new ColorStyleBox(new RGBAColor(0.5f, 0.5f, 0.5f)))
+                                .child(
+                                    new TextEditControl()
+                                            .anchor(ControlAnchor.CENTER)
+                                            .size(70, 20)
+                                            .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                                )
                 ).build();
 
                 MinecraftClient.getInstance().openScreen(screen);

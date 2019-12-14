@@ -1,10 +1,7 @@
 package redstoneparadox.oaktree.util;
 
-/**
- * Created by RedstoneParadox on 11/27/2019.
- */
 @FunctionalInterface
-public interface TriFunction<T, U, V, R> {
+public interface TriFunction<T1, T2, T3, R> {
 
-    R apply(T t, U u, V v);
+    R apply(T1 t1, T2 t2, T3 t3);
 }
