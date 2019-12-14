@@ -23,11 +23,23 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     Screen parentScreen;
 
 
+    boolean backspace = false;
+
+
     public OakTreeScreen(Control root, boolean isPauseScreen, Screen parentScreen) {
         super(new LiteralText("gui"));
         this.root = root;
         this.isPauseScreen = isPauseScreen;
         this.parentScreen = parentScreen;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == 259) {
+            backspace = true;
+        }
+
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
@@ -47,8 +59,10 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
         root.preDraw(int_1, int_2, float_1, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
         root.draw(int_1, int_2, float_1, this);
+
         leftMouseJustPressed = false;
         lastChar = null;
+        backspace = false;
 
         width = (int)root.trueWidth;
         height = (int)root.trueHeight;
@@ -92,6 +106,18 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public boolean isKeyPressed(String key) {
+        switch (key) {
+            case "enter":
+                return false;
+            case "backspace":
+                return backspace;
+            default:
+                return false;
+        }
     }
 
     @Override

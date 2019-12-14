@@ -13,4 +13,6 @@ public interface OakTreeGUI {
     boolean mouseButtonJustClicked(String mouseButton);
 
     Optional<Character> getLastChar();
+
+    boolean isKeyPressed(String key);
 }

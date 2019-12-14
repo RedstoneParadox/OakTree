@@ -1,9 +1,11 @@
 package redstoneparadox.oaktree.client.gui.control;
 
+import net.minecraft.client.font.TextRenderer;
 import redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import redstoneparadox.oaktree.client.gui.util.TypingListener;
+import redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
 
 /**
  * @apiNote  Work in Progress!
@@ -31,11 +33,21 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         gui.getLastChar().ifPresent((character -> {
-            Character toType = onCharTyped.invoke(character, this);
-            if (toType != null) {
-                text = text + toType;
+            Character typed = onCharTyped.invoke(character, this);
+            if (typed != null) {
+                String str = text + typed;
+                TextRenderer font = ((ScreenAccessor)gui).getFont();
+                int stringWidth = font.getStringWidth(str);
+
+                if (stringWidth <= trueWidth) {
+                    text = str;
+                }
             }
         }));
+
+        if (gui.isKeyPressed("backspace") && text.length() > 0) {
+            text = text.substring(0, text.length() - 1);
+        }
 
         drawString(text, gui, trueX, trueY, null, false, RGBAColor.red());
     }

@@ -95,6 +95,11 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     }
 
     @Override
+    public boolean isKeyPressed(String key) {
+        return false;
+    }
+
+    @Override
     public Optional<Container> getScreenContainer() {
         return Optional.of(container);
     }
