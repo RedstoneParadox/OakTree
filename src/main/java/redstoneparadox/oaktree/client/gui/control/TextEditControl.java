@@ -9,18 +9,21 @@ import redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import redstoneparadox.oaktree.client.gui.util.TypingListener;
 import redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @apiNote  Work in Progress!
  */
-public class TextEditControl extends InteractiveControl<TextEditControl> implements TextNode {
+public class TextEditControl extends InteractiveControl<TextEditControl> implements TextControl<TextEditControl> {
 
-    private List<String> lines = Lists.newArrayList("");
+    private boolean shadow = false;
+    private RGBAColor fontColor = RGBAColor.white();
+    private int maxLines = 1;
 
     private TypingListener<TextEditControl> onCharTyped = (toType, node) -> toType;
     private GuiFunction<TextEditControl> onFocused = (gui, node) -> {};
+
+    private List<String> lines = Lists.newArrayList("");
 
     public TextEditControl onCharTyped(TypingListener<TextEditControl> listener) {
         onCharTyped = listener;
@@ -29,6 +32,40 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     public TextEditControl onFocused(GuiFunction<TextEditControl> listener) {
         onFocused = listener;
+        return this;
+    }
+
+    /**
+     * Sets whether the text should be drawn with a shadow.
+     *
+     * @param shadow The value.
+     * @return The control itself.
+     */
+    public TextEditControl shadow(boolean shadow) {
+        this.shadow = shadow;
+        return this;
+    }
+
+    /**
+     * Sets the color of the font to be drawn. Note that transparency
+     * is ignored here due to Minecraft internals.
+     *
+     * @param fontColor The RGBA Color
+     * @return The control itself.
+     */
+    public TextEditControl fontColor(RGBAColor fontColor) {
+        this.fontColor = fontColor;
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of lines.
+     *
+     * @param maxLines The max number of lines.
+     * @return The control itself.
+     */
+    public TextEditControl maxLines(int maxLines) {
+        if (maxLines > 0) this.maxLines = maxLines;
         return this;
     }
 
@@ -60,13 +97,13 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 }
             }
         }
-        if (gui.isKeyPressed("enter")) lines.add("");
+        if (gui.isKeyPressed("enter") && lines.size() < maxLines) lines.add("");
 
         if (!removed) lines.set(index, currentLine);
 
         int offset = 0;
         for (String line: lines) {
-            drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, false, RGBAColor.red());
+            drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
             offset += 1;
         }
     }

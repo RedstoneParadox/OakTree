@@ -37,7 +37,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @param percent The percent of the split. Values are in pixels.
      * @return The node itself.
      */
-    public SplitBoxControl setSplitPercent(float percent) {
+    public SplitBoxControl splitPercent(float percent) {
         if (percent <= 0.0f) {
             percent = 0.0f;
         }
@@ -69,7 +69,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @param child The first child.
      * @return The node itself.
      */
-    public SplitBoxControl setFirstChild(Control child) {
+    public SplitBoxControl firstChild(Control child) {
         first.child(child);
         return this;
     }
@@ -83,7 +83,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
      * @param child The second child.
      * @return The node itself.
      */
-    public SplitBoxControl setSecondChild(Control child) {
+    public SplitBoxControl secondChild(Control child) {
         second.child(child);
         return this;
     }

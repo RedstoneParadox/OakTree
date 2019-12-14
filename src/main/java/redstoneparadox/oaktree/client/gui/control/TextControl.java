@@ -7,7 +7,7 @@ import redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
 
-public interface TextNode {
+public interface TextControl<TC extends TextControl> {
 
     default void drawString(String string, OakTreeGUI gui, float x, float y, ControlAnchor alignment, boolean withShadow, RGBAColor fontColor) {
         int redInt = (int) fontColor.redChannel * 255;
@@ -19,8 +19,6 @@ public interface TextNode {
         if (gui instanceof Screen) {
             TextRenderer font = ((ScreenAccessor)gui).getFont();
             int stringWidth = font.getStringWidth(string);
-
-
 
             if (withShadow) {
                 font.drawWithShadow(string, x + 1, y + 1, colorInt);

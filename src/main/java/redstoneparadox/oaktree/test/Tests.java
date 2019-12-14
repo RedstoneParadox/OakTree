@@ -124,13 +124,13 @@ public class Tests {
             if (world_1.isClient()) {
                 SplitBoxControl root = new SplitBoxControl()
                         .expand(true)
-                        .setSplitPercent(50.0f)
+                        .splitPercent(50.0f)
                         .setFirstMargin(10.0f)
                         .setSecondMargin(10.0f)
-                        .setFirstChild(new Control()
+                        .firstChild(new Control()
                                         .expand(true)
                                         .defaultStyle(new ColorStyleBox(RGBAColor.red())))
-                        .setSecondChild(new Control()
+                        .secondChild(new Control()
                                         .expand(true)
                                         .defaultStyle(new ColorStyleBox(RGBAColor.blue())));
 
@@ -152,10 +152,10 @@ public class Tests {
             if (world_1.isClient()) {
                 SplitBoxControl root = new SplitBoxControl()
                         .expand(true)
-                        .setSplitPercent(50.0f)
+                        .splitPercent(50.0f)
                         .setFirstMargin(10.0f)
                         .setSecondMargin(10.0f)
-                        .setFirstChild(new ProgressBarControl()
+                        .firstChild(new ProgressBarControl()
                                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
                                 .barStyle(new ColorStyleBox(RGBAColor.red()))
                                 .size(20.0f, 100.0f)
@@ -163,7 +163,7 @@ public class Tests {
                                 .anchor(ControlAnchor.CENTER)
                                 .drawDirection(ControlDirection.DOWN)
                                 .percent(50.0f))
-                        .setSecondChild(new Control()
+                        .secondChild(new Control()
                                 .expand(true)
                                 .defaultStyle(new ColorStyleBox(RGBAColor.blue())));
 
@@ -187,10 +187,10 @@ public class Tests {
 
                 SplitBoxControl root = new SplitBoxControl()
                         .expand(true)
-                        .setSplitPercent(50.0f)
+                        .splitPercent(50.0f)
                         .setFirstMargin(10.0f)
                         .setSecondMargin(10.0f)
-                        .setSecondChild(bar
+                        .secondChild(bar
                                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
                                 .barStyle(new ColorStyleBox(RGBAColor.red()))
                                 .size(20.0f, 100.0f)
@@ -198,7 +198,7 @@ public class Tests {
                                 .anchor(ControlAnchor.CENTER)
                                 .drawDirection(ControlDirection.DOWN)
                                 .percent(0.0f))
-                        .setFirstChild(new ButtonControl()
+                        .firstChild(new ButtonControl()
                                 .expand(true)
                                 .onClick(((gui, node) -> {
                                     System.out.println("I was clicked!");
@@ -317,15 +317,36 @@ public class Tests {
         public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient) {
                 Screen screen = new ScreenBuilder(
-                        new BoxControl()
-                                .size(180, 250)
-                                .anchor(ControlAnchor.CENTER)
-                                .defaultStyle(new ColorStyleBox(new RGBAColor(0.5f, 0.5f, 0.5f)))
-                                .child(
-                                    new TextEditControl()
-                                            .anchor(ControlAnchor.CENTER)
-                                            .size(160, 230)
-                                            .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                        new SplitBoxControl()
+                                .expand(true)
+                                .firstChild(
+                                        new BoxControl()
+                                                .size(180, 250)
+                                                .anchor(ControlAnchor.CENTER)
+                                                .defaultStyle(new ColorStyleBox(new RGBAColor(0.5f, 0.5f, 0.5f)))
+                                                .child(
+                                                        new TextEditControl()
+                                                                .anchor(ControlAnchor.CENTER)
+                                                                .size(160, 230)
+                                                                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                                                                .maxLines(10)
+                                                )
+                                )
+                                .secondChild(
+                                        new BoxControl()
+                                                .size(180, 250)
+                                                .anchor(ControlAnchor.CENTER)
+                                                .defaultStyle(new ColorStyleBox(new RGBAColor(0.5f, 0.5f, 0.5f)))
+                                                .child(
+                                                        new LabelControl()
+                                                                .anchor(ControlAnchor.CENTER)
+                                                                .size(160, 230)
+                                                                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                                                                .text(
+                                                                        "Hello, world!\nThis is a showcase for the GUI\ntoolkit Oak Tree!"
+                                                                )
+                                                                .maxLines(10)
+                                                )
                                 )
                 ).build();
 
