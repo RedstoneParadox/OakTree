@@ -3,7 +3,7 @@ package redstoneparadox.oaktree.client.gui.style;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.GuiLighting;
+import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.item.Item;
@@ -52,7 +52,7 @@ public class ItemStyleBox extends StyleBox {
     @Override
     public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
-        GuiLighting.enableForItems(new Matrix4f());
+        DiffuseLighting.enableForLevel(new Matrix4f());
         renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);
         if (gui instanceof Screen) {
             TextRenderer font = ((ScreenAccessor)gui).getFont();

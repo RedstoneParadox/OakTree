@@ -55,8 +55,8 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
         width = (int)root.trueWidth;
         height = (int)root.trueHeight;
 
-        left = (int)root.trueX;
-        top = (int)root.trueY;
+        x = (int)root.trueX;
+        y = (int)root.trueY;
     }
 
     @Override

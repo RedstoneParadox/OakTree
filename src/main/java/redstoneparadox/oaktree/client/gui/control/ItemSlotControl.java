@@ -40,8 +40,8 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
 
             if (index < container.slotList.size()) {
                 Slot slot = container.slotList.get(index);
-                slot.xPosition = slotX;
-                slot.yPosition = slotY;
+                // slot.xPosition = slotX;
+                // slot.yPosition = slotY;
 
                 OakTreeClientNetworking.syncSlot((int)trueX, (int)trueY, index, container.syncId);
             }

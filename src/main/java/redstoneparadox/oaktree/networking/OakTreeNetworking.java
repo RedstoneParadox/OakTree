@@ -35,8 +35,8 @@ public class OakTreeNetworking {
             Container container = CONTAINER_MAP.get(syncID);
             if (index < container.slotList.size()) {
                 Slot slot = container.slotList.get(index);
-                slot.xPosition = x;
-                slot.yPosition = y;
+                // slot.xPosition = x;
+                // slot.yPosition = y;
             }
         }
         else {

@@ -23,7 +23,7 @@ public class ColorStyleBox extends StyleBox {
 
         GlStateManager.enableBlend();
         GlStateManager.disableTexture();
-        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_COLOR.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
+        GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.value, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SrcFactor.ONE.value, GlStateManager.DstFactor.ZERO.value);
         GlStateManager.color4f(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
 
         ScreenVec vert1 = new ScreenVec(x, y);
