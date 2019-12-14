@@ -23,10 +23,10 @@ public interface TextNode {
 
 
             if (withShadow) {
-                font.drawWithShadow(string, x, y, colorInt);
+                font.drawWithShadow(string, x + 1, y, colorInt);
             }
             else {
-                font.draw(string, x, y, colorInt);
+                font.draw(string, x + 1, y, colorInt);
             }
         }
     }
