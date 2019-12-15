@@ -2,6 +2,9 @@ package redstoneparadox.oaktree.client.gui.control;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.util.Texts;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import redstoneparadox.oaktree.client.gui.util.GuiFunction;
@@ -27,6 +30,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
 
     private List<String> lines = Lists.newArrayList("");
+    private Text text = new LiteralText("");
     private boolean focused = false;
     private boolean allSelected = false;
 
@@ -48,15 +52,17 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     public TextEditControl text(String text) {
-        lines.clear();
-        List<String> split = Arrays.asList(text.split("(\r\n|\r|\n)", -1));
-        lines.addAll(split);
+        this.text = new LiteralText(text);
+        return this;
+    }
+
+    public TextEditControl text(Text text) {
+        this.text = text;
         return this;
     }
 
     public TextEditControl clear() {
-        lines.clear();
-        lines.add("");
+        text = new LiteralText("");
         return this;
     }
 
@@ -102,10 +108,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
-        int index = lines.size() - 1;
-        String currentLine = lines.get(index);
-        TextRenderer font = ((ScreenAccessor)gui).getFont();
-
         if (gui.mouseButtonJustClicked("left")  ) {
             if (isMouseWithin && !focused) {
                 focused = true;
@@ -121,57 +123,53 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 allSelected = false;
             }
         }
-
         if (focused) {
             ticks += 1;
             if (ticks >= 40) ticks = 0;
 
             if (gui.getLastChar().isPresent()) {
                 Character character = onCharTyped.invoke(gui.getLastChar().get(), this);
-                if (character != null && font.getStringWidth(currentLine + character) + 2 < trueWidth) {
+                if (character != null) {
                     if (allSelected) {
                         clear();
-                        currentLine = character.toString();
+                        text(character.toString());
                         allSelected = false;
                     }
                     else {
-                        currentLine = currentLine + character;
+                        text.append(character.toString());
                     }
                 }
             }
 
-            boolean removed = false;
             if (gui.isKeyPressed("backspace")) {
                 if (allSelected) {
                     clear();
-                    removed = true;
                     allSelected = false;
                 }
-                if (currentLine.length() > 0) {
-                    currentLine = currentLine.substring(0, currentLine.length() - 1);
-                }
                 else {
-                    currentLine = "";
-                    if (lines.size() > 1) {
-                        lines.remove(index);
-                        removed = true;
-                    }
+                    String string = text.getString();
+                    if (!string.isEmpty()) text(string.substring(0, string.length() - 1));
                 }
             }
-            if (!removed) lines.set(index, currentLine);
 
-            if (gui.isKeyPressed("enter") && lines.size() < maxLines) {
-                lines.add("");
-                allSelected = false;
-            }
             if (gui.isKeyPressed("ctrl_a")) allSelected = true;
+            if (gui.isKeyPressed("enter")) text.append("\n");
+        }
+
+        TextRenderer font = gui.getTextRenderer();
+        List<Text> texts = Texts.wrapLines(text, (int) trueWidth, gui.getTextRenderer(), false, false);
+        if (texts.size() > maxLines) {
+            texts = texts.subList(0, maxLines);
         }
 
         int offset = 0;
-        for (String line: lines) {
-            if (font.getStringWidth(currentLine + "_") < trueWidth && ticks < 20 && focused && offset + 1 == lines.size()) drawString(line + "_", gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
-            else drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
-            if (allSelected) drawHighlights(line, gui, trueX, trueY + offset*10, highlightColor);
+
+        for (Text text: texts) {
+            String line = text.getString();
+            float lineY = trueY + offset * 10;
+            if (ticks < 20 && focused && offset + 1 == texts.size() && font.getStringWidth(line + "_") < trueWidth) drawString(line + "_", gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
+            else drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
+            if (allSelected) drawHighlights(line, gui, trueX, lineY, highlightColor);
             offset += 1;
         }
     }
