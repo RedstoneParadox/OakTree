@@ -19,6 +19,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     private boolean shadow = false;
     private RGBAColor fontColor = RGBAColor.white();
+    private RGBAColor highlightColor = RGBAColor.blue();
     private int maxLines = 1;
 
     private TypingListener<TextEditControl> onCharTyped = (character, control) -> character;
@@ -27,6 +28,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     private List<String> lines = Lists.newArrayList("");
     private boolean focused = false;
+    private boolean allSelected = false;
 
     private int ticks = 0;
 
@@ -105,14 +107,18 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         TextRenderer font = ((ScreenAccessor)gui).getFont();
 
         if (gui.mouseButtonJustClicked("left")  ) {
-            if (isMouseWithin) {
+            if (isMouseWithin && !focused) {
                 focused = true;
                 onFocused.invoke(gui, this);
                 ticks = 0;
             }
-            else  {
+            else if (focused) {
                 focused = false;
+                allSelected = false;
                 onFocusLost.invoke(gui, this);
+            }
+            else {
+                allSelected = false;
             }
         }
 
@@ -122,14 +128,26 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
             if (gui.getLastChar().isPresent()) {
                 Character character = onCharTyped.invoke(gui.getLastChar().get(), this);
-                if (character != null || font.getStringWidth(currentLine + character) < trueWidth) {
-                    currentLine = currentLine + character;
+                if (character != null && font.getStringWidth(currentLine + character) + 2 < trueWidth) {
+                    if (allSelected) {
+                        clear();
+                        currentLine = character.toString();
+                        allSelected = false;
+                    }
+                    else {
+                        currentLine = currentLine + character;
+                    }
                 }
             }
 
             boolean removed = false;
             if (gui.isKeyPressed("backspace")) {
-                if (currentLine.length() > 1) {
+                if (allSelected) {
+                    clear();
+                    removed = true;
+                    allSelected = false;
+                }
+                if (currentLine.length() > 0) {
                     currentLine = currentLine.substring(0, currentLine.length() - 1);
                 }
                 else {
@@ -140,15 +158,20 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                     }
                 }
             }
-            if (gui.isKeyPressed("enter") && lines.size() < maxLines) lines.add("");
-
             if (!removed) lines.set(index, currentLine);
+
+            if (gui.isKeyPressed("enter") && lines.size() < maxLines) {
+                lines.add("");
+                allSelected = false;
+            }
+            if (gui.isKeyPressed("ctrl_a")) allSelected = true;
         }
 
         int offset = 0;
         for (String line: lines) {
             if (font.getStringWidth(currentLine + "_") < trueWidth && ticks < 20 && focused && offset + 1 == lines.size()) drawString(line + "_", gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
             else drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
+            if (allSelected) drawHighlights(line, gui, trueX, trueY + offset*10, highlightColor);
             offset += 1;
         }
     }

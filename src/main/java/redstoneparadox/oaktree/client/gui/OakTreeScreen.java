@@ -25,7 +25,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     private boolean backspace = false;
     private boolean enter = false;
-
+    private boolean ctrlA = false;
 
     public OakTreeScreen(Control root, boolean isPauseScreen, Screen parentScreen) {
         super(new LiteralText("gui"));
@@ -36,12 +36,9 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == 259) {
-            backspace = true;
-        }
-        else if (keyCode == 257) {
-            enter = true;
-        }
+        if (keyCode == 259) backspace = true;
+        if (keyCode == 257) enter = true;
+        if (hasControlDown() && keyCode == 65) ctrlA = true;
 
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
@@ -68,6 +65,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
         lastChar = null;
         backspace = false;
         enter = false;
+        ctrlA = false;
 
         width = (int)root.trueWidth;
         height = (int)root.trueHeight;
@@ -120,6 +118,8 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
                 return enter;
             case "backspace":
                 return backspace;
+            case "ctrl_a":
+                return ctrlA;
             default:
                 return false;
         }

@@ -1,10 +1,16 @@
 package redstoneparadox.oaktree.client.gui.control;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
 import redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
 
 public interface TextControl<TC extends TextControl> {
@@ -20,11 +26,42 @@ public interface TextControl<TC extends TextControl> {
             TextRenderer font = ((ScreenAccessor)gui).getFont();
 
             if (withShadow) {
-                font.drawWithShadow(string, x + 1, y + 1, colorInt);
+                font.drawWithShadow(string, x + 2, y + 2, colorInt);
             }
             else {
-                font.draw(string, x + 1, y + 1, colorInt);
+                font.draw(string, x + 2, y + 2, colorInt);
             }
         }
+    }
+
+    default void drawHighlights(String string, OakTreeGUI gui, float x, float y, RGBAColor highlightColor) {
+        TextRenderer font = ((ScreenAccessor)gui).getFont();
+        int width = font.getStringWidth(string);
+        int height = font.fontHeight;
+
+        ScreenVec vert1 = new ScreenVec(x + 1, y + 1);
+        ScreenVec vert2 = new ScreenVec(x + 1, y + 3 + height);
+        ScreenVec vert3 = new ScreenVec(x + 3 + width, y + 3 + height);
+        ScreenVec vert4 = new ScreenVec(x + 3 + width, y + 1);
+
+        float red = highlightColor.redChannel * 255;
+        float green = highlightColor.greenChannel * 255;
+        float blue = highlightColor.blueChannel * 255;
+        float alpha = highlightColor.alphaChannel * 255;
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
+        RenderSystem.color4f(red, green, blue, alpha);
+        RenderSystem.disableTexture();
+        RenderSystem.enableColorLogicOp();
+        RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
+        builder.begin(7, VertexFormats.POSITION);
+        builder.vertex(vert1.x, vert1.y, 0.0).next();
+        builder.vertex(vert2.x, vert2.y, 0.0).next();
+        builder.vertex(vert3.x, vert3.y, 0.0).next();
+        builder.vertex(vert4.x, vert4.y, 0.0).next();
+        tessellator.draw();
+        RenderSystem.disableColorLogicOp();
+        RenderSystem.enableTexture();
     }
 }
