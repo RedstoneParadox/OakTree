@@ -22,8 +22,6 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     private Screen parentScreen;
 
-    private Control<?> focused = null;
-
 
     private boolean backspace = false;
     private boolean enter = false;
@@ -125,16 +123,6 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
             default:
                 return false;
         }
-    }
-
-    @Override
-    public boolean hasFocus(Control<?> control) {
-        return control == focused;
-    }
-
-    @Override
-    public void stealFocus(Control<?> control) {
-        focused = control;
     }
 
     @Override

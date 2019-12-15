@@ -22,16 +22,23 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     private TypingListener<TextEditControl> onCharTyped = (toType, control) -> toType;
     private GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
+    private GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
 
     private List<String> lines = Lists.newArrayList("");
+    private boolean focused = false;
 
-    public TextEditControl onCharTyped(TypingListener<TextEditControl> listener) {
-        onCharTyped = listener;
+    public TextEditControl onCharTyped(TypingListener<TextEditControl> onCharTyped) {
+        this.onCharTyped = onCharTyped;
         return this;
     }
 
-    public TextEditControl onFocused(GuiFunction<TextEditControl> listener) {
-        onFocused = listener;
+    public TextEditControl onFocused(GuiFunction<TextEditControl> onFocused) {
+        this.onFocused = onFocused;
+        return this;
+    }
+
+    public TextEditControl onFocusLost(GuiFunction<TextEditControl> onFocusLost) {
+        this.onFocusLost = onFocusLost;
         return this;
     }
 
@@ -77,33 +84,42 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         String currentLine = lines.get(index);
         TextRenderer font = ((ScreenAccessor)gui).getFont();
 
-        if (isMouseWithin && gui.mouseButtonJustClicked("left")) gui.stealFocus(this);
-        if (!gui.hasFocus(this)) return;
-        onFocused.invoke(gui, this);
-
-        if (gui.getLastChar().isPresent()) {
-            Character character = onCharTyped.invoke(gui.getLastChar().get(), this);
-            if (character != null || font.getStringWidth(currentLine + character) < trueWidth) {
-                currentLine = currentLine + character;
+        if (gui.mouseButtonJustClicked("left")) {
+            if (isMouseWithin) {
+                focused = true;
+                onFocused.invoke(gui, this);
+            }
+            else  {
+                focused = false;
+                onFocusLost.invoke(gui, this);
             }
         }
 
-        boolean removed = false;
-        if (gui.isKeyPressed("backspace")) {
-            if (currentLine.length() > 1) {
-                currentLine = currentLine.substring(0, currentLine.length() - 1);
-            }
-            else {
-                currentLine = "";
-                if (lines.size() > 1) {
-                    lines.remove(index);
-                    removed = true;
+        if (focused) {
+            if (gui.getLastChar().isPresent()) {
+                Character character = onCharTyped.invoke(gui.getLastChar().get(), this);
+                if (character != null || font.getStringWidth(currentLine + character) < trueWidth) {
+                    currentLine = currentLine + character;
                 }
             }
-        }
-        if (gui.isKeyPressed("enter") && lines.size() < maxLines) lines.add("");
 
-        if (!removed) lines.set(index, currentLine);
+            boolean removed = false;
+            if (gui.isKeyPressed("backspace")) {
+                if (currentLine.length() > 1) {
+                    currentLine = currentLine.substring(0, currentLine.length() - 1);
+                }
+                else {
+                    currentLine = "";
+                    if (lines.size() > 1) {
+                        lines.remove(index);
+                        removed = true;
+                    }
+                }
+            }
+            if (gui.isKeyPressed("enter") && lines.size() < maxLines) lines.add("");
+
+            if (!removed) lines.set(index, currentLine);
+        }
 
         int offset = 0;
         for (String line: lines) {

@@ -16,8 +16,4 @@ public interface OakTreeGUI {
     Optional<Character> getLastChar();
 
     boolean isKeyPressed(String key);
-
-    boolean hasFocus(Control<?> control);
-
-    void stealFocus(Control<?> control);
 }
