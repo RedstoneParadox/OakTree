@@ -18,7 +18,6 @@ public interface TextControl<TC extends TextControl> {
 
         if (gui instanceof Screen) {
             TextRenderer font = ((ScreenAccessor)gui).getFont();
-            int stringWidth = font.getStringWidth(string);
 
             if (withShadow) {
                 font.drawWithShadow(string, x + 1, y + 1, colorInt);

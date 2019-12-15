@@ -27,6 +27,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private List<String> lines = Lists.newArrayList("");
     private boolean focused = false;
 
+    int ticks = 0;
+
     public TextEditControl onCharTyped(TypingListener<TextEditControl> onCharTyped) {
         this.onCharTyped = onCharTyped;
         return this;
@@ -88,6 +90,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             if (isMouseWithin) {
                 focused = true;
                 onFocused.invoke(gui, this);
+                ticks = 0;
             }
             else  {
                 focused = false;
@@ -96,6 +99,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
 
         if (focused) {
+            ticks += 1;
+            if (ticks >= 40) ticks = 0;
+
             if (gui.getLastChar().isPresent()) {
                 Character character = onCharTyped.invoke(gui.getLastChar().get(), this);
                 if (character != null || font.getStringWidth(currentLine + character) < trueWidth) {
@@ -123,7 +129,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
         int offset = 0;
         for (String line: lines) {
-            drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
+            if (font.getStringWidth(currentLine + "_") < trueWidth && ticks < 20 && focused) drawString(line + "_", gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
+            else drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
             offset += 1;
         }
     }
