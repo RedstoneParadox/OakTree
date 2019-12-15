@@ -1,6 +1,7 @@
 package redstoneparadox.oaktree.client.gui.control;
 
 import com.google.common.collect.Lists;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.Texts;
 import net.minecraft.text.LiteralText;
@@ -154,6 +155,16 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
             if (gui.isKeyPressed("ctrl_a")) allSelected = true;
             if (gui.isKeyPressed("enter")) text.append("\n");
+            if (gui.isKeyPressed("copy") && allSelected) MinecraftClient.getInstance().keyboard.setClipboard(text.getString());
+            if (gui.isKeyPressed("cut") && allSelected) {
+                MinecraftClient.getInstance().keyboard.setClipboard(text.getString());
+                clear();
+            }
+            if (gui.isKeyPressed("paste")) {
+                String string = MinecraftClient.getInstance().keyboard.getClipboard();
+                if (allSelected) text(string);
+                else text.append(string);
+            }
         }
 
         TextRenderer font = gui.getTextRenderer();

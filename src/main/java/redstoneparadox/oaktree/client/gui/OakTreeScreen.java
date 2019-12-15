@@ -27,6 +27,9 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     private boolean backspace = false;
     private boolean enter = false;
     private boolean ctrlA = false;
+    private boolean copy = false;
+    private boolean cut = false;
+    private boolean paste = false;
 
     public OakTreeScreen(Control root, boolean isPauseScreen, Screen parentScreen) {
         super(new LiteralText("gui"));
@@ -40,6 +43,9 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
         if (keyCode == 259) backspace = true;
         if (keyCode == 257) enter = true;
         if (hasControlDown() && keyCode == 65) ctrlA = true;
+        if (isCopy(keyCode)) copy = true;
+        if (isCut(keyCode)) cut = true;
+        if (isPaste(keyCode)) paste = true;
 
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
@@ -67,6 +73,9 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
         backspace = false;
         enter = false;
         ctrlA = false;
+        copy = false;
+        cut = false;
+        paste = false;
 
         width = (int)root.trueWidth;
         height = (int)root.trueHeight;
@@ -121,6 +130,12 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
                 return backspace;
             case "ctrl_a":
                 return ctrlA;
+            case "cut":
+                return cut;
+            case "copy":
+                return copy;
+            case "paste":
+                return paste;
             default:
                 return false;
         }
