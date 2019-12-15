@@ -104,7 +104,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         String currentLine = lines.get(index);
         TextRenderer font = ((ScreenAccessor)gui).getFont();
 
-        if (gui.mouseButtonJustClicked("left")) {
+        if (gui.mouseButtonJustClicked("left")  ) {
             if (isMouseWithin) {
                 focused = true;
                 onFocused.invoke(gui, this);
