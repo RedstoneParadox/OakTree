@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
 import net.minecraft.entity.player.PlayerInventory;
@@ -150,6 +151,11 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     @Override
     public TextRenderer getTextRenderer() {
         return this.font;
+    }
+
+    @Override
+    public boolean isBackspaceHeld() {
+        return InputUtil.isKeyPressed(minecraft.getWindow().getHandle(), 259);
     }
 
     @Override

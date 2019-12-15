@@ -3,6 +3,8 @@ package redstoneparadox.oaktree.client.gui;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
 import net.minecraft.text.LiteralText;
@@ -143,6 +145,11 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     @Override
     public TextRenderer getTextRenderer() {
         return this.font;
+    }
+
+    @Override
+    public boolean isBackspaceHeld() {
+        return InputUtil.isKeyPressed(minecraft.getWindow().getHandle(), 259);
     }
 
     @Override

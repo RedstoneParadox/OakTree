@@ -19,4 +19,6 @@ public interface OakTreeGUI {
     boolean isKeyPressed(String key);
 
     TextRenderer getTextRenderer();
+
+    boolean isBackspaceHeld();
 }

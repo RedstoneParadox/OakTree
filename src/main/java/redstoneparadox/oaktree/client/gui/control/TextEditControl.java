@@ -36,6 +36,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private boolean allSelected = false;
 
     private int ticks = 0;
+    private int backspaceTicks = 0;
 
     public TextEditControl onCharTyped(TypingListener<TextEditControl> onCharTyped) {
         this.onCharTyped = onCharTyped;
@@ -142,16 +143,27 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 }
             }
 
-            if (gui.isKeyPressed("backspace")) {
-                if (allSelected) {
-                    clear();
-                    allSelected = false;
+            if (gui.isBackspaceHeld()) {
+                if (backspaceTicks == 0 || backspaceTicks > 20) {
+                    if (allSelected) {
+                        clear();
+                        allSelected = false;
+                    }
+                    else {
+                        String string = text.getString();
+                        if (!string.isEmpty()) text(string.substring(0, string.length() - 1));
+                    }
+                    if (backspaceTicks == 0) backspaceTicks = 1;
                 }
                 else {
-                    String string = text.getString();
-                    if (!string.isEmpty()) text(string.substring(0, string.length() - 1));
+                    backspaceTicks += 1;
                 }
             }
+            else {
+                backspaceTicks = 0;
+            }
+
+
 
             if (gui.isKeyPressed("ctrl_a")) allSelected = true;
             if (gui.isKeyPressed("enter")) text.append("\n");
