@@ -23,14 +23,10 @@ public interface TextControl<TC extends TextControl> {
         int colorInt = redInt << 16 | greenInt << 8 | blueInt;
 
         if (gui instanceof Screen) {
-            TextRenderer font = ((ScreenAccessor)gui).getFont();
+            TextRenderer font = gui.getTextRenderer();
 
-            if (withShadow) {
-                font.drawWithShadow(string, x + 2, y + 2, colorInt);
-            }
-            else {
-                font.draw(string, x + 2, y + 2, colorInt);
-            }
+            if (withShadow) font.drawWithShadow(string, x + 2, y + 2, colorInt);
+            else font.draw(string, x + 2, y + 2, colorInt);
         }
     }
 

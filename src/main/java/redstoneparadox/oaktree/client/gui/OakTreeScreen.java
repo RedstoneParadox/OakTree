@@ -1,6 +1,7 @@
 package redstoneparadox.oaktree.client.gui;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
@@ -123,6 +124,11 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
             default:
                 return false;
         }
+    }
+
+    @Override
+    public TextRenderer getTextRenderer() {
+        return this.font;
     }
 
     @Override

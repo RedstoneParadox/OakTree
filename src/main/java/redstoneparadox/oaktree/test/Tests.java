@@ -317,25 +317,25 @@ public class Tests {
         public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient) {
                 final RGBAColor grey = new RGBAColor(0.8f, 0.8f, 0.8f);
+
+                Control thing = new TextEditControl()
+                        .anchor(ControlAnchor.CENTER)
+                        .shadow(true)
+                        .size(160, 230)
+                        .defaultStyle(new ColorStyleBox(RGBAColor.black(), grey, 1.0f))
+                        .fontColor(RGBAColor.white())
+                        .maxLines(20);
+
                 Screen screen = new ScreenBuilder(
                         new SplitBoxControl()
                                 .expand(true)
-                                .firstChild(
-                                        new TextEditControl()
-                                                .anchor(ControlAnchor.CENTER)
-                                                .shadow(true)
-                                                .size(160, 230)
-                                                .defaultStyle(new ColorStyleBox(RGBAColor.black(), grey, 1.0f))
-                                                .fontColor(RGBAColor.white())
-                                                .maxLines(20)
-                                )
                                 .secondChild(
                                         new LabelControl()
                                                 .anchor(ControlAnchor.CENTER)
                                                 .shadow(true)
                                                 .size(160, 230)
                                                 .defaultStyle(new ColorStyleBox(RGBAColor.black(), grey, 1.0f))
-                                                .text("Hello, world!\nThis is a showcase for the GUI\ntoolkit Oak Tree!")
+                                                .text("Hello, world! This is a showcase for the GUI toolkit Oak Tree!")
                                                 .maxLines(10)
                                 )
                 ).build();

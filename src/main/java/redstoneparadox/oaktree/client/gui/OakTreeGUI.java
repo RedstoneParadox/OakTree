@@ -1,5 +1,6 @@
 package redstoneparadox.oaktree.client.gui;
 
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.container.Container;
 import redstoneparadox.oaktree.client.gui.control.Control;
 
@@ -16,4 +17,6 @@ public interface OakTreeGUI {
     Optional<Character> getLastChar();
 
     boolean isKeyPressed(String key);
+
+    TextRenderer getTextRenderer();
 }

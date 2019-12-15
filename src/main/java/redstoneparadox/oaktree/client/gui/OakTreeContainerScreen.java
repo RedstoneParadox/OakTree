@@ -1,6 +1,7 @@
 package redstoneparadox.oaktree.client.gui;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
 import net.minecraft.client.util.Window;
@@ -97,6 +98,11 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     @Override
     public boolean isKeyPressed(String key) {
         return false;
+    }
+
+    @Override
+    public TextRenderer getTextRenderer() {
+        return this.font;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package redstoneparadox.oaktree.client.gui.control;
 
 import com.google.common.collect.Lists;
+import net.minecraft.client.util.Texts;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Overwrite;
 import redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import redstoneparadox.oaktree.client.gui.util.ControlAnchor;
@@ -15,17 +18,20 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
     private RGBAColor fontColor = RGBAColor.white();
     private int maxLines = 1;
 
-    private final List<String> lines = Lists.newArrayList("");
+    private Text text = new LiteralText("");
 
     public LabelControl text(String text) {
-        lines.clear();
-        List<String> split = Arrays.asList(text.split("(\r\n|\r|\n)", -1));
-        lines.addAll(split);
+        this.text = new LiteralText(text);
+        return this;
+    }
+
+    public LabelControl text(Text text) {
+        this.text = text;
         return this;
     }
 
     public LabelControl clear() {
-        lines.clear();
+        text = new LiteralText("");
         return this;
     }
 
@@ -67,9 +73,14 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
+        List<Text> texts = Texts.wrapLines(text, (int) trueWidth, gui.getTextRenderer(), false, false);
+        if (texts.size() > maxLines) {
+            texts = texts.subList(0, maxLines);
+        }
+
         int offset = 0;
-        for (String line: lines) {
-            drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
+        for (Text text: texts) {
+            drawString(text.getString().trim(), gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
             offset += 1;
         }
     }
