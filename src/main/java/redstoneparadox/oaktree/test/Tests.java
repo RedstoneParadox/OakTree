@@ -42,7 +42,7 @@ public class Tests {
     private final Block TEST_SEVEN_BLOCK = new TestSevenBlock(testSettings());
     private final Block TEST_EIGHT_BLOCK = new TestEightBlock(testSettings());
 
-    static Identifier TEST_SIX = new Identifier("oak_tree", "test_six");
+    static Identifier TEST_SIX = new Identifier("oaktree", "test_six");
 
     public void init() {
         register(TEST_ONE_BLOCK, "one");
@@ -85,7 +85,7 @@ public class Tests {
     }
 
     private void register(Block block, String testNum) {
-        Registry.register(Registry.BLOCK, new Identifier("oak_tree", "test_" + testNum + "_block"), block);
+        Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + testNum + "_block"), block);
     }
 
     private static class TestOneBlock extends Block {
