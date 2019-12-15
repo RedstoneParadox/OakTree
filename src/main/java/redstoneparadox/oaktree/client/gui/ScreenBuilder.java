@@ -102,7 +102,7 @@ public class ScreenBuilder {
      *
      * @return An {@link AbstractContainerScreen} instance.
      */
-    public AbstractContainerScreen<Container> buildContainerScreen() {
-        return new OakTreeContainerScreen<>(root, pause, parent, container, playerInventory, text);
+    public <C extends Container> AbstractContainerScreen<C> buildContainerScreen() {
+        return new OakTreeContainerScreen<C>(root, pause, parent, (C) container, playerInventory, text);
     }
 }

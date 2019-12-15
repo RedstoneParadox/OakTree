@@ -6,9 +6,8 @@ import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
 import net.minecraft.container.Container;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
-import redstoneparadox.oaktree.client.gui.OakTreeContainerScreen;
 import redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import redstoneparadox.oaktree.client.gui.OakTreeScreen;
+import redstoneparadox.oaktree.client.gui.ScreenBuilder;
 import redstoneparadox.oaktree.client.gui.style.StyleBox;
 import redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import redstoneparadox.oaktree.client.gui.util.GuiFunction;
@@ -142,12 +141,24 @@ public class Control<C extends Control> {
 
     @Deprecated
     public void openAsScreen(boolean isPauseScreen, Screen parentScreen) {
-        MinecraftClient.getInstance().openScreen(new OakTreeScreen(this, isPauseScreen, parentScreen));
+        Screen screen = new ScreenBuilder(this)
+                .shouldPause(isPauseScreen)
+                .parentScreen(parentScreen)
+                .build();
+
+        MinecraftClient.getInstance().openScreen(screen);
     }
 
     @Deprecated
-    public <C extends Container> AbstractContainerScreen<C> toContainerScreen(boolean isPauseScreen, Screen parentScreen, C container, PlayerInventory playerInventory, Text text) {
-        return new OakTreeContainerScreen<>(this, isPauseScreen, parentScreen, container, playerInventory, text);
+    public <T extends Container> AbstractContainerScreen<T> toContainerScreen(boolean isPauseScreen, Screen parentScreen, T container, PlayerInventory playerInventory, Text text) {
+        AbstractContainerScreen<T> screen = new ScreenBuilder(this)
+                .shouldPause(isPauseScreen)
+                .parentScreen(parentScreen)
+                .container(container)
+                .playerInventory(playerInventory)
+                .text(text)
+                .buildContainerScreen();
+        return screen;
     }
 
     @Deprecated
