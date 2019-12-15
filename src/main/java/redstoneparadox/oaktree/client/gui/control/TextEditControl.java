@@ -144,7 +144,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             }
 
             if (gui.isBackspaceHeld()) {
-                if (backspaceTicks == 0 || backspaceTicks > 20) {
+                if (backspaceTicks == 0 || (backspaceTicks > 20 && backspaceTicks % 2 == 0)) {
                     if (allSelected) {
                         clear();
                         allSelected = false;
@@ -153,7 +153,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                         String string = text.getString();
                         if (!string.isEmpty()) text(string.substring(0, string.length() - 1));
                     }
-                    if (backspaceTicks == 0) backspaceTicks = 1;
+                    backspaceTicks += 1;
                 }
                 else {
                     backspaceTicks += 1;
