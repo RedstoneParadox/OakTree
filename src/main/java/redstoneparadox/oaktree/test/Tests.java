@@ -327,7 +327,7 @@ public class Tests {
                                                 .size(160, 230)
                                                 .defaultStyle(new ColorStyleBox(RGBAColor.black(), grey, 1.0f))
                                                 .fontColor(RGBAColor.white())
-                                                .maxLines(10)
+                                                .maxLines(20)
                                 )
                                 .secondChild(
                                         new LabelControl()
