@@ -21,7 +21,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private RGBAColor fontColor = RGBAColor.white();
     private int maxLines = 1;
 
-    private TypingListener<TextEditControl> onCharTyped = (toType, control) -> toType;
+    private TypingListener<TextEditControl> onCharTyped = (character, control) -> character;
     private GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
     private GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
 

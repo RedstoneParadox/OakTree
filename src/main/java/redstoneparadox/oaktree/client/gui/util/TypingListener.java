@@ -3,5 +3,5 @@ package redstoneparadox.oaktree.client.gui.util;
 @FunctionalInterface
 public interface TypingListener<T> {
 
-    Character invoke(Character toType, T node);
+    Character invoke(Character character, T node);
 }
