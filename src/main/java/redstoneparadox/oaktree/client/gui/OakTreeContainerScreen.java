@@ -25,6 +25,13 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
 
     private Screen parentScreen;
 
+    private boolean backspace = false;
+    private boolean enter = false;
+    private boolean ctrlA = false;
+    private boolean copy = false;
+    private boolean cut = false;
+    private boolean paste = false;
+
     public OakTreeContainerScreen(Control root, boolean isPauseScreen, Screen parentScreen, T container, PlayerInventory playerInventory, Text text) {
         super(container, playerInventory, text);
         this.root = root;
@@ -33,8 +40,26 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     }
 
     @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == 259) backspace = true;
+        if (keyCode == 257) enter = true;
+        if (hasControlDown() && keyCode == 65) ctrlA = true;
+        if (isCopy(keyCode)) copy = true;
+        if (isCut(keyCode)) cut = true;
+        if (isPaste(keyCode)) paste = true;
+
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
     public boolean isPauseScreen() {
         return isPauseScreen;
+    }
+
+    @Override
+    public void init(MinecraftClient minecraftClient_1, int int_1, int int_2) {
+        super.init(minecraftClient_1, int_1, int_2);
+        root.setup(minecraftClient_1, int_1, int_2, this);
     }
 
     @Override
@@ -43,26 +68,34 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     }
 
     @Override
-    public void render(int int_1, int int_2, float float_1) {
-        super.render(int_1, int_2, float_1);
+    public void render(int mouseX, int mouseY, float delta) {
+        super.render(mouseX, mouseY, delta);
 
         Window clientWindow  = MinecraftClient.getInstance().getWindow();
 
-        root.preDraw(int_1, int_2, float_1, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
-        root.draw(int_1, int_2, float_1, this);
+        root.preDraw(mouseX, mouseY, delta, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
+        root.draw(mouseX, mouseY, delta, this);
+
         leftMouseJustPressed = false;
         lastChar = null;
+        backspace = false;
+        enter = false;
+        ctrlA = false;
+        copy = false;
+        cut = false;
+        paste = false;
 
         width = (int)root.trueWidth;
         height = (int)root.trueHeight;
+    }
 
-        x = (int)root.trueX;
-        y = (int)root.trueY;
+    @Override
+    public Optional<Container> getScreenContainer() {
+        return Optional.of(container);
     }
 
     @Override
     public boolean mouseButtonHeld(String mouseButton) {
-
         switch (mouseButton) {
             case "left":
                 return leftMouseButton;
@@ -75,7 +108,6 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
 
     @Override
     public boolean mouseButtonJustClicked(String mouseButton) {
-
         switch (mouseButton) {
             case "left":
                 return leftMouseJustPressed;
@@ -97,17 +129,27 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
 
     @Override
     public boolean isKeyPressed(String key) {
-        return false;
+        switch (key) {
+            case "enter":
+                return enter;
+            case "backspace":
+                return backspace;
+            case "ctrl_a":
+                return ctrlA;
+            case "cut":
+                return cut;
+            case "copy":
+                return copy;
+            case "paste":
+                return paste;
+            default:
+                return false;
+        }
     }
 
     @Override
     public TextRenderer getTextRenderer() {
         return this.font;
-    }
-
-    @Override
-    public Optional<Container> getScreenContainer() {
-        return Optional.of(container);
     }
 
     @Override
@@ -141,8 +183,8 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     }
 
     @Override
-    protected boolean isClickOutsideBounds(double double_1, double double_2, int int_1, int int_2, int int_3) {
-        return false;
+    protected boolean isClickOutsideBounds(double mouseX, double mouseY, int left, int top, int button) {
+        return (mouseX > x && mouseY > y) && (mouseX < x + width && mouseY < y + height);
     }
 
     @Override

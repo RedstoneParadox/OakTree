@@ -23,7 +23,6 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     private Screen parentScreen;
 
-
     private boolean backspace = false;
     private boolean enter = false;
     private boolean ctrlA = false;
@@ -62,11 +61,13 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
-    public void render(int int_1, int int_2, float float_1) {
+    public void render(int mouseX, int mouseY, float delta) {
+        super.render(mouseX, mouseY, delta);
+
         Window clientWindow  = MinecraftClient.getInstance().getWindow();
 
-        root.preDraw(int_1, int_2, float_1, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
-        root.draw(int_1, int_2, float_1, this);
+        root.preDraw(mouseX, mouseY, delta, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
+        root.draw(mouseX, mouseY, delta, this);
 
         leftMouseJustPressed = false;
         lastChar = null;
@@ -88,7 +89,6 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public boolean mouseButtonHeld(String mouseButton) {
-
         switch (mouseButton) {
             case "left":
                 return leftMouseButton;
@@ -101,7 +101,6 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public boolean mouseButtonJustClicked(String mouseButton) {
-
         switch (mouseButton) {
             case "left":
                 return leftMouseJustPressed;
