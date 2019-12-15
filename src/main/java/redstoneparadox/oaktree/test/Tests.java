@@ -331,7 +331,7 @@ public class Tests {
                                                                 .shadow(true)
                                                                 .size(160, 230)
                                                                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
-                                                                .fontColor(grey)
+                                                                .fontColor(RGBAColor.white())
                                                                 .maxLines(10)
                                                 )
                                 )

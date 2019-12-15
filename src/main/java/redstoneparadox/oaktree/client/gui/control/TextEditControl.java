@@ -28,7 +28,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private List<String> lines = Lists.newArrayList("");
     private boolean focused = false;
 
-    int ticks = 0;
+    private int ticks = 0;
 
     public TextEditControl onCharTyped(TypingListener<TextEditControl> onCharTyped) {
         this.onCharTyped = onCharTyped;
