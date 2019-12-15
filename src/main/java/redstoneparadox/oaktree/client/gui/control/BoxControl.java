@@ -87,7 +87,9 @@ public class BoxControl extends Control<BoxControl> {
         float innerX = trueX + leftPadding;
         float innerY = trueY + topPadding;
 
-        child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, innerWidth, innerHeight);
+        if (child != null) {
+            child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, innerWidth, innerHeight);
+        }
     }
 
     @Override
