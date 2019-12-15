@@ -316,6 +316,7 @@ public class Tests {
         @Override
         public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
             if (world_1.isClient) {
+                final RGBAColor grey = new RGBAColor(0.8f, 0.8f, 0.8f);
                 Screen screen = new ScreenBuilder(
                         new SplitBoxControl()
                                 .expand(true)
@@ -323,12 +324,17 @@ public class Tests {
                                         new BoxControl()
                                                 .size(180, 250)
                                                 .anchor(ControlAnchor.CENTER)
-                                                .defaultStyle(new ColorStyleBox(new RGBAColor(0.5f, 0.5f, 0.5f)))
+                                                .defaultStyle(new ColorStyleBox(grey))
                                                 .child(
                                                         new TextEditControl()
                                                                 .anchor(ControlAnchor.CENTER)
+                                                                .shadow(true)
                                                                 .size(160, 230)
                                                                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                                                                .fontColor(grey)
+                                                                .text("Type here.")
+                                                                .onFocused((gui, control) -> control.clear().fontColor(RGBAColor.white()))
+                                                                .onFocusLost(((gui, control) -> { if (control.isEmpty()) control.text("Type here.").fontColor(grey); }))
                                                                 .maxLines(10)
                                                 )
                                 )
@@ -336,15 +342,14 @@ public class Tests {
                                         new BoxControl()
                                                 .size(180, 250)
                                                 .anchor(ControlAnchor.CENTER)
-                                                .defaultStyle(new ColorStyleBox(new RGBAColor(0.5f, 0.5f, 0.5f)))
+                                                .defaultStyle(new ColorStyleBox(grey))
                                                 .child(
                                                         new LabelControl()
                                                                 .anchor(ControlAnchor.CENTER)
+                                                                .shadow(true)
                                                                 .size(160, 230)
                                                                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
-                                                                .text(
-                                                                        "Hello, world!\nThis is a showcase for the GUI\ntoolkit Oak Tree!"
-                                                                )
+                                                                .text("Hello, world!\nThis is a showcase for the GUI\ntoolkit Oak Tree!")
                                                                 .maxLines(10)
                                                 )
                                 )

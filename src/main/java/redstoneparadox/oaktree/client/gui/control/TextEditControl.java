@@ -9,6 +9,7 @@ import redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import redstoneparadox.oaktree.client.gui.util.TypingListener;
 import redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,6 +43,23 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public TextEditControl onFocusLost(GuiFunction<TextEditControl> onFocusLost) {
         this.onFocusLost = onFocusLost;
         return this;
+    }
+
+    public TextEditControl text(String text) {
+        lines.clear();
+        List<String> split = Arrays.asList(text.split("(\r\n|\r|\n)", -1));
+        lines.addAll(split);
+        return this;
+    }
+
+    public TextEditControl clear() {
+        lines.clear();
+        lines.add("");
+        return this;
+    }
+
+    public boolean isEmpty() {
+        return lines.size() <= 1 && lines.get(0).isEmpty();
     }
 
     /**
@@ -129,7 +147,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
         int offset = 0;
         for (String line: lines) {
-            if (font.getStringWidth(currentLine + "_") < trueWidth && ticks < 20 && focused) drawString(line + "_", gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
+            if (font.getStringWidth(currentLine + "_") < trueWidth && ticks < 20 && focused && offset + 1 == lines.size()) drawString(line + "_", gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
             else drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
             offset += 1;
         }
