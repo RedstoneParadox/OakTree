@@ -187,8 +187,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
         int offset = 0;
 
+        clear();
         for (Text text: texts) {
             String line = text.getString();
+            this.text.append(line);
             float lineY = trueY + offset * 10;
             if (ticks < 20 && focused && offset + 1 == texts.size() && font.getStringWidth(line + "_") < trueWidth) drawString(line + "_", gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
             else drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
