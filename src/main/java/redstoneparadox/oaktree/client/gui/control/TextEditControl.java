@@ -30,7 +30,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
     private GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
 
-    private List<String> lines = Lists.newArrayList("");
     private Text text = new LiteralText("");
     private boolean focused = false;
     private boolean allSelected = false;
@@ -38,38 +37,69 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private int ticks = 0;
     private int backspaceTicks = 0;
 
+    /**
+     * Sets a {@link TypingListener} to run when a character is typed.
+     *
+     * @param onCharTyped The function.
+     * @return The control itself.
+     */
     public TextEditControl onCharTyped(TypingListener<TextEditControl> onCharTyped) {
         this.onCharTyped = onCharTyped;
         return this;
     }
 
+    /**
+     * Sets a {@link GuiFunction} to run when the TextEditControl gains focus.
+     *
+     * @param onFocused The function.
+     * @return The control itself.
+     */
     public TextEditControl onFocused(GuiFunction<TextEditControl> onFocused) {
         this.onFocused = onFocused;
         return this;
     }
 
+    /**
+     * Sets a {@link GuiFunction} to run when the TextEditControl loses focus.
+     *
+     * @param onFocusLost The function.
+     * @return The control itself.
+     */
     public TextEditControl onFocusLost(GuiFunction<TextEditControl> onFocusLost) {
         this.onFocusLost = onFocusLost;
         return this;
     }
 
+    /**
+     * Sets the text of this TextEditControl.
+     *
+     * @param text The text.
+     * @return The control itself.
+     */
     public TextEditControl text(String text) {
         this.text = new LiteralText(text);
         return this;
     }
 
+    /**
+     * Sets the text of this TextEditControl.
+     *
+     * @param text The text.
+     * @return The control itself.
+     */
     public TextEditControl text(Text text) {
         this.text = text;
         return this;
     }
 
+    /**
+     * Clears the text.
+     *
+     * @return The control itself.
+     */
     public TextEditControl clear() {
         text = new LiteralText("");
         return this;
-    }
-
-    public boolean isEmpty() {
-        return lines.size() <= 1 && lines.get(0).isEmpty();
     }
 
     /**

@@ -20,16 +20,35 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
 
     private Text text = new LiteralText("");
 
+    /**
+     * Sets the text for this LabelControl
+     * to display.
+     *
+     * @param text The text to display
+     * @return The control itself.
+     */
     public LabelControl text(String text) {
         this.text = new LiteralText(text);
         return this;
     }
 
+    /**
+     * Sets the text for this LabelControl
+     * to display.
+     *
+     * @param text The text to display
+     * @return The control itself.
+     */
     public LabelControl text(Text text) {
         this.text = text;
         return this;
     }
 
+    /**
+     * Clears the LabelControl
+     *
+     * @return The control itself.
+     */
     public LabelControl clear() {
         text = new LiteralText("");
         return this;
