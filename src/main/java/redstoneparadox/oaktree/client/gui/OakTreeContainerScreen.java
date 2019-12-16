@@ -190,7 +190,7 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
 
     @Override
     protected boolean isClickOutsideBounds(double mouseX, double mouseY, int left, int top, int button) {
-        return (mouseX > x && mouseY > y) && (mouseX < x + width && mouseY < y + height);
+        return !((mouseX > x && mouseY > y) && (mouseX < x + width && mouseY < y + height));
     }
 
     @Override
