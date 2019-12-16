@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "redstoneparadox.oaktree.mixin",
+  "package": "io.github.redstoneparadox.oaktree.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "container.SlotAccessor"

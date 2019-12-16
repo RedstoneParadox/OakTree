@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "redstoneparadox.oaktree.OakTree"
+      "io.github.redstoneparadox.oaktree.OakTree"
     ]
   },
   "mixins": [

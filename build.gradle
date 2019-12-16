@@ -57,7 +57,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 jar {
 	from "LICENSE"
 	from(sourceSets.main.allJava) {
-		exclude "java/redstoneparadox/oaktree/test"
+		exclude "java/io.github.redstoneparadox/oaktree/test"
 	}
 }
 
