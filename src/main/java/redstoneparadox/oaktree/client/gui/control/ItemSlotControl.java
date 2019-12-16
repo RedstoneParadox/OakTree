@@ -4,6 +4,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.container.Slot;
 import redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
+import redstoneparadox.oaktree.mixin.container.SlotAccessor;
 
 /**
  * A Node that acts as a special wrapper for setting
@@ -40,10 +41,10 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
 
             if (index < container.slotList.size()) {
                 Slot slot = container.slotList.get(index);
-                // slot.xPosition = slotX;
-                // slot.yPosition = slotY;
+                ((SlotAccessor) slot).setXPosition(slotX);
+                ((SlotAccessor) slot).setYPosition(slotY);
 
-                OakTreeClientNetworking.syncSlot((int)trueX, (int)trueY, index, container.syncId);
+                OakTreeClientNetworking.syncSlot(slotX, slotY, index, container.syncId);
             }
         });
     }

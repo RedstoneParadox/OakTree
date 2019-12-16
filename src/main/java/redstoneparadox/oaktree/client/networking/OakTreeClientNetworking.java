@@ -7,7 +7,7 @@ import net.minecraft.util.PacketByteBuf;
 
 public class OakTreeClientNetworking {
 
-    private static final Identifier SYNC_SLOT = new Identifier("oak_tree", "sync_slot");
+    private static final Identifier SYNC_SLOT = new Identifier("oaktree", "sync_slot");
 
     public static void syncSlot(int x, int y, int index, int syncID) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());

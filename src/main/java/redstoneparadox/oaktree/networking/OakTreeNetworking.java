@@ -4,13 +4,14 @@ import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.container.Container;
 import net.minecraft.container.Slot;
 import net.minecraft.util.Identifier;
+import redstoneparadox.oaktree.mixin.container.SlotAccessor;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class OakTreeNetworking {
 
-    private static final Identifier SYNC_SLOT = new Identifier("oak_tree", "sync_slot");
+    private static final Identifier SYNC_SLOT = new Identifier("oaktree", "sync_slot");
     private static final Map<Integer, Container> CONTAINER_MAP = new HashMap<>();
 
     public static void initPackets() {
@@ -35,8 +36,8 @@ public class OakTreeNetworking {
             Container container = CONTAINER_MAP.get(syncID);
             if (index < container.slotList.size()) {
                 Slot slot = container.slotList.get(index);
-                // slot.xPosition = x;
-                // slot.yPosition = y;
+                ((SlotAccessor) slot).setXPosition(x);
+                ((SlotAccessor) slot).setYPosition(y);
             }
         }
         else {
