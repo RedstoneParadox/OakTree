@@ -63,7 +63,6 @@ public class Tests {
                             .setRows(3)
                             .setColumns(3)
                             .expand(true)
-                            .visible(false)
                             .cells((row, column, index) -> new ItemSlotControl(index))
                     )
                     .container(new TestSixContainer(syncId, pos, player))

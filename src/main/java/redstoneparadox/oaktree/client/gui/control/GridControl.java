@@ -78,7 +78,7 @@ public class GridControl extends Control<GridControl> {
         for (int i = 0; i < rows; i++) {
             for(int j = 0; j < columns; j++) {
                 setCell(cellIndex, function.apply(i, j, cellIndex));
-                cellIndex++;
+                cellIndex += 1;
             }
         }
         return this;
