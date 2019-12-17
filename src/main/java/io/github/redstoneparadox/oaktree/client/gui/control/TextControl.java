@@ -27,7 +27,7 @@ public interface TextControl<TC extends TextControl> {
         else {
             strings = font.wrapStringToWidthAsList(string, (int) width);
         }
-        
+
         strings = new ArrayList<>(strings);
         strings.addAll(getTrailingNewlines(string));
 

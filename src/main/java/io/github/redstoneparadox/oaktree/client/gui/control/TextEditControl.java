@@ -212,7 +212,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 TextRenderer font = gui.getTextRenderer();
                 int index = lines.size() - 1;
                 String last = lines.get(index);
-                if (font.getStringWidth(last + "_") <= trueWidth) lines.set(index, last + "_");
+                if (font.getStringWidth(last + "_") < trueWidth) lines.set(index, last + "_");
                 else if (lines.size() < maxLines) lines.add("_");
             }
 
