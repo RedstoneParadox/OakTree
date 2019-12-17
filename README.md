@@ -1,6 +1,6 @@
 # Oak Tree
 
-[ ![Download](https://api.bintray.com/packages/redstoneparadox/mods/OakTree/images/download.svg?version=0.1.1-alpha) ](https://bintray.com/redstoneparadox/mods/OakTree/0.1.1-alpha/link)
+[ ![Download](https://api.bintray.com/packages/redstoneparadox/mods/OakTree/images/download.svg?version=0.1.2-alpha) ](https://bintray.com/redstoneparadox/mods/OakTree/0.1.2-alpha/link)
 
 Oak Tree is a GUI toolkit for use in Modded Minecraft alongside the Fabric modding API.
 
