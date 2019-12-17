@@ -27,12 +27,12 @@ public interface TextControl<TC extends TextControl> {
         else {
             strings = font.wrapStringToWidthAsList(string, (int) width);
         }
+        
+        strings = new ArrayList<>(strings);
+        strings.addAll(getTrailingNewlines(string));
+
         if (strings.size() > max) {
             strings = strings.subList(0, max);
-        }
-        else if (string.endsWith("\n")) {
-            strings = new ArrayList<>(strings);
-            strings.addAll(getTrailingNewlines(string));
         }
         return strings;
     }
