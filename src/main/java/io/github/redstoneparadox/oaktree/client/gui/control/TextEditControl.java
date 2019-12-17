@@ -2,8 +2,6 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.util.Texts;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
@@ -27,11 +25,11 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
     private GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
 
-    private Text text = new LiteralText("");
+    private String text = "";
     private boolean focused = false;
     private boolean allSelected = false;
 
-    private int ticks = 0;
+    private int cursorTicks = 0;
     private int backspaceTicks = 0;
 
     /**
@@ -74,7 +72,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
      * @return The control itself.
      */
     public TextEditControl text(String text) {
-        this.text = new LiteralText(text);
+        this.text = text;
         return this;
     }
 
@@ -85,7 +83,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
      * @return The control itself.
      */
     public TextEditControl text(Text text) {
-        this.text = text;
+        this.text = text.getString();
         return this;
     }
 
@@ -95,7 +93,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
      * @return The control itself.
      */
     public TextEditControl clear() {
-        text = new LiteralText("");
+        text = "";
         return this;
     }
 
@@ -141,7 +139,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             if (isMouseWithin && !focused) {
                 focused = true;
                 onFocused.invoke(gui, this);
-                ticks = 0;
+                cursorTicks = 0;
             }
             else if (focused) {
                 focused = false;
@@ -152,20 +150,21 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 allSelected = false;
             }
         }
+
         if (focused) {
-            ticks += 1;
-            if (ticks >= 40) ticks = 0;
+            cursorTicks += 1;
+            if (cursorTicks >= 40) cursorTicks = 0;
 
             if (gui.getLastChar().isPresent()) {
                 Character character = onCharTyped.invoke(gui.getLastChar().get(), this);
                 if (character != null) {
                     if (allSelected) {
                         clear();
-                        text(character.toString());
+                        text = character.toString();
                         allSelected = false;
                     }
                     else {
-                        text.append(character.toString());
+                        text = text + character.toString();
                     }
                 }
             }
@@ -177,8 +176,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                         allSelected = false;
                     }
                     else {
-                        String string = text.getString();
-                        if (!string.isEmpty()) text(string.substring(0, string.length() - 1));
+                        if (!text.isEmpty()) text = text.substring(0, text.length() - 1);
                     }
                     backspaceTicks += 1;
                 }
@@ -190,37 +188,42 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 backspaceTicks = 0;
             }
 
-
-
             if (gui.isKeyPressed("ctrl_a")) allSelected = true;
-            if (gui.isKeyPressed("enter")) text.append("\n");
-            if (gui.isKeyPressed("copy") && allSelected) MinecraftClient.getInstance().keyboard.setClipboard(text.getString());
+            if (gui.isKeyPressed("enter")) text = text + "\n";
+            if (gui.isKeyPressed("copy") && allSelected) MinecraftClient.getInstance().keyboard.setClipboard(text);
             if (gui.isKeyPressed("cut") && allSelected) {
-                MinecraftClient.getInstance().keyboard.setClipboard(text.getString());
+                MinecraftClient.getInstance().keyboard.setClipboard(text);
                 clear();
             }
             if (gui.isKeyPressed("paste")) {
                 String string = MinecraftClient.getInstance().keyboard.getClipboard();
-                if (allSelected) text(string);
-                else text.append(string);
+                if (allSelected) text = string;
+                else text = text.concat(string);
             }
         }
-
-        TextRenderer font = gui.getTextRenderer();
-        List<Text> texts = Texts.wrapLines(text, (int) trueWidth, gui.getTextRenderer(), false, false);
-        if (texts.size() > maxLines) {
-            texts = texts.subList(0, maxLines);
+        else {
+            cursorTicks = 0;
         }
 
-        int offset = 0;
+        if (!text.isEmpty()) {
+            List<String> lines = wrapLines(text, gui, trueWidth, maxLines, shadow);
+            text = combine(lines);
+            if (cursorTicks < 20) {
+                TextRenderer font = gui.getTextRenderer();
+                int index = lines.size() - 1;
+                String last = lines.get(index);
+                if (font.getStringWidth(last + "_") <= trueWidth) lines.set(index, last + "_");
+                else if (lines.size() < maxLines) lines.add("_");
+            }
 
-        for (Text text: texts) {
-            String line = text.getString();
-            float lineY = trueY + offset * 10;
-            if (ticks < 20 && focused && offset + 1 == texts.size() && font.getStringWidth(line + "_") < trueWidth) drawString(line + "_", gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
-            else drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
-            if (allSelected) drawHighlights(line, gui, trueX, lineY, highlightColor);
-            offset += 1;
+            int offset = 0;
+            for (String line: lines) {
+                float lineY = trueY + offset*10;
+                drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
+                if (allSelected) drawHighlights(line, gui, trueX, lineY, highlightColor);
+                offset += 1;
+            }
         }
+        else if (cursorTicks < 20 && focused) drawString("_", gui, trueX, trueY, ControlAnchor.CENTER, shadow, fontColor);
     }
 }

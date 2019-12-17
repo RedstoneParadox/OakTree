@@ -323,7 +323,7 @@ public class Tests {
                                         new TextEditControl()
                                                 .anchor(ControlAnchor.CENTER)
                                                 .shadow(true)
-                                                .size(160, 230)
+                                                .size(180, 230)
                                                 .defaultStyle(new ColorStyleBox(RGBAColor.black(), grey, 1.0f))
                                                 .fontColor(RGBAColor.white())
                                                 .maxLines(20)

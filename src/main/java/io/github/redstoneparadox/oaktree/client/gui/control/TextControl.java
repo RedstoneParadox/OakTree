@@ -13,7 +13,38 @@ import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import io.github.redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface TextControl<TC extends TextControl> {
+
+    default List<String> wrapLines(String string, OakTreeGUI gui, float width, int max, boolean withShadow) {
+        List<String> strings;
+        TextRenderer font = gui.getTextRenderer();
+        if (withShadow) {
+            strings = font.wrapStringToWidthAsList(string, (int) (width - 1));
+        }
+        else {
+            strings = font.wrapStringToWidthAsList(string, (int) width);
+        }
+        if (strings.size() > max) {
+            strings = strings.subList(0, max);
+        }
+        else if (string.endsWith("\n")) {
+            strings = new ArrayList<>(strings);
+            strings.add("");
+        }
+        return strings;
+    }
+
+    default String combine(List<String> strings) {
+        StringBuilder string = new StringBuilder();
+        for (String line: strings) {
+            if (string.length() > 0) string.append("\n");
+            string.append(line);
+        }
+        return string.toString();
+    }
 
     default void drawString(String string, OakTreeGUI gui, float x, float y, ControlAnchor alignment, boolean withShadow, RGBAColor fontColor) {
         int redInt = (int) fontColor.redChannel * 255;
