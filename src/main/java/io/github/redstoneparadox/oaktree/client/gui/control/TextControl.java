@@ -32,9 +32,19 @@ public interface TextControl<TC extends TextControl> {
         }
         else if (string.endsWith("\n")) {
             strings = new ArrayList<>(strings);
-            strings.add("");
+            strings.addAll(getTrailingNewlines(string));
         }
         return strings;
+    }
+
+    default List<String> getTrailingNewlines(String string) {
+        char[] chars = string.toCharArray();
+        List<String> newlines = new ArrayList<>();
+        for (int i = chars.length - 1; i > 0; i -= 1) {
+            if (chars[i] == '\n') newlines.add("");
+            else return newlines;
+        }
+        return newlines;
     }
 
     default String combine(List<String> strings) {
