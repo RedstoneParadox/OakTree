@@ -13,16 +13,16 @@ import java.util.function.BiConsumer;
  */
 public class GridControl extends Control<GridControl> {
 
-    private int rows = 1;
-    private int columns = 1;
+    public int rows = 1;
+    public int columns = 1;
 
-    private float cellWidth = 0.1f;
-    private float cellHeight = 0.1f;
+    public float cellWidth = 0.1f;
+    public float cellHeight = 0.1f;
 
-    private float verticalCellSpacing = 0.0f;
-    private float horizontalCellSpacing = 0.0f;
+    public float verticalCellSpacing = 0.0f;
+    public float horizontalCellSpacing = 0.0f;
 
-    private List<Control> children = new ArrayList<>();
+    public List<Control> children = new ArrayList<>();
 
     @Override
     public GridControl size(float width, float height) {

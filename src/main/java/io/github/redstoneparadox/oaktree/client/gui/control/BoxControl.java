@@ -14,7 +14,7 @@ public class BoxControl extends Control<BoxControl> {
     public float leftPadding = 0.0f;
     public float rightPadding = 0.0f;
 
-    private Control child = null;
+    public Control child = null;
 
     /**
      * Sets all 4 internal margins for this BoxNode.
@@ -81,8 +81,8 @@ public class BoxControl extends Control<BoxControl> {
         if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 
-        float innerWidth = trueWidth - leftPadding - rightPadding;
-        float innerHeight = trueHeight - topPadding - bottomPadding;
+        float innerWidth = width - leftPadding - rightPadding;
+        float innerHeight = height - topPadding - bottomPadding;
 
         float innerX = trueX + leftPadding;
         float innerY = trueY + topPadding;

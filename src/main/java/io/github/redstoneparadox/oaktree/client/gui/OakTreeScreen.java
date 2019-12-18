@@ -79,8 +79,8 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
         cut = false;
         paste = false;
 
-        width = (int)root.trueWidth;
-        height = (int)root.trueHeight;
+        width = (int)root.width;
+        height = (int)root.height;
     }
 
     @Override

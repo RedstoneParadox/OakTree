@@ -8,11 +8,11 @@ import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import java.util.List;
 
 public class LabelControl extends Control<LabelControl> implements TextControl<LabelControl> {
-    private boolean shadow = false;
-    private RGBAColor fontColor = RGBAColor.white();
-    private int maxLines = 1;
+    public boolean shadow = false;
+    public RGBAColor fontColor = RGBAColor.white();
+    public int maxLines = 1;
 
-    private String text = "";
+    public String text = "";
 
     /**
      * Sets the text for this LabelControl
@@ -87,7 +87,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         if (!text.isEmpty()) {
-            List<String> lines = wrapLines(text, gui, trueWidth, maxLines, shadow);
+            List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
             text = combine(lines);
 
             int offset = 0;

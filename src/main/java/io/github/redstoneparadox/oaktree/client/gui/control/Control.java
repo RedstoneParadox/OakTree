@@ -20,25 +20,23 @@ public class Control<C extends Control> {
 
     public float x = 0.0f;
     public float y = 0.0f;
-    float width = 0.1f;
-    float height = 0.1f;
+    public float width = 0.1f;
+    public float height = 0.1f;
 
     boolean visible = true;
 
-    ControlAnchor anchor = ControlAnchor.TOP_LEFT;
+    public ControlAnchor anchor = ControlAnchor.TOP_LEFT;
 
-    GuiFunction<C> onTick = (gui, control) -> {};
+    public GuiFunction<C> onTick = (gui, control) -> {};
 
-    private StyleBox defaultStyle = null;
+    public StyleBox defaultStyle = null;
 
-    boolean expand = false;
+    public boolean expand = false;
 
     StyleBox currentStyle = null;
 
-    public float trueX = 0.0f;
-    public float trueY = 0.0f;
-    public float trueWidth = 0.0f;
-    public float trueHeight = 0.0f;
+    float trueX = 0.0f;
+    float trueY = 0.0f;
 
     /**
      * Sets the position of the node on the screen relative to the parent.
@@ -176,16 +174,13 @@ public class Control<C extends Control> {
 
             trueX = x + anchorOffset.x + offsetX - drawOffset.x;
             trueY = y + anchorOffset.y + offsetY - drawOffset.y;
-
-            trueWidth = width;
-            trueHeight = height;
         }
         else {
             trueX = offsetX;
             trueY = offsetY;
 
-            trueWidth = containerWidth;
-            trueHeight = containerHeight;
+            width = containerWidth;
+            height = containerHeight;
         }
         currentStyle = defaultStyle;
     }
@@ -194,7 +189,7 @@ public class Control<C extends Control> {
         if (!visible) return;
 
         if (currentStyle != null) {
-            currentStyle.draw(trueX, trueY, trueWidth, trueHeight, gui);
+            currentStyle.draw(trueX, trueY, width, height, gui);
         }
     }
 

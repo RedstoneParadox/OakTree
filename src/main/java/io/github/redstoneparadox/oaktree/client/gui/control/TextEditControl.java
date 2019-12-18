@@ -16,16 +16,16 @@ import java.util.List;
  */
 public class TextEditControl extends InteractiveControl<TextEditControl> implements TextControl<TextEditControl> {
 
-    private boolean shadow = false;
-    private RGBAColor fontColor = RGBAColor.white();
-    private RGBAColor highlightColor = RGBAColor.blue();
-    private int maxLines = 1;
+    public boolean shadow = false;
+    public RGBAColor fontColor = RGBAColor.white();
+    public RGBAColor highlightColor = RGBAColor.blue();
+    public int maxLines = 1;
+    public String text = "";
 
-    private TypingListener<TextEditControl> onCharTyped = (character, control) -> character;
-    private GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
-    private GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
+    public TypingListener<TextEditControl> onCharTyped = (character, control) -> character;
+    public GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
+    public GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
 
-    private String text = "";
     private boolean focused = false;
     private boolean allSelected = false;
 
@@ -206,13 +206,13 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
 
         if (!text.isEmpty()) {
-            List<String> lines = wrapLines(text, gui, trueWidth, maxLines, shadow);
+            List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
             text = combine(lines);
             if (cursorTicks < 20) {
                 TextRenderer font = gui.getTextRenderer();
                 int index = lines.size() - 1;
                 String last = lines.get(index);
-                if (font.getStringWidth(last + "_") < trueWidth) lines.set(index, last + "_");
+                if (font.getStringWidth(last + "_") < height) lines.set(index, last + "_");
                 else if (lines.size() < maxLines) lines.add("_");
             }
 

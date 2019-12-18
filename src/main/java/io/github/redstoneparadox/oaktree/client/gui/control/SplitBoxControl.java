@@ -3,6 +3,8 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 
+import java.awt.*;
+
 /**
  * A SplitBoxNode encapsulates two {@link BoxControl} instances,
  * maintaining a percentage-based split between them. The
@@ -74,6 +76,10 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
         return this;
     }
 
+    public Control getFirstChild() {
+        return first.child;
+    }
+
     /**
      * Sets the second child of this node. The second
      * child will be drawn on the right side of the
@@ -86,6 +92,10 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
     public SplitBoxControl secondChild(Control child) {
         second.child(child);
         return this;
+    }
+
+    public Control getSecondChild() {
+        return second.child;
     }
 
     /**
@@ -153,18 +163,18 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
         float rightHeight = 0.0f;
 
         if (vertical) {
-            leftWidth = trueWidth;
-            leftHeight = (splitPercent/100.0f) * trueHeight;
-            rightWidth = trueWidth;
-            rightHeight = trueHeight - leftHeight;
+            leftWidth = width;
+            leftHeight = (splitPercent/100.0f) * height;
+            rightWidth = width;
+            rightHeight = height - leftHeight;
             rightX = trueX;
             rightY = leftHeight + trueY;
         }
         else {
-            leftWidth = (splitPercent/100.0f) * trueWidth;
-            leftHeight = trueHeight;
-            rightWidth = trueWidth - leftWidth;
-            rightHeight = trueHeight;
+            leftWidth = (splitPercent/100.0f) * width;
+            leftHeight = height;
+            rightWidth = width - leftWidth;
+            rightHeight = height;
             rightX = leftWidth + trueX;
             rightY = trueY;
         }

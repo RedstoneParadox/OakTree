@@ -74,8 +74,8 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
 
-        float barX = trueX + ((trueWidth/2) - (barWidth/2));
-        float barY = trueY + ((trueHeight/2) - (barHeight/2));
+        float barX = trueX + ((width/2) - (barWidth/2));
+        float barY = trueY + ((height/2) - (barHeight/2));
 
         switch (direction) {
             case UP:

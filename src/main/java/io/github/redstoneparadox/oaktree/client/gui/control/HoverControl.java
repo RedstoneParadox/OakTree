@@ -6,13 +6,13 @@ import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 
 public class HoverControl extends InteractiveControl<HoverControl> {
 
-    private GuiFunction<HoverControl> mouseEnter = ((gui, node) -> {});
-    private GuiFunction<HoverControl> mouseExit = ((gui, node) -> {});
-    private GuiFunction<HoverControl> whileHovered = ((gui, node) -> {});
+    public GuiFunction<HoverControl> mouseEnter = ((gui, node) -> {});
+    public GuiFunction<HoverControl> mouseExit = ((gui, node) -> {});
+    public GuiFunction<HoverControl> whileHovered = ((gui, node) -> {});
 
     private boolean mouseCurrentlyWithin = false;
 
-    private StyleBox hoverStyle = null;
+    public StyleBox hoverStyle = null;
 
     public HoverControl hoverStyle(StyleBox value) {
         hoverStyle = value;

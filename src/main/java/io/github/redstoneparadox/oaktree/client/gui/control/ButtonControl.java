@@ -6,15 +6,15 @@ import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 
 public class ButtonControl extends InteractiveControl<ButtonControl> {
 
-    private GuiFunction<ButtonControl> onClick = (((gui, node) -> {}));
-    private GuiFunction<ButtonControl> whileHeld = (((gui, node) -> {}));
-    private GuiFunction<ButtonControl> onRelease = (((gui, node) -> {}));
+    public GuiFunction<ButtonControl> onClick = (((gui, node) -> {}));
+    public GuiFunction<ButtonControl> whileHeld = (((gui, node) -> {}));
+    public GuiFunction<ButtonControl> onRelease = (((gui, node) -> {}));
 
-    private boolean toggleable = false;
+    public boolean toggleable = false;
 
     private boolean held = false;
 
-    private StyleBox heldStyle = null;
+    public StyleBox heldStyle = null;
 
     public ButtonControl toggleable(boolean toggleable) {
         this.toggleable = toggleable;

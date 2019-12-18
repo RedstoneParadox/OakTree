@@ -8,8 +8,8 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class SliderControl extends InteractiveControl<SliderControl> {
 
-    private GuiFunction<SliderControl> onDrag = (gui, node) -> {};
-    private ControlDirection direction = ControlDirection.RIGHT;
+    public GuiFunction<SliderControl> onDrag = (gui, node) -> {};
+    public ControlDirection direction = ControlDirection.RIGHT;
     private final Control dragControl = new Control();
 
     public SliderControl setDragNodeStyle(StyleBox style) {

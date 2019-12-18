@@ -86,8 +86,8 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
         cut = false;
         paste = false;
 
-        width = (int)root.trueWidth;
-        height = (int)root.trueHeight;
+        width = (int)root.width;
+        height = (int)root.height;
     }
 
     @Override

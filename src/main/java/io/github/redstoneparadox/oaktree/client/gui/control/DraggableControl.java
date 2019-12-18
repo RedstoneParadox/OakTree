@@ -52,8 +52,8 @@ public class DraggableControl extends InteractiveControl<DraggableControl> {
                 }
 
                 if (held) {
-                    x = clampPosition(mousePos.x, trueWidth);
-                    y = clampPosition(mousePos.y, trueHeight);
+                    x = clampPosition(mousePos.x, width);
+                    y = clampPosition(mousePos.y, height);
                 }
             }
             else if (held) {
