@@ -2,7 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
-public abstract class PaddingControl<C extends Control> extends Control<C> {
+public abstract class PaddingControl<C extends PaddingControl> extends Control<C> {
     public float topPadding = 0.0f;
     public float bottomPadding = 0.0f;
     public float leftPadding = 0.0f;
