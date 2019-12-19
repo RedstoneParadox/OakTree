@@ -31,7 +31,7 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
 
     void preDrawChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         for (Control child: children) {
-            child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, innerWidth, innerHeight);
+            if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, innerWidth, innerHeight);
         }
     }
 
@@ -40,7 +40,7 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         for (Control child: children) {
-            child.draw(mouseX, mouseY, deltaTime, gui);
+            if (child != null) child.draw(mouseX, mouseY, deltaTime, gui);
         }
     }
 }
