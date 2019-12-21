@@ -26,6 +26,8 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
 
     private Screen parentScreen;
 
+    private boolean closeOnInv = true;
+
     private boolean backspace = false;
     private boolean enter = false;
     private boolean ctrlA = false;
@@ -49,6 +51,7 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
         if (isCut(keyCode)) cut = true;
         if (isPaste(keyCode)) paste = true;
 
+        if (this.minecraft != null && this.minecraft.options.keyInventory.matchesKey(keyCode, scanCode) && keyCode != 256) return true;
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
@@ -156,6 +159,11 @@ public class OakTreeContainerScreen<T extends Container> extends AbstractContain
     @Override
     public boolean isBackspaceHeld() {
         return InputUtil.isKeyPressed(minecraft.getWindow().getHandle(), 259);
+    }
+
+    @Override
+    public void shouldCloseOnInventoryKey(boolean value) {
+        closeOnInv = value;
     }
 
     @Override

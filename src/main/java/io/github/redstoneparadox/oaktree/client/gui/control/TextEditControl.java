@@ -137,11 +137,13 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         super.draw(mouseX, mouseY, deltaTime, gui);
         if (gui.mouseButtonJustClicked("left")  ) {
             if (isMouseWithin && !focused) {
+                gui.shouldCloseOnInventoryKey(false);
                 focused = true;
                 onFocused.invoke(gui, this);
                 cursorTicks = 0;
             }
             else if (focused) {
+                gui.shouldCloseOnInventoryKey(true);
                 focused = false;
                 allSelected = false;
                 onFocusLost.invoke(gui, this);
