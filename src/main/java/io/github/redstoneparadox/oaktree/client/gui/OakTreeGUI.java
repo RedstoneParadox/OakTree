@@ -20,4 +20,8 @@ public interface OakTreeGUI {
     TextRenderer getTextRenderer();
 
     boolean isBackspaceHeld();
+
+    default void shouldCloseOnInventoryKey(boolean value) {
+
+    }
 }
