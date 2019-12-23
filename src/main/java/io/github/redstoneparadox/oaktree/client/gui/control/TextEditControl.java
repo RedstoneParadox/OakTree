@@ -209,6 +209,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
         if (!text.isEmpty()) {
             List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
+            if (lines.isEmpty()) lines.add("");
             text = combine(lines);
             if (cursorTicks < 20) {
                 TextRenderer font = gui.getTextRenderer();
