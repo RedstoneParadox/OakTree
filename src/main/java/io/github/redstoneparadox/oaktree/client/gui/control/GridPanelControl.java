@@ -58,7 +58,9 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
     }
 
     /**
-     *
+     * Iterates through all cells and adds the results of the function
+     * to each cell; the function is passed the row, column, and cell
+     * index in that order.
      *
      * @param function The function to call.
      * @return The control itself.
@@ -76,7 +78,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
     }
 
     @Override
-    void preDrawChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    void arrangeChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         float cellWidth = innerWidth/columns;
         float cellHeight = innerHeight/rows;
 
