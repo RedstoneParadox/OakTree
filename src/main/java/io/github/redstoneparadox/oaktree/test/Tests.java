@@ -58,6 +58,7 @@ public class Tests {
         return new TextEditControl()
                 .size(200, 200)
                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
-                .maxLines(10);
+                .maxLines(20)
+                .displayedLines(10);
     }
 }

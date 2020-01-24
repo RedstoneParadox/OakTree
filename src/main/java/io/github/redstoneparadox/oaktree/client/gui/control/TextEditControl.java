@@ -20,6 +20,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public RGBAColor fontColor = RGBAColor.white();
     public RGBAColor highlightColor = RGBAColor.blue();
     public int maxLines = 1;
+    public int displayedLines = 1;
+    public int scrollPosition = 0;
     public String text = "";
 
     public TypingListener<TextEditControl> onCharTyped = (character, control) -> character;
@@ -131,6 +133,18 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return this;
     }
 
+    /**
+     * Set the maximum number of lines to be
+     * displayed.
+     *
+     * @param displayedLines The max displayed lines.
+     * @return The control itself.
+     */
+    public TextEditControl displayedLines(int displayedLines) {
+        if (displayedLines > 0) this.displayedLines = displayedLines;
+        return this;
+    }
+
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
@@ -152,6 +166,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 allSelected = false;
             }
         }
+
+        boolean enter = false;
 
         if (focused) {
             cursorTicks += 1;
@@ -191,7 +207,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             }
 
             if (gui.isKeyPressed("ctrl_a")) allSelected = true;
-            if (gui.isKeyPressed("enter")) text = text + "\n";
+            if (gui.isKeyPressed("enter")) {
+                text = text + "\n";
+
+            }
             if (gui.isKeyPressed("copy") && allSelected) MinecraftClient.getInstance().keyboard.setClipboard(text);
             if (gui.isKeyPressed("cut") && allSelected) {
                 MinecraftClient.getInstance().keyboard.setClipboard(text);
@@ -211,6 +230,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
             if (lines.isEmpty()) lines.add("");
             text = combine(lines);
+            if (lines.size() > displayedLines) {
+                lines = lines.subList(lines.size() - displayedLines, lines.size());
+            }
             if (cursorTicks < 20) {
                 TextRenderer font = gui.getTextRenderer();
                 int index = lines.size() - 1;
