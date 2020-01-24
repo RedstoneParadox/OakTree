@@ -31,8 +31,6 @@ public interface TextControl<TC extends TextControl> {
         strings = new ArrayList<>(strings);
         strings.addAll(getTrailingNewlines(string));
 
-        System.out.println(strings);
-
         if (strings.size() > max) {
             strings = strings.subList(0, max);
         }
