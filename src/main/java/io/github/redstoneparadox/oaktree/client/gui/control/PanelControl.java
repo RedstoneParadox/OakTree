@@ -64,7 +64,11 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         for (Control child: children) {
-            if (child != null) child.draw(mouseX, mouseY, deltaTime, gui);
+            if (child != null && shouldDraw(child)) child.draw(mouseX, mouseY, deltaTime, gui);
         }
+    }
+
+    boolean shouldDraw(Control child) {
+        return true;
     }
 }
