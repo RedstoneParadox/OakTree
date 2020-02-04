@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-/**
- * @apiNote Work-in-progress.
- */
+@Deprecated
 public class GridControl extends Control<GridControl> {
 
     public int rows = 1;
@@ -30,28 +28,33 @@ public class GridControl extends Control<GridControl> {
         return this;
     }
 
+    @Deprecated
     public GridControl setCellSize(float cellWidth, float cellHeight) {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
         return this;
     }
 
+    @Deprecated
     public GridControl setCellSpacing(float horizontalCellSpacing, float verticalCellSpacing) {
         this.verticalCellSpacing = verticalCellSpacing;
         this.horizontalCellSpacing = horizontalCellSpacing;
         return this;
     }
 
+    @Deprecated
     public GridControl setRows(int rows) {
         this.rows = rows;
         return this;
     }
 
+    @Deprecated
     public GridControl setColumns(int columns) {
         this.columns = columns;
         return this;
     }
 
+    @Deprecated
     public GridControl setCell(int index, Control child) {
         if (index >= children.size()) {
             ListUtils.growList(children, index + 1);
@@ -72,6 +75,7 @@ public class GridControl extends Control<GridControl> {
         return this;
     }
 
+    @Deprecated
     public GridControl cells(TriFunction<Integer, Integer, Integer, Control<?>> function) {
         int cellIndex = 0;
 
