@@ -5,19 +5,7 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 
 import java.awt.*;
 
-/**
- * A SplitBoxNode encapsulates two {@link BoxControl} instances,
- * maintaining a percentage-based split between them. The
- * width or height of the first box takes up the specified
- * percentage of the total width while the second box takes
- * up the remainder.
- *
- * The {@link BoxControl#padding(float)},
- * {@link BoxControl#padding(ControlDirection, float)}, and
- * {@link BoxControl#child(Control)} are encapsulated by the
- * SplitBoxNode as well, so there is no need to access
- * them directly.
- */
+@Deprecated
 public class SplitBoxControl extends Control<SplitBoxControl> {
 
     private final BoxControl first = new BoxControl();
@@ -32,13 +20,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
         second.expand = true;
     }
 
-    /**
-     * Sets the percentage of the split. A split of 50%, for example,
-     * will mean that both sides take up half of the space.
-     *
-     * @param percent The percent of the split. Values are in pixels.
-     * @return The node itself.
-     */
+    @Deprecated
     public SplitBoxControl splitPercent(float percent) {
         if (percent <= 0.0f) {
             percent = 0.0f;
@@ -50,27 +32,13 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
         return this;
     }
 
-    /**
-     * Sets whether or not this node is oriented vertically. If
-     * oriented vertically, the split will be horizontal.
-     *
-     * @param vertical If the SplitBoxContainer should be
-     *                 oriented vertically.
-     * @return The node itself.
-     */
+    @Deprecated
     public SplitBoxControl setVertical(boolean vertical) {
         this.vertical = vertical;
         return this;
     }
 
-    /**
-     * Sets the first child of this node. The first child
-     * will be drawn on the left side of the node or the
-     * top side if the node is oriented vertically.
-     *
-     * @param child The first child.
-     * @return The node itself.
-     */
+    @Deprecated
     public SplitBoxControl firstChild(Control child) {
         first.child(child);
         return this;
@@ -80,15 +48,7 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
         return first.child;
     }
 
-    /**
-     * Sets the second child of this node. The second
-     * child will be drawn on the right side of the
-     * node or the top side if the node is oriented
-     * vertically.
-     *
-     * @param child The second child.
-     * @return The node itself.
-     */
+    @Deprecated
     public SplitBoxControl secondChild(Control child) {
         second.child(child);
         return this;
@@ -98,53 +58,25 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
         return second.child;
     }
 
-    /**
-     * Sets all 4 internal margins of the first box
-     * (left or top).
-     *
-     * @param margin The size of the margin in pixels.
-     * @return The node itself
-     */
+    @Deprecated
     public SplitBoxControl setFirstMargin(float margin) {
         first.padding(margin);
         return this;
     }
 
-    /**
-     * Sets one of the 4 internal margins of the first
-     * box based on the passed direction.
-     *
-     * @param direction The direction of the corresponding
-     *                  margin.
-     * @param margin The size of the margin in pixels.
-     * @return The node itself.
-     */
+    @Deprecated
     public SplitBoxControl setFirstMargin(ControlDirection direction, float margin) {
         first.padding(direction, margin);
         return this;
     }
 
-    /**
-     * Sets all 4 internal margins of the second box
-     * (left or top).
-     *
-     * @param margin The size of the margin in pixels.
-     * @return The node itself.
-     */
+    @Deprecated
     public SplitBoxControl setSecondMargin(float margin) {
         second.padding(margin);
         return this;
     }
 
-    /**
-     * Sets one of the 4 internal margins of the second
-     * box based on the passed direction.
-     *
-     * @param direction The direction of the corresponding
-     *                  margin.
-     * @param margin The size of the margin in pixels.
-     * @return The node itself.
-     */
+    @Deprecated
     public SplitBoxControl setSecondMargin(ControlDirection direction, float margin) {
         second.padding(direction, margin);
         return this;
