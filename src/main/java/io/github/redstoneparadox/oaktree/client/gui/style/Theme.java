@@ -10,4 +10,14 @@ public class Theme {
         styles.put(controlID + "/" + controlState, style);
         return this;
     }
+
+    public Theme add(String controlID, StyleBox style) {
+        styles.put(controlID + "/default", style);
+        return this;
+    }
+
+    public static Theme vanilla() {
+        return new Theme()
+                .add("item_slot_control", new TextureStyleBox("oaktree:gui/ui"));
+    }
 }
