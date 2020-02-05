@@ -32,8 +32,8 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         gui.getScreenContainer().ifPresent(container -> {
             super.draw(mouseX, mouseY, deltaTime, gui);
-            int slotX = (int)trueX;
-            int slotY = (int)trueY;
+            int slotX = (int)trueX - gui.getX() + 1;
+            int slotY = (int)trueY - gui.getY() + 1;
             if (!visible) {
                 slotX = -32;
                 slotY = -32;

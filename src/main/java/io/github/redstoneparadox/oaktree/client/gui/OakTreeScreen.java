@@ -152,6 +152,16 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
+    public int getX() {
+        return 0;
+    }
+
+    @Override
+    public int getY() {
+        return 0;
+    }
+
+    @Override
     public boolean mouseClicked(double double_1, double double_2, int int_1) {
         super.mouseClicked(double_1, double_2, int_1);
 

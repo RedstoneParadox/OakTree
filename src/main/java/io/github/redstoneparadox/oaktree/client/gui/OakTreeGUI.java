@@ -24,4 +24,8 @@ public interface OakTreeGUI {
     default void shouldCloseOnInventoryKey(boolean value) {
 
     }
+
+    int getX();
+
+    int getY();
 }

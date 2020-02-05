@@ -4,21 +4,32 @@ import io.github.redstoneparadox.oaktree.client.gui.ScreenBuilder;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.NinePatchStyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.TextureStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Material;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.container.Container;
+import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.function.Supplier;
@@ -27,22 +38,44 @@ public class Tests {
     private final TestBlock testOne = new TestBlock(testSettings(), this::testOne);
     private final TestBlock testTwo = new TestBlock(testSettings(), this::testTwo);
     private final TestBlock testThree = new TestBlock(testSettings(), this::testThree);
+    private final ContainerTestBlock testFour = new ContainerTestBlock(testSettings(), this::testFour);
+
+    private Identifier testFourID = new Identifier("oaktree:test_four");
 
     public void init() {
         register(testOne, "one");
         register(testTwo, "two");
         register(testThree, "three");
+        register(testFour, "four");
+
+        ScreenProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
+            BlockPos pos = buf.readBlockPos();
+            return new ScreenBuilder
+                    (
+                            testFour()
+                    )
+                    .container(new TestContainer(syncId, player))
+                    .playerInventory(player.inventory)
+                    .text(new LiteralText("Test 4"))
+                    .buildContainerScreen();
+        });
+
+        ContainerProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
+            Container container = new TestContainer(syncId, player);
+            OakTreeNetworking.addContainerForSyncing(container);
+            return container;
+        });
     }
 
     private Block.Settings testSettings() {
         return FabricBlockSettings.of(Material.METAL).build();
     }
 
-    private void register(Block block, String testNum) {
-        Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + testNum), block);
+    private void register(Block block, String suffix) {
+        Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
     }
 
-    static class TestBlock extends Block {
+    class TestBlock extends Block {
         private final Supplier<Control> supplier;
 
         TestBlock(Settings settings, Supplier<Control> supplier) {
@@ -56,6 +89,44 @@ public class Tests {
                 MinecraftClient.getInstance().openScreen(new ScreenBuilder(supplier.get()).build());
             }
             return ActionResult.SUCCESS;
+        }
+    }
+
+    class ContainerTestBlock extends TestBlock {
+        ContainerTestBlock(Settings settings, Supplier<Control> supplier) {
+            super(settings, supplier);
+        }
+
+        @Override
+        public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+            if (!world.isClient()) {
+                ContainerProviderRegistry.INSTANCE.openContainer(testFourID, player, (buf -> buf.writeBlockPos(pos)));
+            }
+            return ActionResult.SUCCESS;
+        }
+    }
+
+    static class TestContainer extends Container {
+        private final PlayerInventory playerInventory;
+
+        protected TestContainer(int syncId, PlayerEntity player) {
+            super(null, syncId);
+            this.playerInventory = player.inventory;
+
+            for (int i = 0; i < 3; i += 1) {
+                for (int j = 0; j < 9; j += 1) {
+                    this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 0, 0));
+                }
+            }
+
+            for (int j = 0; j < 9; ++j) {
+                this.addSlot(new Slot(playerInventory, j, 0, 0));
+            }
+        }
+
+        @Override
+        public boolean canUse(PlayerEntity player) {
+            return true;
         }
     }
 
@@ -123,6 +194,34 @@ public class Tests {
                         new NinePatchStyleBox("oaktree:textures/gui/ui.png")
                                 .widths(5, 1, 5)
                                 .heights(5, 1, 5)
+                );
+    }
+
+    private Control testFour() {
+        return new BoxControl()
+                .size(200, 200)
+                .anchor(ControlAnchor.CENTER)
+                .defaultStyle(
+                        new NinePatchStyleBox("oaktree:textures/gui/ui.png")
+                                .widths(5, 1, 5)
+                                .heights(5, 1, 5)
+                )
+                .child(
+                        new GridPanelControl()
+                                .rows(4)
+                                .columns(9)
+                                .anchor(ControlAnchor.CENTER)
+                                .size(162, 72)
+                                .cells(this::slot)
+                );
+    }
+
+    private Control slot(int row, int column, int index) {
+        return new ItemSlotControl(index)
+                .size(18, 18)
+                .anchor(ControlAnchor.CENTER)
+                .defaultStyle(
+                    new TextureStyleBox("oaktree:textures/gui/ui.png").setDrawOrigin(18, 0)
                 );
     }
 }
