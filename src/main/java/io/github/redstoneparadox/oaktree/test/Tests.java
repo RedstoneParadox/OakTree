@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.test;
 import io.github.redstoneparadox.oaktree.client.gui.ScreenBuilder;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.NinePatchStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -25,10 +26,12 @@ import java.util.function.Supplier;
 public class Tests {
     private final TestBlock testOne = new TestBlock(testSettings(), this::testOne);
     private final TestBlock testTwo = new TestBlock(testSettings(), this::testTwo);
+    private final TestBlock testThree = new TestBlock(testSettings(), this::testThree);
 
     public void init() {
         register(testOne, "one");
         register(testTwo, "two");
+        register(testThree, "three");
     }
 
     private Block.Settings testSettings() {
@@ -109,6 +112,17 @@ public class Tests {
                                                 .defaultStyle(new ColorStyleBox(RGBAColor.green()))
                                                 .onClick((gui, control) -> pagePanelControl.nextPage())
                                 )
+                );
+    }
+
+    private Control testThree() {
+        return new Control()
+                .size(100, 200)
+                .anchor(ControlAnchor.CENTER)
+                .defaultStyle(
+                        new NinePatchStyleBox("oaktree:textures/gui/ui.png")
+                                .widths(5, 1, 5)
+                                .heights(5, 1, 5)
                 );
     }
 }
