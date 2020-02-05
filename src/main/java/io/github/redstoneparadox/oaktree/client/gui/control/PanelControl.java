@@ -15,8 +15,11 @@ import java.util.function.Function;
  * @param <C> The {@link PanelControl} type.
  */
 public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
-
     public final List<Control> children = new ArrayList<>();
+
+    public PanelControl() {
+        this.id = "panel_control";
+    }
 
     /**
      * Adds a child to this PanelControl.

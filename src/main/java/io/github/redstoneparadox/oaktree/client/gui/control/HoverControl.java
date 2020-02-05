@@ -14,6 +14,10 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 
     public StyleBox hoverStyle = null;
 
+    public HoverControl() {
+        this.id = "hover_control";
+    }
+
     public HoverControl hoverStyle(StyleBox value) {
         hoverStyle = value;
         return this;

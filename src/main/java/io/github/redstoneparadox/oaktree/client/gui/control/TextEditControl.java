@@ -15,7 +15,6 @@ import java.util.List;
  * @apiNote  Work in Progress!
  */
 public class TextEditControl extends InteractiveControl<TextEditControl> implements TextControl<TextEditControl> {
-
     public boolean shadow = false;
     public RGBAColor fontColor = RGBAColor.white();
     public RGBAColor highlightColor = RGBAColor.blue();
@@ -33,6 +32,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     private int cursorTicks = 0;
     private int backspaceTicks = 0;
+
+    public TextEditControl() {
+        this.id = "text_edit_control";
+    }
 
     /**
      * Sets a {@link TypingListener} to run when a character is typed.

@@ -14,6 +14,10 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 public class BoxControl extends PaddingControl<BoxControl> {
     public Control child = null;
 
+    public BoxControl() {
+        this.id = "box_control";
+    }
+
     @Deprecated
     public BoxControl padding(ControlDirection direction, float margin) {
         switch (direction) {

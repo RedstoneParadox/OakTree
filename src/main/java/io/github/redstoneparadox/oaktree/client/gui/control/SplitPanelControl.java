@@ -7,6 +7,10 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
     public Distribution distribution = Distribution.HALF;
     public boolean verticalSplit = false;
 
+    public SplitPanelControl() {
+        this.id = "split_panel_control";
+    }
+
     public SplitPanelControl splitSize(float splitSize) {
         this.splitSize = splitSize;
         return this;

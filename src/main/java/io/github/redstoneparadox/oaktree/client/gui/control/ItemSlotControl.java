@@ -16,7 +16,6 @@ import io.github.redstoneparadox.oaktree.mixin.container.SlotAccessor;
  * @apiNote You probably shouldn't use this at this time.
  */
 public class ItemSlotControl extends Control<ItemSlotControl> {
-
     private final int index;
 
     /**
@@ -25,6 +24,7 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
      *              index value of the slot.
      */
     public ItemSlotControl(int index) {
+        this.id = "item_slot_control";
         this.index = index;
     }
 

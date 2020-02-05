@@ -14,6 +14,10 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
 
     public String text = "";
 
+    public LabelControl() {
+        this.id = "label_control";
+    }
+
     /**
      * Sets the text for this LabelControl
      * to display.

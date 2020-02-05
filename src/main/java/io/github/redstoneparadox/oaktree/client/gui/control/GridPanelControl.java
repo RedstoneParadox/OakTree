@@ -9,9 +9,12 @@ import io.github.redstoneparadox.oaktree.util.TriFunction;
  * a grid pattern.
  */
 public class GridPanelControl extends PanelControl<GridPanelControl> {
-
     public int rows = 1;
     public int columns = 1;
+
+    public GridPanelControl() {
+        this.id = "grid_panel_control";
+    }
 
     /**
      * Sets the number of rows to divide the

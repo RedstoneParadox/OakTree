@@ -35,8 +35,19 @@ public class Control<C extends Control> {
 
     StyleBox currentStyle = null;
 
+    public String id;
+
     float trueX = 0.0f;
     float trueY = 0.0f;
+
+    public Control() {
+        this.id = "control";
+    }
+
+    public C id(String id) {
+        this.id = id;
+        return (C)this;
+    }
 
     /**
      * Sets the position of the node on the screen relative to the parent.

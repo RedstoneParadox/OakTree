@@ -16,6 +16,10 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 
     public StyleBox heldStyle = null;
 
+    public ButtonControl() {
+        this.id = "button_control";
+    }
+
     public ButtonControl toggleable(boolean toggleable) {
         this.toggleable = toggleable;
         return this;
