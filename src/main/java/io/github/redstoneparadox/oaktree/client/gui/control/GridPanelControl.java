@@ -13,7 +13,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
     public int columns = 1;
 
     public GridPanelControl() {
-        this.id = "grid_panel_control";
+        this.id = "grid_panel";
     }
 
     /**

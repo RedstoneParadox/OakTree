@@ -15,7 +15,7 @@ public class BoxControl extends PaddingControl<BoxControl> {
     public Control child = null;
 
     public BoxControl() {
-        this.id = "box_control";
+        this.id = "box";
     }
 
     @Deprecated

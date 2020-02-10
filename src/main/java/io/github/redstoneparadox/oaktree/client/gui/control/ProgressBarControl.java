@@ -19,7 +19,7 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
     ControlDirection direction = ControlDirection.RIGHT;
 
     public ProgressBarControl() {
-        this.id = "progress_bar_control";
+        this.id = "progress_bar";
     }
 
     /**

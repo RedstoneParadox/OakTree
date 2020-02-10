@@ -6,7 +6,7 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
     public int page = 0;
 
     public PagePanelControl() {
-        this.id = "page_panel_control";
+        this.id = "page_panel";
     }
 
     public PagePanelControl page(int page) {

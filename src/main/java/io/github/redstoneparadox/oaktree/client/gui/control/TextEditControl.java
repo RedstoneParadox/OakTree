@@ -34,7 +34,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private int backspaceTicks = 0;
 
     public TextEditControl() {
-        this.id = "text_edit_control";
+        this.id = "text_edit";
     }
 
     /**

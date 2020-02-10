@@ -15,7 +15,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
     public String text = "";
 
     public LabelControl() {
-        this.id = "label_control";
+        this.id = "label";
     }
 
     /**

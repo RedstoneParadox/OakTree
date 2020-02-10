@@ -24,7 +24,7 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
      *              index value of the slot.
      */
     public ItemSlotControl(int index) {
-        this.id = "item_slot_control";
+        this.id = "item_slot";
         this.index = index;
     }
 

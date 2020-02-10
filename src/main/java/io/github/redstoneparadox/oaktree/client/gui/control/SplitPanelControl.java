@@ -8,7 +8,7 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
     public boolean verticalSplit = false;
 
     public SplitPanelControl() {
-        this.id = "split_panel_control";
+        this.id = "split_panel";
     }
 
     public SplitPanelControl splitSize(float splitSize) {
