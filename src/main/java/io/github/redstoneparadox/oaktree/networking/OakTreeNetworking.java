@@ -34,8 +34,8 @@ public class OakTreeNetworking {
     private static void syncSlot(int x, int y, int index, int syncID) {
         if (CONTAINER_MAP.containsKey(syncID)) {
             Container container = CONTAINER_MAP.get(syncID);
-            if (index < container.slotList.size()) {
-                Slot slot = container.slotList.get(index);
+            if (index < container.slots.size()) {
+                Slot slot = container.slots.get(index);
                 ((SlotAccessor) slot).setXPosition(x);
                 ((SlotAccessor) slot).setYPosition(y);
             }

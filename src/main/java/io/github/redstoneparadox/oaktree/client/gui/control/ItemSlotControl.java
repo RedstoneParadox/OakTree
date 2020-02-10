@@ -39,8 +39,8 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
                 slotY = -32;
             }
 
-            if (index < container.slotList.size()) {
-                Slot slot = container.slotList.get(index);
+            if (index < container.slots.size()) {
+                Slot slot = container.slots.get(index);
                 ((SlotAccessor) slot).setXPosition(slotX);
                 ((SlotAccessor) slot).setYPosition(slotY);
 

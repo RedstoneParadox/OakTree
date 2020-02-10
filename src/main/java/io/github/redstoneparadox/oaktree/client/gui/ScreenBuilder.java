@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
+import net.minecraft.client.gui.screen.ingame.ContainerScreen;
 import net.minecraft.container.Container;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.LiteralText;
@@ -98,11 +98,11 @@ public class ScreenBuilder {
     }
 
     /**
-     * Builds a new {@link AbstractContainerScreen}
+     * Builds a new {@link ContainerScreen}
      *
-     * @return An {@link AbstractContainerScreen} instance.
+     * @return An {@link ContainerScreen} instance.
      */
-    public <C extends Container> AbstractContainerScreen<C> buildContainerScreen() {
+    public <C extends Container> ContainerScreen<C> buildContainerScreen() {
         return new OakTreeContainerScreen<C>(root, pause, parent, (C) container, playerInventory, text);
     }
 }

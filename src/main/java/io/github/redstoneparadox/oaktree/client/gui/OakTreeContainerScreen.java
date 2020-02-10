@@ -3,7 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
+import net.minecraft.client.gui.screen.ingame.ContainerScreen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
 import net.minecraft.container.Container;
@@ -13,7 +13,7 @@ import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 
 import java.util.Optional;
 
-public class OakTreeContainerScreen<T extends Container> extends AbstractContainerScreen<T> implements OakTreeGUI {
+public class OakTreeContainerScreen<T extends Container> extends ContainerScreen<T> implements OakTreeGUI {
 
     private Control root;
 
