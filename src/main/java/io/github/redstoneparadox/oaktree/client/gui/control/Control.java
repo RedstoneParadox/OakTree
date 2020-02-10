@@ -149,28 +149,6 @@ public class Control<C extends Control> {
     }
 
     @Deprecated
-    public void openAsScreen(boolean isPauseScreen, Screen parentScreen) {
-        Screen screen = new ScreenBuilder(this)
-                .shouldPause(isPauseScreen)
-                .parentScreen(parentScreen)
-                .build();
-
-        MinecraftClient.getInstance().openScreen(screen);
-    }
-
-    @Deprecated
-    public <T extends Container> ContainerScreen<T> toContainerScreen(boolean isPauseScreen, Screen parentScreen, T container, PlayerInventory playerInventory, Text text) {
-        ContainerScreen<T> screen = new ScreenBuilder(this)
-                .shouldPause(isPauseScreen)
-                .parentScreen(parentScreen)
-                .container(container)
-                .playerInventory(playerInventory)
-                .text(text)
-                .buildContainerScreen();
-        return screen;
-    }
-
-    @Deprecated
     public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2, OakTreeGUI gui) {
     }
 
