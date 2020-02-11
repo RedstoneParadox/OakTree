@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
+import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.ContainerScreen;
 import net.minecraft.container.Container;
@@ -17,6 +18,7 @@ public class ScreenBuilder {
     private boolean pause = false;
     private Screen parent = null;
     private Control<?> root;
+    private Theme theme = null;
     private Container container;
     private PlayerInventory playerInventory;
     private Text text = new LiteralText("");
@@ -49,6 +51,11 @@ public class ScreenBuilder {
      */
     public ScreenBuilder parentScreen(Screen parent) {
         this.parent = parent;
+        return this;
+    }
+
+    public ScreenBuilder theme(Theme theme) {
+        this.theme = theme;
         return this;
     }
 
@@ -94,7 +101,7 @@ public class ScreenBuilder {
      * @return A {@link Screen} instance.
      */
     public Screen build() {
-        return new OakTreeScreen(root, pause, parent);
+        return new OakTreeScreen(root, pause, parent, theme);
     }
 
     /**

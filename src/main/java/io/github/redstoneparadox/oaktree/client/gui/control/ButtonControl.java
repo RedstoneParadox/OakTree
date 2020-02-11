@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 
 public class ButtonControl extends InteractiveControl<ButtonControl> {
@@ -27,6 +28,7 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 
     public ButtonControl heldStyle(StyleBox style) {
         heldStyle = style;
+        internalTheme.add("self", "held", style);
         return this;
     }
 
@@ -93,5 +95,9 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
         }
     }
 
-
+    @Override
+    void applyTheme(Theme theme) {
+        super.applyTheme(theme);
+        heldStyle = getStyle(theme, "held");
+    }
 }

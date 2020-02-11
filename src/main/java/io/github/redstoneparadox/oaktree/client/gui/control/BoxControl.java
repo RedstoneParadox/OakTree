@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
+import net.minecraft.client.MinecraftClient;
 
 /**
  * BoxControl is a type of PaddingControl that
@@ -48,6 +49,12 @@ public class BoxControl extends PaddingControl<BoxControl> {
     public BoxControl child(Control child) {
         this.child = child;
         return this;
+    }
+
+    @Override
+    public void setup(MinecraftClient client, OakTreeGUI gui) {
+        super.setup(client, gui);
+        child.setup(client, gui);
     }
 
     @Override

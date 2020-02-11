@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import net.minecraft.client.MinecraftClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,14 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
             children.add(function.apply(i));
         }
         return (C) this;
+    }
+
+    @Override
+    public void setup(MinecraftClient client, OakTreeGUI gui) {
+        super.setup(client, gui);
+        for (Control child: children) {
+            child.setup(client, gui);
+        }
     }
 
     @Override

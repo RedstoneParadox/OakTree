@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
+import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,15 +17,14 @@ import java.util.Optional;
 public class OakTreeContainerScreen<T extends Container> extends ContainerScreen<T> implements OakTreeGUI {
 
     private Control root;
-
     private boolean isPauseScreen;
+    private Screen parentScreen;
+    private Theme theme;
 
     private boolean leftMouseButton;
     private boolean leftMouseJustPressed;
 
     private Character lastChar = null;
-
-    private Screen parentScreen;
 
     private boolean closeOnInv = true;
 
@@ -35,11 +35,12 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
     private boolean cut = false;
     private boolean paste = false;
 
-    public OakTreeContainerScreen(Control root, boolean isPauseScreen, Screen parentScreen, T container, PlayerInventory playerInventory, Text text) {
+    public OakTreeContainerScreen(Control root, boolean isPauseScreen, Screen parentScreen, Theme theme, T container, PlayerInventory playerInventory, Text text) {
         super(container, playerInventory, text);
         this.root = root;
         this.isPauseScreen = isPauseScreen;
         this.parentScreen = parentScreen;
+        this.theme = theme;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
     @Override
     public void init(MinecraftClient minecraftClient_1, int int_1, int int_2) {
         super.init(minecraftClient_1, int_1, int_2);
-        root.setup(minecraftClient_1, int_1, int_2, this);
+        root.setup(minecraftClient_1, this);
     }
 
     @Override
@@ -174,6 +175,17 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
     @Override
     public int getY() {
         return y;
+    }
+
+    @Override
+    public Theme getTheme() {
+        return theme;
+    }
+
+    @Override
+    public void applyTheme(Theme theme) {
+        this.theme = theme;
+        root.setup(MinecraftClient.getInstance(), this);
     }
 
     @Override

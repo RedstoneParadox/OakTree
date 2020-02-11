@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import net.minecraft.client.MinecraftClient;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
@@ -11,25 +12,19 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
  * The base class for all controls.
  */
 public class Control<C extends Control> {
-
     public float x = 0.0f;
     public float y = 0.0f;
     public float width = 0.1f;
     public float height = 0.1f;
-
-    boolean visible = true;
-
+    public boolean visible = true;
     public ControlAnchor anchor = ControlAnchor.TOP_LEFT;
-
     public GuiFunction<C> onTick = (gui, control) -> {};
-
     public StyleBox defaultStyle = null;
-
     public boolean expand = false;
+    public String id;
 
     StyleBox currentStyle = null;
-
-    public String id;
+    Theme internalTheme = null;
 
     float trueX = 0.0f;
     float trueY = 0.0f;
@@ -112,6 +107,7 @@ public class Control<C extends Control> {
      */
     public C defaultStyle(StyleBox style) {
         defaultStyle = style;
+        internalTheme.add("self", style);
         return (C)this;
     }
 
@@ -142,8 +138,8 @@ public class Control<C extends Control> {
         return (C)this;
     }
 
-    @Deprecated
-    public void setup(MinecraftClient minecraftClient_1, int int_1, int int_2, OakTreeGUI gui) {
+    public void setup(MinecraftClient client, OakTreeGUI gui) {
+        applyTheme(gui.getTheme());
     }
 
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
@@ -166,6 +162,16 @@ public class Control<C extends Control> {
             height = containerHeight;
         }
         currentStyle = defaultStyle;
+    }
+
+    void applyTheme(Theme theme) {
+        defaultStyle = getStyle(theme, "default");
+    }
+
+    final StyleBox getStyle(Theme theme, String name) {
+        StyleBox style = internalTheme.get("self/" + name);
+        if (style == null && theme != null) theme.get(id + "/" + name);
+        return style;
     }
 
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {

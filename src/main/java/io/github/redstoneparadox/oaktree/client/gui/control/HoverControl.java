@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 
 public class HoverControl extends InteractiveControl<HoverControl> {
@@ -20,6 +21,7 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 
     public HoverControl hoverStyle(StyleBox value) {
         hoverStyle = value;
+        internalTheme.add("self", "hover", hoverStyle);
         return this;
     }
 
@@ -59,5 +61,11 @@ public class HoverControl extends InteractiveControl<HoverControl> {
         if (mouseCurrentlyWithin && hoverStyle != null) {
             currentStyle = hoverStyle;
         }
+    }
+
+    @Override
+    void applyTheme(Theme theme) {
+        super.applyTheme(theme);
+        hoverStyle = getStyle(theme, "hover");
     }
 }

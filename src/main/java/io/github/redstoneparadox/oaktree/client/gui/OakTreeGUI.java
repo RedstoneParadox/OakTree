@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
+import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.container.Container;
 
@@ -28,4 +29,8 @@ public interface OakTreeGUI {
     int getX();
 
     int getY();
+
+    Theme getTheme();
+
+    void applyTheme(Theme theme);
 }
