@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class SplitPanelControl extends PanelControl<SplitPanelControl> {
     public float splitSize = 0.0f;
@@ -33,31 +34,23 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
 
     @Override
     void arrangeChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
-        float firstWidth;
-        float firstHeight;
+        ScreenVec firstPosition = innerPosition(trueX, trueY);
+        ScreenVec firstDimensions;
 
-        float secondX;
-        float secondY;
-        float secondWidth;
-        float secondHeight;
+        ScreenVec secondPosition;
+        ScreenVec secondDimension;
 
         if (verticalSplit) {
-            firstWidth = innerWidth;
-            firstHeight = splitSize;
+            firstDimensions = innerDimensions(width, splitSize);
 
-            secondX = innerX;
-            secondY = innerY + splitSize;
-            secondWidth = innerWidth;
-            secondHeight = innerHeight - splitSize;
+            secondPosition = innerPosition(trueX, trueY + splitSize);
+            secondDimension = innerDimensions(width, height - splitSize);
         }
-        else  {
-            firstWidth = splitSize;
-            firstHeight = innerHeight;
+        else {
+            firstDimensions = innerDimensions(splitSize, height);
 
-            secondX = innerX + splitSize;
-            secondY = innerY;
-            secondWidth = innerWidth - splitSize;
-            secondHeight = innerHeight;
+            secondPosition = innerPosition(trueX + splitSize, trueY);
+            secondDimension = innerDimensions(width - splitSize, height);
         }
 
         if (distribution == Distribution.HALF) {
@@ -65,8 +58,8 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
             for (int i = 0; i < children.size(); i += 1) {
                 Control child = children.get(i);
                 if (child != null) {
-                    if (i < half) child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, firstWidth, firstHeight);
-                    else child.preDraw(mouseX, mouseY, deltaTime, gui, secondX, secondY, secondWidth, secondHeight);
+                    if (i < half) child.preDraw(mouseX, mouseY, deltaTime, gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y);
+                    else child.preDraw(mouseX, mouseY, deltaTime, gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y);
                 }
             }
         }
@@ -74,8 +67,8 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
             boolean second = false;
             for (Control child: children) {
                 if (child != null) {
-                    if (second) child.preDraw(mouseX, mouseY, deltaTime, gui, secondX, secondY, secondWidth, secondHeight);
-                    else child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, firstWidth, firstHeight);
+                    if (second) child.preDraw(mouseX, mouseY, deltaTime, gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y);
+                    else child.preDraw(mouseX, mouseY, deltaTime, gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y);
                 }
                 second = !second;
             }

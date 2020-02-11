@@ -1,17 +1,13 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public abstract class PaddingControl<C extends PaddingControl> extends Control<C> {
     public float topPadding = 0.0f;
     public float bottomPadding = 0.0f;
     public float leftPadding = 0.0f;
     public float rightPadding = 0.0f;
-
-    float innerWidth = width;
-    float innerHeight = height;
-    float innerX = trueX;
-    float innerY = trueY;
 
     /**
      * Sets the padding for all 4 sides.
@@ -74,10 +70,19 @@ public abstract class PaddingControl<C extends PaddingControl> extends Control<C
     @Override
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
-        innerWidth = width - leftPadding - rightPadding;
-        innerHeight = height - topPadding - bottomPadding;
+    }
 
-        innerX = trueX + leftPadding;
-        innerY = trueY + topPadding;
+    ScreenVec innerDimensions(float spaceWidth, float spaceHeight) {
+        float innerWidth = spaceWidth - leftPadding - rightPadding;
+        float innerHeight = spaceHeight - topPadding - bottomPadding;
+
+        return new ScreenVec(innerWidth, innerHeight);
+    }
+
+    ScreenVec innerPosition(float spaceX, float spaceY) {
+        float innerX = spaceX + leftPadding;
+        float innerY = spaceY + topPadding;
+
+        return new ScreenVec(innerX, innerY);
     }
 }

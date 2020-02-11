@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class ListPanelControl extends PanelControl<ListPanelControl> {
     public boolean horizontal = false;
@@ -35,23 +36,27 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
     @Override
     void arrangeChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!horizontal) {
-            float entryHeight = innerHeight/displayCount;
+            float sectionHeight = height/displayCount;
+            ScreenVec innerDimensions = innerDimensions(width, sectionHeight);
+            ScreenVec innerPosition = innerPosition(trueX, trueY);
 
             for (int i = 0; i < displayCount; i += 1) {
-                float entryY = trueY + (i * entryHeight);
+                float entryY = innerPosition.y + (i * sectionHeight);
 
                 Control child = children.get(i + startIndex);
-                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, entryY, innerWidth, entryHeight);
+                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y);
             }
         }
         else {
-            float entryWidth = innerWidth/displayCount;
+            float sectionWidth = width/displayCount;
+            ScreenVec innerDimensions = innerDimensions(sectionWidth, height);
+            ScreenVec innerPosition = innerPosition(trueX, trueY);
 
             for (int i = 0; i < displayCount; i += 1) {
-                float entryX = trueX + (i * entryWidth);
+                float entryX = innerPosition.x + (i * sectionWidth);
 
                 Control child = children.get(i + startIndex);
-                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, entryX, innerY, entryWidth, innerHeight);
+                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y);
             }
         }
     }

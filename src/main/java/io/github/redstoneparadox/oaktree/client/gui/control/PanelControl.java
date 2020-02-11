@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.MinecraftClient;
 
 import java.util.ArrayList;
@@ -66,8 +67,11 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
     }
 
     void arrangeChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        ScreenVec innerPosition = innerPosition(trueX, trueY);
+        ScreenVec innerDimensions = innerDimensions(width, height);
+
         for (Control child: children) {
-            if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, innerWidth, innerHeight);
+            if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y);
         }
     }
 

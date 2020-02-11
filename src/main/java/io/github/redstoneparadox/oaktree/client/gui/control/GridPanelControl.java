@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import io.github.redstoneparadox.oaktree.util.ListUtils;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
 
@@ -82,18 +83,20 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 
     @Override
     void arrangeChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
-        float cellWidth = innerWidth/columns;
-        float cellHeight = innerHeight/rows;
+        float cellWidth = width/columns;
+        float cellHeight = height/rows;
+        ScreenVec innerDimensions = innerDimensions(cellWidth, cellHeight);
+        ScreenVec innerPosition = innerPosition(trueX, trueY);
 
         int index = 0;
 
         for (int j = 0; j < rows && index < children.size(); j += 1) {
             for (int i = 0; i < columns && index < children.size(); i += 1) {
-                float cellX = innerX + (i * cellWidth);
-                float cellY = innerY + (j * cellHeight);
+                float cellX = innerPosition.x + (i * cellWidth);
+                float cellY = innerPosition.y + (j * cellHeight);
 
                 Control child = children.get(index);
-                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, cellX, cellY, cellWidth, cellHeight);
+                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, cellX, cellY, innerDimensions.x, innerDimensions.y);
 
                 index += 1;
             }

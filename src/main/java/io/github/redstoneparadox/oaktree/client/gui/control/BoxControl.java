@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.MinecraftClient;
 
 /**
@@ -61,15 +62,11 @@ public class BoxControl extends PaddingControl<BoxControl> {
     public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
-
-        float innerWidth = width - leftPadding - rightPadding;
-        float innerHeight = height - topPadding - bottomPadding;
-
-        float innerX = trueX + leftPadding;
-        float innerY = trueY + topPadding;
+        ScreenVec innerPosition = innerPosition(trueX, trueY);
+        ScreenVec innerDimensions = innerDimensions(width, height);
 
         if (child != null) {
-            child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, innerY, innerWidth, innerHeight);
+            child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y);
         }
     }
 

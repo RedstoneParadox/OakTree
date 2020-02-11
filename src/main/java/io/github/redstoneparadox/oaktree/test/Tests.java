@@ -240,6 +240,7 @@ public class Tests {
                 .child(
                         list
                                 .size(200, 200)
+                                .padding(2)
                                 .children(20, this::itemLabel)
                                 .displayCount(4)
                                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
@@ -268,8 +269,9 @@ public class Tests {
 
     private Control itemLabel(int i) {
         return new LabelControl()
-                .size(200, 50)
+                .expand(true)
                 .anchor(ControlAnchor.CENTER)
+                .defaultStyle(new ColorStyleBox(RGBAColor.white()))
                 .shadow(true)
                 .text("List Item " + (i + 1) + ".");
     }
