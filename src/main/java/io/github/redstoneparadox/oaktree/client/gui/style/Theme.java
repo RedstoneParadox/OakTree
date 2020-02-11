@@ -32,12 +32,24 @@ public class Theme {
                         .widths(5, 1, 5)
                         .heights(5, 1, 5)
                         .fileDimensions(256, 256)
-                .scale(1f))
+                        .scale(1f))
                 .add("text_edit", new ColorStyleBox(RGBAColor.black(), new RGBAColor(0.63f, 0.63f, 0.63f), 1))
                 .add("background", new TextureStyleBox("textures/gui/options_background.png")
                         .textureSize(16, 16)
                         .fileDimensions(16, 16)
                         .tint(new RGBAColor(255, 255, 255))
-                        .tiled(true));
+                        .tiled(true))
+                .add("button", "held", new NinePatchStyleBox("oaktree:textures/gui/ui.png")
+                        .widths(3, 12, 3)
+                        .heights(3, 12, 3)
+                        .drawOrigin(36, 0)
+                        .fileDimensions(256, 256)
+                        .scale(1))
+                .add("button", new NinePatchStyleBox("oaktree:textures/gui/ui.png")
+                        .widths(3, 12, 3)
+                        .heights(3, 12, 3)
+                        .drawOrigin(54, 0)
+                        .fileDimensions(256, 256)
+                        .scale(1));
     }
 }

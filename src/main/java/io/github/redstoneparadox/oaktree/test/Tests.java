@@ -293,9 +293,14 @@ public class Tests {
                                                 .expand(true)
                                 )
                                 .child(
-                                        new Control()
+                                        new BoxControl()
                                                 .id("base")
                                                 .expand(true)
+                                                .padding(4.0f)
+                                                .child(
+                                                        new ButtonControl()
+                                                        .expand(true)
+                                                )
                                 )
                 );
     }
