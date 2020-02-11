@@ -27,7 +27,7 @@ public class Theme {
 
     public static Theme vanilla() {
         return new Theme()
-                .add("item_slot", new TextureStyleBox("oaktree:gui/ui.png").setDrawOrigin(18, 0))
+                .add("item_slot", new TextureStyleBox("oaktree:gui/ui.png").drawOrigin(18, 0))
                 .add("base", new NinePatchStyleBox("oaktree:gui/ui.png")
                         .widths(5, 1, 5)
                         .heights(5, 1, 5))

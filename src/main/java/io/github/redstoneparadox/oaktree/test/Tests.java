@@ -14,15 +14,12 @@ import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Material;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.container.Container;
 import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -30,7 +27,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.function.Supplier;
@@ -230,7 +226,7 @@ public class Tests {
                 .size(18, 18)
                 .anchor(ControlAnchor.CENTER)
                 .defaultStyle(
-                    new TextureStyleBox("oaktree:textures/gui/ui.png").setDrawOrigin(18, 0)
+                    new TextureStyleBox("oaktree:textures/gui/ui.png").drawOrigin(18, 0)
                 );
     }
 
@@ -279,6 +275,13 @@ public class Tests {
     }
 
     private Control testSix() {
-        return testOne().defaultStyle(null);
+        return new BoxControl()
+                .expand(true)
+                .defaultStyle(
+                        new TextureStyleBox("textures/gui/options_background.png")
+                                .textureSize(16, 16)
+                                .magicNumber(2)
+                                .tiled(true)
+                );
     }
 }

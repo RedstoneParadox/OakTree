@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface DrawableHelperAccessor {
 
     @Invoker("blit")
-    void invokeBlit(int int_1, int int_2, int int_3, int int_4, int int_5, int int_6);
+    void invokeBlit(int x, int y, int left, int top, int width, int height);
 }
