@@ -170,7 +170,7 @@ public class Control<C extends Control> {
 
     final StyleBox getStyle(Theme theme, String name) {
         StyleBox style = internalTheme.get("self/" + name);
-        if (style == null && theme != null) theme.get(id + "/" + name);
+        if (style == null && theme != null) style = theme.get(id + "/" + name);
         return style;
     }
 

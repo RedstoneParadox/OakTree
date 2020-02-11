@@ -162,7 +162,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public Theme getTheme() {
-        return null;
+        return theme;
     }
 
     @Override

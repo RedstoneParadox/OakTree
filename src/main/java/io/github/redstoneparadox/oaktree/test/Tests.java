@@ -5,6 +5,7 @@ import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.NinePatchStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.TextureStyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
@@ -35,11 +36,12 @@ import net.minecraft.world.World;
 import java.util.function.Supplier;
 
 public class Tests {
-    private final TestBlock testOne = new TestBlock(testSettings(), this::testOne);
-    private final TestBlock testTwo = new TestBlock(testSettings(), this::testTwo);
-    private final TestBlock testThree = new TestBlock(testSettings(), this::testThree);
-    private final ContainerTestBlock testFour = new ContainerTestBlock(testSettings(), this::testFour);
-    private final TestBlock testFive = new TestBlock(testSettings(), this::testFive);
+    private final TestBlock testOne = new TestBlock(testSettings(), false, this::testOne);
+    private final TestBlock testTwo = new TestBlock(testSettings(), false, this::testTwo);
+    private final TestBlock testThree = new TestBlock(testSettings(), false, this::testThree);
+    private final ContainerTestBlock testFour = new ContainerTestBlock(testSettings(), false, this::testFour);
+    private final TestBlock testFive = new TestBlock(testSettings(), false, this::testFive);
+    private final TestBlock testSix = new TestBlock(testSettings(), true, this::testSix);
 
     private Identifier testFourID = new Identifier("oaktree:test_four");
 
@@ -49,6 +51,7 @@ public class Tests {
         register(testThree, "three");
         register(testFour, "four");
         register(testFive, "five");
+        register(testSix, "six");
 
         ScreenProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
             BlockPos pos = buf.readBlockPos();
@@ -79,24 +82,28 @@ public class Tests {
 
     class TestBlock extends Block {
         private final Supplier<Control> supplier;
+        private final boolean vanilla;
 
-        TestBlock(Settings settings, Supplier<Control> supplier) {
+        TestBlock(Settings settings, boolean vanilla, Supplier<Control> supplier) {
             super(settings);
+            this.vanilla = vanilla;
             this.supplier = supplier;
         }
 
         @Override
         public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
             if (world.isClient) {
-                MinecraftClient.getInstance().openScreen(new ScreenBuilder(supplier.get()).build());
+                ScreenBuilder builder = new ScreenBuilder(supplier.get());
+                if (vanilla) builder.theme(Theme.vanilla());
+                MinecraftClient.getInstance().openScreen(builder.build());
             }
             return ActionResult.SUCCESS;
         }
     }
 
     class ContainerTestBlock extends TestBlock {
-        ContainerTestBlock(Settings settings, Supplier<Control> supplier) {
-            super(settings, supplier);
+        ContainerTestBlock(Settings settings, boolean vanilla, Supplier<Control> supplier) {
+            super(settings, vanilla, supplier);
         }
 
         @Override
@@ -269,5 +276,9 @@ public class Tests {
                 .anchor(ControlAnchor.CENTER)
                 .shadow(true)
                 .text("List Item " + (i + 1) + ".");
+    }
+
+    private Control testSix() {
+        return testOne().defaultStyle(null);
     }
 }
