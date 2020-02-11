@@ -1,13 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ingame.ContainerScreen;
-import net.minecraft.container.Container;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import io.github.redstoneparadox.oaktree.client.gui.ScreenBuilder;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
