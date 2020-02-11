@@ -24,7 +24,7 @@ public class Control<C extends Control> {
     public String id;
 
     StyleBox currentStyle = null;
-    Theme internalTheme = null;
+    Theme internalTheme = new Theme();
 
     float trueX = 0.0f;
     float trueY = 0.0f;
