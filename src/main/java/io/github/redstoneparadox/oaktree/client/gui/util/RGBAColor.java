@@ -5,10 +5,10 @@ package io.github.redstoneparadox.oaktree.client.gui.util;
  */
 public class RGBAColor {
 
-    public float redChannel = 0.0f;
-    public float blueChannel = 0.0f;
-    public float greenChannel = 0.0f;
-    public float alphaChannel = 0.0f;
+    public float redChannel;
+    public float blueChannel;
+    public float greenChannel;
+    public float alphaChannel;
 
     public RGBAColor(float red, float green, float blue, float alpha) {
         redChannel = red;

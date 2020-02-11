@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.BufferBuilder;
@@ -17,6 +18,7 @@ public class TextureStyleBox extends StyleBox {
     private boolean tiled;
     private int textureWidth = 0;
     private int textureHeight = 0;
+    private RGBAColor tint = RGBAColor.white();
 
     public TextureStyleBox(String path) {
         textureID = new Identifier(path);
@@ -69,6 +71,11 @@ public class TextureStyleBox extends StyleBox {
         return this;
     }
 
+    public TextureStyleBox tint(RGBAColor tint) {
+        this.tint = tint;
+        return this;
+    }
+
     @Override
     public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
@@ -89,14 +96,19 @@ public class TextureStyleBox extends StyleBox {
         float widthDivisor = textureWidth * 2.0f;
         float heightDivisor = textureHeight * 2.0f;
 
+        int r = (int) (tint.redChannel * 255.0f);
+        int g = (int) (tint.greenChannel * 255.0f);
+        int b = (int) (tint.blueChannel * 255.0f);
+        int a = (int) (tint.alphaChannel * 255.0f);
+
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         bufferBuilder.begin(7, VertexFormats.POSITION_TEXTURE_COLOR);
-        bufferBuilder.vertex(x, (y + height), 0.0).texture(left/widthDivisor, (height + top)/heightDivisor).color(255, 255, 255, 255).next();
-        bufferBuilder.vertex((x + width), (y + height), 0.0).texture((width + left)/widthDivisor, (height + top)/heightDivisor).color(255, 255, 255, 255).next();
-        bufferBuilder.vertex((x + width), y, 0.0).texture((width + left)/widthDivisor, top/heightDivisor).color(255, 255, 255, 255).next();
-        bufferBuilder.vertex(x, y, 0.0).texture(left/widthDivisor, top/heightDivisor).color(255, 255, 255, 255).next();
+        bufferBuilder.vertex(x, (y + height), 0.0).texture(left/widthDivisor, (height + top)/heightDivisor).color(r, g, b, a).next();
+        bufferBuilder.vertex((x + width), (y + height), 0.0).texture((width + left)/widthDivisor, (height + top)/heightDivisor).color(r, g, b, a).next();
+        bufferBuilder.vertex((x + width), y, 0.0).texture((width + left)/widthDivisor, top/heightDivisor).color(r, g, b, a).next();
+        bufferBuilder.vertex(x, y, 0.0).texture(left/widthDivisor, top/heightDivisor).color(r, g, b, a).next();
         tessellator.draw();
     }
 }

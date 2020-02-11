@@ -34,6 +34,7 @@ public class Theme {
                 .add("text_edit", new ColorStyleBox(RGBAColor.black(), new RGBAColor(0.63f, 0.63f, 0.63f), 1))
                 .add("background", new TextureStyleBox("textures/gui/options_background.png")
                         .textureSize(16, 16)
+                        .tint(new RGBAColor(64, 64, 64))
                         .magicNumber(2)
                         .tiled(true));
     }
