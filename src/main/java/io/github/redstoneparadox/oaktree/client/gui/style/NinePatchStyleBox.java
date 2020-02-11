@@ -48,7 +48,7 @@ public class NinePatchStyleBox extends TextureStyleBox {
 
             float thirdX = x + firstWidth + fullSecondWidth;
             float thirdY = y + firstHeight + fullSecondHeight;
-            int thirdLeft = drawLeft + firstWidth + thirdHeight;
+            int thirdLeft = drawLeft + firstWidth + secondHeight;
             int thirdTop = drawTop + firstHeight + secondHeight;
 
             // Top left
@@ -69,78 +69,6 @@ public class NinePatchStyleBox extends TextureStyleBox {
             drawTiled(secondX, thirdY, secondLeft, thirdTop, secondWidth, thirdHeight, fullSecondWidth, thirdHeight);
             // Bottom Right
             drawTexture(thirdX, thirdY, thirdLeft, thirdTop, thirdWidth, thirdHeight);
-
-
-            /*
-            int xPatches = (int) ((width - firstWidth - thirdWidth)/secondWidth) + 2;
-            int yPatches = (int) ((height - firstHeight - thirdHeight)/secondHeight) + 2;
-
-            int currentX = (int) x;
-            int currentY = (int) y;
-
-            for (int yPatch = 1; yPatch <= yPatches; yPatch += 1) {
-                for (int xPatch = 1; xPatch <= xPatches; xPatch += 1) {
-                    // Top Left Corner
-                    if (xPatch == 1 && yPatch == 1) {
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, drawLeft, drawTop, firstWidth, firstHeight);
-                        currentX += firstWidth;
-                    }
-                    // Top Middle
-                    else if (xPatch > 1 && xPatch < xPatches && yPatch == 1) {
-                        int left = drawLeft + firstWidth;
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, left, drawTop, secondWidth, firstHeight);
-                        currentX += secondWidth;
-                    }
-                    // Top Right Corner
-                    else if (xPatch == xPatches && yPatch == 1) {
-                        int left = drawLeft + firstWidth + secondWidth;
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, left, drawTop, thirdWidth, firstHeight);
-                        currentX = (int) x;
-                        currentY += firstHeight;
-                    }
-                    // Middle Left
-                    else if (xPatch == 1 && yPatch > 1 && yPatch < yPatches) {
-                        int top = drawTop + firstHeight;
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, drawLeft, top, firstWidth, secondHeight);
-                        currentX += firstWidth;
-                    }
-                    // Center
-                    else if (xPatch > 1 && xPatch < xPatches && yPatch > 1 && yPatch < yPatches){
-                        int left = drawLeft + firstWidth;
-                        int top = drawTop + firstHeight;
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, left, top, secondWidth, secondHeight);
-                        currentX += secondWidth;
-                    }
-                    // Middle Right
-                    else if (xPatch == xPatches && yPatch > 1 && yPatch < yPatches) {
-                        int top = drawTop + firstHeight;
-                        int left = drawLeft + firstWidth + secondWidth;
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, left, top, thirdWidth, secondHeight);
-                        currentX = (int) x;
-                        currentY += secondHeight;
-                    }
-                    // Bottom Left Corner
-                    else if (xPatch == 1 && yPatch == yPatches) {
-                        int top = drawTop + firstHeight + secondHeight;
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, drawLeft, top, firstWidth, thirdHeight);
-                        currentX += firstWidth;
-                    }
-                    // Bottom Middle
-                    else if (xPatch > 1 && xPatch < xPatches && yPatch == yPatches) {
-                        int top = drawTop + firstHeight + secondHeight;
-                        int left = drawLeft + firstWidth;
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, left, top, secondWidth, thirdHeight);
-                        currentX += secondWidth;
-                    }
-                    // Bottom Right Corner
-                    else {
-                        int left = drawLeft + firstWidth + secondWidth;
-                        int top = drawTop + firstHeight + secondHeight;
-                        ((DrawableHelperAccessor) gui).invokeBlit(currentX, currentY, left, top, thirdWidth, thirdHeight);
-                    }
-                }
-            }
-             */
         }
     }
 }

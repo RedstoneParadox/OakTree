@@ -19,8 +19,8 @@ public class TextureStyleBox extends StyleBox {
     private int textureWidth = 0;
     private int textureHeight = 0;
     private RGBAColor tint = RGBAColor.white();
-    private int fileWidth = 0;
-    private int fileHeight = 0;
+    private float fileWidth = 0;
+    private float fileHeight = 0;
     private float scale = 2;
 
     public TextureStyleBox(String path) {
@@ -51,7 +51,7 @@ public class TextureStyleBox extends StyleBox {
         return this;
     }
 
-    public TextureStyleBox fileDimensions(int fileWidth, int fileHeight) {
+    public TextureStyleBox fileDimensions(float fileWidth, float fileHeight) {
         this.fileWidth = fileWidth;
         this.fileHeight = fileHeight;
         return this;
@@ -126,9 +126,9 @@ public class TextureStyleBox extends StyleBox {
 
         bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_TEXTURE);
 
-        bufferBuilder.vertex(x * scale, (y + height) * scale, 0.0).texture(left/fileWidth, (top + textureHeight)/fileHeight).color(r, g, b, a).next();
-        bufferBuilder.vertex((x + width) * scale, (y + height) * scale, 0.0).texture((left + textureWidth)/fileWidth, (top + textureHeight)/fileHeight).color(r, g, b, a).next();
-        bufferBuilder.vertex((x + width) * scale, y * scale, 0.0).texture((left + textureWidth)/fileWidth, top/fileHeight).color(r, g, b, a).next();
+        bufferBuilder.vertex(x * scale, (y + height) * scale, 0.0).texture(left/fileWidth, (top + height)/fileHeight).color(r, g, b, a).next();
+        bufferBuilder.vertex((x + width) * scale, (y + height) * scale, 0.0).texture((left + width)/fileWidth, (top + height)/fileHeight).color(r, g, b, a).next();
+        bufferBuilder.vertex((x + width) * scale, y * scale, 0.0).texture((left + width)/fileWidth, top/fileHeight).color(r, g, b, a).next();
         bufferBuilder.vertex(x * scale, y * scale, 0.0).texture(left/fileWidth, top/fileHeight).color(r, g, b, a).next();
 
         tessellator.draw();

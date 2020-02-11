@@ -32,7 +32,7 @@ public class Theme {
                         .widths(5, 1, 5)
                         .heights(5, 1, 5)
                         .fileDimensions(256, 256)
-                .scale(0.5f))
+                .scale(1f))
                 .add("text_edit", new ColorStyleBox(RGBAColor.black(), new RGBAColor(0.63f, 0.63f, 0.63f), 1))
                 .add("background", new TextureStyleBox("textures/gui/options_background.png")
                         .textureSize(16, 16)
