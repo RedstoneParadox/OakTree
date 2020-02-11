@@ -21,6 +21,10 @@ public class RGBAColor {
         this(red, green, blue, 1.0f);
     }
 
+    public RGBAColor(int red, int green, int blue) {
+        this(red/255.0f, green/255.0f, blue/255.0f);
+    }
+
     public static RGBAColor white() {
         return  new RGBAColor(1.0f, 1.0f, 1.0f);
     }
