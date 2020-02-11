@@ -1,9 +1,11 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+
 public class ListPanelControl extends PanelControl<ListPanelControl> {
     public boolean horizontal = false;
     public int displayCount = 1;
-    public int currentIndex = 0;
+    public int startIndex = 0;
 
     public ListPanelControl() {
         id = "list_panel";
@@ -20,14 +22,43 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
         return this;
     }
 
-    public ListPanelControl currentIndex(int currentIndex) {
-        if (currentIndex < 0) this.currentIndex = 0;
-        else this.currentIndex = Math.min(currentIndex, children.size() - displayCount);
+    public ListPanelControl startIndex(int currentIndex) {
+        if (currentIndex < 0) this.startIndex = 0;
+        else this.startIndex = Math.min(currentIndex, children.size() - displayCount);
         return this;
     }
 
     public ListPanelControl scroll(int amount) {
-        currentIndex(currentIndex + amount);
-        return this;
+        return startIndex(startIndex + amount);
+    }
+
+    @Override
+    void arrangeChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        if (!horizontal) {
+            float entryHeight = innerHeight/displayCount;
+
+            for (int i = 0; i < displayCount; i += 1) {
+                float entryY = trueY + (i * entryHeight);
+
+                Control child = children.get(i + startIndex);
+                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerX, entryY, innerWidth, entryHeight);
+            }
+        }
+        else {
+            float entryWidth = innerWidth/displayCount;
+
+            for (int i = 0; i < displayCount; i += 1) {
+                float entryX = trueX + (i * entryWidth);
+
+                Control child = children.get(i + startIndex);
+                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, entryX, innerY, entryWidth, innerHeight);
+            }
+        }
+    }
+
+    @Override
+    boolean shouldDraw(Control child) {
+        int index = children.indexOf(child);
+        return index >= startIndex && index < startIndex + displayCount;
     }
 }

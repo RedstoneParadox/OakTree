@@ -39,6 +39,7 @@ public class Tests {
     private final TestBlock testTwo = new TestBlock(testSettings(), this::testTwo);
     private final TestBlock testThree = new TestBlock(testSettings(), this::testThree);
     private final ContainerTestBlock testFour = new ContainerTestBlock(testSettings(), this::testFour);
+    private final TestBlock testFive = new TestBlock(testSettings(), this::testFive);
 
     private Identifier testFourID = new Identifier("oaktree:test_four");
 
@@ -47,6 +48,7 @@ public class Tests {
         register(testTwo, "two");
         register(testThree, "three");
         register(testFour, "four");
+        register(testFive, "five");
 
         ScreenProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
             BlockPos pos = buf.readBlockPos();
@@ -170,11 +172,11 @@ public class Tests {
                                 .size(200, 100)
                                 .splitSize(100)
                                 .child(
-                                new ButtonControl()
-                                .size(50, 50)
-                                .anchor(ControlAnchor.CENTER)
-                                .defaultStyle(new ColorStyleBox(RGBAColor.red()))
-                                .onClick((gui, control) -> pagePanelControl.previousPage())
+                                        new ButtonControl()
+                                                .size(50, 50)
+                                                .anchor(ControlAnchor.CENTER)
+                                                .defaultStyle(new ColorStyleBox(RGBAColor.red()))
+                                                .onClick((gui, control) -> pagePanelControl.previousPage())
                                 )
                                 .child(
                                         new ButtonControl()
@@ -223,5 +225,49 @@ public class Tests {
                 .defaultStyle(
                     new TextureStyleBox("oaktree:textures/gui/ui.png").setDrawOrigin(18, 0)
                 );
+    }
+
+    private Control testFive() {
+        ListPanelControl list = new ListPanelControl();
+
+        return new SplitPanelControl()
+                .size(300, 200)
+                .splitSize(200)
+                .anchor(ControlAnchor.CENTER)
+                .child(
+                        list
+                                .size(200, 200)
+                                .children(20, this::itemLabel)
+                                .displayCount(4)
+                                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                )
+                .child(
+                        new SplitPanelControl()
+                                .verticalSplit(true)
+                                .size(100, 200)
+                                .splitSize(100)
+                                .child(
+                                        new ButtonControl()
+                                                .size(50, 50)
+                                                .anchor(ControlAnchor.CENTER)
+                                                .defaultStyle(new ColorStyleBox(RGBAColor.green()))
+                                                .onClick((gui, control) -> list.scroll(-1))
+                                )
+                                .child(
+                                        new ButtonControl()
+                                                .size(50, 50)
+                                                .anchor(ControlAnchor.CENTER)
+                                                .defaultStyle(new ColorStyleBox(RGBAColor.red()))
+                                                .onClick((gui, control) -> list.scroll(1))
+                                )
+                );
+    }
+
+    private Control itemLabel(int i) {
+        return new LabelControl()
+                .size(200, 50)
+                .anchor(ControlAnchor.CENTER)
+                .shadow(true)
+                .text("List Item " + (i + 1) + ".");
     }
 }
