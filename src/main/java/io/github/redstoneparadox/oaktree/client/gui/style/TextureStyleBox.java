@@ -13,7 +13,7 @@ public class TextureStyleBox extends StyleBox {
     Identifier textureID;
     int drawLeft = 0;
     int drawTop = 0;
-    int magicNumber = 0;
+    int magicNumber = 1;
     private boolean tiled;
     private int textureWidth = 0;
     private int textureHeight = 0;
