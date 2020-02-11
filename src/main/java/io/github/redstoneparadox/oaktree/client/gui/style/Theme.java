@@ -16,6 +16,13 @@ public class Theme {
         return this;
     }
 
+    public StyleBox get(String style) {
+        if (styles.containsKey(style)) {
+            return styles.get(style);
+        }
+        return null;
+    }
+
     public static Theme vanilla() {
         return new Theme()
                 .add("item_slot_control", new TextureStyleBox("oaktree:gui/ui"));
