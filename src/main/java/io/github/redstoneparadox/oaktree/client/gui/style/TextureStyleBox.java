@@ -21,7 +21,7 @@ public class TextureStyleBox extends StyleBox {
     private RGBAColor tint = RGBAColor.white();
     private int fileWidth = 0;
     private int fileHeight = 0;
-    private int scale = 2;
+    private float scale = 2;
 
     public TextureStyleBox(String path) {
         textureID = new Identifier(path);
@@ -69,7 +69,7 @@ public class TextureStyleBox extends StyleBox {
      * @param scale The value to set.
      * @return This
      */
-    public TextureStyleBox scale(int scale) {
+    public TextureStyleBox scale(float scale) {
         this.scale = scale;
         return this;
     }
@@ -111,7 +111,7 @@ public class TextureStyleBox extends StyleBox {
         }
     }
 
-    private void drawTexture(float x, float y, float left, float top, float width, float height) {
+    void drawTexture(float x, float y, float left, float top, float width, float height) {
         int r = (int) (tint.redChannel * 255.0f);
         int g = (int) (tint.greenChannel * 255.0f);
         int b = (int) (tint.blueChannel * 255.0f);
