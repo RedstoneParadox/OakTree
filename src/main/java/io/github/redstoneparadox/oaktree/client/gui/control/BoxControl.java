@@ -54,7 +54,7 @@ public class BoxControl extends PaddingControl<BoxControl> {
     @Override
     public void setup(MinecraftClient client, OakTreeGUI gui) {
         super.setup(client, gui);
-        child.setup(client, gui);
+        if (child != null) child.setup(client, gui);
     }
 
     @Override
