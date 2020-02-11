@@ -27,10 +27,14 @@ public class Theme {
 
     public static Theme vanilla() {
         return new Theme()
-                .add("item_slot", new TextureStyleBox("oaktree:gui/ui.png").drawOrigin(18, 0))
-                .add("base", new NinePatchStyleBox("oaktree:gui/ui.png")
+                .add("item_slot", new TextureStyleBox("oaktree:textures/gui/ui.png").drawOrigin(18, 0))
+                .add("base", new NinePatchStyleBox("oaktree:textures/gui/ui.png")
                         .widths(5, 1, 5)
                         .heights(5, 1, 5))
-                .add("text_edit", new ColorStyleBox(RGBAColor.black(), new RGBAColor(0.63f, 0.63f, 0.63f), 1));
+                .add("text_edit", new ColorStyleBox(RGBAColor.black(), new RGBAColor(0.63f, 0.63f, 0.63f), 1))
+                .add("background", new TextureStyleBox("textures/gui/options_background.png")
+                        .textureSize(16, 16)
+                        .magicNumber(2)
+                        .tiled(true));
     }
 }

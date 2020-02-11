@@ -277,11 +277,24 @@ public class Tests {
     private Control testSix() {
         return new BoxControl()
                 .expand(true)
-                .defaultStyle(
-                        new TextureStyleBox("textures/gui/options_background.png")
-                                .textureSize(16, 16)
-                                .magicNumber(2)
-                                .tiled(true)
+                .id("background")
+                .child(
+                        new SplitPanelControl()
+                                .anchor(ControlAnchor.CENTER)
+                                .size(200, 200)
+                                .padding(3.0f)
+                                .splitSize(150)
+                                .verticalSplit(true)
+                                .child(
+                                        new Control()
+                                                .id("base")
+                                                .expand(true)
+                                )
+                                .child(
+                                        new Control()
+                                                .id("base")
+                                                .expand(true)
+                                )
                 );
     }
 }
