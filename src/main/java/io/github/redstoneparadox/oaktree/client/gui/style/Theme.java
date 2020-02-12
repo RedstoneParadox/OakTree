@@ -50,6 +50,12 @@ public class Theme {
                         .heights(3, 12, 3)
                         .drawOrigin(54, 0)
                         .fileDimensions(256, 256)
+                        .scale(1))
+                .add("button", "hover", new NinePatchStyleBox("oaktree:textures/gui/ui.png")
+                        .widths(3, 12, 3)
+                        .heights(3, 12, 3)
+                        .drawOrigin(72, 0)
+                        .fileDimensions(256, 256)
                         .scale(1));
     }
 }

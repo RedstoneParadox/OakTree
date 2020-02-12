@@ -14,8 +14,10 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
     public boolean toggleable = false;
 
     private boolean held = false;
+    private boolean hovered = false;
 
     public StyleBox heldStyle = null;
+    public StyleBox hoverStyle = null;
 
     public ButtonControl() {
         this.id = "button";
@@ -26,9 +28,15 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
         return this;
     }
 
-    public ButtonControl heldStyle(StyleBox style) {
-        heldStyle = style;
-        internalTheme.add("self", "held", style);
+    public ButtonControl heldStyle(StyleBox heldStyle) {
+        this.heldStyle = heldStyle;
+        internalTheme.add("self", "held", heldStyle);
+        return this;
+    }
+
+    public ButtonControl hoverStyle(StyleBox hoverStyle) {
+        this.hoverStyle = hoverStyle;
+        internalTheme.add("self", "hover", hoverStyle);
         return this;
     }
 
@@ -67,6 +75,9 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
                 else if (gui.mouseButtonHeld("left") && held) {
                     whileHeld.invoke(gui, this);
                 }
+                else if (!held){
+                    hovered = true;
+                }
             }
         }
         else {
@@ -82,6 +93,9 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
                     held = false;
                     onRelease.invoke(gui, this);
                 }
+                else if (!held) {
+                    hovered = true;
+                }
             }
             else if (held) {
                 held = false;
@@ -93,11 +107,18 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
         if (held && heldStyle != null) {
             currentStyle = heldStyle;
         }
+
+        if (hovered && hoverStyle != null) {
+            currentStyle = hoverStyle;
+        }
+
+        hovered = false;
     }
 
     @Override
     void applyTheme(Theme theme) {
         super.applyTheme(theme);
         heldStyle = getStyle(theme, "held");
+        hoverStyle = getStyle(theme, "hover");
     }
 }
