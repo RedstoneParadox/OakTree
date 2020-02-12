@@ -37,7 +37,7 @@ public class Theme {
                 .add("background", new TextureStyleBox("textures/gui/options_background.png")
                         .textureSize(16, 16)
                         .fileDimensions(16, 16)
-                        .tint(new RGBAColor(255, 255, 255))
+                        .tint(new RGBAColor(64, 64, 64))
                         .tiled(true))
                 .add("button", "held", new NinePatchStyleBox("oaktree:textures/gui/ui.png")
                         .widths(3, 12, 3)

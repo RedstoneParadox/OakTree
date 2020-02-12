@@ -124,12 +124,12 @@ public class TextureStyleBox extends StyleBox {
         RenderSystem.blendFuncSeparate(770, 771, 1, 0);
         RenderSystem.color4f(255, 255, 255, 255);
 
-        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_TEXTURE);
+        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
 
-        bufferBuilder.vertex(x * scale, (y + height) * scale, 0.0).texture(left/fileWidth, (top + height)/fileHeight).color(r, g, b, a).next();
-        bufferBuilder.vertex((x + width) * scale, (y + height) * scale, 0.0).texture((left + width)/fileWidth, (top + height)/fileHeight).color(r, g, b, a).next();
-        bufferBuilder.vertex((x + width) * scale, y * scale, 0.0).texture((left + width)/fileWidth, top/fileHeight).color(r, g, b, a).next();
-        bufferBuilder.vertex(x * scale, y * scale, 0.0).texture(left/fileWidth, top/fileHeight).color(r, g, b, a).next();
+        bufferBuilder.vertex(x * scale, (y + height) * scale, 0.0).color(r, g, b, a).texture(left/fileWidth, (top + height)/fileHeight).next();
+        bufferBuilder.vertex((x + width) * scale, (y + height) * scale, 0.0).color(r, g, b, a).texture((left + width)/fileWidth, (top + height)/fileHeight).next();
+        bufferBuilder.vertex((x + width) * scale, y * scale, 0.0).color(r, g, b, a).texture((left + width)/fileWidth, top/fileHeight).next();
+        bufferBuilder.vertex(x * scale, y * scale, 0.0).color(r, g, b, a).texture(left/fileWidth, top/fileHeight).next();
 
         tessellator.draw();
 

@@ -277,30 +277,53 @@ public class Tests {
     }
 
     private Control testSix() {
+        LabelControl pageLabel = new LabelControl();
+
         return new BoxControl()
                 .expand(true)
                 .id("background")
                 .child(
                         new SplitPanelControl()
                                 .anchor(ControlAnchor.CENTER)
-                                .size(200, 200)
+                                .size(300, 200)
                                 .padding(3.0f)
                                 .splitSize(150)
                                 .verticalSplit(true)
                                 .child(
-                                        new Control()
+                                        new PagePanelControl()
                                                 .id("base")
                                                 .expand(true)
+                                                .padding(5.0f)
+                                                .child(
+                                                        new TextEditControl()
+                                                                .expand(true)
+                                                                .maxLines(40)
+                                                                .displayedLines(13)
+                                                                .shadow(true)
+                                                )
                                 )
                                 .child(
-                                        new BoxControl()
+                                        new ListPanelControl()
                                                 .id("base")
                                                 .expand(true)
-                                                .padding(4.0f)
+                                                .horizontal(true)
+                                                .padding(5.0f)
                                                 .child(
                                                         new ButtonControl()
                                                         .expand(true)
                                                 )
+                                                .child(
+                                                        pageLabel
+                                                                .text("page 1/1")
+                                                                .anchor(ControlAnchor.CENTER)
+                                                                .size(70, 10)
+                                                                .shadow(true)
+                                                )
+                                                .child(
+                                                        new ButtonControl()
+                                                                .expand(true)
+                                                )
+                                                .displayCount(3)
                                 )
                 );
     }
