@@ -1,13 +1,10 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.gui.util.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
-import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
-import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
-import io.github.redstoneparadox.oaktree.client.gui.util.TypingListener;
 
 import java.util.List;
 
@@ -20,7 +17,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public RGBAColor highlightColor = RGBAColor.blue();
     public int maxLines = 1;
     public int displayedLines = 1;
-    public int scrollPosition = 0;
     public String text = "";
 
     public TypingListener<TextEditControl> onCharTyped = (character, control) -> character;
@@ -32,6 +28,11 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     private int cursorTicks = 0;
     private int backspaceTicks = 0;
+
+    private int cursorRow = 0;
+    private int cursorColumn = 0;
+
+    private static final String RULER = createRulerString();
 
     public TextEditControl() {
         this.id = "text_edit";
@@ -148,8 +149,98 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return this;
     }
 
+    private static String createRulerString() {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < 200; i++) {
+            builder.append("_");
+        }
+
+        return builder.toString();
+    }
+
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        if (!visible) return;
+        super.draw(mouseX, mouseY, deltaTime, gui);
+        if (text.isEmpty()) return;
+
+        List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
+        Key pressed = gui.getKey();
+        int lineLength = gui.getTextRenderer().trimToWidth(RULER, (int)width).length();
+        boolean movedVertically = false;
+
+        switch (pressed) {
+            case NONE:
+                break;
+            case BACKSPACE:
+                break;
+            case ENTER:
+                lines = insertLineBreak(lines, gui);
+                cursorRow += 1;
+                break;
+            case CTRL_A:
+                break;
+            case COPY:
+                break;
+            case CUT:
+                break;
+            case PASTE:
+                break;
+            case UP:
+                cursorRow += 1;
+                movedVertically = true;
+                break;
+            case DOWN:
+                cursorRow -= 1;
+                movedVertically = true;
+                break;
+            case LEFT:
+                cursorColumn -= 1;
+            case RIGHT:
+                cursorColumn += 1;
+        }
+
+        boolean cursorVisible = rectifyCursorPosition(lines, lineLength, movedVertically);
+    }
+
+    private boolean rectifyCursorPosition(List<String> lines, int lineLength, boolean movedVertically) {
+        if (!movedVertically) {
+            String line = lines.get(cursorRow);
+
+            if (cursorColumn < 0) {
+                if (cursorRow > 0) {
+                    cursorRow -= 1;
+                    cursorColumn = lines.get(cursorRow).length() - 1;
+                }
+            }
+            else if (cursorColumn >= line.length()) {
+                if (cursorRow < lines.size() - 1) {
+                    cursorRow += 1;
+                    cursorColumn = 0;
+                }
+            }
+        }
+        else {
+            if (cursorRow < 0) cursorRow = 0;
+            if (cursorRow >= lines.size()) cursorRow -= 1;
+            if (cursorColumn >= lineLength) cursorColumn = lines.get(cursorRow).length() - 1;
+        }
+
+        return true;
+    }
+
+    private List<String> insertLineBreak(List<String> lines, OakTreeGUI gui) {
+        String line = lines.get(cursorRow);
+
+        String before = line.substring(0, cursorColumn);
+        String after = line.substring(cursorColumn);
+        lines.set(cursorRow, before + "\n" + after);
+
+        return wrapLines(combine(lines), gui, width, maxLines, shadow);
+    }
+
+    public void draw_old(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         if (gui.mouseButtonJustClicked("left")  ) {

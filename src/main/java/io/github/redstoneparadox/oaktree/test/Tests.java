@@ -293,7 +293,7 @@ public class Tests {
                                         new PagePanelControl()
                                                 .id("base")
                                                 .expand(true)
-                                                .padding(5.0f)
+                                                .padding(6.0f)
                                                 .child(
                                                         new TextEditControl()
                                                                 .expand(true)

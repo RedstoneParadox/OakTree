@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
+import io.github.redstoneparadox.oaktree.client.gui.util.Key;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
@@ -22,12 +23,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     private boolean leftMouseButton;
     private boolean leftMouseJustPressed;
 
-    private boolean backspace = false;
-    private boolean enter = false;
-    private boolean ctrlA = false;
-    private boolean copy = false;
-    private boolean cut = false;
-    private boolean paste = false;
+    private Key pressed = Key.NONE;
 
     public OakTreeScreen(Control root, boolean isPauseScreen, Screen parentScreen, Theme theme) {
         super(new LiteralText("gui"));
@@ -39,13 +35,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == 259) backspace = true;
-        if (keyCode == 257) enter = true;
-        if (hasControlDown() && keyCode == 65) ctrlA = true;
-        if (isCopy(keyCode)) copy = true;
-        if (isCut(keyCode)) cut = true;
-        if (isPaste(keyCode)) paste = true;
-
+        pressed = Key.fromKeycode(keyCode);
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
@@ -71,12 +61,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
         leftMouseJustPressed = false;
         lastChar = null;
-        backspace = false;
-        enter = false;
-        ctrlA = false;
-        copy = false;
-        cut = false;
-        paste = false;
+        pressed = Key.NONE;
 
         width = (int)root.width;
         height = (int)root.height;
@@ -121,23 +106,8 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
-    public boolean isKeyPressed(String key) {
-        switch (key) {
-            case "enter":
-                return enter;
-            case "backspace":
-                return backspace;
-            case "ctrl_a":
-                return ctrlA;
-            case "cut":
-                return cut;
-            case "copy":
-                return copy;
-            case "paste":
-                return paste;
-            default:
-                return false;
-        }
+    public Key getKey() {
+        return null;
     }
 
     @Override

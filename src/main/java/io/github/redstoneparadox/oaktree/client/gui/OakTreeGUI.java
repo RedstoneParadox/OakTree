@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
+import io.github.redstoneparadox.oaktree.client.gui.util.Key;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.container.Container;
 
@@ -16,7 +17,12 @@ public interface OakTreeGUI {
 
     Optional<Character> getLastChar();
 
-    boolean isKeyPressed(String key);
+    @Deprecated
+    default boolean isKeyPressed(String key) {
+        return false;
+    }
+
+    Key getKey();
 
     TextRenderer getTextRenderer();
 
@@ -33,4 +39,20 @@ public interface OakTreeGUI {
     Theme getTheme();
 
     void applyTheme(Theme theme);
+
+    default boolean isLeftKey(int keycode) {
+        return keycode == 263;
+    }
+
+    default boolean isRightKey(int keycode) {
+        return keycode == 262;
+    }
+
+    default boolean isUpKey(int keycode) {
+        return keycode == 265;
+    }
+
+    default boolean isDownKey(int keycode) {
+        return keycode == 264;
+    }
 }
