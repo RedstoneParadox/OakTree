@@ -107,7 +107,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public Key getKey() {
-        return null;
+        return pressed;
     }
 
     @Override

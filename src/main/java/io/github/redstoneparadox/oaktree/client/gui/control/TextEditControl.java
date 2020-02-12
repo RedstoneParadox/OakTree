@@ -28,9 +28,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     private int cursorTicks = 0;
     private int backspaceTicks = 0;
-
-    private int cursorRow = 0;
-    private int cursorColumn = 0;
+    private int cursorPosition = 0;
 
     private static final String RULER = createRulerString();
 
@@ -163,21 +161,17 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
+        if (gui.getLastChar().isPresent()) insertCharacter(gui.getLastChar().get());
         if (text.isEmpty()) return;
 
-        List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
         Key pressed = gui.getKey();
-        int lineLength = gui.getTextRenderer().trimToWidth(RULER, (int)width).length();
-        boolean movedVertically = false;
-
         switch (pressed) {
             case NONE:
                 break;
             case BACKSPACE:
+                removeCharacter();
                 break;
             case ENTER:
-                lines = insertLineBreak(lines, gui);
-                cursorRow += 1;
                 break;
             case CTRL_A:
                 break;
@@ -188,56 +182,45 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             case PASTE:
                 break;
             case UP:
-                cursorRow += 1;
-                movedVertically = true;
                 break;
             case DOWN:
-                cursorRow -= 1;
-                movedVertically = true;
                 break;
             case LEFT:
-                cursorColumn -= 1;
+                break;
             case RIGHT:
-                cursorColumn += 1;
+                break;
         }
 
-        boolean cursorVisible = rectifyCursorPosition(lines, lineLength, movedVertically);
+        List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
+        for (int i = 0; i < lines.size(); i += 1) {
+            String line = lines.get(i);
+            float lineY = trueY + i*gui.getTextRenderer().fontHeight;
+            drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
+        }
     }
 
-    private boolean rectifyCursorPosition(List<String> lines, int lineLength, boolean movedVertically) {
-        if (!movedVertically) {
-            String line = lines.get(cursorRow);
-
-            if (cursorColumn < 0) {
-                if (cursorRow > 0) {
-                    cursorRow -= 1;
-                    cursorColumn = lines.get(cursorRow).length() - 1;
-                }
-            }
-            else if (cursorColumn >= line.length()) {
-                if (cursorRow < lines.size() - 1) {
-                    cursorRow += 1;
-                    cursorColumn = 0;
-                }
-            }
+    private void insertCharacter(char c) {
+        if (cursorPosition == text.length()) {
+            text = text + c;
         }
         else {
-            if (cursorRow < 0) cursorRow = 0;
-            if (cursorRow >= lines.size()) cursorRow -= 1;
-            if (cursorColumn >= lineLength) cursorColumn = lines.get(cursorRow).length() - 1;
+            String first = text.substring(0, cursorPosition);
+            String second = text.substring(cursorPosition);
+            text = first + c + second;
         }
 
-        return true;
+        cursorPosition += 1;
     }
 
-    private List<String> insertLineBreak(List<String> lines, OakTreeGUI gui) {
-        String line = lines.get(cursorRow);
+    private void removeCharacter() {
+        if (cursorPosition == text.length()) {
+            text = text.substring(0, text.length() - 1);
+        }
+        else {
 
-        String before = line.substring(0, cursorColumn);
-        String after = line.substring(cursorColumn);
-        lines.set(cursorRow, before + "\n" + after);
+        }
 
-        return wrapLines(combine(lines), gui, width, maxLines, shadow);
+        cursorPosition -= 1;
     }
 
     public void draw_old(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
