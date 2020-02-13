@@ -191,7 +191,29 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 break;
         }
 
+        drawText(gui);
+        drawCursor(gui);
+    }
+
+    private void insertCharacter(char c) {
+        if (cursorPosition == text.length()) text = text + c;
+        else text = text.substring(0, cursorPosition) + c + text.substring(cursorPosition);
+
+        cursorPosition += 1;
+    }
+
+    private void removeCharacter() {
+        if (cursorPosition == text.length()) text = text.substring(0, text.length() - 1);
+        else if (cursorPosition > 0) text = text.substring(0, cursorPosition - 1) + text.substring(cursorPosition);
+
+        cursorPosition -= 1;
+    }
+
+    private void drawText(OakTreeGUI gui) {
         List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
+        if (lines.isEmpty()) lines.add("");
+        text = combine(lines);
+
         for (int i = 0; i < lines.size(); i += 1) {
             String line = lines.get(i);
             float lineY = trueY + i*gui.getTextRenderer().fontHeight;
@@ -199,28 +221,35 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
     }
 
-    private void insertCharacter(char c) {
-        if (cursorPosition == text.length()) {
-            text = text + c;
-        }
-        else {
-            String first = text.substring(0, cursorPosition);
-            String second = text.substring(cursorPosition);
-            text = first + c + second;
+    private void drawCursor(OakTreeGUI gui) {
+        cursorPosition = Math.min(cursorPosition, text.length());
+        if (cursorPosition < 0) cursorPosition = 0;
+
+        if (cursorPosition == 0) {
+            drawString("_", gui, trueX, trueY, ControlAnchor.CENTER, true, fontColor);
         }
 
-        cursorPosition += 1;
-    }
+        int i = cursorPosition;
+        List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
+        String cursorLine = null;
+        int fontHeight = gui.getTextRenderer().fontHeight;
+        float cursorY = trueY - fontHeight;
 
-    private void removeCharacter() {
-        if (cursorPosition == text.length()) {
-            text = text.substring(0, text.length() - 1);
+        for (String line: lines) {
+            cursorY += fontHeight;
+            if (i < line.length() + 1) {
+                cursorLine = line;
+                break;
+            }
+            i -= line.length() + 1;
         }
-        else {
 
+        if (cursorLine != null) {
+            if (i > 0) {
+                int cursorX = gui.getTextRenderer().getStringWidth(cursorLine.substring(0, i)) + (int)trueX;
+                drawString("_", gui, cursorX, cursorY, ControlAnchor.CENTER, true, fontColor);
+            }
         }
-
-        cursorPosition -= 1;
     }
 
     public void draw_old(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
