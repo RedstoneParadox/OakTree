@@ -29,6 +29,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private int cursorTicks = 0;
     private int backspaceTicks = 0;
     private int cursorPosition = 0;
+    private boolean charAdded = false;
 
     private static final String RULER = createRulerString();
 
@@ -162,7 +163,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         if (gui.getLastChar().isPresent()) insertCharacter(gui.getLastChar().get());
-        if (text.isEmpty()) return;
+        if (text.isEmpty()) {
+            drawCursor(gui);
+            return;
+        }
 
         Key pressed = gui.getKey();
         switch (pressed) {
@@ -172,6 +176,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 removeCharacter();
                 break;
             case ENTER:
+                text = text + '\n';
+                cursorPosition += 1;
                 break;
             case CTRL_A:
                 break;
@@ -186,8 +192,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             case DOWN:
                 break;
             case LEFT:
+                if (cursorPosition > 0) cursorPosition -= 1;
                 break;
             case RIGHT:
+                if (cursorPosition < text.length()) cursorPosition += 1;
                 break;
         }
 
@@ -216,21 +224,20 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
         for (int i = 0; i < lines.size(); i += 1) {
             String line = lines.get(i);
-            float lineY = trueY + i*gui.getTextRenderer().fontHeight;
+            float lineY = trueY + i * gui.getTextRenderer().fontHeight;
             drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
         }
     }
 
     private void drawCursor(OakTreeGUI gui) {
-        cursorPosition = Math.min(cursorPosition, text.length());
-        if (cursorPosition < 0) cursorPosition = 0;
-
-        if (cursorPosition == 0) {
+        if (text.isEmpty()) {
             drawString("_", gui, trueX, trueY, ControlAnchor.CENTER, true, fontColor);
         }
-
+        cursorPosition = Math.min(cursorPosition, text.length());
+        if (cursorPosition < 0) cursorPosition = 0;
         int i = cursorPosition;
         List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
+
         String cursorLine = null;
         int fontHeight = gui.getTextRenderer().fontHeight;
         float cursorY = trueY - fontHeight;
@@ -248,6 +255,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             if (i > 0) {
                 int cursorX = gui.getTextRenderer().getStringWidth(cursorLine.substring(0, i)) + (int)trueX;
                 drawString("_", gui, cursorX, cursorY, ControlAnchor.CENTER, true, fontColor);
+            }
+            else {
+                drawString("_", gui, trueX, cursorY, ControlAnchor.CENTER, true, fontColor);
             }
         }
     }
