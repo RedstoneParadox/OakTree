@@ -180,6 +180,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                     insertCharacter('\n');
                     break;
                 case CTRL_A:
+                    allSelected = true;
                     break;
                 case COPY:
                     break;
@@ -202,6 +203,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             if (cursorTicks < 10) drawCursor(gui);
             cursorTicks += 1;
             if (cursorTicks >= 20) cursorTicks = 0;
+        }
+        else {
+            allSelected = false;
         }
         drawText(gui);
     }
@@ -227,13 +231,26 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     private void insertCharacter(char c) {
-        if (cursorPosition == text.length()) text = text + c;
+        if (allSelected) {
+            text = "" + c;
+            allSelected = false;
+            cursorPosition = 1;
+            return;
+        }
+        else if (cursorPosition == text.length()) text = text + c;
         else text = text.substring(0, cursorPosition) + c + text.substring(cursorPosition);
 
         cursorPosition += 1;
     }
 
     private void removeCharacter() {
+        if (allSelected) {
+            text = "";
+            cursorPosition = 0;
+            allSelected = false;
+            return;
+        }
+
         if (text.isEmpty()) return;
         if (cursorPosition == text.length()) text = text.substring(0, text.length() - 1);
         else if (cursorPosition > 0) text = text.substring(0, cursorPosition - 1) + text.substring(cursorPosition);
@@ -252,6 +269,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             String line = lines.get(i);
             float lineY = trueY + i * gui.getTextRenderer().fontHeight;
             drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
+            if (allSelected) drawHighlights(line, gui, trueX, lineY, highlightColor);
         }
     }
 
