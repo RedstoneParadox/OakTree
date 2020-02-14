@@ -162,43 +162,66 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
-        if (gui.getLastChar().isPresent()) {
-            insertCharacter(gui.getLastChar().get());
-            charAdded = true;
-        }
+        updateFocused(gui);
+        if (focused) {
+            if (gui.getLastChar().isPresent()) {
+                insertCharacter(gui.getLastChar().get());
+                charAdded = true;
+            }
 
-        Key pressed = gui.getKey();
-        switch (pressed) {
-            case NONE:
-                break;
-            case BACKSPACE:
-                removeCharacter();
-                break;
-            case ENTER:
-                insertCharacter('\n');
-                break;
-            case CTRL_A:
-                break;
-            case COPY:
-                break;
-            case CUT:
-                break;
-            case PASTE:
-                break;
-            case UP:
-                break;
-            case DOWN:
-                break;
-            case LEFT:
-                if (cursorPosition > 0) cursorPosition -= 1;
-                break;
-            case RIGHT:
-                if (cursorPosition < text.length()) cursorPosition += 1;
-                break;
-        }
+            Key pressed = gui.getKey();
+            switch (pressed) {
+                case NONE:
+                    break;
+                case BACKSPACE:
+                    removeCharacter();
+                    break;
+                case ENTER:
+                    insertCharacter('\n');
+                    break;
+                case CTRL_A:
+                    break;
+                case COPY:
+                    break;
+                case CUT:
+                    break;
+                case PASTE:
+                    break;
+                case UP:
+                    break;
+                case DOWN:
+                    break;
+                case LEFT:
+                    if (cursorPosition > 0) cursorPosition -= 1;
+                    break;
+                case RIGHT:
+                    if (cursorPosition < text.length()) cursorPosition += 1;
+                    break;
+            }
 
+            drawCursor(gui);
+        }
         drawText(gui);
-        drawCursor(gui);
+    }
+
+    private void updateFocused(OakTreeGUI gui) {
+        if (gui.mouseButtonJustClicked("left")) {
+            if (isMouseWithin && !focused) {
+                gui.shouldCloseOnInventoryKey(false);
+                focused = true;
+                onFocused.invoke(gui, this);
+                cursorTicks = 0;
+            }
+            else if (focused) {
+                gui.shouldCloseOnInventoryKey(true);
+                focused = false;
+                allSelected = false;
+                onFocusLost.invoke(gui, this);
+            }
+            else {
+                allSelected = false;
+            }
+        }
     }
 
     private void insertCharacter(char c) {
@@ -267,7 +290,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public void draw_old(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
-        if (gui.mouseButtonJustClicked("left")  ) {
+        if (gui.mouseButtonJustClicked("left")) {
             if (isMouseWithin && !focused) {
                 gui.shouldCloseOnInventoryKey(false);
                 focused = true;
