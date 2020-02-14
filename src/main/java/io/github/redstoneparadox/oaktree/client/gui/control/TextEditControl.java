@@ -162,10 +162,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
-        if (gui.getLastChar().isPresent()) insertCharacter(gui.getLastChar().get());
-        if (text.isEmpty()) {
-            drawCursor(gui);
-            return;
+        if (gui.getLastChar().isPresent()) {
+            insertCharacter(gui.getLastChar().get());
+            charAdded = true;
         }
 
         Key pressed = gui.getKey();
@@ -176,8 +175,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 removeCharacter();
                 break;
             case ENTER:
-                text = text + '\n';
-                cursorPosition += 1;
+                insertCharacter('\n');
                 break;
             case CTRL_A:
                 break;
@@ -211,6 +209,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     private void removeCharacter() {
+        if (text.isEmpty()) return;
         if (cursorPosition == text.length()) text = text.substring(0, text.length() - 1);
         else if (cursorPosition > 0) text = text.substring(0, cursorPosition - 1) + text.substring(cursorPosition);
 
@@ -232,6 +231,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private void drawCursor(OakTreeGUI gui) {
         if (text.isEmpty()) {
             drawString("_", gui, trueX, trueY, ControlAnchor.CENTER, true, fontColor);
+            return;
         }
         cursorPosition = Math.min(cursorPosition, text.length());
         if (cursorPosition < 0) cursorPosition = 0;
