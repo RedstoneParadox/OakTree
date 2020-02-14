@@ -199,7 +199,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                     break;
             }
 
-            drawCursor(gui);
+            if (cursorTicks < 10) drawCursor(gui);
+            cursorTicks += 1;
+            if (cursorTicks >= 20) cursorTicks = 0;
         }
         drawText(gui);
     }
@@ -276,13 +278,15 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             i -= line.length() + 1;
         }
 
+        String cursorString = cursorPosition < text.length() ? "|" : "_";
+
         if (cursorLine != null) {
             if (i > 0) {
                 int cursorX = gui.getTextRenderer().getStringWidth(cursorLine.substring(0, i)) + (int)trueX;
-                drawString("_", gui, cursorX, cursorY, ControlAnchor.CENTER, true, fontColor);
+                drawString(cursorString, gui, cursorX, cursorY, ControlAnchor.CENTER, true, fontColor);
             }
             else {
-                drawString("_", gui, trueX, cursorY, ControlAnchor.CENTER, true, fontColor);
+                drawString(cursorString, gui, trueX, cursorY, ControlAnchor.CENTER, true, fontColor);
             }
         }
     }
