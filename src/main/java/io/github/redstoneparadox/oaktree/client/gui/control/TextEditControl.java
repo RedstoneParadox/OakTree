@@ -217,9 +217,11 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     private void drawText(OakTreeGUI gui) {
+        int oldLength = text.length();
         List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
         if (lines.isEmpty()) lines.add("");
         text = combine(lines);
+        cursorPosition += (text.length() - oldLength);
 
         for (int i = 0; i < lines.size(); i += 1) {
             String line = lines.get(i);
