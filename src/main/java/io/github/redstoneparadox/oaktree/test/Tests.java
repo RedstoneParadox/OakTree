@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("ALL")
 public class Tests {
     private final TestBlock testOne = new TestBlock(testSettings(), false, this::testOne);
     private final TestBlock testTwo = new TestBlock(testSettings(), false, this::testTwo);
@@ -310,7 +311,7 @@ public class Tests {
                                                 .padding(5.0f)
                                                 .child(
                                                         new ButtonControl()
-                                                        .expand(true)
+                                                                .expand(true)
                                                 )
                                                 .child(
                                                         pageLabel
