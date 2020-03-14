@@ -62,7 +62,7 @@ public interface TextControl<TC extends TextControl> {
         for (int i = 0; i < strings.size() - 1; i += 1) {
             String line = strings.get(i);
             builder.append(line);
-            if (addNewlines) builder.append('\n');
+            if (addNewlines && !line.endsWith("\n")) builder.append('\n');
         }
         builder.append(strings.get(strings.size() - 1));
         return builder.toString();

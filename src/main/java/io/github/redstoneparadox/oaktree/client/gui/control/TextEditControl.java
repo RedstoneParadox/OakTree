@@ -24,17 +24,19 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private int arrowKeyTicks = 0;
     private int cursorTicks = 0;
     private boolean focused = false;
+    private String text = "";
+    private boolean updateText = false;
 
     public boolean shadow = false;
     public RGBAColor fontColor = RGBAColor.white();
     public RGBAColor highlightColor = RGBAColor.blue();
     public int maxLines = 1;
     public int displayedLines = 1;
-    public String text = "";
 
     public TypingListener<TextEditControl> onCharTyped = (character, control) -> character;
     public GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
     public GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
+    public GuiFunction<TextEditControl> onEnter = (gui, control) -> {};
 
 
     public TextEditControl() {
@@ -82,6 +84,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
      */
     public TextEditControl text(String text) {
         this.text = text;
+        updateText = true;
         return this;
     }
 
@@ -93,7 +96,12 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
      */
     public TextEditControl text(Text text) {
         this.text = text.getString();
+        updateText = true;
         return this;
+    }
+
+    public String getText() {
+        return combine(lines, true);
     }
 
     /**
@@ -102,7 +110,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
      * @return The control itself.
      */
     public TextEditControl clear() {
-        text = "";
+        this.text("");
         return this;
     }
 
@@ -161,6 +169,15 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         if (lines.isEmpty()) lines.add("");
         try {
             if (focused) {
+                if (updateText) {
+                    lines.clear();
+                    lines.addAll(wrapLines(text, gui, width, maxLines, shadow));
+                    selection.cancel();
+                    cursor.toEnd();
+                    updateText = false;
+                    text = "";
+                }
+
                 if (gui.getLastChar().isPresent()) {
                     int oldSize = lines.size();
                     insertCharacter(onCharTyped.invoke(gui.getLastChar().get(), this), gui);
@@ -223,6 +240,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 }
                 if (enter(handle)) {
                     if (enterTicks == 0 || enterTicks > 20) {
+                        onEnter.invoke(gui, this);
                         if (selection.active) {
                             deleteSelection(gui);
                             cursor.toSelectionStart();
