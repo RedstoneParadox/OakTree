@@ -32,8 +32,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private boolean allSelected = false;
 
     private int cursorTicks = 0;
-    private int backspaceTicks = 0;
-    private int cursorPosition = 0;
     private boolean charAdded = false;
 
     private static final String RULER = createRulerString();
@@ -169,55 +167,66 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         super.draw(mouseX, mouseY, deltaTime, gui);
         updateFocused(gui);
         if (lines.isEmpty()) lines.add("");
-        if (focused) {
-            if (gui.getLastChar().isPresent()) {
-                insertCharacter(gui.getLastChar().get(), gui);
-                mainCursor.moveRight();
-                charAdded = true;
-            }
-
-            Key pressed = gui.getKey();
-            switch (pressed) {
-                case NONE:
-                    break;
-                case BACKSPACE:
-                    removeCharacter(gui);
-                    mainCursor.moveLeft();
-                    break;
-                case ENTER:
-                    newLine(gui);
+        try {
+            if (focused) {
+                if (gui.getLastChar().isPresent()) {
+                    int oldSize = lines.size();
+                    insertCharacter(onCharTyped.invoke(gui.getLastChar().get(), this), gui);
                     mainCursor.moveRight();
-                    break;
-                case CTRL_A:
-                    break;
-                case COPY:
-                    break;
-                case CUT:
-                    break;
-                case PASTE:
-                    break;
-                case UP:
-                    mainCursor.moveUp();
-                    break;
-                case DOWN:
-                    mainCursor.moveDown();
-                    break;
-                case LEFT:
-                    mainCursor.moveLeft();
-                    break;
-                case RIGHT:
-                    mainCursor.moveRight();
-                    break;
-            }
+                    if (oldSize + 1 == lines.size()) mainCursor.moveRight();
+                    charAdded = true;
+                }
 
-            if (cursorTicks < 10) drawCursor(gui);
-            cursorTicks += 1;
-            if (cursorTicks >= 20) cursorTicks = 0;
+                Key pressed = gui.getKey();
+                switch (pressed) {
+                    case NONE:
+                        break;
+                    case BACKSPACE:
+                        if (mainCursor.row == 0 && mainCursor.column == 0) break;
+                        removeCharacter(gui);
+                        mainCursor.moveLeft();
+                        if (lines.size() >= 1 && lines.get(lines.size() - 1).isEmpty()) {
+                            mainCursor.moveLeft();
+                            lines.remove(lines.size() - 1);
+                        };
+                        break;
+                    case ENTER:
+                        newLine(gui);
+                        mainCursor.moveRight();
+                        break;
+                    case CTRL_A:
+                        break;
+                    case COPY:
+                        break;
+                    case CUT:
+                        break;
+                    case PASTE:
+                        break;
+                    case UP:
+                        mainCursor.moveUp();
+                        break;
+                    case DOWN:
+                        mainCursor.moveDown();
+                        break;
+                    case LEFT:
+                        mainCursor.moveLeft();
+                        break;
+                    case RIGHT:
+                        mainCursor.moveRight();
+                        break;
+                }
+
+                if (cursorTicks < 10) drawCursor(gui);
+                cursorTicks += 1;
+                if (cursorTicks >= 20) cursorTicks = 0;
+            }
+            else {
+                allSelected = false;
+            }
+            drawText(gui);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else {
-            allSelected = false;
-        }
-        drawText(gui);
     }
 
     private void updateFocused(OakTreeGUI gui) {
@@ -262,7 +271,13 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
         for (int i = 0; i < mainCursor.column; i+= 1) cursorPosition += 1;
 
-        String newText = text.substring(0, cursorPosition) + c + text.substring(cursorPosition);
+        String newText;
+        if (cursorPosition == text.length()) {
+            newText = text + c;
+        } else {
+            newText = text.substring(0, cursorPosition) + c + text.substring(cursorPosition);
+        }
+
         lines.clear();
         lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
     }
@@ -284,6 +299,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         else if (cursorPosition == text.length()) {
             newText = text.substring(0, text.length() - 1);
         }
+        else if (cursorPosition <= 0) {
+            newText = text.substring(1);
+        }
         else {
             newText = text.substring(0, cursorPosition - 1) + text.substring(cursorPosition);
         }
@@ -293,17 +311,11 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     private void drawText(OakTreeGUI gui) {
-        int lastLine;
-        if (lines.size() < displayedLines) {
-            lastLine = lines.size() - 1;
-        }
-        else {
-            lastLine = firstLine + displayedLines;
-        }
+        int length = Math.min(lines.size(), displayedLines);
 
-        for (int i = firstLine; i < lastLine; i += 1) {
+        for (int i = firstLine; i < firstLine + length; i += 1) {
             String line = lines.get(i);
-            float lineY = trueY + i * gui.getTextRenderer().fontHeight;
+            float lineY = trueY + (i - firstLine) * gui.getTextRenderer().fontHeight;
             drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
         }
     }
@@ -323,7 +335,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     private class Cursor {
+        // Inclusive index of current line in lines
         int row = 0;
+        // Exclusive index of current line-string
         int column = 0;
         final boolean main;
 
@@ -359,10 +373,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 if (row == 0) column = 0;
                 else {
                     row -= 1;
-                    column = lines.get(row).length() - 1;
+                    column = lines.get(row).length();
                 }
             }
-            if (column >= lines.get(row).length()) {
+            if (column > lines.get(row).length()) {
                 if (row < lines.size() - 1) {
                     column = 0;
                     row += 1;
@@ -385,11 +399,12 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             adjustFirstLine();
         }
 
+        // TODO: Figure out how to replace these loops with proper math.
         private void adjustFirstLine() {
             if (!main) return;
 
-            if (row < firstLine) firstLine = row;
-            else if (row >= firstLine + displayedLines) firstLine = row - displayedLines - 1;
+            while (row < firstLine) firstLine -= 1;
+            while (row >= firstLine + displayedLines) firstLine += 1;
         }
     }
 }

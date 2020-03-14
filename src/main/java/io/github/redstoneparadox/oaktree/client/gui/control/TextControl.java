@@ -42,15 +42,17 @@ public interface TextControl<TC extends TextControl> {
         for (char c: string.toCharArray()) {
             if (c == '\n') {
                 strings.add(builder.toString());
+                builder.setLength(0);
                 continue;
             };
             if (renderer.getStringWidth(builder.toString() + c) > width) {
                 strings.add(builder.toString());
-                continue;
+                builder.setLength(0);
             }
             builder.append(c);
         }
 
+        strings.add(builder.toString());
         return strings;
     }
 
