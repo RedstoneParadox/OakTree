@@ -6,12 +6,17 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @apiNote  Work in Progress!
  */
 public class TextEditControl extends InteractiveControl<TextEditControl> implements TextControl<TextEditControl> {
+    private final List<String> lines = new ArrayList<>();
+    private int firstLine = 0;
+    private final Cursor mainCursor = new Cursor(true);
+
     public boolean shadow = false;
     public RGBAColor fontColor = RGBAColor.white();
     public RGBAColor highlightColor = RGBAColor.blue();
@@ -163,9 +168,11 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         if (!visible) return;
         super.draw(mouseX, mouseY, deltaTime, gui);
         updateFocused(gui);
+        if (lines.isEmpty()) lines.add("");
         if (focused) {
             if (gui.getLastChar().isPresent()) {
-                insertCharacter(gui.getLastChar().get());
+                insertCharacter(gui.getLastChar().get(), gui);
+                mainCursor.moveRight();
                 charAdded = true;
             }
 
@@ -174,13 +181,14 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 case NONE:
                     break;
                 case BACKSPACE:
-                    removeCharacter();
+                    removeCharacter(gui);
+                    mainCursor.moveLeft();
                     break;
                 case ENTER:
-                    insertCharacter('\n');
+                    newLine(gui);
+                    mainCursor.moveRight();
                     break;
                 case CTRL_A:
-                    allSelected = true;
                     break;
                 case COPY:
                     break;
@@ -189,14 +197,16 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 case PASTE:
                     break;
                 case UP:
+                    mainCursor.moveUp();
                     break;
                 case DOWN:
+                    mainCursor.moveDown();
                     break;
                 case LEFT:
-                    if (cursorPosition > 0) cursorPosition -= 1;
+                    mainCursor.moveLeft();
                     break;
                 case RIGHT:
-                    if (cursorPosition < text.length()) cursorPosition += 1;
+                    mainCursor.moveRight();
                     break;
             }
 
@@ -230,188 +240,156 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
     }
 
-    private void insertCharacter(char c) {
-        if (allSelected) {
-            text = "" + c;
-            allSelected = false;
-            cursorPosition = 1;
-            return;
-        }
-        else if (cursorPosition == text.length()) text = text + c;
-        else text = text.substring(0, cursorPosition) + c + text.substring(cursorPosition);
-
-        cursorPosition += 1;
+    private void newLine(OakTreeGUI gui) {
+        if (lines.size() == maxLines) return;
+        int oldLinesSize = lines.size();
+        insertCharacter('\n', gui);
+        if (oldLinesSize == lines.size()) lines.add("");
     }
 
-    private void removeCharacter() {
-        if (allSelected) {
-            text = "";
-            cursorPosition = 0;
-            allSelected = false;
+    private void insertCharacter(char c, OakTreeGUI gui) {
+        if (lines.isEmpty()) {
+            lines.add(String.valueOf(c));
             return;
         }
 
-        if (text.isEmpty()) return;
-        if (cursorPosition == text.length()) text = text.substring(0, text.length() - 1);
-        else if (cursorPosition > 0) text = text.substring(0, cursorPosition - 1) + text.substring(cursorPosition);
+        String text = combine(lines, true);
 
-        cursorPosition -= 1;
+        int cursorPosition = 0;
+        for (int i = 0; i < mainCursor.row; i += 1) {
+            String line = lines.get(i);
+            cursorPosition += line.length() + 1;
+        }
+        for (int i = 0; i < mainCursor.column; i+= 1) cursorPosition += 1;
+
+        String newText = text.substring(0, cursorPosition) + c + text.substring(cursorPosition);
+        lines.clear();
+        lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
+    }
+
+    private void removeCharacter(OakTreeGUI gui) {
+        String text = combine(lines, true);
+
+        int cursorPosition = 0;
+        for (int i = 0; i < mainCursor.row; i += 1) {
+            String line = lines.get(i);
+            cursorPosition += line.length() + 1;
+        }
+        for (int i = 0; i < mainCursor.column; i+= 1) cursorPosition += 1;
+
+        String newText;
+        if (text.length() <= 1) {
+            newText = "";
+        }
+        else if (cursorPosition == text.length()) {
+            newText = text.substring(0, text.length() - 1);
+        }
+        else {
+            newText = text.substring(0, cursorPosition - 1) + text.substring(cursorPosition);
+        }
+
+        lines.clear();
+        lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
     }
 
     private void drawText(OakTreeGUI gui) {
-        int oldLength = text.length();
-        List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
-        if (lines.isEmpty()) lines.add("");
-        text = combine(lines);
-        cursorPosition += (text.length() - oldLength);
+        int lastLine;
+        if (lines.size() < displayedLines) {
+            lastLine = lines.size() - 1;
+        }
+        else {
+            lastLine = firstLine + displayedLines;
+        }
 
-        for (int i = 0; i < lines.size(); i += 1) {
+        for (int i = firstLine; i < lastLine; i += 1) {
             String line = lines.get(i);
             float lineY = trueY + i * gui.getTextRenderer().fontHeight;
             drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
-            if (allSelected) drawHighlights(line, gui, trueX, lineY, highlightColor);
         }
     }
 
     private void drawCursor(OakTreeGUI gui) {
-        if (text.isEmpty()) {
-            drawString("_", gui, trueX, trueY, ControlAnchor.CENTER, true, fontColor);
+        if (lines.isEmpty()) {
+            drawString("_", gui, trueX, trueY, ControlAnchor.CENTER, shadow, fontColor);
             return;
         }
-        cursorPosition = Math.min(cursorPosition, text.length());
-        if (cursorPosition < 0) cursorPosition = 0;
-        int i = cursorPosition;
-        List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
 
-        String cursorLine = null;
-        int fontHeight = gui.getTextRenderer().fontHeight;
-        float cursorY = trueY - fontHeight;
-
-        for (String line: lines) {
-            cursorY += fontHeight;
-            if (i < line.length() + 1) {
-                cursorLine = line;
-                break;
-            }
-            i -= line.length() + 1;
-        }
-
-        String cursorString = cursorPosition < text.length() ? "|" : "_";
-
-        if (cursorLine != null) {
-            if (i > 0) {
-                int cursorX = gui.getTextRenderer().getStringWidth(cursorLine.substring(0, i)) + (int)trueX;
-                drawString(cursorString, gui, cursorX, cursorY, ControlAnchor.CENTER, true, fontColor);
-            }
-            else {
-                drawString(cursorString, gui, trueX, cursorY, ControlAnchor.CENTER, true, fontColor);
-            }
-        }
+        int actualRow = mainCursor.row - firstLine;
+        String cursorLine = lines.get(mainCursor.row);
+        TextRenderer renderer = gui.getTextRenderer();
+        int cursorX = renderer.getStringWidth(cursorLine.substring(0, mainCursor.column));
+        int cursorY = (int) ((trueY + 1) * actualRow * renderer.fontHeight);
+        drawString("_", gui, cursorX, cursorY, ControlAnchor.CENTER, shadow, fontColor);
     }
 
-    public void draw_old(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
-        if (!visible) return;
-        super.draw(mouseX, mouseY, deltaTime, gui);
-        if (gui.mouseButtonJustClicked("left")) {
-            if (isMouseWithin && !focused) {
-                gui.shouldCloseOnInventoryKey(false);
-                focused = true;
-                onFocused.invoke(gui, this);
-                cursorTicks = 0;
-            }
-            else if (focused) {
-                gui.shouldCloseOnInventoryKey(true);
-                focused = false;
-                allSelected = false;
-                onFocusLost.invoke(gui, this);
-            }
-            else {
-                allSelected = false;
-            }
+    private class Cursor {
+        int row = 0;
+        int column = 0;
+        final boolean main;
+
+        Cursor(boolean main) {
+            this.main = main;
         }
 
-        boolean enter = false;
+        Cursor(int row, int column, boolean main) {
+            this.row = row;
+            this.column = column;
+            this.main = main;
+        }
 
-        if (focused) {
-            cursorTicks += 1;
-            if (cursorTicks >= 40) cursorTicks = 0;
+        void moveRight() {
+            moveHorizontal(1);
+        }
 
-            if (gui.getLastChar().isPresent()) {
-                Character character = onCharTyped.invoke(gui.getLastChar().get(), this);
-                if (character != null) {
-                    if (allSelected) {
-                        clear();
-                        text = character.toString();
-                        allSelected = false;
-                    }
-                    else {
-                        text = text + character.toString();
-                    }
+        void moveLeft() {
+            moveHorizontal(-1);
+        }
+
+        void moveUp() {
+            moveVertical(-1);
+        }
+
+        void moveDown() {
+            moveVertical(1);
+        }
+
+        private void moveHorizontal(int amount) {
+            column += amount;
+            if (column < 0) {
+                if (row == 0) column = 0;
+                else {
+                    row -= 1;
+                    column = lines.get(row).length() - 1;
                 }
             }
-
-            if (gui.isBackspaceHeld()) {
-                if (backspaceTicks == 0 || (backspaceTicks > 20 && backspaceTicks % 2 == 0)) {
-                    if (allSelected) {
-                        clear();
-                        allSelected = false;
-                    }
-                    else {
-                        if (!text.isEmpty()) text = text.substring(0, text.length() - 1);
-                    }
-                    backspaceTicks += 1;
+            if (column >= lines.get(row).length()) {
+                if (row < lines.size() - 1) {
+                    column = 0;
+                    row += 1;
                 }
                 else {
-                    backspaceTicks += 1;
+                    column = lines.get(row).length();
                 }
             }
-            else {
-                backspaceTicks = 0;
-            }
 
-            if (gui.isKeyPressed("ctrl_a")) allSelected = true;
-            if (gui.isKeyPressed("enter")) {
-                text = text + "\n";
-
-            }
-            if (gui.isKeyPressed("copy") && allSelected) MinecraftClient.getInstance().keyboard.setClipboard(text);
-            if (gui.isKeyPressed("cut") && allSelected) {
-                MinecraftClient.getInstance().keyboard.setClipboard(text);
-                clear();
-            }
-            if (gui.isKeyPressed("paste")) {
-                String string = MinecraftClient.getInstance().keyboard.getClipboard();
-                if (allSelected) text = string;
-                else text = text.concat(string);
-            }
-        }
-        else {
-            cursorTicks = 0;
+            adjustFirstLine();
         }
 
-        if (!text.isEmpty()) {
-            List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
-            if (lines.isEmpty()) lines.add("");
-            text = combine(lines);
-            if (lines.size() > displayedLines) {
-                lines = lines.subList(lines.size() - displayedLines, lines.size());
-            }
-            if (cursorTicks < 20) {
-                TextRenderer font = gui.getTextRenderer();
-                int index = lines.size() - 1;
-                String last = lines.get(index);
-                if (font.getStringWidth(last + "_") < width) lines.set(index, last + "_");
-                else if (lines.size() < maxLines) lines.add("_");
-            }
+        private void moveVertical(int amount) {
+            row += amount;
+            if (row < 0) row = 0;
+            else if (row > lines.size() - 1) row = lines.size() - 1;
 
-            int offset = 0;
-            for (String line: lines) {
-                float lineY = trueY + offset*10;
-                drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
-                if (allSelected) drawHighlights(line, gui, trueX, lineY, highlightColor);
-                offset += 1;
-            }
+            if (column > lines.get(row).length()) column = lines.get(row).length();
+
+            adjustFirstLine();
         }
-        else if (cursorTicks < 20 && focused) drawString("_", gui, trueX, trueY, ControlAnchor.CENTER, shadow, fontColor);
+
+        private void adjustFirstLine() {
+            if (!main) return;
+
+            if (row < firstLine) firstLine = row;
+            else if (row >= firstLine + displayedLines) firstLine = row - displayedLines - 1;
+        }
     }
 }

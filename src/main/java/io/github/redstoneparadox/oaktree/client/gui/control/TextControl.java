@@ -20,16 +20,13 @@ public interface TextControl<TC extends TextControl> {
 
     default List<String> wrapLines(String string, OakTreeGUI gui, float width, int max, boolean withShadow) {
         List<String> strings;
-        TextRenderer font = gui.getTextRenderer();
+        TextRenderer renderer = gui.getTextRenderer();
         if (withShadow) {
-            strings = font.wrapStringToWidthAsList(string, (int) (width - 1));
+            strings = wrapLines(string, renderer, (int) (width - 1));
         }
         else {
-            strings = font.wrapStringToWidthAsList(string, (int) width);
+            strings = wrapLines(string, renderer, (int) (width));
         }
-
-        strings = new ArrayList<>(strings);
-        strings.addAll(getTrailingNewlines(string));
 
         if (strings.size() > max) {
             strings = strings.subList(0, max);
@@ -38,23 +35,34 @@ public interface TextControl<TC extends TextControl> {
         return strings;
     }
 
-    default List<String> getTrailingNewlines(String string) {
-        char[] chars = string.toCharArray();
-        List<String> newlines = new ArrayList<>();
-        for (int i = chars.length - 1; i > 0; i -= 1) {
-            if (chars[i] == '\n') newlines.add("");
-            else return newlines;
+    default List<String> wrapLines(String string, TextRenderer renderer, int width) {
+        List<String> strings = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+
+        for (char c: string.toCharArray()) {
+            if (c == '\n') {
+                strings.add(builder.toString());
+                continue;
+            };
+            if (renderer.getStringWidth(builder.toString() + c) > width) {
+                strings.add(builder.toString());
+                continue;
+            }
+            builder.append(c);
         }
-        return newlines;
+
+        return strings;
     }
 
-    default String combine(List<String> strings) {
-        StringBuilder string = new StringBuilder();
-        for (String line: strings) {
-            if (string.length() > 0) string.append("\n");
-            string.append(line);
+    default String combine(List<String> strings, boolean addNewlines) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < strings.size() - 1; i += 1) {
+            String line = strings.get(i);
+            builder.append(line);
+            if (addNewlines) builder.append('\n');
         }
-        return string.toString();
+        builder.append(strings.get(strings.size() - 1));
+        return builder.toString();
     }
 
     default void drawString(String string, OakTreeGUI gui, float x, float y, ControlAnchor alignment, boolean withShadow, RGBAColor fontColor) {
