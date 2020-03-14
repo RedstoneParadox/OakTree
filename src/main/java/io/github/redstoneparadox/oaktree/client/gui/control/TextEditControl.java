@@ -424,7 +424,16 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         TextRenderer renderer = gui.getTextRenderer();
         int cursorX = (int) (trueX + renderer.getStringWidth(cursorLine.substring(0, cursor.column)));
         int cursorY = (int) (trueY + actualRow * renderer.fontHeight);
-        drawString("_", gui, cursorX, cursorY, ControlAnchor.CENTER, shadow, fontColor);
+
+        String cursorString = "_";
+        if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine, renderer)) cursorString = "|";
+
+        drawString(cursorString, gui, cursorX, cursorY, ControlAnchor.CENTER, shadow, fontColor);
+    }
+
+    private boolean lineOccupiesFullSpace(String cursorLine, TextRenderer renderer) {
+        int width = (int) (this.width - 3);
+        return renderer.getStringWidth(cursorLine) >= width;
     }
 
     private class Cursor {
