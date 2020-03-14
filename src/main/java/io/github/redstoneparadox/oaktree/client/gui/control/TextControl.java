@@ -41,6 +41,7 @@ public interface TextControl<TC extends TextControl> {
 
         for (char c: string.toCharArray()) {
             if (c == '\n') {
+                builder.append('\n');
                 strings.add(builder.toString());
                 builder.setLength(0);
                 continue;
@@ -82,10 +83,9 @@ public interface TextControl<TC extends TextControl> {
         }
     }
 
-    default void drawHighlights(String string, OakTreeGUI gui, float x, float y, RGBAColor highlightColor) {
-        TextRenderer font = ((ScreenAccessor)gui).getFont();
-        int width = font.getStringWidth(string);
-        int height = font.fontHeight;
+    default void drawHighlights(String string, TextRenderer renderer, float x, float y, RGBAColor highlightColor) {
+        int width = renderer.getStringWidth(string);
+        int height = renderer.fontHeight;
 
         ScreenVec vert1 = new ScreenVec(x + 1, y + 1);
         ScreenVec vert2 = new ScreenVec(x + 1, y + 3 + height);

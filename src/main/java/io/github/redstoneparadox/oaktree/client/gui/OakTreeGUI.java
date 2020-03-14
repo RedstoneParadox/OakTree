@@ -22,11 +22,17 @@ public interface OakTreeGUI {
         return false;
     }
 
-    Key getKey();
+    @Deprecated
+    default Key getKey() {
+        return Key.NONE;
+    };
 
     TextRenderer getTextRenderer();
 
-    boolean isBackspaceHeld();
+    @Deprecated
+    default boolean isBackspaceHeld() {
+        return false;
+    }
 
     default void shouldCloseOnInventoryKey(boolean value) {
 

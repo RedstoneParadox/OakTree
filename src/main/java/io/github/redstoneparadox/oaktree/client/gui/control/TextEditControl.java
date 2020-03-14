@@ -3,6 +3,8 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.util.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
@@ -15,7 +17,13 @@ import java.util.List;
 public class TextEditControl extends InteractiveControl<TextEditControl> implements TextControl<TextEditControl> {
     private final List<String> lines = new ArrayList<>();
     private int firstLine = 0;
-    private final Cursor mainCursor = new Cursor(true);
+    private final Cursor cursor = new Cursor(true);
+    private final Selection selection = new Selection();
+    private int inputCooldown = 0;
+    private int backspaceTicks = 0;
+    private int enterTicks;
+    private int cursorTicks = 0;
+    private boolean focused = false;
 
     public boolean shadow = false;
     public RGBAColor fontColor = RGBAColor.white();
@@ -28,13 +36,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
     public GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
 
-    private boolean focused = false;
-    private boolean allSelected = false;
-
-    private int cursorTicks = 0;
-    private boolean charAdded = false;
-
-    private static final String RULER = createRulerString();
 
     public TextEditControl() {
         this.id = "text_edit";
@@ -151,16 +152,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return this;
     }
 
-    private static String createRulerString() {
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < 200; i++) {
-            builder.append("_");
-        }
-
-        return builder.toString();
-    }
-
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
@@ -169,51 +160,64 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         if (lines.isEmpty()) lines.add("");
         try {
             if (focused) {
-                if (gui.getLastChar().isPresent()) {
-                    int oldSize = lines.size();
-                    insertCharacter(onCharTyped.invoke(gui.getLastChar().get(), this), gui);
-                    mainCursor.moveRight();
-                    if (oldSize + 1 == lines.size()) mainCursor.moveRight();
-                    charAdded = true;
-                }
+                if (inputCooldown <= 0) {
+                    if (gui.getLastChar().isPresent()) {
+                        int oldSize = lines.size();
+                        insertCharacter(onCharTyped.invoke(gui.getLastChar().get(), this), gui);
+                        cursor.moveRight();
+                        if (oldSize + 1 == lines.size()) cursor.moveRight();
+                    }
+                    long handle = MinecraftClient.getInstance().getWindow().getHandle();
 
-                Key pressed = gui.getKey();
-                switch (pressed) {
-                    case NONE:
-                        break;
-                    case BACKSPACE:
-                        if (mainCursor.row == 0 && mainCursor.column == 0) break;
-                        removeCharacter(gui);
-                        mainCursor.moveLeft();
-                        if (lines.size() >= 1 && lines.get(lines.size() - 1).isEmpty()) {
-                            mainCursor.moveLeft();
-                            lines.remove(lines.size() - 1);
-                        };
-                        break;
-                    case ENTER:
-                        newLine(gui);
-                        mainCursor.moveRight();
-                        break;
-                    case CTRL_A:
-                        break;
-                    case COPY:
-                        break;
-                    case CUT:
-                        break;
-                    case PASTE:
-                        break;
-                    case UP:
-                        mainCursor.moveUp();
-                        break;
-                    case DOWN:
-                        mainCursor.moveDown();
-                        break;
-                    case LEFT:
-                        mainCursor.moveLeft();
-                        break;
-                    case RIGHT:
-                        mainCursor.moveRight();
-                        break;
+                    if (upKey(handle)) {
+                        cursor.moveUp();
+                        inputCooldown = 1;
+                    }
+                    if (downKey(handle)) {
+                        cursor.moveDown();
+                        inputCooldown = 1;
+                    }
+                    if (leftKey(handle)) {
+                        cursor.moveRight();
+                        inputCooldown = 1;
+                    }
+                    if (rightKey(handle)) {
+                        cursor.moveRight();
+                        inputCooldown = 1;
+                    }
+                    if (backspace(handle)) {
+                        if (backspaceTicks == 0 || backspaceTicks > 20) {
+                            if (cursor.row != 0 || cursor.column != 0) {
+                                removeCharacter(gui);
+                                cursor.moveLeft();
+                                inputCooldown = 1;
+                            }
+                        }
+                        backspaceTicks += 1;
+                    }
+                    else {
+                        backspaceTicks = 0;
+                    }
+                    if (enter(handle)) {
+                        if (enterTicks == 0 || enterTicks > 20) {
+                            newLine(gui);
+                            cursor.moveRight();
+                            cursor.moveRight();
+                            inputCooldown = 1;
+                        }
+                        enterTicks += 1;
+                    }
+                    else {
+                        enterTicks = 0;
+                    }
+                    if (ctrlA(handle)) {
+                        selection.all();
+                        cursor.toEnd();
+                        inputCooldown = 1;
+                    }
+                }
+                else {
+                    inputCooldown -= 1;
                 }
 
                 if (cursorTicks < 10) drawCursor(gui);
@@ -221,12 +225,45 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 if (cursorTicks >= 20) cursorTicks = 0;
             }
             else {
-                allSelected = false;
+                selection.disable();
+                backspaceTicks = 0;
+                enterTicks = 0;
+            }
+            if (lines.isEmpty() || (lines.size() == 1 && lines.get(0).isEmpty())) {
+                selection.disable();
             }
             drawText(gui);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean upKey(long handle) {
+        return InputUtil.isKeyPressed(handle, 265);
+    }
+
+    private boolean downKey(long handle) {
+        return InputUtil.isKeyPressed(handle, 264);
+    }
+
+    private boolean leftKey(long handle) {
+        return InputUtil.isKeyPressed(handle, 263);
+    }
+
+    private boolean rightKey(long handle) {
+        return InputUtil.isKeyPressed(handle, 262);
+    }
+
+    private boolean backspace(long handle) {
+        return InputUtil.isKeyPressed(handle, 259);
+    }
+
+    private boolean enter(long handle) {
+        return InputUtil.isKeyPressed(handle, 257);
+    }
+
+    private boolean ctrlA(long handle) {
+        return InputUtil.isKeyPressed(handle, 65) && Screen.isSelectAll(65);
     }
 
     private void updateFocused(OakTreeGUI gui) {
@@ -240,20 +277,18 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             else if (focused) {
                 gui.shouldCloseOnInventoryKey(true);
                 focused = false;
-                allSelected = false;
+                selection.disable();
                 onFocusLost.invoke(gui, this);
             }
             else {
-                allSelected = false;
+                selection.disable();
             }
         }
     }
 
     private void newLine(OakTreeGUI gui) {
         if (lines.size() == maxLines) return;
-        int oldLinesSize = lines.size();
         insertCharacter('\n', gui);
-        if (oldLinesSize == lines.size()) lines.add("");
     }
 
     private void insertCharacter(char c, OakTreeGUI gui) {
@@ -262,17 +297,11 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             return;
         }
 
-        String text = combine(lines, true);
-
-        int cursorPosition = 0;
-        for (int i = 0; i < mainCursor.row; i += 1) {
-            String line = lines.get(i);
-            cursorPosition += line.length() + 1;
-        }
-        for (int i = 0; i < mainCursor.column; i+= 1) cursorPosition += 1;
+        String text = combine(lines, false);
+        int cursorPosition = getCursorPosition();
 
         String newText;
-        if (cursorPosition == text.length()) {
+        if (cursorPosition >= text.length()) {
             newText = text + c;
         } else {
             newText = text.substring(0, cursorPosition) + c + text.substring(cursorPosition);
@@ -283,14 +312,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     private void removeCharacter(OakTreeGUI gui) {
-        String text = combine(lines, true);
-
-        int cursorPosition = 0;
-        for (int i = 0; i < mainCursor.row; i += 1) {
-            String line = lines.get(i);
-            cursorPosition += line.length() + 1;
-        }
-        for (int i = 0; i < mainCursor.column; i+= 1) cursorPosition += 1;
+        String text = combine(lines, false);
+        int cursorPosition = getCursorPosition();
 
         String newText;
         if (text.length() <= 1) {
@@ -310,13 +333,42 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
     }
 
+    private int getCursorPosition() {
+        int cursorPosition = 0;
+        for (int i = 0; i < cursor.row; i += 1) {
+            String line = lines.get(i);
+            cursorPosition += line.length();
+        }
+        for (int i = 0; i < cursor.column; i+= 1) cursorPosition += 1;
+        return cursorPosition;
+    }
+
     private void drawText(OakTreeGUI gui) {
         int length = Math.min(lines.size(), displayedLines);
 
-        for (int i = firstLine; i < firstLine + length; i += 1) {
-            String line = lines.get(i);
-            float lineY = trueY + (i - firstLine) * gui.getTextRenderer().fontHeight;
+        for (int row = firstLine; row < firstLine + length; row += 1) {
+            String line = lines.get(row);
+            if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
+            float lineY = trueY + (row - firstLine) * gui.getTextRenderer().fontHeight;
             drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
+            drawHighlights(line, gui.getTextRenderer(), lineY, row);
+        }
+    }
+
+    private void drawHighlights(String line, TextRenderer renderer, float lineY, int row) {
+        if (selection.isHighlighted(row)) {
+            int startIndex;
+            if (selection.start.row != row) startIndex = 0;
+            else startIndex = selection.start.column;
+
+            int endIndex;
+            if (selection.end.row != row) endIndex = line.length() - 1;
+            else endIndex = selection.end.column;
+
+            if (startIndex == endIndex) return;
+
+            float x = renderer.getStringWidth(line.substring(0, startIndex));
+            drawHighlights(line, renderer, x, lineY, highlightColor);
         }
     }
 
@@ -326,10 +378,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             return;
         }
 
-        int actualRow = mainCursor.row - firstLine;
-        String cursorLine = lines.get(mainCursor.row);
+        int actualRow = cursor.row - firstLine;
+        String cursorLine = lines.get(cursor.row);
         TextRenderer renderer = gui.getTextRenderer();
-        int cursorX = renderer.getStringWidth(cursorLine.substring(0, mainCursor.column));
+        int cursorX = renderer.getStringWidth(cursorLine.substring(0, cursor.column));
         int cursorY = (int) ((trueY + 1) * actualRow * renderer.fontHeight);
         drawString("_", gui, cursorX, cursorY, ControlAnchor.CENTER, shadow, fontColor);
     }
@@ -342,12 +394,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         final boolean main;
 
         Cursor(boolean main) {
-            this.main = main;
-        }
-
-        Cursor(int row, int column, boolean main) {
-            this.row = row;
-            this.column = column;
             this.main = main;
         }
 
@@ -369,6 +415,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
         private void moveHorizontal(int amount) {
             column += amount;
+            if (row >= lines.size()) {
+                row = lines.size() - 1;
+                column = lines.get(row).length();
+            }
             if (column < 0) {
                 if (row == 0) column = 0;
                 else {
@@ -376,13 +426,17 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                     column = lines.get(row).length();
                 }
             }
-            if (column > lines.get(row).length()) {
-                if (row < lines.size() - 1) {
+
+            String cursorRow = lines.get(row);
+            if (cursorRow.endsWith("\n")) cursorRow = cursorRow.substring(0, cursorRow.length() - 1);
+
+            if (column > cursorRow.length()) {
+                if (row < lines.size() - 1 && amount > 0) {
                     column = 0;
                     row += 1;
                 }
                 else {
-                    column = lines.get(row).length();
+                    column = cursorRow.length();
                 }
             }
 
@@ -394,8 +448,21 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             if (row < 0) row = 0;
             else if (row > lines.size() - 1) row = lines.size() - 1;
 
-            if (column > lines.get(row).length()) column = lines.get(row).length();
+            String cursorRow = lines.get(row);
+            if (cursorRow.endsWith("\n")) cursorRow = cursorRow.substring(0, cursorRow.length() - 1);
+            if (column > cursorRow.length()) column = cursorRow.length();
 
+            adjustFirstLine();
+        }
+
+        private void toStart() {
+            row = 0;
+            column = 0;
+        }
+
+        private void toEnd() {
+            row = lines.size() - 1;
+            column = lines.get(row).length();
             adjustFirstLine();
         }
 
@@ -404,7 +471,38 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             if (!main) return;
 
             while (row < firstLine) firstLine -= 1;
+            if (lines.size() >= displayedLines) while (lines.size() - firstLine < displayedLines) firstLine -= 1;
             while (row >= firstLine + displayedLines) firstLine += 1;
+        }
+    }
+
+    private class Selection {
+        private Cursor start = new Cursor(false);
+        private Cursor end = new Cursor(false);
+        private boolean active = false;
+
+        private void all() {
+            start.toStart();
+            end.toEnd();
+            active = true;
+        }
+
+        private void disable() {
+            start.toStart();
+            end.toEnd();
+            active = false;
+        }
+
+        private boolean isHighlighted(int row) {
+            return active && (start.row <= row && row <= end.row);
+        }
+
+        private int startColumn() {
+            return start.column;
+        }
+
+        private int endColumn() {
+            return end.column;
         }
     }
 }
