@@ -152,6 +152,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return this;
     }
 
+    // Abandon hope all Ye who enter here!
     @Override
     public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
@@ -170,6 +171,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
                 if (upKey(handle)) {
                     if (arrowKeyTicks == 0 || arrowKeyTicks >= 20 && arrowKeyTicks % 2 == 0) {
+                        if (!selection.active && shift(handle)) selection.startHighlighting();
                         cursor.moveUp();
                         selection.moveToCursor(handle);
                     }
@@ -177,6 +179,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 }
                 else if (downKey(handle)) {
                     if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
+                        if (!selection.active && shift(handle)) selection.startHighlighting();
                         cursor.moveDown();
                         selection.moveToCursor(handle);
                     }
@@ -184,6 +187,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 }
                 else if (leftKey(handle)) {
                     if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
+                        if (!selection.active && shift(handle)) selection.startHighlighting();
                         cursor.moveLeft();
                         selection.moveToCursor(handle);
                     }
@@ -191,6 +195,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 }
                 else if (rightKey(handle)) {
                     if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
+                        if (!selection.active && shift(handle)) selection.startHighlighting();
                         cursor.moveRight();
                         selection.moveToCursor(handle);
                     }
@@ -202,15 +207,13 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
                 if (backspace(handle)) {
                     if (backspaceTicks == 0 || backspaceTicks > 20) {
-                        if (cursor.row != 0 || cursor.column != 0) {
-                            if (selection.active) {
-                                deleteSelection(gui);
-                                cursor.toSelectionStart();
-                            }
-                            else {
-                                removeCharacter(gui);
-                                cursor.moveLeft();
-                            }
+                        if (selection.active) {
+                            deleteSelection(gui);
+                            cursor.toSelectionStart();
+                        }
+                        else if (cursor.row != 0 || cursor.column != 0) {
+                            removeCharacter(gui);
+                            cursor.moveLeft();
                         }
                     }
                     backspaceTicks += 1;
@@ -540,12 +543,14 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             active = false;
         }
 
-        private void startHighlighting(int row, int column) {
-            anchor.row = row;
-            anchor.column = column;
+        private void startHighlighting() {
+            anchor.row = cursor.row;
+            anchor.column = cursor.column;
 
-            follower.row = row;
-            follower.column = column;
+            follower.row = cursor.row;
+            follower.column = cursor.column;
+
+            active = true;
         }
 
         private boolean isHighlighted(int row) {
@@ -572,7 +577,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
 
         private boolean inverted() {
-            return anchor.row > follower.row && anchor.column > follower.column;
+            return follower.row < anchor.row || (follower.row == anchor.row && follower.column < anchor.column);
         }
 
         private int startColumn() {
