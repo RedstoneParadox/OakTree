@@ -22,6 +22,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private int backspaceTicks = 0;
     private int enterTicks = 0;
     private int arrowKeyTicks = 0;
+    private boolean copied = false;
+    private int pasteTicks = 0;
     private int cursorTicks = 0;
     private boolean focused = false;
     private String text = "";
@@ -180,6 +182,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
                 if (gui.getLastChar().isPresent()) {
                     int oldSize = lines.size();
+                    if (selection.active) {
+                        deleteSelection(gui);
+                        cursor.toSelectionStart();
+                    }
                     insertCharacter(onCharTyped.invoke(gui.getLastChar().get(), this), gui);
                     cursor.moveRight();
                     if (oldSize + 1 == lines.size()) cursor.moveRight();
@@ -223,7 +229,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 }
 
                 if (backspace(handle)) {
-                    if (backspaceTicks == 0 || backspaceTicks > 20) {
+                    if (backspaceTicks == 0 || backspaceTicks > 20 && backspaceTicks % 2 == 0) {
                         if (selection.active) {
                             deleteSelection(gui);
                             cursor.toSelectionStart();
@@ -238,8 +244,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 else {
                     backspaceTicks = 0;
                 }
+
                 if (enter(handle)) {
-                    if (enterTicks == 0 || enterTicks > 20) {
+                    if (enterTicks == 0 || enterTicks > 20 && enterTicks % 2 == 0) {
                         onEnter.invoke(gui, this);
                         if (selection.active) {
                             deleteSelection(gui);
@@ -255,9 +262,46 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 else {
                     enterTicks = 0;
                 }
+
                 if (ctrlA(handle)) {
                     selection.all();
                     cursor.toEnd();
+                }
+
+                if (copy(handle) && selection.active) {
+                    if (!copied) {
+                        String selectedText = getSelection();
+                        if (selectedText != null) MinecraftClient.getInstance().keyboard.setClipboard(selectedText);
+                    }
+                    copied = true;
+                } else copied = false;
+
+                if (cut(handle)) {
+                    if (!copied) {
+                        String selectedText = getSelection();
+                        if (selectedText != null) MinecraftClient.getInstance().keyboard.setClipboard(selectedText);
+                        deleteSelection(gui);
+                        cursor.toSelectionStart();
+                    }
+                    copied = true;
+                } else copied = false;
+
+                if (paste(handle)) {
+                    if (pasteTicks == 0 || pasteTicks > 20 && pasteTicks % 2 == 0) {
+                        if (selection.active) {
+                            deleteSelection(gui);
+                            cursor.toSelectionStart();
+                        }
+                        String st = MinecraftClient.getInstance().keyboard.getClipboard();
+                        int oldSize = lines.size();
+                        insertString(st, gui);
+                        for (int i = 0; i < st.length(); i += 1) cursor.moveRight();
+                        if (oldSize < lines.size()) cursor.moveRight();
+                    }
+                    pasteTicks += 1;
+                }
+                else {
+                    pasteTicks = 0;
                 }
 
                 if (cursorTicks < 10) drawCursor(gui);
@@ -306,6 +350,18 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return InputUtil.isKeyPressed(handle, 65) && Screen.isSelectAll(65);
     }
 
+    private boolean copy(long handle) {
+        return InputUtil.isKeyPressed(handle, 67) && Screen.isCopy(67);
+    }
+
+    private boolean cut(long handle) {
+        return InputUtil.isKeyPressed(handle, 88) && Screen.isCut(88);
+    }
+
+    private boolean paste(long handle) {
+        return InputUtil.isKeyPressed(handle, 86) && Screen.isPaste(86);
+    }
+
     private boolean shift(long handle) {
         return InputUtil.isKeyPressed(handle, 344) || InputUtil.isKeyPressed(handle, 340);
     }
@@ -322,6 +378,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                 gui.shouldCloseOnInventoryKey(true);
                 focused = false;
                 selection.cancel();
+                cursor.toStart();
                 onFocusLost.invoke(gui, this);
             }
             else {
@@ -333,6 +390,18 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private void newLine(OakTreeGUI gui) {
         if (lines.size() == maxLines) return;
         insertCharacter('\n', gui);
+    }
+
+    private String getSelection() {
+        if (lines.isEmpty()) return null;
+
+        String text = combine(lines, false);
+        int startPosition = getCursorPosition(selection.start());
+        int endPosition = getCursorPosition(selection.end());
+
+        if (startPosition == endPosition) return null;
+
+        return text.substring(startPosition, endPosition);
     }
 
     private void deleteSelection(OakTreeGUI gui) {
@@ -363,6 +432,26 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             newText = text + c;
         } else {
             newText = text.substring(0, cursorPosition) + c + text.substring(cursorPosition);
+        }
+
+        lines.clear();
+        lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
+    }
+
+    private void insertString(String st, OakTreeGUI gui)  {
+        if (lines.isEmpty()) {
+            lines.addAll(wrapLines(st, gui, width, maxLines, shadow));
+            return;
+        }
+
+        String text = combine(lines, false);
+        int cursorPosition = getCursorPosition(cursor);
+
+        String newText;
+        if (cursorPosition >= text.length()) {
+            newText = text + st;
+        } else {
+            newText = text.substring(0, cursorPosition) + st + text.substring(cursorPosition);
         }
 
         lines.clear();
