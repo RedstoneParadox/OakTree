@@ -6,6 +6,7 @@
     "container.SlotAccessor"
   ],
   "client": [
+    "client.gui.screen.MixinScreen",
     "client.gui.screen.ScreenAccessor"
   ],
   "injectors": {
