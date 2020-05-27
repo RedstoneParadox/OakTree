@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * BoxControl is a type of PaddingControl that
@@ -71,12 +72,12 @@ public class BoxControl extends PaddingControl<BoxControl> {
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
-        super.draw(mouseX, mouseY, deltaTime, gui);
+        super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
         if (child != null) {
-            child.draw(mouseX, mouseY, deltaTime, gui);
+            child.draw(matrices, mouseX, mouseY, deltaTime, gui);
         }
     }
 }

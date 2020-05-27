@@ -7,6 +7,7 @@ import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * The base class for all controls.
@@ -174,7 +175,7 @@ public class Control<C extends Control> {
         return style;
     }
 
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
 
         if (currentStyle != null) {

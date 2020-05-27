@@ -1,8 +1,8 @@
 package io.github.redstoneparadox.oaktree.networking;
 
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.minecraft.container.Container;
-import net.minecraft.container.Slot;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Identifier;
 import io.github.redstoneparadox.oaktree.mixin.container.SlotAccessor;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 public class OakTreeNetworking {
 
     private static final Identifier SYNC_SLOT = new Identifier("oaktree", "sync_slot");
-    private static final Map<Integer, Container> CONTAINER_MAP = new HashMap<>();
+    private static final Map<Integer, ScreenHandler> CONTAINER_MAP = new HashMap<>();
 
     public static void initPackets() {
         ServerSidePacketRegistry.INSTANCE.register(SYNC_SLOT, ((context, buffer) -> {
@@ -27,17 +27,17 @@ public class OakTreeNetworking {
         }));
     }
 
-    public static void addContainerForSyncing(Container container) {
-        CONTAINER_MAP.put(container.syncId, container);
+    public static void addContainerForSyncing(ScreenHandler screenHandler) {
+        CONTAINER_MAP.put(screenHandler.syncId, screenHandler);
     }
 
     private static void syncSlot(int x, int y, int index, int syncID) {
         if (CONTAINER_MAP.containsKey(syncID)) {
-            Container container = CONTAINER_MAP.get(syncID);
-            if (index < container.slots.size()) {
-                Slot slot = container.slots.get(index);
-                ((SlotAccessor) slot).setXPosition(x);
-                ((SlotAccessor) slot).setYPosition(y);
+            ScreenHandler screenHandler = CONTAINER_MAP.get(syncID);
+            if (index < screenHandler.slots.size()) {
+                Slot slot = screenHandler.slots.get(index);
+                ((SlotAccessor) slot).setX(x);
+                ((SlotAccessor) slot).setY(y);
             }
         }
         else {

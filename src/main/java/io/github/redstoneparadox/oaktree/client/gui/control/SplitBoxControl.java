@@ -2,8 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
-
-import java.awt.*;
+import net.minecraft.client.util.math.MatrixStack;
 
 @Deprecated
 public class SplitBoxControl extends Control<SplitBoxControl> {
@@ -116,11 +115,11 @@ public class SplitBoxControl extends Control<SplitBoxControl> {
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
-        super.draw(mouseX, mouseY, deltaTime, gui);
+        super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
-        first.draw(mouseX, mouseY, deltaTime, gui);
-        second.draw(mouseX, mouseY, deltaTime, gui);
+        first.draw(matrices, mouseX, mouseY, deltaTime, gui);
+        second.draw(matrices, mouseX, mouseY, deltaTime, gui);
     }
 }

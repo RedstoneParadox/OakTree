@@ -3,13 +3,13 @@ package io.github.redstoneparadox.oaktree.client.gui;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.Key;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.container.Container;
+import net.minecraft.screen.ScreenHandler;
 
 import java.util.Optional;
 
 public interface OakTreeGUI {
 
-    Optional<Container> getScreenContainer();
+    Optional<ScreenHandler> getScreenContainer();
 
     boolean mouseButtonHeld(String mouseButton);
 

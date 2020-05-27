@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
@@ -87,16 +88,16 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
-        super.draw(mouseX, mouseY, deltaTime, gui);
+        super.draw(matrices, mouseX, mouseY, deltaTime, gui);
         if (!text.isEmpty()) {
             List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
             text = combine(lines, true);
 
             int offset = 0;
             for (String line: lines) {
-                drawString(line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
+                drawString(matrices, line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
                 offset += 1;
             }
         }

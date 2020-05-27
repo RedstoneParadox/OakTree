@@ -16,10 +16,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.container.Container;
-import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -56,16 +56,16 @@ public class Tests {
                     (
                             testFour()
                     )
-                    .container(new TestContainer(syncId, player))
+                    .container(new TestScreenHandler(syncId, player))
                     .playerInventory(player.inventory)
                     .text(new LiteralText("Test 4"))
                     .buildContainerScreen();
         });
 
         ContainerProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
-            Container container = new TestContainer(syncId, player);
-            OakTreeNetworking.addContainerForSyncing(container);
-            return container;
+            ScreenHandler screenHandler = new TestScreenHandler(syncId, player);
+            OakTreeNetworking.addContainerForSyncing(screenHandler);
+            return screenHandler;
         });
     }
 
@@ -112,10 +112,10 @@ public class Tests {
         }
     }
 
-    static class TestContainer extends Container {
+    static class TestScreenHandler extends ScreenHandler {
         private final PlayerInventory playerInventory;
 
-        protected TestContainer(int syncId, PlayerEntity player) {
+        protected TestScreenHandler(int syncId, PlayerEntity player) {
             super(null, syncId);
             this.playerInventory = player.inventory;
 

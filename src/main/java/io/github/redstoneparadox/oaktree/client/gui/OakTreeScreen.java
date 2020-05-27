@@ -7,7 +7,8 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
-import net.minecraft.container.Container;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.LiteralText;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 
@@ -51,13 +52,13 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float delta) {
-        super.render(mouseX, mouseY, delta);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        super.render(matrices, mouseX, mouseY, delta);
 
         Window clientWindow  = MinecraftClient.getInstance().getWindow();
 
         root.preDraw(mouseX, mouseY, delta, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
-        root.draw(mouseX, mouseY, delta, this);
+        root.draw(matrices, mouseX, mouseY, delta, this);
 
         leftMouseJustPressed = false;
         lastChar = null;
@@ -68,7 +69,7 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
     }
 
     @Override
-    public Optional<Container> getScreenContainer() {
+    public Optional<ScreenHandler> getScreenContainer() {
         return Optional.empty();
     }
 
@@ -112,12 +113,12 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public TextRenderer getTextRenderer() {
-        return this.font;
+        return this.textRenderer;
     }
 
     @Override
     public boolean isBackspaceHeld() {
-        return InputUtil.isKeyPressed(minecraft.getWindow().getHandle(), 259);
+        return InputUtil.isKeyPressed(client.getWindow().getHandle(), 259);
     }
 
     @Override
@@ -173,6 +174,6 @@ public class OakTreeScreen extends Screen implements OakTreeGUI {
 
     @Override
     public void onClose() {
-        minecraft.openScreen(parentScreen);
+        client.openScreen(parentScreen);
     }
 }

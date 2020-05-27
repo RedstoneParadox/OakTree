@@ -2,9 +2,9 @@ package io.github.redstoneparadox.oaktree.client.gui;
 
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ingame.ContainerScreen;
-import net.minecraft.container.Container;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
@@ -19,7 +19,7 @@ public class ScreenBuilder {
     private Screen parent = null;
     private Control<?> root;
     private Theme theme = null;
-    private Container container;
+    private ScreenHandler handler;
     private PlayerInventory playerInventory;
     private Text text = new LiteralText("");
 
@@ -61,14 +61,14 @@ public class ScreenBuilder {
 
     /**
      * If building a contain screen, this sets the
-     * backing {@link Container} for the built
+     * backing {@link ScreenHandler} for the built
      * screen.
      *
-     * @param container The container.
+     * @param handler The container.
      * @return The builder itself.
      */
-    public ScreenBuilder container(Container container) {
-        this.container = container;
+    public ScreenBuilder container(ScreenHandler handler) {
+        this.handler = handler;
         return this;
     }
 
@@ -105,11 +105,11 @@ public class ScreenBuilder {
     }
 
     /**
-     * Builds a new {@link ContainerScreen}
+     * Builds a new {@link HandledScreen}
      *
-     * @return An {@link ContainerScreen} instance.
+     * @return An {@link HandledScreen} instance.
      */
-    public <C extends Container> ContainerScreen<C> buildContainerScreen() {
-        return new OakTreeContainerScreen<C>(root, pause, parent, theme, (C) container, playerInventory, text);
+    public <C extends ScreenHandler> HandledScreen<C> buildContainerScreen() {
+        return new OakTreeHandledScreen<C>(root, pause, parent, theme, (C) handler, playerInventory, text);
     }
 }

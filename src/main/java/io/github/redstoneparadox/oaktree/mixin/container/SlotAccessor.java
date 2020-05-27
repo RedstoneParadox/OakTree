@@ -1,9 +1,8 @@
 package io.github.redstoneparadox.oaktree.mixin.container;
 
+import net.minecraft.screen.slot.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
-
-import net.minecraft.container.Slot;
 
 /**
  * Accessor mixin for changing slot x and y positions.
@@ -12,15 +11,15 @@ import net.minecraft.container.Slot;
 @Mixin(Slot.class)
 public interface SlotAccessor {
 
-    @Accessor("xPosition")
-    public abstract int getXPosition();
+    @Accessor("x")
+    public abstract int getX();
 
-    @Accessor("xPosition")
-    public abstract void setXPosition(int xPosition);
+    @Accessor("x")
+    public abstract void setX(int xPosition);
 
-    @Accessor("yPosition")
-    public abstract int getYPosition();
+    @Accessor("y")
+    public abstract int getY();
 
-    @Accessor("yPosition")
-    public abstract void setYPosition(int yPosition);
+    @Accessor("y")
+    public abstract void setY(int yPosition);
 }

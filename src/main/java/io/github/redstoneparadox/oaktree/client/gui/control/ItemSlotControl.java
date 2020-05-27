@@ -1,10 +1,11 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.container.Slot;
+import net.minecraft.client.util.math.MatrixStack;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.mixin.container.SlotAccessor;
+import net.minecraft.screen.slot.Slot;
 
 /**
  * A Node that acts as a special wrapper for setting
@@ -29,9 +30,9 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         gui.getScreenContainer().ifPresent(container -> {
-            super.draw(mouseX, mouseY, deltaTime, gui);
+            super.draw(matrices, mouseX, mouseY, deltaTime, gui);
             int slotX = (int)trueX - gui.getX() + 1;
             int slotY = (int)trueY - gui.getY() + 1;
             if (!visible) {
@@ -41,8 +42,8 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
 
             if (index < container.slots.size()) {
                 Slot slot = container.slots.get(index);
-                ((SlotAccessor) slot).setXPosition(slotX);
-                ((SlotAccessor) slot).setYPosition(slotY);
+                ((SlotAccessor) slot).setX(slotX);
+                ((SlotAccessor) slot).setY(slotY);
 
                 OakTreeClientNetworking.syncSlot(slotX, slotY, index, container.syncId);
             }

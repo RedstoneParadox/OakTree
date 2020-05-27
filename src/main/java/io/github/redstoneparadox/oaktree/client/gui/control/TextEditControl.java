@@ -5,6 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
@@ -164,9 +165,9 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     // Abandon hope all Ye who enter here!
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
-        super.draw(mouseX, mouseY, deltaTime, gui);
+        super.draw(matrices, mouseX, mouseY, deltaTime, gui);
         updateFocused(gui);
         if (lines.isEmpty()) lines.add("");
         try {
@@ -304,7 +305,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                     pasteTicks = 0;
                 }
 
-                if (cursorTicks < 10) drawCursor(gui);
+                if (cursorTicks < 10) drawCursor(matrices, gui);
                 cursorTicks += 1;
                 if (cursorTicks >= 20) cursorTicks = 0;
             }
@@ -316,7 +317,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             if (lines.isEmpty() || (lines.size() == 1 && lines.get(0).isEmpty())) {
                 selection.cancel();
             }
-            drawText(gui);
+            drawText(matrices, gui);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -490,14 +491,14 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return cursorPosition;
     }
 
-    private void drawText(OakTreeGUI gui) {
+    private void drawText(MatrixStack matrices, OakTreeGUI gui) {
         int length = Math.min(lines.size(), displayedLines);
 
         for (int row = firstLine; row < firstLine + length; row += 1) {
             String line = lines.get(row);
             if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
             float lineY = trueY + (row - firstLine) * gui.getTextRenderer().fontHeight;
-            drawString(line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
+            drawString(matrices, line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
             drawHighlights(line, gui.getTextRenderer(), lineY, row);
         }
     }
@@ -514,33 +515,33 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
             if (startIndex == endIndex) return;
 
-            float x = trueX + renderer.getStringWidth(line.substring(0, startIndex));
+            float x = trueX + renderer.getWidth(line.substring(0, startIndex));
             String highlightedPortion = line.substring(startIndex, endIndex);
             drawHighlights(highlightedPortion, renderer, x, lineY, highlightColor);
         }
     }
 
-    private void drawCursor(OakTreeGUI gui) {
+    private void drawCursor(MatrixStack matrices, OakTreeGUI gui) {
         if (lines.isEmpty()) {
-            drawString("_", gui, trueX, trueY, ControlAnchor.CENTER, shadow, fontColor);
+            drawString(matrices, "_", gui, trueX, trueY, ControlAnchor.CENTER, shadow, fontColor);
             return;
         }
 
         int actualRow = cursor.row - firstLine;
         String cursorLine = lines.get(cursor.row);
         TextRenderer renderer = gui.getTextRenderer();
-        int cursorX = (int) (trueX + renderer.getStringWidth(cursorLine.substring(0, cursor.column)));
+        int cursorX = (int) (trueX + renderer.getWidth(cursorLine.substring(0, cursor.column)));
         int cursorY = (int) (trueY + actualRow * renderer.fontHeight);
 
         String cursorString = "_";
         if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine, renderer)) cursorString = "|";
 
-        drawString(cursorString, gui, cursorX, cursorY, ControlAnchor.CENTER, shadow, fontColor);
+        drawString(matrices, cursorString, gui, cursorX, cursorY, ControlAnchor.CENTER, shadow, fontColor);
     }
 
     private boolean lineOccupiesFullSpace(String cursorLine, TextRenderer renderer) {
         int width = (int) (this.width - 3);
-        return renderer.getStringWidth(cursorLine) >= width;
+        return renderer.getWidth(cursorLine) >= width;
     }
 
     private class Cursor {

@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.util.ListUtils;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,14 +115,14 @@ public class GridControl extends Control<GridControl> {
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
-        super.draw(mouseX, mouseY, deltaTime, gui);
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+        super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
         int cellCount = rows * columns;
         for (int i = 0; i < cellCount; i++) {
             Control child = children.get(i);
             if (child != null) {
-                child.draw(mouseX, mouseY, deltaTime, gui);
+                child.draw(matrices, mouseX, mouseY, deltaTime, gui);
             }
         }
     }

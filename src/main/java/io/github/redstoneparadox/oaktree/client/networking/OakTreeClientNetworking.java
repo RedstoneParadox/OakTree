@@ -2,8 +2,8 @@ package io.github.redstoneparadox.oaktree.client.networking;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 
 public class OakTreeClientNetworking {
 

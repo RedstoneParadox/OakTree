@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,11 +77,11 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
-        super.draw(mouseX, mouseY, deltaTime, gui);
+        super.draw(matrices, mouseX, mouseY, deltaTime, gui);
         for (Control child: children) {
-            if (child != null && shouldDraw(child)) child.draw(mouseX, mouseY, deltaTime, gui);
+            if (child != null && shouldDraw(child)) child.draw(matrices, mouseX, mouseY, deltaTime, gui);
         }
     }
 

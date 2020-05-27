@@ -11,7 +11,7 @@ import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
-import io.github.redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public interface TextControl<TC extends TextControl> {
                 builder.setLength(0);
                 continue;
             };
-            if (renderer.getStringWidth(builder.toString() + c) > width) {
+            if (renderer.getWidth(builder.toString() + c) > width) {
                 strings.add(builder.toString());
                 builder.setLength(0);
             }
@@ -68,7 +68,7 @@ public interface TextControl<TC extends TextControl> {
         return builder.toString();
     }
 
-    default void drawString(String string, OakTreeGUI gui, float x, float y, ControlAnchor alignment, boolean withShadow, RGBAColor fontColor) {
+    default void drawString(MatrixStack matrices, String string, OakTreeGUI gui, float x, float y, ControlAnchor alignment, boolean withShadow, RGBAColor fontColor) {
         int redInt = (int) fontColor.redChannel * 255;
         int greenInt = (int) fontColor.greenChannel * 255;
         int blueInt = (int) fontColor.blueChannel * 255;
@@ -78,13 +78,13 @@ public interface TextControl<TC extends TextControl> {
         if (gui instanceof Screen) {
             TextRenderer font = gui.getTextRenderer();
 
-            if (withShadow) font.drawWithShadow(string, x + 2, y + 2, colorInt);
-            else font.draw(string, x + 2, y + 2, colorInt);
+            if (withShadow) font.drawWithShadow(matrices, string, x + 2, y + 2, colorInt);
+            else font.draw(matrices, string, x + 2, y + 2, colorInt);
         }
     }
 
     default void drawHighlights(String string, TextRenderer renderer, float x, float y, RGBAColor highlightColor) {
-        int width = renderer.getStringWidth(string);
+        int width = renderer.getWidth(string);
         int height = renderer.fontHeight;
 
         ScreenVec vert1 = new ScreenVec(x + 1, y + 1);

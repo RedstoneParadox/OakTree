@@ -5,17 +5,18 @@ import io.github.redstoneparadox.oaktree.client.gui.util.Key;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ingame.ContainerScreen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
-import net.minecraft.container.Container;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 
 import java.util.Optional;
 
-public class OakTreeContainerScreen<T extends Container> extends ContainerScreen<T> implements OakTreeGUI {
+public class OakTreeHandledScreen<T extends ScreenHandler> extends HandledScreen<T> implements OakTreeGUI {
 
     private Control root;
     private boolean isPauseScreen;
@@ -30,7 +31,7 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
     private boolean closeOnInv = true;
 
 
-    public OakTreeContainerScreen(Control root, boolean isPauseScreen, Screen parentScreen, Theme theme, T container, PlayerInventory playerInventory, Text text) {
+    public OakTreeHandledScreen(Control root, boolean isPauseScreen, Screen parentScreen, Theme theme, T container, PlayerInventory playerInventory, Text text) {
         super(container, playerInventory, text);
         this.root = root;
         this.isPauseScreen = isPauseScreen;
@@ -41,7 +42,7 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         pressed = Key.fromKeycode(keyCode);
-        if (this.minecraft != null && this.minecraft.options.keyInventory.matchesKey(keyCode, scanCode) && keyCode != 256) return true;
+        if (this.client != null && this.client.options.keyInventory.matchesKey(keyCode, scanCode) && keyCode != 256) return true;
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
@@ -57,18 +58,18 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
     }
 
     @Override
-    protected void drawBackground(float var1, int var2, int var3) {
+    protected void drawBackground(MatrixStack matrixStack, float f, int i, int j) {
 
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float delta) {
-        super.render(mouseX, mouseY, delta);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        super.render(matrices, mouseX, mouseY, delta);
 
         Window clientWindow  = MinecraftClient.getInstance().getWindow();
 
         root.preDraw(mouseX, mouseY, delta, this, 0, 0, clientWindow.getScaledWidth(), clientWindow.getScaledHeight());
-        root.draw(mouseX, mouseY, delta, this);
+        root.draw(matrices, mouseX, mouseY, delta, this);
 
         lastChar = null;
         pressed = Key.NONE;
@@ -78,8 +79,8 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
     }
 
     @Override
-    public Optional<Container> getScreenContainer() {
-        return Optional.of(container);
+    public Optional<ScreenHandler> getScreenContainer() {
+        return Optional.of(handler);
     }
 
     @Override
@@ -122,12 +123,12 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
 
     @Override
     public TextRenderer getTextRenderer() {
-        return this.font;
+        return this.textRenderer;
     }
 
     @Override
     public boolean isBackspaceHeld() {
-        return InputUtil.isKeyPressed(minecraft.getWindow().getHandle(), 259);
+        return InputUtil.isKeyPressed(client.getWindow().getHandle(), 259);
     }
 
     @Override
@@ -193,6 +194,6 @@ public class OakTreeContainerScreen<T extends Container> extends ContainerScreen
 
     @Override
     public void onClose() {
-        minecraft.openScreen(parentScreen);
+        client.openScreen(parentScreen);
     }
 }

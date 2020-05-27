@@ -5,10 +5,10 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.registry.Registry;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
@@ -55,7 +55,7 @@ public class ItemStyleBox extends StyleBox {
         DiffuseLighting.enableForLevel(new Matrix4f());
         renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);
         if (gui instanceof Screen) {
-            TextRenderer font = ((ScreenAccessor)gui).getFont();
+            TextRenderer font = ((ScreenAccessor)gui).getTextRenderer();
             renderer.renderGuiItemOverlay(font, stack, (int)x - 7, (int)y - 7);
         }
     }

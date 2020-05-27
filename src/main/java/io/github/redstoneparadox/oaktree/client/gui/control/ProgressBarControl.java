@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
+import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * A node representing a percent-based progress bar.
@@ -74,9 +75,9 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
         if (!visible) return;
-        super.draw(mouseX, mouseY, deltaTime, gui);
+        super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
         float barX = trueX + ((width/2) - (barWidth/2));
         float barY = trueY + ((height/2) - (barHeight/2));
