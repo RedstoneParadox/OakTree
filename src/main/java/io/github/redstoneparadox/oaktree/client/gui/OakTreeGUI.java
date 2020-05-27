@@ -17,22 +17,7 @@ public interface OakTreeGUI {
 
     Optional<Character> getLastChar();
 
-    @Deprecated
-    default boolean isKeyPressed(String key) {
-        return false;
-    }
-
-    @Deprecated
-    default Key getKey() {
-        return Key.NONE;
-    };
-
     TextRenderer getTextRenderer();
-
-    @Deprecated
-    default boolean isBackspaceHeld() {
-        return false;
-    }
 
     default void shouldCloseOnInventoryKey(boolean value) {
 
@@ -45,20 +30,4 @@ public interface OakTreeGUI {
     Theme getTheme();
 
     void applyTheme(Theme theme);
-
-    default boolean isLeftKey(int keycode) {
-        return keycode == 263;
-    }
-
-    default boolean isRightKey(int keycode) {
-        return keycode == 262;
-    }
-
-    default boolean isUpKey(int keycode) {
-        return keycode == 265;
-    }
-
-    default boolean isDownKey(int keycode) {
-        return keycode == 264;
-    }
 }

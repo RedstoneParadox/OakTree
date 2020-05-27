@@ -117,18 +117,8 @@ public class OakTreeHandledScreen<T extends ScreenHandler> extends HandledScreen
     }
 
     @Override
-    public Key getKey() {
-        return pressed;
-    }
-
-    @Override
     public TextRenderer getTextRenderer() {
         return this.textRenderer;
-    }
-
-    @Override
-    public boolean isBackspaceHeld() {
-        return InputUtil.isKeyPressed(client.getWindow().getHandle(), 259);
     }
 
     @Override
