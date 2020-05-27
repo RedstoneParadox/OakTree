@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
-import io.github.redstoneparadox.oaktree.client.gui.util.Key;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.screen.ScreenHandler;
 
