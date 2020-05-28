@@ -75,8 +75,7 @@ public final class ControlGui {
         }
 
         List<Control<?>> controlList = new ArrayList<>();
-        root.preDraw(this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), controlList, mouseX, mouseY);
-
+        root.zIndex(controlList);
         Collections.reverse(controlList);
         boolean mouseCaptured = false;
         for (Control<?> control: controlList) {
@@ -93,6 +92,7 @@ public final class ControlGui {
             }
         }
 
+        root.preDraw(this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), mouseX, mouseY);
         root.draw(matrices, mouseX, mouseY, delta, this);
 
         screen.setSize(root.area.width, root.area.height);

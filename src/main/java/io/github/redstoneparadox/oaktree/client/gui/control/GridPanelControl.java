@@ -5,8 +5,6 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import io.github.redstoneparadox.oaktree.util.ListUtils;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
 
-import java.util.List;
-
 /**
  * Subclass of {@link PanelControl} that lays out its children in
  * a grid pattern.
@@ -84,7 +82,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
     }
 
     @Override
-    void arrangeChildren(ControlGui gui, List<Control<?>> controlList, int mouseX, int mouseY) {
+    void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
         int cellWidth = area.width/columns;
         int cellHeight = area.height/rows;
         ScreenVec innerDimensions = innerDimensions(cellWidth, cellHeight);
@@ -98,7 +96,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
                 int cellY = innerPosition.y + (j * cellHeight);
 
                 Control child = children.get(index);
-                if (child != null) child.preDraw(gui, cellX, cellY, innerDimensions.x, innerDimensions.y, controlList, mouseX, mouseY);
+                if (child != null) child.preDraw(gui, cellX, cellY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 
                 index += 1;
             }

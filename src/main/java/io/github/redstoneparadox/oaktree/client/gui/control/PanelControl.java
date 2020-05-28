@@ -61,18 +61,26 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
     }
 
     @Override
-    public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, List<Control<?>> controlList, int mouseX, int mouseY) {
-        if (!visible) return;
-        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, controlList, mouseX, mouseY);
-        arrangeChildren(gui, controlList, mouseX, mouseY);
+    public void zIndex(List<Control<?>> controls) {
+        controls.add(this);
+        for (Control<?> child: children) {
+            child.zIndex(controls);
+        }
     }
 
-    void arrangeChildren(ControlGui gui, List<Control<?>> controlList, int mouseX, int mouseY) {
+    @Override
+    public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
+        if (!visible) return;
+        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
+        arrangeChildren(gui, mouseX, mouseY);
+    }
+
+    void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
         ScreenVec innerPosition = innerPosition(trueX, trueY);
         ScreenVec innerDimensions = innerDimensions(area.width, area.height);
 
         for (Control child: children) {
-            if (child != null) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, controlList, mouseX, mouseY);
+            if (child != null) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
         }
     }
 

@@ -140,14 +140,16 @@ public class Control<C extends Control> {
         return (C)this;
     }
 
+    public void zIndex(List<Control<?>> controls) {
+        controls.add(this);
+    }
+
     public void setup(MinecraftClient client, ControlGui gui) {
         applyTheme(gui.getTheme());
     }
 
-    public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, List<Control<?>> controlList, int mouseX, int mouseY) {
+    public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
         if (!visible) return;
-
-        controlList.add(this);
 
         onTick.invoke(gui, (C)this);
 

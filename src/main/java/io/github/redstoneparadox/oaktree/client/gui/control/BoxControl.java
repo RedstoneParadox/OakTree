@@ -42,14 +42,20 @@ public class BoxControl extends PaddingControl<BoxControl> {
     }
 
     @Override
-    public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, List<Control<?>> controlList, int mouseX, int mouseY) {
+    public void zIndex(List<Control<?>> controls) {
+        controls.add(this);
+        child.zIndex(controls);
+    }
+
+    @Override
+    public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
         if (!visible) return;
-        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, controlList, mouseX, mouseY);
+        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
         ScreenVec innerPosition = innerPosition(trueX, trueY);
         ScreenVec innerDimensions = innerDimensions(area.width, area.height);
 
         if (child != null) {
-            child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, controlList, mouseX, mouseY);
+            child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
         }
     }
 

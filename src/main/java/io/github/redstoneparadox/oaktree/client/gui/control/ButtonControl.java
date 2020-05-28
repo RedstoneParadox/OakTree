@@ -5,8 +5,6 @@ import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 
-import java.util.List;
-
 public class ButtonControl extends InteractiveControl<ButtonControl> {
 
     public GuiFunction<ButtonControl> onClick = (((gui, node) -> {}));
@@ -59,9 +57,9 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 
 
     @Override
-    public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, List<Control<?>> controlList, int mouseX, int mouseY) {
+    public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
         if (!visible) return;
-        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, controlList, mouseX, mouseY);
+        super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
         if (toggleable) {
             if (isMouseWithin) {
                 if (gui.mouseButtonJustClicked("left")) {

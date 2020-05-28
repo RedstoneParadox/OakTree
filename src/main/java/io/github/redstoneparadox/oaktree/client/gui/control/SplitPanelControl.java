@@ -3,8 +3,6 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-import java.util.List;
-
 public class SplitPanelControl extends PanelControl<SplitPanelControl> {
     public int splitSize = 0;
     public Distribution distribution = Distribution.HALF;
@@ -35,7 +33,7 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
     }
 
     @Override
-    void arrangeChildren(ControlGui gui, List<Control<?>> controlList, int mouseX, int mouseY) {
+    void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
         ScreenVec firstPosition = innerPosition(trueX, trueY);
         ScreenVec firstDimensions;
 
@@ -60,8 +58,8 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
             for (int i = 0; i < children.size(); i += 1) {
                 Control child = children.get(i);
                 if (child != null) {
-                    if (i < half) child.preDraw(gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, controlList, mouseX, mouseY);
-                    else child.preDraw(gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, controlList, mouseX, mouseY);
+                    if (i < half) child.preDraw(gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, mouseX, mouseY);
+                    else child.preDraw(gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, mouseX, mouseY);
                 }
             }
         }
@@ -69,8 +67,8 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
             boolean second = false;
             for (Control child: children) {
                 if (child != null) {
-                    if (second) child.preDraw(gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, controlList, mouseX, mouseY);
-                    else child.preDraw(gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, controlList, mouseX, mouseY);
+                    if (second) child.preDraw(gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, mouseX, mouseY);
+                    else child.preDraw(gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, mouseX, mouseY);
                 }
                 second = !second;
             }
