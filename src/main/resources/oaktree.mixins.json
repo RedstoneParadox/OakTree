@@ -7,6 +7,7 @@
   ],
   "client": [
     "client.MixinKeyboard",
+    "client.MixinMouse",
     "client.gui.screen.MixinScreen",
     "client.gui.screen.ingame.MixinHandledScreen"
   ],

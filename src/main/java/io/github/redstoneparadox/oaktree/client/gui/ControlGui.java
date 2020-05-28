@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenRect;
+import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.font.TextRenderer;
@@ -49,12 +50,12 @@ public final class ControlGui implements OakTreeGUI {
 
     public void draw(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         Window window = screen.getClient().getWindow();
-        Mouse mouse = screen.getClient().mouse;
+        MouseHooks mouse = (MouseHooks) screen.getClient().mouse;
 
-        if (mouse.wasLeftButtonClicked()) System.out.println("Left mouse button down.");
-        if (mouse.wasRightButtonClicked()) System.out.println("Right mouse button down.");
+        if (mouse.leftButton()) System.out.println("Left mouse button down.");
+        if (mouse.rightButton()) System.out.println("Right mouse button down.");
 
-        if (mouse.wasLeftButtonClicked()) {
+        if (mouse.leftButton()) {
             if (leftMouseClicked) {
                 leftMouseClicked = false;
             }
@@ -68,7 +69,7 @@ public final class ControlGui implements OakTreeGUI {
             leftMouseHeld = false;
         }
 
-        if (mouse.wasRightButtonClicked()) {
+        if (mouse.rightButton()) {
             if (rightMouseClicked) {
                 rightMouseClicked = false;
             }
@@ -86,6 +87,8 @@ public final class ControlGui implements OakTreeGUI {
         root.draw(matrices, mouseX, mouseY, delta, this);
 
         screen.setSize((int)root.width, (int)root.height);
+
+        lastChar = null;
     }
 
     @Override
