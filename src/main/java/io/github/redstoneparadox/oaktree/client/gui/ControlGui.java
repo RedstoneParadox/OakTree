@@ -6,6 +6,7 @@ import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
@@ -32,7 +33,7 @@ public final class ControlGui {
         this.screen = (ScreenHooks)screen;
         this.root = root;
 
-        ((KeyboardHooks)this.screen.getClient().keyboard).onCharTyped(character -> this.lastChar = character);
+        ((KeyboardHooks)(MinecraftClient.getInstance().keyboard)).onCharTyped(character -> this.lastChar = character);
     }
 
     public void close() {
