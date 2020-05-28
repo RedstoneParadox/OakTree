@@ -5,6 +5,8 @@ import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 
+import java.util.List;
+
 public class HoverControl extends InteractiveControl<HoverControl> {
 
     public GuiFunction<HoverControl> mouseEnter = ((gui, node) -> {});
@@ -41,9 +43,9 @@ public class HoverControl extends InteractiveControl<HoverControl> {
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, List<Control<?>> controlList) {
         if (!visible) return;
-        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight, controlList);
 
         if (!mouseCurrentlyWithin && isMouseWithin) {
             mouseCurrentlyWithin = true;

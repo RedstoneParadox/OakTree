@@ -10,6 +10,8 @@ import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.util.math.MatrixStack;
 
+import java.util.List;
+
 /**
  * The base class for all controls.
  */
@@ -142,8 +144,10 @@ public class Control<C extends Control> {
         applyTheme(gui.getTheme());
     }
 
-    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, List<Control<?>> controlList) {
         if (!visible) return;
+
+        controlList.add(this);
 
         onTick.invoke(gui, (C)this);
 

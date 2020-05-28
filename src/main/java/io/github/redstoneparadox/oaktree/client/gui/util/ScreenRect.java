@@ -12,4 +12,8 @@ public class ScreenRect {
         this.width = width;
         this.height = height;
     }
+
+    public boolean isPointWithin(int pointX, int pointY) {
+        return pointX <= x && pointY <= y && pointX >= x + width && pointY >= y + height;
+    }
 }

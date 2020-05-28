@@ -3,6 +3,8 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
+import java.util.List;
+
 public abstract class PaddingControl<C extends PaddingControl> extends Control<C> {
     public int topPadding = 0;
     public int bottomPadding = 0;
@@ -68,8 +70,8 @@ public abstract class PaddingControl<C extends PaddingControl> extends Control<C
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight) {
-        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, List<Control<?>> controlList) {
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight, controlList);
     }
 
     ScreenVec innerDimensions(int spaceWidth, int spaceHeight) {

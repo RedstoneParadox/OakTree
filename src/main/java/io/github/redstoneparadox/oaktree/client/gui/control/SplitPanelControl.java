@@ -58,8 +58,8 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
             for (int i = 0; i < children.size(); i += 1) {
                 Control child = children.get(i);
                 if (child != null) {
-                    if (i < half) child.preDraw(mouseX, mouseY, deltaTime, gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y);
-                    else child.preDraw(mouseX, mouseY, deltaTime, gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y);
+                    if (i < half) child.preDraw(mouseX, mouseY, deltaTime, gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, controlList);
+                    else child.preDraw(mouseX, mouseY, deltaTime, gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, controlList);
                 }
             }
         }
@@ -67,8 +67,8 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
             boolean second = false;
             for (Control child: children) {
                 if (child != null) {
-                    if (second) child.preDraw(mouseX, mouseY, deltaTime, gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y);
-                    else child.preDraw(mouseX, mouseY, deltaTime, gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y);
+                    if (second) child.preDraw(mouseX, mouseY, deltaTime, gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, controlList);
+                    else child.preDraw(mouseX, mouseY, deltaTime, gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, controlList);
                 }
                 second = !second;
             }

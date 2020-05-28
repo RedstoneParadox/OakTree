@@ -39,7 +39,7 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
         ScreenVec innerPosition = innerPosition(trueX, trueY);
         ScreenVec innerDimensions = innerDimensions(area.width, area.height);
 
-        if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y);
+        if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, controlList);
     }
 
     @Override

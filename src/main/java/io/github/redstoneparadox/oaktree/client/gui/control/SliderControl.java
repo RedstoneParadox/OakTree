@@ -6,6 +6,8 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
+import java.util.List;
+
 public class SliderControl extends InteractiveControl<SliderControl> {
 
     public GuiFunction<SliderControl> onDrag = (gui, node) -> {};
@@ -22,9 +24,9 @@ public class SliderControl extends InteractiveControl<SliderControl> {
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, List<Control<?>> controlList) {
         if (!visible) return;
-        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
+        super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight, controlList);
 
         ScreenVec relativeMousePos = relativeMousePosition(mouseX, mouseY);
 

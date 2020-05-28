@@ -44,7 +44,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
                 int entryY = innerPosition.y + (i * sectionHeight);
 
                 Control child = children.get(i + startIndex);
-                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y);
+                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y, controlList);
             }
         }
         else {
@@ -56,7 +56,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
                 int entryX = innerPosition.x + (i * sectionWidth);
 
                 Control child = children.get(i + startIndex);
-                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y);
+                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y, controlList);
             }
         }
     }

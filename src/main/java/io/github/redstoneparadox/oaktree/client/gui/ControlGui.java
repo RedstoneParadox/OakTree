@@ -1,8 +1,8 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
+import io.github.redstoneparadox.oaktree.client.gui.control.InteractiveControl;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
-import io.github.redstoneparadox.oaktree.client.gui.util.ScreenRect;
 import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
@@ -15,9 +15,6 @@ import net.minecraft.screen.ScreenHandler;
 import java.util.*;
 
 public final class ControlGui {
-    private Map<ScreenRect, Control<?>> areaMap = new HashMap<>();
-    private List<ScreenRect> areas = new ArrayList<>();
-
     private final ScreenHooks screen;
     private final Control<?> root;
 
@@ -40,9 +37,6 @@ public final class ControlGui {
 
     public void close() {
 
-
-        areaMap.clear();
-        areas.clear();
     }
 
     public void draw(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -80,7 +74,25 @@ public final class ControlGui {
             rightMouseHeld = false;
         }
 
-        root.preDraw(mouseX, mouseY, delta, this, 0, 0, window.getScaledWidth(), window.getScaledHeight());
+        List<Control<?>> controlList = new ArrayList<>();
+        root.preDraw(mouseX, mouseY, delta, this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), controlList);
+
+        Collections.reverse(controlList);
+        boolean mouseCaptured = false;
+        for (Control<?> control: controlList) {
+            if (control.area.isPointWithin(mouseX, mouseY) && !mouseCaptured) {
+                mouseCaptured = true;
+                if (control instanceof InteractiveControl<?>) {
+                    ((InteractiveControl<?>)control).setMouseWithin(true);
+                }
+            }
+            else {
+                if (control instanceof InteractiveControl<?>) {
+                    ((InteractiveControl<?>)control).setMouseWithin(false);
+                }
+            }
+        }
+
         root.draw(matrices, mouseX, mouseY, delta, this);
 
         screen.setSize(root.area.width, root.area.height);
