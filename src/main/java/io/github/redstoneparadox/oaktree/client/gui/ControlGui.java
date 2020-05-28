@@ -6,7 +6,6 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ScreenRect;
 import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
-import net.minecraft.client.Mouse;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
@@ -16,7 +15,7 @@ import net.minecraft.screen.ScreenHandler;
 import java.util.*;
 
 @SuppressWarnings("deprecation")
-public final class ControlGui implements OakTreeGUI {
+public final class ControlGui {
     private Map<ScreenRect, Control<?>> areaMap = new HashMap<>();
     private List<ScreenRect> areas = new ArrayList<>();
 
@@ -90,12 +89,10 @@ public final class ControlGui implements OakTreeGUI {
         lastChar = null;
     }
 
-    @Override
     public Optional<ScreenHandler> getScreenContainer() {
         return screen.getHandler();
     }
 
-    @Override
     public boolean mouseButtonHeld(String mouseButton) {
         switch (mouseButton) {
             case "left":
@@ -107,7 +104,6 @@ public final class ControlGui implements OakTreeGUI {
         }
     }
 
-    @Override
     public boolean mouseButtonJustClicked(String mouseButton) {
         switch (mouseButton) {
             case "left":
@@ -119,32 +115,26 @@ public final class ControlGui implements OakTreeGUI {
         }
     }
 
-    @Override
     public Optional<Character> getLastChar() {
         return lastChar == null ? Optional.empty() : Optional.of(lastChar);
     }
 
-    @Override
     public TextRenderer getTextRenderer() {
         return screen.getTextRenderer();
     }
 
-    @Override
     public int getX() {
         return screen.getX();
     }
 
-    @Override
     public int getY() {
         return screen.getY();
     }
 
-    @Override
     public Theme getTheme() {
         return theme;
     }
 
-    @Override
     public void applyTheme(Theme theme) {
         this.theme = theme;
         root.setup(screen.getClient(), this);

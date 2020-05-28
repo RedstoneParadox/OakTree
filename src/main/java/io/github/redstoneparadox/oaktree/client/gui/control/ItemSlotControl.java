@@ -1,8 +1,8 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.mixin.container.SlotAccessor;
 import net.minecraft.screen.slot.Slot;
@@ -30,7 +30,7 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
     }
 
     @Override
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         gui.getScreenContainer().ifPresent(container -> {
             super.draw(matrices, mouseX, mouseY, deltaTime, gui);
             int slotX = (int)trueX - gui.getX() + 1;

@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 
 @Deprecated
-public class OakTreeHandledScreen<T extends ScreenHandler> extends HandledScreen<T> implements OakTreeGUI {
+public class OakTreeHandledScreen<T extends ScreenHandler> extends HandledScreen<T> {
     private final ControlGui gui;
 
     private boolean isPauseScreen;

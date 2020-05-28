@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.MinecraftClient;
@@ -54,13 +54,13 @@ public class BoxControl extends PaddingControl<BoxControl> {
     }
 
     @Override
-    public void setup(MinecraftClient client, OakTreeGUI gui) {
+    public void setup(MinecraftClient client, ControlGui gui) {
         super.setup(client, gui);
         if (child != null) child.setup(client, gui);
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         ScreenVec innerPosition = innerPosition(trueX, trueY);
@@ -72,7 +72,7 @@ public class BoxControl extends PaddingControl<BoxControl> {
     }
 
     @Override
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 

@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import net.minecraft.client.util.math.MatrixStack;
@@ -75,7 +75,7 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
     }
 
     @Override
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 

@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -7,7 +8,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,7 +165,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
     // Abandon hope all Ye who enter here!
     @Override
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
         updateFocused(gui);
@@ -367,7 +367,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return InputUtil.isKeyPressed(handle, 344) || InputUtil.isKeyPressed(handle, 340);
     }
 
-    private void updateFocused(OakTreeGUI gui) {
+    private void updateFocused(ControlGui gui) {
         if (gui.mouseButtonJustClicked("left")) {
             if (isMouseWithin && !focused) {
                 gui.shouldCloseOnInventoryKey(false);
@@ -388,7 +388,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
     }
 
-    private void newLine(OakTreeGUI gui) {
+    private void newLine(ControlGui gui) {
         if (lines.size() == maxLines) return;
         insertCharacter('\n', gui);
     }
@@ -405,7 +405,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return text.substring(startPosition, endPosition);
     }
 
-    private void deleteSelection(OakTreeGUI gui) {
+    private void deleteSelection(ControlGui gui) {
         if (lines.isEmpty()) return;
 
         String text = combine(lines, false);
@@ -419,7 +419,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
     }
 
-    private void insertCharacter(char c, OakTreeGUI gui) {
+    private void insertCharacter(char c, ControlGui gui) {
         if (lines.isEmpty()) {
             lines.add(String.valueOf(c));
             return;
@@ -439,7 +439,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
     }
 
-    private void insertString(String st, OakTreeGUI gui)  {
+    private void insertString(String st, ControlGui gui)  {
         if (lines.isEmpty()) {
             lines.addAll(wrapLines(st, gui, width, maxLines, shadow));
             return;
@@ -459,7 +459,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
     }
 
-    private void removeCharacter(OakTreeGUI gui) {
+    private void removeCharacter(ControlGui gui) {
         String text = combine(lines, false);
         int cursorPosition = getCursorPosition(cursor);
 
@@ -491,7 +491,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         return cursorPosition;
     }
 
-    private void drawText(MatrixStack matrices, OakTreeGUI gui) {
+    private void drawText(MatrixStack matrices, ControlGui gui) {
         int length = Math.min(lines.size(), displayedLines);
 
         for (int row = firstLine; row < firstLine + length; row += 1) {
@@ -521,7 +521,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
     }
 
-    private void drawCursor(MatrixStack matrices, OakTreeGUI gui) {
+    private void drawCursor(MatrixStack matrices, ControlGui gui) {
         if (lines.isEmpty()) {
             drawString(matrices, "_", gui, trueX, trueY, ControlAnchor.CENTER, shadow, fontColor);
             return;

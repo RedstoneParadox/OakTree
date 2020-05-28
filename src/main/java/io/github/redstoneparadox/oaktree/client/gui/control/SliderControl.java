@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
@@ -23,7 +23,7 @@ public class SliderControl extends InteractiveControl<SliderControl> {
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
 

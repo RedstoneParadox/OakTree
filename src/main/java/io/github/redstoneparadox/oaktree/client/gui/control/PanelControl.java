@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
@@ -53,7 +53,7 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
     }
 
     @Override
-    public void setup(MinecraftClient client, OakTreeGUI gui) {
+    public void setup(MinecraftClient client, ControlGui gui) {
         super.setup(client, gui);
         for (Control child: children) {
             child.setup(client, gui);
@@ -61,13 +61,13 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         arrangeChildren(mouseX, mouseY, deltaTime, gui);
     }
 
-    void arrangeChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    void arrangeChildren(int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         ScreenVec innerPosition = innerPosition(trueX, trueY);
         ScreenVec innerDimensions = innerDimensions(width, height);
 
@@ -77,7 +77,7 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
     }
 
     @Override
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
         for (Control child: children) {

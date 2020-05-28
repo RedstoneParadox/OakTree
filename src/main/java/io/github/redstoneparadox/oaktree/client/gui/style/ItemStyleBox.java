@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.DiffuseLighting;
@@ -9,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.registry.Registry;
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 
 public class ItemStyleBox extends StyleBox {
 
@@ -48,7 +48,7 @@ public class ItemStyleBox extends StyleBox {
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+    public void draw(float x, float y, float width, float height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
         DiffuseLighting.enableForLevel(new Matrix4f());
         renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);

@@ -7,7 +7,7 @@ import net.minecraft.text.LiteralText;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 
 @Deprecated
-public class OakTreeScreen extends Screen implements OakTreeGUI {
+public class OakTreeScreen extends Screen {
     private final ControlGui gui;
 
     private boolean isPauseScreen;

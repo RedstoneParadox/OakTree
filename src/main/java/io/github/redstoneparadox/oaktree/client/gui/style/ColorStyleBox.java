@@ -1,10 +1,10 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
@@ -25,7 +25,7 @@ public class ColorStyleBox extends StyleBox {
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+    public void draw(float x, float y, float width, float height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
 

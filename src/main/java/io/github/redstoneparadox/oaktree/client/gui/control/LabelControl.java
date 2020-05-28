@@ -1,8 +1,8 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 
@@ -88,7 +88,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
     }
 
     @Override
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
         if (!text.isEmpty()) {

@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 
 /**
  * A StyleBox represents the part of the node that actually gets drawn. Multiple Nodes
@@ -9,9 +9,9 @@ import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
  */
 public abstract class StyleBox {
 
-    public abstract void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical);
+    public abstract void draw(float x, float y, float width, float height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical);
 
-    public final void draw(float x, float y, float width, float height, OakTreeGUI gui) {
+    public final void draw(float x, float y, float width, float height, ControlGui gui) {
         draw(x, y, width, height, gui, false, false);
     }
 }

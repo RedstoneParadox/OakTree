@@ -1,8 +1,8 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import net.minecraft.client.MinecraftClient;
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
@@ -139,11 +139,11 @@ public class Control<C extends Control> {
         return (C)this;
     }
 
-    public void setup(MinecraftClient client, OakTreeGUI gui) {
+    public void setup(MinecraftClient client, ControlGui gui) {
         applyTheme(gui.getTheme());
     }
 
-    public void preDraw(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
         if (!visible) return;
 
         onTick.invoke(gui, (C)this);
@@ -175,7 +175,7 @@ public class Control<C extends Control> {
         return style;
     }
 
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!visible) return;
 
         if (currentStyle != null) {

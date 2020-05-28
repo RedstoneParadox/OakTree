@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class ListPanelControl extends PanelControl<ListPanelControl> {
@@ -34,7 +34,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
     }
 
     @Override
-    void arrangeChildren(int mouseX, int mouseY, float deltaTime, OakTreeGUI gui) {
+    void arrangeChildren(int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!horizontal) {
             float sectionHeight = height/displayCount;
             ScreenVec innerDimensions = innerDimensions(width, sectionHeight);

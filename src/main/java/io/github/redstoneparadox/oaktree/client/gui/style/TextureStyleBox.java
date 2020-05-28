@@ -1,14 +1,13 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
-import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import org.lwjgl.opengl.GL11;
 
 public class TextureStyleBox extends StyleBox {
@@ -75,7 +74,7 @@ public class TextureStyleBox extends StyleBox {
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+    public void draw(float x, float y, float width, float height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
         
         if (!tiled) {
