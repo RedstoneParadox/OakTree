@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenRect;
+import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
 import net.minecraft.client.Mouse;
@@ -16,8 +17,6 @@ import java.util.*;
 
 @SuppressWarnings("deprecation")
 public final class ControlGui implements OakTreeGUI {
-    private static final Collection<ControlGui> GUIS = new ArrayList<>();
-
     private Map<ScreenRect, Control<?>> areaMap = new HashMap<>();
     private List<ScreenRect> areas = new ArrayList<>();
 
@@ -38,11 +37,11 @@ public final class ControlGui implements OakTreeGUI {
         this.screen = (ScreenHooks)screen;
         this.root = root;
 
-        GUIS.add(this);
+        ((KeyboardHooks)this.screen.getClient().keyboard).onCharTyped(character -> this.lastChar = character);
     }
 
     public void close() {
-        GUIS.remove(this);
+
 
         areaMap.clear();
         areas.clear();
@@ -149,11 +148,5 @@ public final class ControlGui implements OakTreeGUI {
     public void applyTheme(Theme theme) {
         this.theme = theme;
         root.setup(screen.getClient(), this);
-    }
-
-    public static void onCharTyped(char c) {
-        for (ControlGui gui: GUIS) {
-            gui.lastChar = c;
-        }
     }
 }
