@@ -8,7 +8,7 @@
   "client": [
     "client.MixinKeyboard",
     "client.gui.screen.MixinScreen",
-    "client.gui.screen.ScreenAccessor"
+    "client.gui.screen.ingame.MixinHandledScreen"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.item.Item;
@@ -11,7 +10,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.registry.Registry;
 import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
-import io.github.redstoneparadox.oaktree.mixin.client.gui.screen.ScreenAccessor;
 
 public class ItemStyleBox extends StyleBox {
 
