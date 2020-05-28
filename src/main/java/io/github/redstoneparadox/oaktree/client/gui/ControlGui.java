@@ -75,7 +75,7 @@ public final class ControlGui {
         }
 
         List<Control<?>> controlList = new ArrayList<>();
-        root.preDraw(mouseX, mouseY, delta, this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), controlList);
+        root.preDraw(this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), controlList, mouseX, mouseY);
 
         Collections.reverse(controlList);
         boolean mouseCaptured = false;

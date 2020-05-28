@@ -3,6 +3,8 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
+import java.util.List;
+
 public class ListPanelControl extends PanelControl<ListPanelControl> {
     public boolean horizontal = false;
     public int displayCount = 1;
@@ -34,7 +36,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
     }
 
     @Override
-    void arrangeChildren(int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+    void arrangeChildren(ControlGui gui, List<Control<?>> controlList, int mouseX, int mouseY) {
         if (!horizontal) {
             int sectionHeight = area.height/displayCount;
             ScreenVec innerDimensions = innerDimensions(area.width, sectionHeight);
@@ -44,7 +46,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
                 int entryY = innerPosition.y + (i * sectionHeight);
 
                 Control child = children.get(i + startIndex);
-                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y, controlList);
+                if (child != null) child.preDraw(gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y, controlList, mouseX, mouseY);
             }
         }
         else {
@@ -56,7 +58,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
                 int entryX = innerPosition.x + (i * sectionWidth);
 
                 Control child = children.get(i + startIndex);
-                if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y, controlList);
+                if (child != null) child.preDraw(gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y, controlList, mouseX, mouseY);
             }
         }
     }
