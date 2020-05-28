@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenRect;
 import net.minecraft.client.MinecraftClient;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
@@ -13,10 +14,21 @@ import net.minecraft.client.util.math.MatrixStack;
  * The base class for all controls.
  */
 public class Control<C extends Control> {
+    public final ScreenRect area = new ScreenRect(0, 0, 1, 1);
+
+    /**
+     * @deprecated Set these values on {@link Control#area} instead.
+     * Setting them here no longer does anything.
+     */
+    @Deprecated
     public float x = 0.0f;
+    @Deprecated
     public float y = 0.0f;
+    @Deprecated
     public float width = 0.1f;
+    @Deprecated
     public float height = 0.1f;
+
     public boolean visible = true;
     public ControlAnchor anchor = ControlAnchor.TOP_LEFT;
     public GuiFunction<C> onTick = (gui, control) -> {};
@@ -46,13 +58,13 @@ public class Control<C extends Control> {
      * pixels to the left and 10 pixels below the top-left corner of the
      * screen.
      *
-     * @param posX The new x position in pixels.
-     * @param posY The new y position in pixels.
+     * @param x The new x position in pixels.
+     * @param y The new y position in pixels.
      * @return The node itself.
      */
-    public C position(float posX, float posY) {
-        x = posX;
-        y = posY;
+    public C position(int x, int y) {
+        area.x = x;
+        area.y = y;
         return (C)this;
     }
 
@@ -66,9 +78,9 @@ public class Control<C extends Control> {
      * @param height The new height of this node in pixels.
      * @return The node itself.
      */
-    public C size(float width, float height) {
-        this.width = width;
-        this.height = height;
+    public C size(int width, int height) {
+        area.width = width;
+        area.height = height;
         return (C)this;
     }
 
@@ -152,15 +164,15 @@ public class Control<C extends Control> {
             ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
             ScreenVec drawOffset = anchor.getOffset(width, height);
 
-            trueX = x + anchorOffset.x + offsetX - drawOffset.x;
-            trueY = y + anchorOffset.y + offsetY - drawOffset.y;
+            trueX = area.x + anchorOffset.x + offsetX - drawOffset.x;
+            trueY = area.y + anchorOffset.y + offsetY - drawOffset.y;
         }
         else {
             trueX = offsetX;
             trueY = offsetY;
 
-            width = containerWidth;
-            height = containerHeight;
+            area.width = (int)containerWidth;
+            area.height = (int)containerHeight;
         }
         currentStyle = defaultStyle;
     }

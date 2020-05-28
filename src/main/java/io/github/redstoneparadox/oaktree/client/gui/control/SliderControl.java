@@ -18,7 +18,6 @@ public class SliderControl extends InteractiveControl<SliderControl> {
     }
 
     public SliderControl setDragNodeSize(float width, float height) {
-        dragControl.size(width, height);
         return this;
     }
 

@@ -370,13 +370,11 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private void updateFocused(ControlGui gui) {
         if (gui.mouseButtonJustClicked("left")) {
             if (isMouseWithin && !focused) {
-                gui.shouldCloseOnInventoryKey(false);
                 focused = true;
                 onFocused.invoke(gui, this);
                 cursorTicks = 0;
             }
             else if (focused) {
-                gui.shouldCloseOnInventoryKey(true);
                 focused = false;
                 selection.cancel();
                 cursor.toStart();
