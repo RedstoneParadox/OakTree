@@ -174,7 +174,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
             if (focused) {
                 if (updateText) {
                     lines.clear();
-                    lines.addAll(wrapLines(text, gui, width, maxLines, shadow));
+                    lines.addAll(wrapLines(text, gui, area.width, maxLines, shadow));
                     selection.cancel();
                     cursor.toEnd();
                     updateText = false;
@@ -414,7 +414,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
         String newText = text.substring(0, startPosition) + text.substring(endPosition);
         lines.clear();
-        lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
+        lines.addAll(wrapLines(newText, gui, area.width, maxLines, shadow));
     }
 
     private void insertCharacter(char c, ControlGui gui) {
@@ -434,12 +434,12 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
 
         lines.clear();
-        lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
+        lines.addAll(wrapLines(newText, gui, area.width, maxLines, shadow));
     }
 
     private void insertString(String st, ControlGui gui)  {
         if (lines.isEmpty()) {
-            lines.addAll(wrapLines(st, gui, width, maxLines, shadow));
+            lines.addAll(wrapLines(st, gui, area.width, maxLines, shadow));
             return;
         }
 
@@ -454,7 +454,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
 
         lines.clear();
-        lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
+        lines.addAll(wrapLines(newText, gui, area.width, maxLines, shadow));
     }
 
     private void removeCharacter(ControlGui gui) {
@@ -476,7 +476,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         }
 
         lines.clear();
-        lines.addAll(wrapLines(newText, gui, width, maxLines, shadow));
+        lines.addAll(wrapLines(newText, gui, area.width, maxLines, shadow));
     }
 
     private int getCursorPosition(Cursor cursor) {
@@ -495,13 +495,13 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         for (int row = firstLine; row < firstLine + length; row += 1) {
             String line = lines.get(row);
             if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
-            float lineY = trueY + (row - firstLine) * gui.getTextRenderer().fontHeight;
+            int lineY = trueY + (row - firstLine) * gui.getTextRenderer().fontHeight;
             drawString(matrices, line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
             drawHighlights(line, gui.getTextRenderer(), lineY, row);
         }
     }
 
-    private void drawHighlights(String line, TextRenderer renderer, float lineY, int row) {
+    private void drawHighlights(String line, TextRenderer renderer, int lineY, int row) {
         if (selection.isHighlighted(row)) {
             int startIndex;
             if (selection.start().row != row) startIndex = 0;
@@ -513,7 +513,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
             if (startIndex == endIndex) return;
 
-            float x = trueX + renderer.getWidth(line.substring(0, startIndex));
+            int x = trueX + renderer.getWidth(line.substring(0, startIndex));
             String highlightedPortion = line.substring(startIndex, endIndex);
             drawHighlights(highlightedPortion, renderer, x, lineY, highlightColor);
         }
@@ -538,7 +538,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     private boolean lineOccupiesFullSpace(String cursorLine, TextRenderer renderer) {
-        int width = (int) (this.width - 3);
+        int width = area.width - 3;
         return renderer.getWidth(cursorLine) >= width;
     }
 

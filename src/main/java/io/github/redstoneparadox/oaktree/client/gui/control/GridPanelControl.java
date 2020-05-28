@@ -83,8 +83,8 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 
     @Override
     void arrangeChildren(int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-        float cellWidth = width/columns;
-        float cellHeight = height/rows;
+        int cellWidth = area.width/columns;
+        int cellHeight = area.height/rows;
         ScreenVec innerDimensions = innerDimensions(cellWidth, cellHeight);
         ScreenVec innerPosition = innerPosition(trueX, trueY);
 
@@ -92,8 +92,8 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 
         for (int j = 0; j < rows && index < children.size(); j += 1) {
             for (int i = 0; i < columns && index < children.size(); i += 1) {
-                float cellX = innerPosition.x + (i * cellWidth);
-                float cellY = innerPosition.y + (j * cellHeight);
+                int cellX = innerPosition.x + (i * cellWidth);
+                int cellY = innerPosition.y + (j * cellHeight);
 
                 Control child = children.get(index);
                 if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, cellX, cellY, innerDimensions.x, innerDimensions.y);

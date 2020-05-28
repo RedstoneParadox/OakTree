@@ -80,7 +80,7 @@ public interface TextControl<TC extends TextControl> {
         else textRenderer.draw(matrices, string, x + 2, y + 2, colorInt);
     }
 
-    default void drawHighlights(String string, TextRenderer renderer, float x, float y, RGBAColor highlightColor) {
+    default void drawHighlights(String string, TextRenderer renderer, int x, int y, RGBAColor highlightColor) {
         int width = renderer.getWidth(string);
         int height = renderer.fontHeight;
 

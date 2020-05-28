@@ -92,7 +92,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
         if (!text.isEmpty()) {
-            List<String> lines = wrapLines(text, gui, width, maxLines, shadow);
+            List<String> lines = wrapLines(text, gui, area.width, maxLines, shadow);
             text = combine(lines, true);
 
             int offset = 0;

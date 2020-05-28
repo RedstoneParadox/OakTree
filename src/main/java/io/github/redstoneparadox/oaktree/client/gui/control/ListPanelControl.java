@@ -36,24 +36,24 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
     @Override
     void arrangeChildren(int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!horizontal) {
-            float sectionHeight = height/displayCount;
-            ScreenVec innerDimensions = innerDimensions(width, sectionHeight);
+            int sectionHeight = area.height/displayCount;
+            ScreenVec innerDimensions = innerDimensions(area.width, sectionHeight);
             ScreenVec innerPosition = innerPosition(trueX, trueY);
 
             for (int i = 0; i < displayCount; i += 1) {
-                float entryY = innerPosition.y + (i * sectionHeight);
+                int entryY = innerPosition.y + (i * sectionHeight);
 
                 Control child = children.get(i + startIndex);
                 if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y);
             }
         }
         else {
-            float sectionWidth = width/displayCount;
-            ScreenVec innerDimensions = innerDimensions(sectionWidth, height);
+            int sectionWidth = area.width/displayCount;
+            ScreenVec innerDimensions = innerDimensions(sectionWidth, area.height);
             ScreenVec innerPosition = innerPosition(trueX, trueY);
 
             for (int i = 0; i < displayCount; i += 1) {
-                float entryX = innerPosition.x + (i * sectionWidth);
+                int entryX = innerPosition.x + (i * sectionWidth);
 
                 Control child = children.get(i + startIndex);
                 if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y);

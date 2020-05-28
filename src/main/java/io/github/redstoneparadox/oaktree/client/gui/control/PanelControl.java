@@ -61,7 +61,7 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
     }
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight) {
         if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
         arrangeChildren(mouseX, mouseY, deltaTime, gui);
@@ -69,7 +69,7 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
 
     void arrangeChildren(int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         ScreenVec innerPosition = innerPosition(trueX, trueY);
-        ScreenVec innerDimensions = innerDimensions(width, height);
+        ScreenVec innerDimensions = innerDimensions(area.width, area.height);
 
         for (Control child: children) {
             if (child != null) child.preDraw(mouseX, mouseY, deltaTime, gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y);

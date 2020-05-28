@@ -4,7 +4,7 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
 public class SplitPanelControl extends PanelControl<SplitPanelControl> {
-    public float splitSize = 0.0f;
+    public int splitSize = 0;
     public Distribution distribution = Distribution.HALF;
     public boolean verticalSplit = false;
 
@@ -12,7 +12,7 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
         this.id = "split_panel";
     }
 
-    public SplitPanelControl splitSize(float splitSize) {
+    public SplitPanelControl splitSize(int splitSize) {
         this.splitSize = splitSize;
         return this;
     }
@@ -41,16 +41,16 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
         ScreenVec secondDimension;
 
         if (verticalSplit) {
-            firstDimensions = innerDimensions(width, splitSize);
+            firstDimensions = innerDimensions(area.width, splitSize);
 
             secondPosition = innerPosition(trueX, trueY + splitSize);
-            secondDimension = innerDimensions(width, height - splitSize);
+            secondDimension = innerDimensions(area.width, area.height - splitSize);
         }
         else {
-            firstDimensions = innerDimensions(splitSize, height);
+            firstDimensions = innerDimensions(splitSize, area.height);
 
             secondPosition = innerPosition(trueX + splitSize, trueY);
-            secondDimension = innerDimensions(width - splitSize, height);
+            secondDimension = innerDimensions(area.width - splitSize, area.height);
         }
 
         if (distribution == Distribution.HALF) {

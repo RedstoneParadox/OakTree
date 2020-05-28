@@ -14,8 +14,8 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 
     public float percent = 100.0f;
 
-    float barWidth = 0.1f;
-    float barHeight = 0.1f;
+    int barWidth = 1;
+    int barHeight = 1;
 
     ControlDirection direction = ControlDirection.RIGHT;
 
@@ -54,7 +54,7 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
      * @param height The height of the progress bar.
      * @return The node itself.
      */
-    public ProgressBarControl barSize(float width, float height) {
+    public ProgressBarControl barSize(int width, int height) {
         barWidth = width;
         barHeight = height;
         return this;
@@ -79,21 +79,21 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
-        float barX = trueX + ((width/2) - (barWidth/2));
-        float barY = trueY + ((height/2) - (barHeight/2));
+        int barX = trueX + ((area.width/2) - (barWidth/2));
+        int barY = trueY + ((area.height/2) - (barHeight/2));
 
         switch (direction) {
             case UP:
-                barStyle.draw(barX, barY + barHeight, barWidth, barHeight * (this.percent/100.0f), gui, false, true);
+                barStyle.draw(barX, barY + barHeight, barWidth, (int) (barHeight * (this.percent/100.0f)), gui, false, true);
                 break;
             case DOWN:
-                barStyle.draw(barX, barY, barWidth, barHeight * (this.percent/100.0f), gui);
+                barStyle.draw(barX, barY, barWidth, (int) (barHeight * (this.percent/100.0f)), gui);
                 break;
             case LEFT:
-                barStyle.draw(barX + barWidth, barY, barWidth * (this.percent/100.0f), barHeight, gui, true, false);
+                barStyle.draw(barX + barWidth, barY, (int) (barWidth * (this.percent/100.0f)), barHeight, gui, true, false);
                 break;
             case RIGHT:
-                barStyle.draw(barX, barY, barWidth * (this.percent/100.0f), barHeight, gui);
+                barStyle.draw(barX, barY, (int) (barWidth * (this.percent/100.0f)), barHeight, gui);
                 break;
         }
     }

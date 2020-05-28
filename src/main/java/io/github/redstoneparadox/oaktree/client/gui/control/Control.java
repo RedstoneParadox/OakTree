@@ -16,19 +16,6 @@ import net.minecraft.client.util.math.MatrixStack;
 public class Control<C extends Control> {
     public final ScreenRect area = new ScreenRect(0, 0, 1, 1);
 
-    /**
-     * @deprecated Set these values on {@link Control#area} instead.
-     * Setting them here no longer does anything.
-     */
-    @Deprecated
-    public float x = 0.0f;
-    @Deprecated
-    public float y = 0.0f;
-    @Deprecated
-    public float width = 0.1f;
-    @Deprecated
-    public float height = 0.1f;
-
     public boolean visible = true;
     public ControlAnchor anchor = ControlAnchor.TOP_LEFT;
     public GuiFunction<C> onTick = (gui, control) -> {};
@@ -39,8 +26,8 @@ public class Control<C extends Control> {
     StyleBox currentStyle = null;
     Theme internalTheme = new Theme();
 
-    float trueX = 0.0f;
-    float trueY = 0.0f;
+    int trueX = 0;
+    int trueY = 0;
 
     public Control() {
         this.id = "control";
@@ -155,14 +142,14 @@ public class Control<C extends Control> {
         applyTheme(gui.getTheme());
     }
 
-    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight) {
         if (!visible) return;
 
         onTick.invoke(gui, (C)this);
 
         if (!expand) {
             ScreenVec anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-            ScreenVec drawOffset = anchor.getOffset(width, height);
+            ScreenVec drawOffset = anchor.getOffset(area.width, area.height);
 
             trueX = area.x + anchorOffset.x + offsetX - drawOffset.x;
             trueY = area.y + anchorOffset.y + offsetY - drawOffset.y;
@@ -191,7 +178,7 @@ public class Control<C extends Control> {
         if (!visible) return;
 
         if (currentStyle != null) {
-            currentStyle.draw(trueX, trueY, width, height, gui);
+            currentStyle.draw(trueX, trueY, area.width, area.height, gui);
         }
     }
 

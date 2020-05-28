@@ -9,9 +9,9 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
  */
 public abstract class StyleBox {
 
-    public abstract void draw(float x, float y, float width, float height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical);
+    public abstract void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical);
 
-    public final void draw(float x, float y, float width, float height, ControlGui gui) {
+    public final void draw(int x, int y, int width, int height, ControlGui gui) {
         draw(x, y, width, height, gui, false, false);
     }
 }

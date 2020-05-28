@@ -48,7 +48,7 @@ public class ItemStyleBox extends StyleBox {
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+    public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
         DiffuseLighting.enableForLevel(new Matrix4f());
         renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);

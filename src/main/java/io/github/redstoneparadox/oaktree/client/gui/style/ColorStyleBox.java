@@ -12,20 +12,20 @@ public class ColorStyleBox extends StyleBox {
 
     private RGBAColor color;
     private RGBAColor borderColor;
-    private float borderWidth;
+    private int borderWidth;
 
-    public ColorStyleBox(RGBAColor color, RGBAColor borderColor, float borderWidth) {
+    public ColorStyleBox(RGBAColor color, RGBAColor borderColor, int borderWidth) {
         this.color = color;
         this.borderColor = borderColor;
         this.borderWidth = borderWidth;
     }
 
     public ColorStyleBox(RGBAColor color) {
-        this(color, null, 1.0f);
+        this(color, null, 1);
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+    public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
 
@@ -67,7 +67,7 @@ public class ColorStyleBox extends StyleBox {
         GlStateManager.disableBlend();
     }
 
-    private void drawBorder(float x, float y, float width, float height, boolean mirroredHorizontal, boolean mirroredVertical) {
+    private void drawBorder(int x, int y, int width, int height, boolean mirroredHorizontal, boolean mirroredVertical) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
 

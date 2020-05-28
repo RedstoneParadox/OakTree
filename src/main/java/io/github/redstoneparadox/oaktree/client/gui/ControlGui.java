@@ -83,7 +83,7 @@ public final class ControlGui {
         root.preDraw(mouseX, mouseY, delta, this, 0, 0, window.getScaledWidth(), window.getScaledHeight());
         root.draw(matrices, mouseX, mouseY, delta, this);
 
-        screen.setSize((int)root.width, (int)root.height);
+        screen.setSize(root.area.width, root.area.height);
 
         lastChar = null;
     }

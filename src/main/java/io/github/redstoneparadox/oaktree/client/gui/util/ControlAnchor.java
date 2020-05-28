@@ -11,7 +11,7 @@ public enum ControlAnchor {
     BOTTOM_CENTER,
     BOTTOM_RIGHT;
 
-    public ScreenVec getOffset(float width, float height) {
+    public ScreenVec getOffset(int width, int height) {
         ScreenVec offset = new ScreenVec();
 
         if (this == TOP_CENTER || this == CENTER || this == BOTTOM_CENTER) {

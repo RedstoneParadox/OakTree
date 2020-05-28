@@ -8,13 +8,13 @@ public abstract class InteractiveControl<T extends InteractiveControl> extends C
     protected boolean isMouseWithin = false;
 
     @Override
-    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, float offsetX, float offsetY, float containerWidth, float containerHeight) {
+    public void preDraw(int mouseX, int mouseY, float deltaTime, ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight) {
         if (!visible) return;
         super.preDraw(mouseX, mouseY, deltaTime, gui, offsetX, offsetY, containerWidth, containerHeight);
-        isMouseWithin = (mouseX >= trueX && mouseX <= (width + trueX)) && (mouseY >= trueY && mouseY <= (height + trueY));
+        isMouseWithin = (mouseX >= trueX && mouseX <= (area.width + trueX)) && (mouseY >= trueY && mouseY <= (area.height + trueY));
     }
 
-    protected ScreenVec relativeMousePosition(float mouseX, float mouseY) {
+    protected ScreenVec relativeMousePosition(int mouseX, int mouseY) {
         return new ScreenVec(mouseX - trueX, mouseY - trueY);
     }
 }

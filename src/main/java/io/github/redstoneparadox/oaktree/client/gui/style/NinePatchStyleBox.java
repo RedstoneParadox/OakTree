@@ -32,7 +32,7 @@ public class NinePatchStyleBox extends TextureStyleBox {
     }
 
     @Override
-    public void draw(float x, float y, float width, float height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+    public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         GlStateManager.color4f(1.0f,1.0f, 1.0f, 1.0f);
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
 

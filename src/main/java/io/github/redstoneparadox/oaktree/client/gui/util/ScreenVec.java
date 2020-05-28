@@ -1,10 +1,10 @@
 package io.github.redstoneparadox.oaktree.client.gui.util;
 
 public class ScreenVec {
-    public float x;
-    public float y;
+    public int x;
+    public int y;
 
-    public ScreenVec(float x, float y) {
+    public ScreenVec(int x, int y) {
         this.x = x;
         this.y = y;
     }
