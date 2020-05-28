@@ -14,7 +14,6 @@ import net.minecraft.screen.ScreenHandler;
 
 import java.util.*;
 
-@SuppressWarnings("deprecation")
 public final class ControlGui {
     private Map<ScreenRect, Control<?>> areaMap = new HashMap<>();
     private List<ScreenRect> areas = new ArrayList<>();
