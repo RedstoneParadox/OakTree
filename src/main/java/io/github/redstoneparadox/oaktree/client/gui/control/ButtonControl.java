@@ -4,6 +4,8 @@ import io.github.redstoneparadox.oaktree.client.gui.OakTreeGUI;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Mouse;
 
 public class ButtonControl extends InteractiveControl<ButtonControl> {
 

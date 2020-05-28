@@ -75,12 +75,10 @@ public interface TextControl<TC extends TextControl> {
 
         int colorInt = redInt << 16 | greenInt << 8 | blueInt;
 
-        if (gui instanceof Screen) {
-            TextRenderer font = gui.getTextRenderer();
+        TextRenderer textRenderer = gui.getTextRenderer();
 
-            if (withShadow) font.drawWithShadow(matrices, string, x + 2, y + 2, colorInt);
-            else font.draw(matrices, string, x + 2, y + 2, colorInt);
-        }
+        if (withShadow) textRenderer.drawWithShadow(matrices, string, x + 2, y + 2, colorInt);
+        else textRenderer.draw(matrices, string, x + 2, y + 2, colorInt);
     }
 
     default void drawHighlights(String string, TextRenderer renderer, float x, float y, RGBAColor highlightColor) {

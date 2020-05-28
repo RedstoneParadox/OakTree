@@ -54,9 +54,7 @@ public class ItemStyleBox extends StyleBox {
         ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
         DiffuseLighting.enableForLevel(new Matrix4f());
         renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);
-        if (gui instanceof Screen) {
-            TextRenderer font = ((ScreenAccessor)gui).getTextRenderer();
-            renderer.renderGuiItemOverlay(font, stack, (int)x - 7, (int)y - 7);
-        }
+        TextRenderer textRenderer = gui.getTextRenderer();
+        renderer.renderGuiItemOverlay(textRenderer, stack, (int)x - 7, (int)y - 7);
     }
 }

@@ -22,9 +22,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> implements Scr
     }
 
     @Override
-    public int getX() {
-        return x;
-    }
+    public int getX() { return x; }
 
     @Override
     public int getY() {

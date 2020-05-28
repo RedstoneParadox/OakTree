@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.mixin.client.gui.screen;
 
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.screen.ScreenHandler;
@@ -13,6 +14,11 @@ import java.util.Optional;
 @Mixin(Screen.class)
 public abstract class MixinScreen implements ScreenHooks {
     @Shadow protected net.minecraft.client.font.TextRenderer textRenderer;
+    @Shadow protected MinecraftClient client;
+
+    @Shadow public int width;
+
+    @Shadow public int height;
 
     @Override
     public Optional<ScreenHandler> getHandler() {
@@ -25,6 +31,11 @@ public abstract class MixinScreen implements ScreenHooks {
     }
 
     @Override
+    public MinecraftClient getClient() {
+        return client;
+    }
+
+    @Override
     public int getX() {
         return 0;
     }
@@ -32,5 +43,11 @@ public abstract class MixinScreen implements ScreenHooks {
     @Override
     public int getY() {
         return 0;
+    }
+
+    @Override
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 }

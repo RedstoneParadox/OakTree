@@ -36,39 +36,37 @@ public class NinePatchStyleBox extends TextureStyleBox {
     public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         GlStateManager.color4f(1.0f,1.0f, 1.0f, 1.0f);
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
-        if (gui instanceof DrawableHelper) {
 
-            int fullSecondWidth = (int) (width - firstWidth - thirdWidth);
-            int fullSecondHeight = (int) (height - firstHeight - thirdHeight);
+        int fullSecondWidth = (int) (width - firstWidth - thirdWidth);
+        int fullSecondHeight = (int) (height - firstHeight - thirdHeight);
 
-            float secondX = x + firstWidth;
-            float secondY = y + firstHeight;
-            int secondLeft = drawLeft + firstWidth;
-            int secondTop = drawTop + firstHeight;
+        float secondX = x + firstWidth;
+        float secondY = y + firstHeight;
+        int secondLeft = drawLeft + firstWidth;
+        int secondTop = drawTop + firstHeight;
 
-            float thirdX = x + firstWidth + fullSecondWidth;
-            float thirdY = y + firstHeight + fullSecondHeight;
-            int thirdLeft = drawLeft + firstWidth + secondHeight;
-            int thirdTop = drawTop + firstHeight + secondHeight;
+        float thirdX = x + firstWidth + fullSecondWidth;
+        float thirdY = y + firstHeight + fullSecondHeight;
+        int thirdLeft = drawLeft + firstWidth + secondHeight;
+        int thirdTop = drawTop + firstHeight + secondHeight;
 
-            // Top left
-            drawTexture(x, y, drawLeft, drawTop, firstWidth, firstHeight);
-            // Top Middle
-            drawTiled(secondX, y, secondLeft, drawTop, secondWidth, firstHeight, fullSecondWidth, firstHeight);
-            // Top Right
-            drawTexture(thirdX, y, thirdLeft, drawTop, thirdWidth, firstHeight);
-            // Center Left
-            drawTiled(x, secondY, drawLeft, secondTop, firstWidth, secondHeight, firstWidth, fullSecondHeight);
-            // Center
-            drawTiled(secondX, secondY, secondLeft, secondTop, secondWidth, secondHeight, fullSecondWidth, fullSecondHeight);
-            // Center Right
-            drawTiled(thirdX, secondY, thirdLeft, secondTop, thirdWidth, secondHeight, thirdWidth, fullSecondHeight);
-            // Bottom left
-            drawTexture(x, thirdY, drawLeft, thirdTop, firstWidth, thirdHeight);
-            // Bottom Middle
-            drawTiled(secondX, thirdY, secondLeft, thirdTop, secondWidth, thirdHeight, fullSecondWidth, thirdHeight);
-            // Bottom Right
-            drawTexture(thirdX, thirdY, thirdLeft, thirdTop, thirdWidth, thirdHeight);
-        }
+        // Top left
+        drawTexture(x, y, drawLeft, drawTop, firstWidth, firstHeight);
+        // Top Middle
+        drawTiled(secondX, y, secondLeft, drawTop, secondWidth, firstHeight, fullSecondWidth, firstHeight);
+        // Top Right
+        drawTexture(thirdX, y, thirdLeft, drawTop, thirdWidth, firstHeight);
+        // Center Left
+        drawTiled(x, secondY, drawLeft, secondTop, firstWidth, secondHeight, firstWidth, fullSecondHeight);
+        // Center
+        drawTiled(secondX, secondY, secondLeft, secondTop, secondWidth, secondHeight, fullSecondWidth, fullSecondHeight);
+        // Center Right
+        drawTiled(thirdX, secondY, thirdLeft, secondTop, thirdWidth, secondHeight, thirdWidth, fullSecondHeight);
+        // Bottom left
+        drawTexture(x, thirdY, drawLeft, thirdTop, firstWidth, thirdHeight);
+        // Bottom Middle
+        drawTiled(secondX, thirdY, secondLeft, thirdTop, secondWidth, thirdHeight, fullSecondWidth, thirdHeight);
+        // Bottom Right
+        drawTexture(thirdX, thirdY, thirdLeft, thirdTop, thirdWidth, thirdHeight);
     }
 }

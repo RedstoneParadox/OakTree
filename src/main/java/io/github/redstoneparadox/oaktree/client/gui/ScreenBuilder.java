@@ -13,7 +13,10 @@ import io.github.redstoneparadox.oaktree.client.gui.control.Control;
  * Created by RedstoneParadox on 11/27/2019.
  *
  * Used for building new screens.
+ *
+ * @deprecated Use {@link ControlGui} instead.
  */
+@Deprecated
 public class ScreenBuilder {
     private boolean pause = false;
     private Screen parent = null;

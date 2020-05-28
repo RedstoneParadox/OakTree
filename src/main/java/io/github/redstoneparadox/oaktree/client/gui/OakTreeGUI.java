@@ -6,31 +6,58 @@ import net.minecraft.screen.ScreenHandler;
 
 import java.util.Optional;
 
+/**
+ * @deprecated Use a {@link ControlGui} instead.
+ */
+@Deprecated
 public interface OakTreeGUI {
 
     @Deprecated
-    Optional<ScreenHandler> getScreenContainer();
-
-    boolean mouseButtonHeld(String mouseButton);
-
-    boolean mouseButtonJustClicked(String mouseButton);
-
-    Optional<Character> getLastChar();
+    default Optional<ScreenHandler> getScreenContainer() {
+        return Optional.empty();
+    }
 
     @Deprecated
-    TextRenderer getTextRenderer();
+    default boolean mouseButtonHeld(String mouseButton){
+        return false;
+    }
+
+    @Deprecated
+    default boolean mouseButtonJustClicked(String mouseButton) {
+        return false;
+    }
+
+    @Deprecated
+    default Optional<Character> getLastChar() {
+        return Optional.empty();
+    }
+
+    @Deprecated
+    default TextRenderer getTextRenderer() {
+        return null;
+    }
 
     default void shouldCloseOnInventoryKey(boolean value) {
 
     }
 
     @Deprecated
-    int getX();
+    default int getX() {
+        return 0;
+    }
 
     @Deprecated
-    int getY();
+    default int getY() {
+        return 0;
+    }
 
-    Theme getTheme();
+    @Deprecated
+    default Theme getTheme() {
+        return null;
+    }
 
-    void applyTheme(Theme theme);
+    @Deprecated
+    default void applyTheme(Theme theme) {
+
+    }
 }

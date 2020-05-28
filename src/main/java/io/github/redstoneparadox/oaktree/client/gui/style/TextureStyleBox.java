@@ -77,16 +77,15 @@ public class TextureStyleBox extends StyleBox {
     @Override
     public void draw(float x, float y, float width, float height, OakTreeGUI gui, boolean mirroredHorizontal, boolean mirroredVertical) {
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
-        if (gui instanceof DrawableHelper) {
-            if (!tiled) {
-                int drawWidth = Math.min((int)width, textureWidth);
-                int drawHeight = Math.min((int)height, textureHeight);
+        
+        if (!tiled) {
+            int drawWidth = Math.min((int)width, textureWidth);
+            int drawHeight = Math.min((int)height, textureHeight);
 
-                drawTexture(x, y, drawLeft, drawTop, drawWidth, drawHeight);
-            }
-            else {
-                drawTiled(x, y, drawLeft, drawTop, textureWidth, textureHeight, (int)width, (int)height);
-            }
+            drawTexture(x, y, drawLeft, drawTop, drawWidth, drawHeight);
+        }
+        else {
+            drawTiled(x, y, drawLeft, drawTop, textureWidth, textureHeight, (int)width, (int)height);
         }
     }
 
