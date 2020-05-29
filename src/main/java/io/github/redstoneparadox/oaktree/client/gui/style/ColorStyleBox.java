@@ -34,7 +34,7 @@ public class ColorStyleBox extends StyleBox {
         GlStateManager.enableBlend();
         GlStateManager.disableTexture();
         GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
-        GlStateManager.color4f(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
+        GlStateManager.blendColor(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
 
         ScreenVec vert1 = new ScreenVec(x, y);
         ScreenVec vert2 = new ScreenVec(x, y + height);
@@ -55,11 +55,11 @@ public class ColorStyleBox extends StyleBox {
             vert4.y = vert4.y - height;
         }
 
-        builder.begin(7, VertexFormats.POSITION);
-        builder.vertex(vert1.x, vert1.y, 0.0).next();
-        builder.vertex(vert2.x, vert2.y, 0.0).next();
-        builder.vertex(vert3.x, vert3.y, 0.0).next();
-        builder.vertex(vert4.x, vert4.y, 0.0).next();
+        builder.begin(7, VertexFormats.POSITION_COLOR);
+        builder.vertex(vert1.x, vert1.y, 0.0).color(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel).next();
+        builder.vertex(vert2.x, vert2.y, 0.0).color(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel).next();
+        builder.vertex(vert3.x, vert3.y, 0.0).color(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel).next();
+        builder.vertex(vert4.x, vert4.y, 0.0).color(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel).next();
 
         tessellator.draw();
 

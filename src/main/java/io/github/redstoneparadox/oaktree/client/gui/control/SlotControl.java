@@ -12,7 +12,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 
 public class SlotControl extends InteractiveControl<SlotControl> {
-    public StyleBox highlightStyle = new ColorStyleBox(new RGBAColor(1.0f, 1.0f, 1.0f, 0.5f));
+    public StyleBox highlightStyle = new ColorStyleBox(new RGBAColor(0.75f, 0.75f, 0.75f, 0.5f));
+    public int slotBorder = 1;
 
     private final int index;
     private final int inventory;
@@ -60,7 +61,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                 renderer.renderGuiItemOverlay(textRenderer, stack, itemX, itemY);
 
                 if (isMouseWithin) {
-                    highlightStyle.draw(trueX, trueY, area.width, area.height, gui);
+                    highlightStyle.draw(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), gui);
                 }
             }
         });

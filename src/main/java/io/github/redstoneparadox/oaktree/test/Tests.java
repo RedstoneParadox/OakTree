@@ -291,7 +291,7 @@ public class Tests {
     private Control<?> testThree() {
         return new PanelControl<>()
                 .id("base")
-                .size(180, 80)
+                .size(180, 90)
                 .anchor(ControlAnchor.CENTER)
                 .child(
                         new GridPanelControl()
