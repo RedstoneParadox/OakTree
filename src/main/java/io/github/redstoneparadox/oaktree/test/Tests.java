@@ -197,7 +197,7 @@ public class Tests {
         SliderControl scrollBar = new SliderControl()
                 .size(20, 100)
                 .onSlide((gui, control) -> {
-                    listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.displayCount) * (control.scrollPercent)/100) - 1));
+                    listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.displayCount) * (control.scrollPercent)/100)));
                 })
                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
                 .sliderStyle(new ColorStyleBox(RGBAColor.white()))
