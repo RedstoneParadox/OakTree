@@ -6,6 +6,7 @@ import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
+import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
@@ -148,12 +149,38 @@ public class Tests {
     }
 
     private Control<?> testOne() {
-        return new DropdownControl(
+        DropdownControl leftDropdown = new DropdownControl(
                 new ListPanelControl()
                         .defaultStyle(new ColorStyleBox(RGBAColor.red()))
                         .size(60, 80)
                         .children(4, this::itemLabel)
-                        .displayCount(3)
+                        .displayCount(4)
+        )
+                .size(60, 20)
+                .defaultStyle(new ColorStyleBox(RGBAColor.blue()))
+                .dropdownDirection(ControlDirection.LEFT)
+                .anchor(ControlAnchor.CENTER);
+
+        DropdownControl rightDropdown = new DropdownControl(
+                new ListPanelControl()
+                        .defaultStyle(new ColorStyleBox(RGBAColor.red()))
+                        .size(60, 80)
+                        .children(4, this::itemLabel)
+                        .displayCount(4)
+        )
+                .size(60, 20)
+                .defaultStyle(new ColorStyleBox(RGBAColor.green()))
+                .dropdownDirection(ControlDirection.RIGHT)
+                .anchor(ControlAnchor.CENTER);
+
+
+        return new DropdownControl(
+                new ListPanelControl()
+                        .defaultStyle(new ColorStyleBox(RGBAColor.red()))
+                        .size(60, 40)
+                        .child(leftDropdown)
+                        .child(rightDropdown)
+                        .displayCount(2)
         )
                 .size(60, 20)
                 .defaultStyle(new ColorStyleBox(RGBAColor.black()))
@@ -162,7 +189,7 @@ public class Tests {
 
     private Control<?> itemLabel(int number) {
         return new LabelControl()
-                .size(40, 20)
+                .size(60, 20)
                 .text("Item No. " + number)
                 .shadow(true);
     }
