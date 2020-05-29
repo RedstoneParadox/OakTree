@@ -2,11 +2,11 @@ package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
-import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
-import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
+import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
@@ -14,11 +14,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -28,16 +29,25 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Tests {
 
     public void init() {
 
-        register(new TestBlock(false, this::testOne), "one");
+        Identifier testThree = new Identifier("oaktree:test_three");
+
+        register(new TestBlock(true, this::testOne), "one");
         register(new TestBlock(true, this::testTwo), "two");
+        register(new ContainerTestBlock(true, this::testThree, testThree), "three");
+
+
+        ScreenProviderRegistry.INSTANCE.registerFactory(testThree, (screenHandler -> {
+            return new HandledTestScreen((TestScreenHandler) screenHandler, new LiteralText(""), true, testThree());
+        }));
+        ContainerProviderRegistry.INSTANCE.registerFactory(testThree, (syncId, identifier, player, buf) -> new TestScreenHandler(syncId, player));
 
         /*
         ScreenProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
@@ -58,6 +68,8 @@ public class Tests {
             return screenHandler;
         });
          */
+
+
     }
 
     private static Block.Settings testSettings() {
@@ -125,95 +137,187 @@ public class Tests {
         }
     }
 
-    static class TestScreenHandler extends ScreenHandler {
+    static class HandledTestScreen extends HandledScreen<TestScreenHandler> {
+        private final ControlGui gui;
+
+        public HandledTestScreen(TestScreenHandler handler, Text title, boolean vanilla, Control<?> control) {
+            super(handler, handler.playerInventory, title);
+            this.gui = new ControlGui(this, control);
+            if (vanilla) this.gui.applyTheme(Theme.vanilla());
+        }
+
+        @Override
+        protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
+
+        }
+
+        @Override
+        public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+            super.render(matrices, mouseX, mouseY, delta);
+            gui.draw(matrices, mouseX, mouseY, delta);
+        }
+
+        @Override
+        public boolean isPauseScreen() {
+            return false;
+        }
+    }
+
+    static class TestScreenHandler extends ScreenHandler implements InventoryScreenHandler {
         private final PlayerInventory playerInventory;
 
         protected TestScreenHandler(int syncId, PlayerEntity player) {
             super(null, syncId);
             this.playerInventory = player.inventory;
-
-            for (int i = 0; i < 3; i += 1) {
-                for (int j = 0; j < 9; j += 1) {
-                    this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 0, 0));
-                }
-            }
-
-            for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j, 0, 0));
-            }
         }
 
         @Override
         public boolean canUse(PlayerEntity player) {
             return true;
         }
+
+        @Override
+        public void pickupStack(int index, int inventory, boolean full) {
+            if (inventory == 0) {
+                if (full) {
+                    playerInventory.setCursorStack(playerInventory.removeStack(index));
+                }
+                else {
+                    ItemStack stack = playerInventory.getStack(index);
+                    playerInventory.setCursorStack(playerInventory.removeStack(index, stack.getCount()/2));
+                }
+            }
+        }
+
+        @Override
+        public void placeStack(int index, int inventory, boolean full) {
+            if (isCursorEmpty()) return;
+
+            if (inventory == 0) {
+                if (full) {
+                    playerInventory.insertStack(index, playerInventory.getCursorStack());
+                }
+                else {
+                    ItemStack stack = playerInventory.getCursorStack().split(1);
+                    playerInventory.insertStack(index, stack);
+                }
+            }
+        }
+
+        @NotNull
+        @Override
+        public ItemStack getStack(int index, int inventory) {
+            if (inventory == 0) {
+                return playerInventory.getStack(index);
+            }
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public boolean isCursorEmpty() {
+            return playerInventory.getCursorStack().isEmpty();
+        }
     }
 
     private Control<?> testOne() {
         DropdownControl leftDropdown = new DropdownControl(
                 new ListPanelControl()
-                        .defaultStyle(new ColorStyleBox(RGBAColor.red()))
-                        .size(60, 80)
+                        .id("base")
+                        .size(80, 80)
                         .children(4, this::itemLabel)
                         .displayCount(4)
         )
-                .size(60, 20)
-                .defaultStyle(new ColorStyleBox(RGBAColor.blue()))
+                .size(40, 20)
+                .id("button")
                 .dropdownDirection(ControlDirection.LEFT)
                 .anchor(ControlAnchor.CENTER);
 
         DropdownControl rightDropdown = new DropdownControl(
                 new ListPanelControl()
-                        .defaultStyle(new ColorStyleBox(RGBAColor.red()))
-                        .size(60, 80)
+                        .id("base")
+                        .size(80, 80)
                         .children(4, this::itemLabel)
                         .displayCount(4)
         )
-                .size(60, 20)
-                .defaultStyle(new ColorStyleBox(RGBAColor.green()))
+                .size(40, 20)
+                .id("button")
                 .dropdownDirection(ControlDirection.RIGHT)
                 .anchor(ControlAnchor.CENTER);
 
 
-        return new DropdownControl(
-                new ListPanelControl()
-                        .defaultStyle(new ColorStyleBox(RGBAColor.red()))
-                        .size(60, 40)
-                        .child(leftDropdown)
-                        .child(rightDropdown)
-                        .displayCount(2)
-        )
-                .size(60, 20)
-                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
-                .anchor(ControlAnchor.CENTER);
+        return new PanelControl<>()
+                .child(new DropdownControl(
+                        new ListPanelControl()
+                                .id("base")
+                                .size(60, 60)
+                                .child(leftDropdown)
+                                .child(rightDropdown)
+                                .displayCount(2)
+                        )
+                        .size(60, 20)
+                        .id("button")
+                        .anchor(ControlAnchor.CENTER)
+                )
+                .size(90, 50)
+                .anchor(ControlAnchor.CENTER)
+                .id("base");
     }
 
     private Control<?> testTwo() {
         ListPanelControl listPanel = new ListPanelControl()
                 .size(100, 100)
                 .children(20, this::itemLabel)
-                .displayCount(5);
+                .displayCount(5)
+                .anchor(ControlAnchor.CENTER);
 
         SliderControl scrollBar = new SliderControl()
                 .size(20, 100)
                 .onSlide((gui, control) -> {
                     listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.displayCount) * (control.scrollPercent)/100)));
                 })
-                .barLength(10);
+                .barLength(10)
+                .anchor(ControlAnchor.CENTER);
 
         return new SplitPanelControl()
                 .everyOther()
-                .size(120, 100)
-                .splitSize(20)
+                .id("base")
+                .size(140, 120)
+                .splitSize(30)
                 .child(scrollBar)
                 .child(listPanel)
                 .anchor(ControlAnchor.CENTER);
+    }
+
+    private Control<?> testThree() {
+        return new PanelControl<>()
+                .id("base")
+                .size(180, 80)
+                .anchor(ControlAnchor.CENTER)
+                .child(
+                        new GridPanelControl()
+                                .size(162, 72)
+                                .anchor(ControlAnchor.CENTER)
+                                .rows(4)
+                                .columns(9)
+                                .children(36, integer -> {
+                                    int index = integer;
+                                    if (integer < 27) {
+                                        index += 9;
+                                    }
+                                    else {
+                                        index -= 27;
+                                    }
+
+                                    return new SlotControl(index, 0);
+                                })
+                );
     }
 
     private Control<?> itemLabel(int number) {
         return new LabelControl()
                 .size(60, 20)
                 .text("Item No. " + (number + 1))
+                .anchor(ControlAnchor.CENTER)
                 .shadow(true);
     }
 }

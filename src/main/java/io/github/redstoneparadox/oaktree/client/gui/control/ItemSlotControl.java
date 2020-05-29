@@ -31,7 +31,7 @@ public class ItemSlotControl extends Control<ItemSlotControl> {
 
     @Override
     public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-        gui.getScreenContainer().ifPresent(container -> {
+        gui.getScreenHandler().ifPresent(container -> {
             super.draw(matrices, mouseX, mouseY, deltaTime, gui);
             int slotX = (int)trueX - gui.getX() + 1;
             int slotY = (int)trueY - gui.getY() + 1;

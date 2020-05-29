@@ -100,7 +100,7 @@ public final class ControlGui {
         lastChar = null;
     }
 
-    public Optional<ScreenHandler> getScreenContainer() {
+    public Optional<ScreenHandler> getScreenHandler() {
         return screen.getHandler();
     }
 

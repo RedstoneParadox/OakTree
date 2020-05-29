@@ -31,6 +31,7 @@ public class Theme {
                         .drawOrigin(18, 0)
                         .fileDimensions(256, 256)
                         .textureSize(18, 18)
+                        .scale(1)
                 )
                 .add("base", new NinePatchStyleBox("oaktree:textures/gui/ui.png")
                         .widths(4, 2, 4)
