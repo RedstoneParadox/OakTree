@@ -2,6 +2,8 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +28,12 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
     public DropdownControl dropdownDirection(@NotNull ControlDirection dropdownDirection) {
         this.dropdownDirection = dropdownDirection;
         return this;
+    }
+
+    @Override
+    public void setup(MinecraftClient client, ControlGui gui) {
+        super.setup(client, gui);
+        dropdown.setup(client, gui);
     }
 
     @Override
