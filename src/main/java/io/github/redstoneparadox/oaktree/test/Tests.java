@@ -1,26 +1,26 @@
 package io.github.redstoneparadox.oaktree.test;
 
+import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.ScreenBuilder;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
-import io.github.redstoneparadox.oaktree.client.gui.style.NinePatchStyleBox;
-import io.github.redstoneparadox.oaktree.client.gui.style.TextureStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
-import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -31,10 +31,11 @@ import net.minecraft.world.World;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings("ALL")
 public class Tests {
 
     public void init() {
+
+        register(new TestBlock(false, this::testOne), "one");
 
         /*
         ScreenProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
@@ -57,7 +58,7 @@ public class Tests {
          */
     }
 
-    private Block.Settings testSettings() {
+    private static Block.Settings testSettings() {
         return FabricBlockSettings.of(Material.METAL).build();
     }
 
@@ -66,11 +67,11 @@ public class Tests {
     }
 
     class TestBlock extends Block {
-        private final Supplier<Control> supplier;
+        private final Supplier<Control<?>> supplier;
         private final boolean vanilla;
 
-        TestBlock(Settings settings, boolean vanilla, Supplier<Control> supplier) {
-            super(settings);
+        TestBlock(boolean vanilla, Supplier<Control<?>> supplier) {
+            super(testSettings());
             this.vanilla = vanilla;
             this.supplier = supplier;
         }
@@ -78,9 +79,7 @@ public class Tests {
         @Override
         public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
             if (world.isClient) {
-                ScreenBuilder builder = new ScreenBuilder(supplier.get());
-                if (vanilla) builder.theme(Theme.vanilla());
-                MinecraftClient.getInstance().openScreen(builder.build());
+                MinecraftClient.getInstance().openScreen(new TestScreen(new LiteralText("test screen"), vanilla, supplier.get()));
             }
             return ActionResult.SUCCESS;
         }
@@ -89,8 +88,8 @@ public class Tests {
     class ContainerTestBlock extends TestBlock {
         private final Identifier containerID;
 
-        ContainerTestBlock(Settings settings, boolean vanilla, Supplier<Control> supplier, Identifier containerID) {
-            super(settings, vanilla, supplier);
+        ContainerTestBlock(boolean vanilla, Supplier<Control<?>> supplier, Identifier containerID) {
+            super(vanilla, supplier);
             this.containerID = containerID;
         }
 
@@ -100,6 +99,27 @@ public class Tests {
                 ContainerProviderRegistry.INSTANCE.openContainer(containerID, player, (buf -> buf.writeBlockPos(pos)));
             }
             return ActionResult.SUCCESS;
+        }
+    }
+
+    static class TestScreen extends Screen {
+        private final ControlGui gui;
+
+        protected TestScreen(Text title, boolean vanilla, Control<?> control) {
+            super(title);
+            this.gui = new ControlGui(this, control);
+            if (vanilla) this.gui.applyTheme(Theme.vanilla());
+        }
+
+        @Override
+        public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+            super.render(matrices, mouseX, mouseY, delta);
+            gui.draw(matrices, mouseX, mouseY, delta);
+        }
+
+        @Override
+        public boolean isPauseScreen() {
+            return false;
         }
     }
 
@@ -125,5 +145,25 @@ public class Tests {
         public boolean canUse(PlayerEntity player) {
             return true;
         }
+    }
+
+    private Control<?> testOne() {
+        return new DropdownControl(
+                new ListPanelControl()
+                        .defaultStyle(new ColorStyleBox(RGBAColor.red()))
+                        .size(60, 80)
+                        .children(4, this::itemLabel)
+                        .displayCount(3)
+        )
+                .size(60, 20)
+                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                .anchor(ControlAnchor.CENTER);
+    }
+
+    private Control<?> itemLabel(int number) {
+        return new LabelControl()
+                .size(40, 20)
+                .text("Item No. " + number)
+                .shadow(true);
     }
 }

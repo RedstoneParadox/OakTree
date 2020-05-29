@@ -62,6 +62,7 @@ public class PanelControl<C extends PanelControl> extends PaddingControl<C> {
 
     @Override
     public void zIndex(List<Control<?>> controls) {
+        if (!visible) return;
         controls.add(this);
         for (Control<?> child: children) {
             child.zIndex(controls);

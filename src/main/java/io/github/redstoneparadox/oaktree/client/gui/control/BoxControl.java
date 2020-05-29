@@ -43,6 +43,7 @@ public class BoxControl extends PaddingControl<BoxControl> {
 
     @Override
     public void zIndex(List<Control<?>> controls) {
+        if (!visible) return;
         controls.add(this);
         child.zIndex(controls);
     }

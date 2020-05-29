@@ -14,6 +14,10 @@ public class ScreenRect {
     }
 
     public boolean isPointWithin(int pointX, int pointY) {
-        return pointX <= x && pointY <= y && pointX >= x + width && pointY >= y + height;
+        return pointX >= x && pointY >= y && pointX <= x + width && pointY <= y + height;
+    }
+
+    public ScreenRect offset(int offsetX, int offsetY) {
+        return new ScreenRect(x + offsetX, y + offsetY, width, height);
     }
 }

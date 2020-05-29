@@ -140,7 +140,12 @@ public class Control<C extends Control> {
         return (C)this;
     }
 
+    public ScreenVec getTruePosition() {
+        return new ScreenVec(trueX, trueY);
+    }
+
     public void zIndex(List<Control<?>> controls) {
+        if (!visible) return;
         controls.add(this);
     }
 

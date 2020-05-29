@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 import io.github.redstoneparadox.oaktree.client.gui.control.InteractiveControl;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
+import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
@@ -44,11 +45,8 @@ public final class ControlGui {
         Window window = screen.getClient().getWindow();
         MouseHooks mouse = (MouseHooks) screen.getClient().mouse;
 
-        if (mouse.leftButton()) System.out.println("Left mouse button down.");
-        if (mouse.rightButton()) System.out.println("Right mouse button down.");
-
         if (mouse.leftButton()) {
-            if (leftMouseClicked) {
+            if (leftMouseHeld) {
                 leftMouseClicked = false;
             }
             else {
@@ -62,7 +60,7 @@ public final class ControlGui {
         }
 
         if (mouse.rightButton()) {
-            if (rightMouseClicked) {
+            if (rightMouseHeld) {
                 rightMouseClicked = false;
             }
             else {
@@ -80,7 +78,8 @@ public final class ControlGui {
         Collections.reverse(controlList);
         boolean mouseCaptured = false;
         for (Control<?> control: controlList) {
-            if (control.area.isPointWithin(mouseX, mouseY) && !mouseCaptured) {
+            ScreenVec truePos = control.getTruePosition();
+            if (control.area.offset(truePos.x, truePos.y).isPointWithin(mouseX, mouseY) && !mouseCaptured) {
                 mouseCaptured = true;
                 if (control instanceof InteractiveControl<?>) {
                     ((InteractiveControl<?>)control).setMouseWithin(true);

@@ -17,6 +17,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
         return this;
     }
 
+    // TODO: Display count should only be clamped during preDraw
     public ListPanelControl displayCount(int displayCount) {
         if (displayCount < 1) this.displayCount = 1;
         else this.displayCount = Math.min(displayCount, children.size());
