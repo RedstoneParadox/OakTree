@@ -16,7 +16,7 @@ import java.util.List;
  * single child.
  */
 public class BoxControl extends PaddingControl<BoxControl> {
-    public Control child = null;
+    public Control<?> child = null;
 
     public BoxControl() {
         this.id = "box";
@@ -30,7 +30,7 @@ public class BoxControl extends PaddingControl<BoxControl> {
      * @param child The node that is being added as a child.
      * @return The node itself.
      */
-    public BoxControl child(Control child) {
+    public BoxControl child(Control<?> child) {
         this.child = child;
         return this;
     }

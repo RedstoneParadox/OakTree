@@ -52,7 +52,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
      * @param column The column
      * @return The control itself.
      */
-    public GridPanelControl child(Control child, int row, int column) throws IndexOutOfBoundsException {
+    public GridPanelControl child(Control<?> child, int row, int column) throws IndexOutOfBoundsException {
         if (row >= rows || column >= columns) throw new GridCellOutOfBoundsException(row, column);
 
         int index = row * columns + column;
@@ -95,7 +95,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
                 int cellX = innerPosition.x + (i * cellWidth);
                 int cellY = innerPosition.y + (j * cellHeight);
 
-                Control child = children.get(index);
+                Control<?> child = children.get(index);
                 if (child != null) child.preDraw(gui, cellX, cellY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 
                 index += 1;

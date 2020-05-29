@@ -11,7 +11,7 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
     @NotNull public Control<?> dropdown;
     @NotNull public ControlDirection dropdownDirection = ControlDirection.DOWN;
 
-    public DropdownControl(Control<?> dropdown) {
+    public DropdownControl(@NotNull Control<?> dropdown) {
         this.dropdown = dropdown;
         this.dropdown.visible(false);
     }

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * The base class for all controls.
  */
-public class Control<C extends Control> {
+public class Control<C extends Control<C>> {
     public final ScreenRect area = new ScreenRect(0, 0, 1, 1);
 
     public boolean visible = true;

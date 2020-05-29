@@ -1,11 +1,8 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-import java.util.List;
-
-public abstract class InteractiveControl<T extends InteractiveControl> extends Control<T> {
+public abstract class InteractiveControl<C extends InteractiveControl<C>> extends Control<C> {
 
     protected boolean isMouseWithin = false;
 

@@ -35,7 +35,7 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
 
     @Override
     void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
-        Control child = children.get(page);
+        Control<?> child = children.get(page);
         ScreenVec innerPosition = innerPosition(trueX, trueY);
         ScreenVec innerDimensions = innerDimensions(area.width, area.height);
 
@@ -43,7 +43,7 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
     }
 
     @Override
-    boolean shouldDraw(Control child) {
+    boolean shouldDraw(Control<?> child) {
         return children.indexOf(child) == page;
     }
 }

@@ -1,14 +1,13 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.ScreenBuilder;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -60,7 +59,7 @@ public class Tests {
     }
 
     private static Block.Settings testSettings() {
-        return FabricBlockSettings.of(Material.METAL).build();
+        return FabricBlockSettings.of(Material.METAL);
     }
 
     private void register(Block block, String suffix) {

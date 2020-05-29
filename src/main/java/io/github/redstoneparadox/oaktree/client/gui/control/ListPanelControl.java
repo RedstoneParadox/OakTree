@@ -44,7 +44,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
             for (int i = 0; i < displayCount; i += 1) {
                 int entryY = innerPosition.y + (i * sectionHeight);
 
-                Control child = children.get(i + startIndex);
+                Control<?> child = children.get(i + startIndex);
                 if (child != null) child.preDraw(gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
             }
         }
@@ -56,14 +56,14 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
             for (int i = 0; i < displayCount; i += 1) {
                 int entryX = innerPosition.x + (i * sectionWidth);
 
-                Control child = children.get(i + startIndex);
+                Control<?> child = children.get(i + startIndex);
                 if (child != null) child.preDraw(gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
             }
         }
     }
 
     @Override
-    boolean shouldDraw(Control child) {
+    boolean shouldDraw(Control<?> child) {
         int index = children.indexOf(child);
         return index >= startIndex && index < startIndex + displayCount;
     }

@@ -3,7 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public abstract class PaddingControl<C extends PaddingControl> extends Control<C> {
+public abstract class PaddingControl<C extends PaddingControl<C>> extends Control<C> {
     public int topPadding = 0;
     public int bottomPadding = 0;
     public int leftPadding = 0;
