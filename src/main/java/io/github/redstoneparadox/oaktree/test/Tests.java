@@ -29,6 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Tests {
@@ -36,6 +37,7 @@ public class Tests {
     public void init() {
 
         register(new TestBlock(false, this::testOne), "one");
+        register(new TestBlock(false, this::testTwo), "two");
 
         /*
         ScreenProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
@@ -186,10 +188,34 @@ public class Tests {
                 .anchor(ControlAnchor.CENTER);
     }
 
+    private Control<?> testTwo() {
+        ListPanelControl listPanel = new ListPanelControl()
+                .size(100, 100)
+                .children(20, this::itemLabel)
+                .displayCount(5);
+
+        SliderControl scrollBar = new SliderControl()
+                .size(20, 100)
+                .onSlide((gui, control) -> {
+                    listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.displayCount) * (control.scrollPercent)/100) - 1));
+                })
+                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
+                .sliderStyle(new ColorStyleBox(RGBAColor.white()))
+                .barLength(10);
+
+        return new SplitPanelControl()
+                .everyOther()
+                .size(120, 100)
+                .splitSize(20)
+                .child(scrollBar)
+                .child(listPanel)
+                .anchor(ControlAnchor.CENTER);
+    }
+
     private Control<?> itemLabel(int number) {
         return new LabelControl()
                 .size(60, 20)
-                .text("Item No. " + number)
+                .text("Item No. " + (number + 1))
                 .shadow(true);
     }
 }
