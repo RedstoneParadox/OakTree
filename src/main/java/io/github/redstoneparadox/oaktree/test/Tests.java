@@ -37,7 +37,7 @@ public class Tests {
     public void init() {
 
         register(new TestBlock(false, this::testOne), "one");
-        register(new TestBlock(false, this::testTwo), "two");
+        register(new TestBlock(true, this::testTwo), "two");
 
         /*
         ScreenProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
@@ -199,8 +199,6 @@ public class Tests {
                 .onSlide((gui, control) -> {
                     listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.displayCount) * (control.scrollPercent)/100)));
                 })
-                .defaultStyle(new ColorStyleBox(RGBAColor.black()))
-                .sliderStyle(new ColorStyleBox(RGBAColor.white()))
                 .barLength(10);
 
         return new SplitPanelControl()

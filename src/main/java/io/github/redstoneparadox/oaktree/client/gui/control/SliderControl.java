@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +15,10 @@ public class SliderControl extends InteractiveControl<SliderControl> {
     @NotNull public GuiFunction<SliderControl> onSlide = (gui, control) -> {};
 
     public int barLength = 1;
+
+    public SliderControl() {
+        this.id = "slider";
+    }
 
     public SliderControl sliderStyle(StyleBox sliderStyle) {
         this.sliderStyle = sliderStyle;
@@ -76,5 +81,11 @@ public class SliderControl extends InteractiveControl<SliderControl> {
         }
 
         if (sliderStyle != null) sliderStyle.draw(sliderX, sliderY, sliderWidth, sliderHeight, gui);
+    }
+
+    @Override
+    void applyTheme(Theme theme) {
+        defaultStyle = getStyle(theme, "default");
+        sliderStyle = getStyle(theme, "slider");
     }
 }
