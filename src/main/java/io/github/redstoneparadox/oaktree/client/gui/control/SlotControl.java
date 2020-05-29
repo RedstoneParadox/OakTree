@@ -9,18 +9,22 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 
 public class SlotControl extends InteractiveControl<SlotControl> {
     public StyleBox highlightStyle = new ColorStyleBox(new RGBAColor(0.75f, 0.75f, 0.75f, 0.5f));
     public int slotBorder = 1;
 
-    private final int index;
-    private final int inventory;
+    private final int slot;
+    private final int inventoryIndex;
 
-    public SlotControl(int index, int inventory) {
-        this.index = index;
-        this.inventory = inventory;
+    public SlotControl(int slot, int inventoryIndex) {
+        this.slot = slot;
+        this.inventoryIndex = inventoryIndex;
         this.id = "item_slot";
         this.size(18, 18);
     }
@@ -31,14 +35,42 @@ public class SlotControl extends InteractiveControl<SlotControl> {
             if (handler instanceof InventoryScreenHandler) {
                 super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 
+                PlayerEntity player = ((InventoryScreenHandler) handler).getPlayer();
+                PlayerInventory playerInventory = player.inventory;
+                Inventory inventory = ((InventoryScreenHandler) handler).getInventory(inventoryIndex);
+
                 if (isMouseWithin) {
-                    if (((InventoryScreenHandler) handler).isCursorEmpty()) {
-                        if (gui.mouseButtonJustClicked("left")) ((InventoryScreenHandler) handler).pickupStack(index, inventory, true);
-                        else if (gui.mouseButtonJustClicked("right")) ((InventoryScreenHandler) handler).pickupStack(index, inventory, false);
+                    if (playerInventory.getCursorStack().isEmpty()) {
+                        if (gui.mouseButtonJustClicked("left")) {
+                            playerInventory.setCursorStack(inventory.removeStack(slot));
+                        }
+                        else if (gui.mouseButtonJustClicked("right")) {
+                            ItemStack stack = inventory.getStack(slot);
+                            playerInventory.setCursorStack(inventory.removeStack(slot, stack.getCount()/2));
+                        }
                     }
                     else {
-                        if (gui.mouseButtonJustClicked("left")) ((InventoryScreenHandler) handler).placeStack(index, inventory, true);
-                        else if (gui.mouseButtonJustClicked("right")) ((InventoryScreenHandler) handler).placeStack(index, inventory, false);
+                        ItemStack stackInSlot = inventory.getStack(slot);
+
+                        if (gui.mouseButtonJustClicked("left")) {
+                            if (stackInSlot.isEmpty()) {
+                                inventory.setStack(slot, playerInventory.getCursorStack());
+                                playerInventory.setCursorStack(ItemStack.EMPTY);
+                            }
+                            else {
+                                ItemStack cursorStack = playerInventory.getCursorStack();
+                                combineStacks(cursorStack, stackInSlot, cursorStack.getCount());
+                            }
+                        }
+                        else if (gui.mouseButtonJustClicked("right")) {
+                            if (stackInSlot.isEmpty()) {
+                                inventory.setStack(slot, playerInventory.getCursorStack().split(1));
+                            }
+                            else {
+                                ItemStack cursorStack = playerInventory.getCursorStack();
+                                combineStacks(cursorStack, stackInSlot, 1);
+                            }
+                        }
                     }
                 }
             }
@@ -50,7 +82,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         gui.getScreenHandler().ifPresent(screenHandler -> {
             if (screenHandler instanceof InventoryScreenHandler) {
                 super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-                ItemStack stack = ((InventoryScreenHandler) screenHandler).getStack(index, inventory);
+                ItemStack stack = ((InventoryScreenHandler) screenHandler).getInventory(inventoryIndex).getStack(slot);
                 ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
 
                 int itemX = (area.width - 16)/2 + trueX;
@@ -65,5 +97,18 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                 }
             }
         });
+    }
+
+    private void combineStacks(ItemStack from, ItemStack to, int amount) {
+        if (from.getCount() < amount) {
+            combineStacks(from, to, from.getCount());
+        }
+        else if (to.getMaxCount() - to.getCount() < amount) {
+            combineStacks(from, to, to.getMaxCount() - to.getCount());
+        }
+        else if (ItemStack.areItemsEqual(from, to)) {
+            from.decrement(amount);
+            to.increment(amount);
+        }
     }
 }

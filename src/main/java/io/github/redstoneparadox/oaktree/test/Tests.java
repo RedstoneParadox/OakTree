@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.LiteralText;
@@ -30,7 +31,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class Tests {
@@ -141,7 +145,7 @@ public class Tests {
         private final ControlGui gui;
 
         public HandledTestScreen(TestScreenHandler handler, Text title, boolean vanilla, Control<?> control) {
-            super(handler, handler.playerInventory, title);
+            super(handler, handler.player.inventory, title);
             this.gui = new ControlGui(this, control);
             if (vanilla) this.gui.applyTheme(Theme.vanilla());
         }
@@ -164,11 +168,13 @@ public class Tests {
     }
 
     static class TestScreenHandler extends ScreenHandler implements InventoryScreenHandler {
-        private final PlayerInventory playerInventory;
+        private final PlayerEntity player;
+        private final List<Inventory> inventories = new ArrayList<>();
 
         protected TestScreenHandler(int syncId, PlayerEntity player) {
             super(null, syncId);
-            this.playerInventory = player.inventory;
+            this.player = player;
+            inventories.add(player.inventory);
         }
 
         @Override
@@ -177,45 +183,13 @@ public class Tests {
         }
 
         @Override
-        public void pickupStack(int index, int inventory, boolean full) {
-            if (inventory == 0) {
-                if (full) {
-                    playerInventory.setCursorStack(playerInventory.removeStack(index));
-                }
-                else {
-                    ItemStack stack = playerInventory.getStack(index);
-                    playerInventory.setCursorStack(playerInventory.removeStack(index, stack.getCount()/2));
-                }
-            }
+        public @Nullable Inventory getInventory(int inventory) {
+            return inventories.get(inventory);
         }
 
         @Override
-        public void placeStack(int index, int inventory, boolean full) {
-            if (isCursorEmpty()) return;
-
-            if (inventory == 0) {
-                if (full) {
-                    playerInventory.insertStack(index, playerInventory.getCursorStack());
-                }
-                else {
-                    ItemStack stack = playerInventory.getCursorStack().split(1);
-                    playerInventory.insertStack(index, stack);
-                }
-            }
-        }
-
-        @NotNull
-        @Override
-        public ItemStack getStack(int index, int inventory) {
-            if (inventory == 0) {
-                return playerInventory.getStack(index);
-            }
-            return ItemStack.EMPTY;
-        }
-
-        @Override
-        public boolean isCursorEmpty() {
-            return playerInventory.getCursorStack().isEmpty();
+        public @NotNull PlayerEntity getPlayer() {
+            return player;
         }
     }
 

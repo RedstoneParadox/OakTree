@@ -1,14 +1,12 @@
 package io.github.redstoneparadox.oaktree.util;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface InventoryScreenHandler {
-    void pickupStack(int index, int inventory, boolean full);
+   @Nullable Inventory getInventory(int inventory);
 
-    void placeStack(int index, int inventory, boolean full);
-
-    @NotNull ItemStack getStack(int index, int inventory);
-
-    boolean isCursorEmpty();
+   @NotNull PlayerEntity getPlayer();
 }
