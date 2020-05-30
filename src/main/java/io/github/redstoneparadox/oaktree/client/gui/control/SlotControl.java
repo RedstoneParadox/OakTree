@@ -29,6 +29,16 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         this.size(18, 18);
     }
 
+    public SlotControl highlightStyle(StyleBox highlightStyle) {
+        this.highlightStyle = highlightStyle;
+        return this;
+    }
+
+    public SlotControl slotBorder(int slotBorder) {
+        this.slotBorder = slotBorder;
+        return this;
+    }
+
     @Override
     public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
         gui.getScreenHandler().ifPresent(handler -> {
