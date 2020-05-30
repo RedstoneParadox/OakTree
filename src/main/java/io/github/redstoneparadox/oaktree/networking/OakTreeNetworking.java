@@ -44,6 +44,7 @@ public class OakTreeNetworking {
         });
     }
 
+    @Deprecated
     public static void addContainerForSyncing(ScreenHandler screenHandler) {
         CONTAINER_MAP.put(screenHandler.syncId, screenHandler);
     }
@@ -56,6 +57,7 @@ public class OakTreeNetworking {
         LISTENER_MAP.remove(handler.getSyncID());
     }
 
+    @Deprecated
     private static void syncSlot(int x, int y, int index, int syncID) {
         if (CONTAINER_MAP.containsKey(syncID)) {
             ScreenHandler screenHandler = CONTAINER_MAP.get(syncID);

@@ -16,6 +16,7 @@ import net.minecraft.screen.slot.Slot;
  *
  * @apiNote You probably shouldn't use this at this time.
  */
+@Deprecated
 public class ItemSlotControl extends Control<ItemSlotControl> {
     private final int index;
 

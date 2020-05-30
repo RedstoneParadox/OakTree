@@ -11,6 +11,7 @@ public class OakTreeClientNetworking {
     private static final Identifier SYNC_SLOT = new Identifier("oaktree", "sync_slot");
     public static final Identifier SYNC_STACK = new Identifier("oaktree", "sync_stack");
 
+    @Deprecated
     public static void syncSlot(int x, int y, int index, int syncID) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeIntArray(new int[]{x, y, index, syncID});
