@@ -13,11 +13,19 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tag.Tag;
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class SlotControl extends InteractiveControl<SlotControl> {
     public StyleBox highlightStyle = new ColorStyleBox(new RGBAColor(0.75f, 0.75f, 0.75f, 0.5f));
     public int slotBorder = 1;
+
+    public BiFunction<SlotControl, ItemStack, Boolean> canInsert = (slotControl, stack) -> true;
+    public BiFunction<SlotControl, ItemStack, Boolean> canTake = (slotControl, stack) -> true;
 
     private final int slot;
     private final int inventoryID;
@@ -39,6 +47,36 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         return this;
     }
 
+    public SlotControl canInsert(BiFunction<SlotControl, ItemStack, Boolean> canInsert) {
+        this.canInsert = canInsert;
+        return this;
+    }
+
+    public SlotControl filter(Item... items) {
+        this.canInsert = ((slotControl, stack) -> {
+            for (Item item: items) {
+                if (stack.getItem() != item) return false;
+            }
+            return true;
+        });
+        return this;
+    }
+
+    public SlotControl filter(Tag<Item>... tags) {
+        this.canInsert = ((slotControl, stack) -> {
+            for (Tag<Item> tag: tags) {
+                if (!tag.contains(stack.getItem())) return false;
+            }
+            return true;
+        });
+        return this;
+    }
+
+    public SlotControl canTake(BiFunction<SlotControl, ItemStack, Boolean> canTake) {
+        this.canTake = canTake;
+        return this;
+    }
+
     @Override
     public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
         gui.getScreenHandler().ifPresent(handler -> {
@@ -53,40 +91,44 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                     boolean stackChanged = false;
 
                     if (playerInventory.getCursorStack().isEmpty()) {
-                        if (gui.mouseButtonJustClicked("left")) {
-                            playerInventory.setCursorStack(inventory.removeStack(slot));
-                            stackChanged = true;
-                        }
-                        else if (gui.mouseButtonJustClicked("right")) {
-                            ItemStack stack = inventory.getStack(slot);
-                            playerInventory.setCursorStack(inventory.removeStack(slot, stack.getCount()/2));
-                            stackChanged = true;
+                        ItemStack stack = inventory.getStack(slot);
+
+                        if (canTake.apply(this, stack)) {
+                            if (gui.mouseButtonJustClicked("left")) {
+                                playerInventory.setCursorStack(inventory.removeStack(slot));
+                                stackChanged = true;
+                            }
+                            else if (gui.mouseButtonJustClicked("right")) {
+                                playerInventory.setCursorStack(inventory.removeStack(slot, stack.getCount()/2));
+                                stackChanged = true;
+                            }
                         }
                     }
                     else {
                         ItemStack stackInSlot = inventory.getStack(slot);
+                        ItemStack cursorStack = playerInventory.getCursorStack();
 
-                        if (gui.mouseButtonJustClicked("left")) {
-                            if (stackInSlot.isEmpty()) {
-                                inventory.setStack(slot, playerInventory.getCursorStack());
-                                playerInventory.setCursorStack(ItemStack.EMPTY);
-                                stackChanged = true;
+                        if (canInsert.apply(this, cursorStack)) {
+                            if (gui.mouseButtonJustClicked("left")) {
+                                if (stackInSlot.isEmpty()) {
+                                    inventory.setStack(slot, playerInventory.getCursorStack());
+                                    playerInventory.setCursorStack(ItemStack.EMPTY);
+                                    stackChanged = true;
+                                }
+                                else {
+                                    combineStacks(cursorStack, stackInSlot, cursorStack.getCount());
+                                    stackChanged = true;
+                                }
                             }
-                            else {
-                                ItemStack cursorStack = playerInventory.getCursorStack();
-                                combineStacks(cursorStack, stackInSlot, cursorStack.getCount());
-                                stackChanged = true;
-                            }
-                        }
-                        else if (gui.mouseButtonJustClicked("right")) {
-                            if (stackInSlot.isEmpty()) {
-                                inventory.setStack(slot, playerInventory.getCursorStack().split(1));
-                                stackChanged = true;
-                            }
-                            else {
-                                ItemStack cursorStack = playerInventory.getCursorStack();
-                                combineStacks(cursorStack, stackInSlot, 1);
-                                stackChanged = true;
+                            else if (gui.mouseButtonJustClicked("right")) {
+                                if (stackInSlot.isEmpty()) {
+                                    inventory.setStack(slot, playerInventory.getCursorStack().split(1));
+                                    stackChanged = true;
+                                }
+                                else {
+                                    combineStacks(cursorStack, stackInSlot, 1);
+                                    stackChanged = true;
+                                }
                             }
                         }
                     }

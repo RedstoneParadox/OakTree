@@ -20,6 +20,9 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -188,6 +191,7 @@ public class Tests {
             inventories.add(player.inventory);
 
             if (!player.world.isClient) OakTreeNetworking.listenForStackSync(this);
+            inventories.add(new SimpleInventory(ItemStack.EMPTY, ItemStack.EMPTY));
         }
 
         @Override
@@ -287,28 +291,41 @@ public class Tests {
     }
 
     private Control<?> testThree() {
-        return new PanelControl<>()
+        GridPanelControl playerInvGrid = new GridPanelControl()
+                .size(162, 72)
+                .anchor(ControlAnchor.CENTER)
+                .rows(4)
+                .columns(9)
+                .children(36, integer -> {
+                    int index = integer;
+                    if (integer < 27) {
+                        index += 9;
+                    }
+                    else {
+                        index -= 27;
+                    }
+
+                    return new SlotControl(index, 0);
+                });
+
+        SlotControl slot1 = new SlotControl(0, 1)
+                .filter(Items.ANDESITE);
+
+        SlotControl slot2 = new SlotControl(1, 1)
+                .canTake((slotControl, stack) -> false);
+
+        return new SplitPanelControl()
                 .id("base")
-                .size(180, 90)
+                .size(180, 120)
+                .splitSize(30)
                 .anchor(ControlAnchor.CENTER)
                 .child(
                         new GridPanelControl()
-                                .size(162, 72)
-                                .anchor(ControlAnchor.CENTER)
-                                .rows(4)
-                                .columns(9)
-                                .children(36, integer -> {
-                                    int index = integer;
-                                    if (integer < 27) {
-                                        index += 9;
-                                    }
-                                    else {
-                                        index -= 27;
-                                    }
-
-                                    return new SlotControl(index, 0);
-                                })
-                );
+                                .size(36, 18)
+                                .rows(1).columns(2)
+                                .child(slot1).child(slot2)
+                )
+                .child(playerInvGrid);
     }
 
     private Control<?> itemLabel(int number) {
