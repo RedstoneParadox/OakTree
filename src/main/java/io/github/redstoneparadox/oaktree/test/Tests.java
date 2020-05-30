@@ -5,6 +5,8 @@ import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
+import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
+import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -17,9 +19,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -165,6 +165,17 @@ public class Tests {
         public boolean isPauseScreen() {
             return false;
         }
+
+        @Override
+        public void onClose() {
+            super.onClose();
+            handler.close(handler.player);
+        }
+
+        @Override
+        public void removed() {
+            super.removed();
+        }
     }
 
     static class TestScreenHandler extends ScreenHandler implements InventoryScreenHandler {
@@ -175,6 +186,8 @@ public class Tests {
             super(null, syncId);
             this.player = player;
             inventories.add(player.inventory);
+
+            if (!player.world.isClient) OakTreeNetworking.listenForStackSync(this);
         }
 
         @Override
@@ -183,13 +196,24 @@ public class Tests {
         }
 
         @Override
-        public @Nullable Inventory getInventory(int inventory) {
-            return inventories.get(inventory);
+        public @Nullable Inventory getInventory(int inventoryID) {
+            return inventories.get(inventoryID);
         }
 
         @Override
         public @NotNull PlayerEntity getPlayer() {
             return player;
+        }
+
+        @Override
+        public int getSyncID() {
+            return syncId;
+        }
+
+        @Override
+        public void close(PlayerEntity player) {
+            super.close(player);
+            OakTreeNetworking.stopListening(this);
         }
     }
 

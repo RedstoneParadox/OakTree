@@ -6,7 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface InventoryScreenHandler {
-   @Nullable Inventory getInventory(int inventory);
+   @Nullable Inventory getInventory(int inventoryID);
 
    @NotNull PlayerEntity getPlayer();
+
+   int getSyncID();
 }
