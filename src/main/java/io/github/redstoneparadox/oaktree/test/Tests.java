@@ -49,6 +49,7 @@ public class Tests {
         register(new TestBlock(true, this::testOne), "one");
         register(new TestBlock(true, this::testTwo), "two");
         register(new ContainerTestBlock(true, this::testThree, testThree), "three");
+        register(new TestBlock(true, this::testFour), "four");
 
 
         ScreenProviderRegistry.INSTANCE.registerFactory(testThree, (screenHandler -> {
@@ -334,5 +335,17 @@ public class Tests {
                 .text("Item No. " + (number + 1))
                 .anchor(ControlAnchor.CENTER)
                 .shadow(true);
+    }
+
+    private Control<?> testFour() {
+        return new ButtonControl()
+                .id("button")
+                .size(200, 20)
+                .anchor(ControlAnchor.CENTER)
+                .tooltip(
+                        new LabelControl()
+                                .text("Hi!")
+                                .size(40, 20)
+                );
     }
 }
