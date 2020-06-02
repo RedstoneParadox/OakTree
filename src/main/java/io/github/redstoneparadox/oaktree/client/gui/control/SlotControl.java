@@ -8,6 +8,7 @@ import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworki
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,9 +17,10 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
+import net.minecraft.text.Text;
 
+import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class SlotControl extends InteractiveControl<SlotControl> {
     public StyleBox highlightStyle = new ColorStyleBox(new RGBAColor(0.75f, 0.75f, 0.75f, 0.5f));
@@ -34,6 +36,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         this.slot = slot;
         this.inventoryID = inventoryID;
         this.id = "item_slot";
+        this.tooltip = new LabelControl().id("tooltip").resizable(true);
         this.size(18, 18);
     }
 
@@ -78,6 +81,12 @@ public class SlotControl extends InteractiveControl<SlotControl> {
     }
 
     @Override
+    public void setup(MinecraftClient client, ControlGui gui) {
+        super.setup(client, gui);
+        if (tooltip != null) tooltip.setup(client, gui);
+    }
+
+    @Override
     public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
         gui.getScreenHandler().ifPresent(handler -> {
             if (handler instanceof InventoryScreenHandler) {
@@ -89,23 +98,21 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 
                 if (isMouseWithin && inventory != null) {
                     boolean stackChanged = false;
+                    ItemStack stackInSlot = inventory.getStack(slot);
 
                     if (playerInventory.getCursorStack().isEmpty()) {
-                        ItemStack stack = inventory.getStack(slot);
-
-                        if (canTake.apply(this, stack)) {
+                        if (canTake.apply(this, stackInSlot)) {
                             if (gui.mouseButtonJustClicked("left")) {
                                 playerInventory.setCursorStack(inventory.removeStack(slot));
                                 stackChanged = true;
                             }
                             else if (gui.mouseButtonJustClicked("right")) {
-                                playerInventory.setCursorStack(inventory.removeStack(slot, stack.getCount()/2));
+                                playerInventory.setCursorStack(inventory.removeStack(slot, stackInSlot.getCount()/2));
                                 stackChanged = true;
                             }
                         }
                     }
                     else {
-                        ItemStack stackInSlot = inventory.getStack(slot);
                         ItemStack cursorStack = playerInventory.getCursorStack();
 
                         if (canInsert.apply(this, cursorStack)) {
@@ -135,6 +142,12 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 
                     if (stackChanged) {
                         OakTreeClientNetworking.syncStack(slot, inventoryID, handler.syncId, inventory.getStack(slot));
+                    }
+                    if (!stackInSlot.isEmpty()) {
+                        List<Text> texts = stackInSlot.getTooltip(player, TooltipContext.Default.NORMAL);
+                        if (tooltip instanceof LabelControl) {
+                            ((LabelControl) tooltip).text(texts);
+                        }
                     }
                 }
             }

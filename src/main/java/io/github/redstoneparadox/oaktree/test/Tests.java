@@ -134,6 +134,12 @@ public class Tests {
         }
 
         @Override
+        protected void init() {
+            super.init();
+            gui.init();
+        }
+
+        @Override
         public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
             super.render(matrices, mouseX, mouseY, delta);
             gui.draw(matrices, mouseX, mouseY, delta);
@@ -152,6 +158,12 @@ public class Tests {
             super(handler, handler.player.inventory, title);
             this.gui = new ControlGui(this, control);
             if (vanilla) this.gui.applyTheme(Theme.vanilla());
+        }
+
+        @Override
+        protected void init() {
+            super.init();
+            gui.init();
         }
 
         @Override

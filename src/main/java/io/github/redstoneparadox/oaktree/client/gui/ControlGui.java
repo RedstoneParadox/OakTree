@@ -20,6 +20,8 @@ public final class ControlGui {
     private final ScreenHooks screen;
     private final Control<?> root;
 
+    private boolean initialized = false;
+
     private boolean leftMouseClicked = false;
     private boolean leftMouseHeld = false;
 
@@ -41,7 +43,15 @@ public final class ControlGui {
 
     }
 
+    public void init() {
+        if (initialized) return;
+        root.setup(screen.getClient(), this);
+        initialized = true;
+    }
+
     public void draw(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        if (!initialized) return;
+
         Window window = screen.getClient().getWindow();
         MouseHooks mouse = (MouseHooks) screen.getClient().mouse;
 
@@ -148,6 +158,6 @@ public final class ControlGui {
 
     public void applyTheme(Theme theme) {
         this.theme = theme;
-        root.setup(screen.getClient(), this);
+        if (initialized) root.setup(screen.getClient(), this);
     }
 }

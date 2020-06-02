@@ -2,20 +2,25 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.class_5348;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class LabelControl extends Control<LabelControl> implements TextControl<LabelControl> {
+    public @NotNull Text text = LiteralText.EMPTY;
     public boolean shadow = false;
     public RGBAColor fontColor = RGBAColor.white();
     public int maxLines = 1;
-    public @NotNull Text text = new LiteralText("");
+    public boolean resizable = false;
+
+    private @Nullable TextRenderer renderer = null;
 
     public LabelControl() {
         this.id = "label";
@@ -29,8 +34,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
      * @return The control itself.
      */
     public LabelControl text(String text) {
-        this.text = new LiteralText(text);
-        return this;
+        return this.text(new LiteralText(text));
     }
 
     /**
@@ -45,13 +49,27 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
         return this;
     }
 
+    public LabelControl text(List<Text> texts) {
+        if (resizable && renderer != null) {
+            for (Text text: texts) {
+                this.area.width = Math.max(this.area.width, renderer.getWidth(text));
+            }
+
+            this.area.width += 4;
+            area.height = renderer.fontHeight * texts.size() + 4;
+        }
+
+        this.text = combine(texts);
+        return this;
+    }
+
     /**
      * Clears the LabelControl
      *
      * @return The control itself.
      */
     public LabelControl clear() {
-        this.text = new LiteralText("");
+        this.text = LiteralText.EMPTY;
         return this;
     }
 
@@ -89,16 +107,27 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
         return this;
     }
 
+    public LabelControl resizable(boolean resizable) {
+        this.resizable = resizable;
+        return this;
+    }
+
+    @Override
+    public void setup(MinecraftClient client, ControlGui gui) {
+        super.setup(client, gui);
+        this.renderer = gui.getTextRenderer();
+    }
+
     @Override
     public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-        TextRenderer renderer = gui.getTextRenderer();
 
-        List<class_5348> lines = wrapText(text, renderer, area.width, 0, maxLines, shadow);
-
-        for (class_5348 line: lines) {
-            drawText(matrices, line, renderer, trueX, trueY, shadow, fontColor);
+        if (renderer != null) {
+            List<class_5348> lines = wrapText(text, renderer, area.width, 0, maxLines, shadow);
+            for (class_5348 line: lines) {
+                drawText(matrices, line, renderer, trueX, trueY, shadow, fontColor);
+            }
         }
     }
 }

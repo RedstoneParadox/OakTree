@@ -12,7 +12,10 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +85,18 @@ public interface TextControl<TC extends TextControl> {
         else textRenderer.draw(matrices, string, x + 2, y + 2, colorInt);
     }
 
-    default List<class_5348> wrapText(class_5348 text, TextRenderer renderer, int width, int start, int max, boolean shadow) {
+    default Text combine(List<Text> texts) {
+        if (texts.isEmpty()) return new LiteralText("");
+
+        MutableText text = texts.get(0).shallowCopy();
+        for (int index = 1; index < texts.size(); index += 1) {
+            text.append(texts.get(index));
+        }
+
+        return text;
+    }
+
+    default List<class_5348> wrapText(class_5348 text, @NotNull TextRenderer renderer, int width, int start, int max, boolean shadow) {
         List<class_5348> lines;
         if (shadow) {
             lines = renderer.wrapLines(text, width - 1);
