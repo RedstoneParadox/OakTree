@@ -176,6 +176,11 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         });
     }
 
+    @Override
+    public void postDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+        super.postDraw(matrices, mouseX, mouseY, deltaTime, gui);
+    }
+
     private void combineStacks(ItemStack from, ItemStack to, int amount) {
         if (from.getCount() < amount) {
             combineStacks(from, to, from.getCount());

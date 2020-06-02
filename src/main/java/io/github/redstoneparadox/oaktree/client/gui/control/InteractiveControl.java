@@ -10,8 +10,8 @@ import org.jetbrains.annotations.Nullable;
 public abstract class InteractiveControl<C extends InteractiveControl<C>> extends Control<C> {
     public @Nullable Control<?> tooltip = null;
     public boolean lockTooltipPos = false;
-    public int tooltipOffsetX = 24;
-    public int tooltipOffsetY = -8;
+    public int tooltipOffsetX = 8;
+    public int tooltipOffsetY = -10;
 
     protected boolean isMouseWithin = false;
 
@@ -45,8 +45,7 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
     }
 
     @Override
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-        super.draw(matrices, mouseX, mouseY, deltaTime, gui);
+    public void postDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (tooltip != null) tooltip.draw(matrices, mouseX, mouseY, deltaTime, gui);
     }
 

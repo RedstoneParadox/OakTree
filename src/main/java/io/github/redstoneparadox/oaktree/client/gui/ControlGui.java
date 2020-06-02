@@ -86,6 +86,7 @@ public final class ControlGui {
         List<Control<?>> controlList = new ArrayList<>();
         root.zIndex(controlList);
         Collections.reverse(controlList);
+        InteractiveControl<?> hovered = null;
         boolean mouseCaptured = false;
         for (Control<?> control: controlList) {
             ScreenVec truePos = control.getTruePosition();
@@ -93,6 +94,7 @@ public final class ControlGui {
                 mouseCaptured = true;
                 if (control instanceof InteractiveControl<?>) {
                     ((InteractiveControl<?>)control).setMouseWithin(true);
+                    hovered = (InteractiveControl<?>) control;
                 }
             }
             else {
@@ -104,6 +106,7 @@ public final class ControlGui {
 
         root.preDraw(this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), mouseX, mouseY);
         root.draw(matrices, mouseX, mouseY, delta, this);
+        if (hovered != null) hovered.postDraw(matrices, mouseX, mouseY, delta, this);
 
         screen.setSize(root.area.width, root.area.height);
 

@@ -175,6 +175,18 @@ public class Control<C extends Control<C>> {
         currentStyle = defaultStyle;
     }
 
+    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+        if (!visible) return;
+
+        if (currentStyle != null) {
+            currentStyle.draw(trueX, trueY, area.width, area.height, gui);
+        }
+    }
+
+    public void postDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+
+    }
+
     void applyTheme(Theme theme) {
         defaultStyle = getStyle(theme, "default");
     }
@@ -184,13 +196,4 @@ public class Control<C extends Control<C>> {
         if (style == null && theme != null) style = theme.get(id + "/" + name);
         return style;
     }
-
-    public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-        if (!visible) return;
-
-        if (currentStyle != null) {
-            currentStyle.draw(trueX, trueY, area.width, area.height, gui);
-        }
-    }
-
 }
