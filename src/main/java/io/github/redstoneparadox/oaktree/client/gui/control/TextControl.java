@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import net.minecraft.class_5348;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -11,6 +12,7 @@ import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +80,31 @@ public interface TextControl<TC extends TextControl> {
 
         if (withShadow) textRenderer.drawWithShadow(matrices, string, x + 2, y + 2, colorInt);
         else textRenderer.draw(matrices, string, x + 2, y + 2, colorInt);
+    }
+
+    default List<class_5348> wrapText(class_5348 text, TextRenderer renderer, int width, int start, int max, boolean shadow) {
+        List<class_5348> lines;
+        if (shadow) {
+            lines = renderer.wrapLines(text, width - 1);
+        }
+        else {
+            lines = renderer.wrapLines(text, width);
+        }
+
+        if (start + max <= lines.size()) return lines.subList(start, max);
+        else if (start < lines.size()) return lines.subList(start, lines.size());
+        return lines;
+    }
+
+    default void drawText(MatrixStack matrices, class_5348 text, TextRenderer renderer, int x, int y, boolean shadow, RGBAColor fontColor) {
+        int redInt = (int) fontColor.redChannel * 255;
+        int greenInt = (int) fontColor.greenChannel * 255;
+        int blueInt = (int) fontColor.blueChannel * 255;
+
+        int colorInt = redInt << 16 | greenInt << 8 | blueInt;
+
+        if (shadow) renderer.drawWithShadow(matrices, text, x + 2, y + 2, colorInt);
+        else renderer.draw(matrices, text, x + 2, y + 2, colorInt);
     }
 
     default void drawHighlights(String string, TextRenderer renderer, int x, int y, RGBAColor highlightColor) {

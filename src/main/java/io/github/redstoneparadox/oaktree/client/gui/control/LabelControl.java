@@ -1,10 +1,13 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import net.minecraft.class_5348;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -12,8 +15,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
     public boolean shadow = false;
     public RGBAColor fontColor = RGBAColor.white();
     public int maxLines = 1;
-
-    public String text = "";
+    public @NotNull Text text = new LiteralText("");
 
     public LabelControl() {
         this.id = "label";
@@ -27,7 +29,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
      * @return The control itself.
      */
     public LabelControl text(String text) {
-        this.text = text;
+        this.text = new LiteralText(text);
         return this;
     }
 
@@ -39,7 +41,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
      * @return The control itself.
      */
     public LabelControl text(Text text) {
-        this.text = text.getString();
+        this.text = text;
         return this;
     }
 
@@ -49,7 +51,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
      * @return The control itself.
      */
     public LabelControl clear() {
-        text = "";
+        this.text = new LiteralText("");
         return this;
     }
 
@@ -91,15 +93,12 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
     public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (!visible) return;
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-        if (!text.isEmpty()) {
-            List<String> lines = wrapLines(text, gui, area.width, maxLines, shadow);
-            text = combine(lines, true);
+        TextRenderer renderer = gui.getTextRenderer();
 
-            int offset = 0;
-            for (String line: lines) {
-                drawString(matrices, line, gui, trueX, trueY + offset*10, ControlAnchor.CENTER, shadow, fontColor);
-                offset += 1;
-            }
+        List<class_5348> lines = wrapText(text, renderer, area.width, 0, maxLines, shadow);
+
+        for (class_5348 line: lines) {
+            drawText(matrices, line, renderer, trueX, trueY, shadow, fontColor);
         }
     }
 }
