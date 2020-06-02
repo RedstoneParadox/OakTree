@@ -165,7 +165,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                 int itemX = (area.width - 16)/2 + trueX;
                 int itemY = (area.height - 16)/2 + trueY;
 
-                renderer.renderGuiItemIcon(stack, itemX, itemY);
+                renderer.renderGuiItem(stack, itemX, itemY);
                 TextRenderer textRenderer = gui.getTextRenderer();
                 renderer.renderGuiItemOverlay(textRenderer, stack, itemX, itemY);
 
@@ -174,11 +174,6 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                 }
             }
         });
-    }
-
-    @Override
-    public void postDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-        super.postDraw(matrices, mouseX, mouseY, deltaTime, gui);
     }
 
     private void combineStacks(ItemStack from, ItemStack to, int amount) {
