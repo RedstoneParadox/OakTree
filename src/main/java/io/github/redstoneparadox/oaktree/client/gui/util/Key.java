@@ -1,7 +1,10 @@
 package io.github.redstoneparadox.oaktree.client.gui.util;
 
 import net.minecraft.client.gui.screen.Screen;
+import org.jetbrains.annotations.ApiStatus;
 
+@Deprecated
+@ApiStatus.ScheduledForRemoval
 public enum Key {
     NONE,
     BACKSPACE,
