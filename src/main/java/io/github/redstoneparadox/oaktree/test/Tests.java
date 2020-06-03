@@ -4,8 +4,7 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
-import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
+import io.github.redstoneparadox.oaktree.client.geometry.Direction2D;
 import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
@@ -244,7 +243,7 @@ public class Tests {
         )
                 .size(40, 20)
                 .id("button")
-                .dropdownDirection(ControlDirection.LEFT)
+                .dropdownDirection(Direction2D.LEFT)
                 .anchor(ControlAnchor.CENTER);
 
         DropdownControl rightDropdown = new DropdownControl(
@@ -256,7 +255,7 @@ public class Tests {
         )
                 .size(40, 20)
                 .id("button")
-                .dropdownDirection(ControlDirection.RIGHT)
+                .dropdownDirection(Direction2D.RIGHT)
                 .anchor(ControlAnchor.CENTER);
 
 

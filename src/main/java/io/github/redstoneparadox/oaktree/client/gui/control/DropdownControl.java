@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
+import io.github.redstoneparadox.oaktree.client.geometry.Direction2D;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DropdownControl extends InteractiveControl<DropdownControl> {
     @NotNull public Control<?> dropdown;
-    @NotNull public ControlDirection dropdownDirection = ControlDirection.DOWN;
+    @NotNull public Direction2D dropdownDirection = Direction2D.DOWN;
 
     public DropdownControl(@NotNull Control<?> dropdown) {
         this.dropdown = dropdown;
@@ -24,7 +24,7 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
         return this;
     }
 
-    public DropdownControl dropdownDirection(@NotNull ControlDirection dropdownDirection) {
+    public DropdownControl dropdownDirection(@NotNull Direction2D dropdownDirection) {
         this.dropdownDirection = dropdownDirection;
         return this;
     }

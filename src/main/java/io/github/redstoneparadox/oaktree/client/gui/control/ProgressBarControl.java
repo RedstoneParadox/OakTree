@@ -2,7 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.Style;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
+import io.github.redstoneparadox.oaktree.client.geometry.Direction2D;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -17,7 +17,7 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
     int barWidth = 1;
     int barHeight = 1;
 
-    ControlDirection direction = ControlDirection.RIGHT;
+    Direction2D direction = Direction2D.RIGHT;
 
     public ProgressBarControl() {
         this.id = "progress_bar";
@@ -61,15 +61,15 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
     }
 
     /**
-     * Sets the {@link ControlDirection} for the bar to be
-     * drawn in. A values of {@link ControlDirection#DOWN}
+     * Sets the {@link Direction2D} for the bar to be
+     * drawn in. A values of {@link Direction2D#DOWN}
      * means that the progress bar will be drawn
      * downwards.
      *
      * @param direction The direction to face.
      * @return The node itself.
      */
-    public ProgressBarControl drawDirection(ControlDirection direction) {
+    public ProgressBarControl drawDirection(Direction2D direction) {
         this.direction = direction;
         return this;
     }
