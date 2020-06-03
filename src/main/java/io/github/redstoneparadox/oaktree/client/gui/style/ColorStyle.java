@@ -6,7 +6,7 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
-import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 
 public class ColorStyle extends Style {
 
@@ -36,10 +36,10 @@ public class ColorStyle extends Style {
         GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
         GlStateManager.blendColor(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
 
-        ScreenVec vert1 = new ScreenVec(x, y);
-        ScreenVec vert2 = new ScreenVec(x, y + height);
-        ScreenVec vert3 = new ScreenVec(x + width, y + height);
-        ScreenVec vert4 = new ScreenVec(x + width, y);
+        Vector2D vert1 = new Vector2D(x, y);
+        Vector2D vert2 = new Vector2D(x, y + height);
+        Vector2D vert3 = new Vector2D(x + width, y + height);
+        Vector2D vert4 = new Vector2D(x + width, y);
 
         if (mirroredHorizontal) {
             vert1.x = vert1.x - width;
@@ -76,10 +76,10 @@ public class ColorStyle extends Style {
         GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
         GlStateManager.color4f(borderColor.redChannel, borderColor.greenChannel, borderColor.blueChannel, borderColor.alphaChannel);
 
-        ScreenVec vert1 = new ScreenVec(x - borderWidth, y - borderWidth);
-        ScreenVec vert2 = new ScreenVec(x - borderWidth, y + height + borderWidth);
-        ScreenVec vert3 = new ScreenVec(x + width + borderWidth, y + height + borderWidth);
-        ScreenVec vert4 = new ScreenVec(x + width + borderWidth, y - borderWidth);
+        Vector2D vert1 = new Vector2D(x - borderWidth, y - borderWidth);
+        Vector2D vert2 = new Vector2D(x - borderWidth, y + height + borderWidth);
+        Vector2D vert3 = new Vector2D(x + width + borderWidth, y + height + borderWidth);
+        Vector2D vert4 = new Vector2D(x + width + borderWidth, y - borderWidth);
 
         if (mirroredHorizontal) {
             vert1.x = vert1.x - width;

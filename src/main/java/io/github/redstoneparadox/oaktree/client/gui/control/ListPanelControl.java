@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 
 public class ListPanelControl extends PanelControl<ListPanelControl> {
     public boolean horizontal = false;
@@ -38,8 +38,8 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
     void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
         if (!horizontal) {
             int sectionHeight = area.height/displayCount;
-            ScreenVec innerDimensions = innerDimensions(area.width, sectionHeight);
-            ScreenVec innerPosition = innerPosition(trueX, trueY);
+            Vector2D innerDimensions = innerDimensions(area.width, sectionHeight);
+            Vector2D innerPosition = innerPosition(trueX, trueY);
 
             for (int i = 0; i < displayCount; i += 1) {
                 int entryY = innerPosition.y + (i * sectionHeight);
@@ -50,8 +50,8 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
         }
         else {
             int sectionWidth = area.width/displayCount;
-            ScreenVec innerDimensions = innerDimensions(sectionWidth, area.height);
-            ScreenVec innerPosition = innerPosition(trueX, trueY);
+            Vector2D innerDimensions = innerDimensions(sectionWidth, area.height);
+            Vector2D innerPosition = innerPosition(trueX, trueY);
 
             for (int i = 0; i < displayCount; i += 1) {
                 int entryX = innerPosition.x + (i * sectionWidth);

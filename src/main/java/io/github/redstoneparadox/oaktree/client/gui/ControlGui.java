@@ -3,7 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 import io.github.redstoneparadox.oaktree.client.gui.control.InteractiveControl;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
-import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
@@ -89,7 +89,7 @@ public final class ControlGui {
         InteractiveControl<?> hovered = null;
         boolean mouseCaptured = false;
         for (Control<?> control: controlList) {
-            ScreenVec truePos = control.getTruePosition();
+            Vector2D truePos = control.getTruePosition();
             if (control.area.offset(truePos.x, truePos.y).isPointWithin(mouseX, mouseY) && !mouseCaptured) {
                 mouseCaptured = true;
                 if (control instanceof InteractiveControl<?>) {

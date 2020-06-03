@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -77,8 +77,8 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
     }
 
     void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
-        ScreenVec innerPosition = innerPosition(trueX, trueY);
-        ScreenVec innerDimensions = innerDimensions(area.width, area.height);
+        Vector2D innerPosition = innerPosition(trueX, trueY);
+        Vector2D innerDimensions = innerDimensions(area.width, area.height);
 
         for (Control<?> child: children) {
             if (child != null) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);

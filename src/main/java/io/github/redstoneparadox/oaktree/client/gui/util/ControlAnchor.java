@@ -1,5 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.util;
 
+import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
+
 public enum ControlAnchor {
     TOP_LEFT,
     TOP_CENTER,
@@ -11,8 +13,8 @@ public enum ControlAnchor {
     BOTTOM_CENTER,
     BOTTOM_RIGHT;
 
-    public ScreenVec getOffset(int width, int height) {
-        ScreenVec offset = new ScreenVec();
+    public Vector2D getOffset(int width, int height) {
+        Vector2D offset = new Vector2D();
 
         if (this == TOP_CENTER || this == CENTER || this == BOTTOM_CENTER) {
             offset.x = width/2;

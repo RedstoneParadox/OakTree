@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
@@ -28,7 +28,7 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
         if (tooltip != null) {
             tooltip.expand = false;
 
-            ScreenVec mousePos = relativeMousePosition(mouseX, mouseY);
+            Vector2D mousePos = relativeMousePosition(mouseX, mouseY);
 
             if (isMouseWithin) {
                 if (!tooltip.visible || !lockTooltipPos) {
@@ -49,8 +49,8 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
         if (tooltip != null) tooltip.draw(matrices, mouseX, mouseY, deltaTime, gui);
     }
 
-    protected ScreenVec relativeMousePosition(int mouseX, int mouseY) {
-        return new ScreenVec(mouseX - trueX, mouseY - trueY);
+    protected Vector2D relativeMousePosition(int mouseX, int mouseY) {
+        return new Vector2D(mouseX - trueX, mouseY - trueY);
     }
 
     @ApiStatus.Internal

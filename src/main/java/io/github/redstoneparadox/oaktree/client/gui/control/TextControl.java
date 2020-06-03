@@ -10,7 +10,7 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
-import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
+import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
@@ -125,10 +125,10 @@ public interface TextControl<TC extends TextControl> {
         int width = renderer.getWidth(string);
         int height = renderer.fontHeight;
 
-        ScreenVec vert1 = new ScreenVec(x + 1, y + 1);
-        ScreenVec vert2 = new ScreenVec(x + 1, y + 3 + height);
-        ScreenVec vert3 = new ScreenVec(x + 3 + width, y + 3 + height);
-        ScreenVec vert4 = new ScreenVec(x + 3 + width, y + 1);
+        Vector2D vert1 = new Vector2D(x + 1, y + 1);
+        Vector2D vert2 = new Vector2D(x + 1, y + 3 + height);
+        Vector2D vert3 = new Vector2D(x + 3 + width, y + 3 + height);
+        Vector2D vert4 = new Vector2D(x + 3 + width, y + 1);
 
         float red = highlightColor.redChannel * 255;
         float green = highlightColor.greenChannel * 255;

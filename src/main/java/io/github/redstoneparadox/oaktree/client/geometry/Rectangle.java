@@ -1,12 +1,12 @@
-package io.github.redstoneparadox.oaktree.client.gui.util;
+package io.github.redstoneparadox.oaktree.client.geometry;
 
-public class ScreenRect {
+public class Rectangle {
     public int x;
     public int y;
     public int width;
     public int height;
 
-    public ScreenRect(int x, int y, int width, int height) {
+    public Rectangle(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -17,7 +17,7 @@ public class ScreenRect {
         return pointX >= x && pointY >= y && pointX <= x + width && pointY <= y + height;
     }
 
-    public ScreenRect offset(int offsetX, int offsetY) {
-        return new ScreenRect(x + offsetX, y + offsetY, width, height);
+    public Rectangle offset(int offsetX, int offsetY) {
+        return new Rectangle(x + offsetX, y + offsetY, width, height);
     }
 }
