@@ -5,7 +5,6 @@ import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
 import net.minecraft.client.MinecraftClient;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -19,7 +18,7 @@ public class Control<C extends Control<C>> {
     public final Rectangle area = new Rectangle(0, 0, 1, 1);
 
     public boolean visible = true;
-    public ControlAnchor anchor = ControlAnchor.TOP_LEFT;
+    public Anchor anchor = Anchor.TOP_LEFT;
     public BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
     public Style defaultStyle = null;
     public boolean expand = false;
@@ -115,15 +114,15 @@ public class Control<C extends Control<C>> {
 
     /**
      * Anchors the position of this node relative to the parent using
-     * a {@link ControlAnchor}. For example, a value of
-     * {@link ControlAnchor#CENTER} and a position of (10, 0)
+     * a {@link Anchor}. For example, a value of
+     * {@link Anchor#CENTER} and a position of (10, 0)
      * will result in the node being placed 10 pixels to the left of
      * the parent node's center.
      *
-     * @param anchor The {@link ControlAnchor} to anchor to.
+     * @param anchor The {@link Anchor} to anchor to.
      * @return The node itself.
      */
-    public C anchor(ControlAnchor anchor) {
+    public C anchor(Anchor anchor) {
         this.anchor = anchor;
         return (C)this;
     }

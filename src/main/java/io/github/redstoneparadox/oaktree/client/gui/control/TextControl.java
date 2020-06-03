@@ -8,7 +8,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 import net.minecraft.client.util.math.MatrixStack;
@@ -72,7 +71,7 @@ public interface TextControl<TC extends TextControl> {
         return builder.toString();
     }
 
-    default void drawString(MatrixStack matrices, String string, ControlGui gui, float x, float y, ControlAnchor alignment, boolean withShadow, RGBAColor fontColor) {
+    default void drawString(MatrixStack matrices, String string, ControlGui gui, float x, float y, Anchor alignment, boolean withShadow, RGBAColor fontColor) {
         int redInt = (int) fontColor.redChannel * 255;
         int greenInt = (int) fontColor.greenChannel * 255;
         int blueInt = (int) fontColor.blueChannel * 255;
