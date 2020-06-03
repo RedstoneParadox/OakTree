@@ -3,13 +3,14 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
-import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
+
+import java.util.function.BiConsumer;
 
 public class HoverControl extends InteractiveControl<HoverControl> {
 
-    public GuiFunction<HoverControl> mouseEnter = ((gui, node) -> {});
-    public GuiFunction<HoverControl> mouseExit = ((gui, node) -> {});
-    public GuiFunction<HoverControl> whileHovered = ((gui, node) -> {});
+    public BiConsumer<ControlGui, HoverControl> mouseEnter = (gui, node) -> {};
+    public BiConsumer<ControlGui, HoverControl> mouseExit = (gui, node) -> {};
+    public BiConsumer<ControlGui, HoverControl> whileHovered = (gui, node) -> {};
 
     private boolean mouseCurrentlyWithin = false;
 
@@ -25,17 +26,17 @@ public class HoverControl extends InteractiveControl<HoverControl> {
         return this;
     }
 
-    public HoverControl onMouseEnter(GuiFunction<HoverControl> listener) {
+    public HoverControl onMouseEnter(BiConsumer<ControlGui, HoverControl> listener) {
         mouseEnter = listener;
         return this;
     }
 
-    public HoverControl onMouseExit(GuiFunction<HoverControl> listener) {
+    public HoverControl onMouseExit(BiConsumer<ControlGui, HoverControl> listener) {
         mouseExit = listener;
         return this;
     }
 
-    public HoverControl whileMouseHovers(GuiFunction<HoverControl> listener) {
+    public HoverControl whileMouseHovers(BiConsumer<ControlGui, HoverControl> listener) {
         whileHovered = listener;
         return this;
     }
@@ -47,15 +48,15 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 
         if (!mouseCurrentlyWithin && isMouseWithin) {
             mouseCurrentlyWithin = true;
-            mouseEnter.invoke(gui, this);
+            mouseEnter.accept(gui, this);
         }
         else if (mouseCurrentlyWithin && !isMouseWithin) {
             mouseCurrentlyWithin = false;
-            mouseExit.invoke(gui, this);
+            mouseExit.accept(gui, this);
         }
 
         if (mouseCurrentlyWithin) {
-            whileHovered.invoke(gui, this);
+            whileHovered.accept(gui, this);
         }
 
         if (mouseCurrentlyWithin && hoverStyle != null) {

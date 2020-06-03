@@ -2,15 +2,18 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.*;
+import io.github.redstoneparadox.oaktree.util.TriFunction;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * @apiNote  Work in Progress!
@@ -36,10 +39,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     public int maxLines = 1;
     public int displayedLines = 1;
 
-    public TypingListener<TextEditControl> onCharTyped = (character, control) -> character;
-    public GuiFunction<TextEditControl> onFocused = (gui, control) -> {};
-    public GuiFunction<TextEditControl> onFocusLost = (gui, control) -> {};
-    public GuiFunction<TextEditControl> onEnter = (gui, control) -> {};
+    public TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped = (gui, control, character) -> character;
+    public BiConsumer<ControlGui, TextEditControl> onFocused = (gui, control) -> {};
+    public BiConsumer<ControlGui, TextEditControl> onFocusLost = (gui, control) -> {};
+    public BiConsumer<ControlGui, TextEditControl> onEnter = (gui, control) -> {};
 
 
     public TextEditControl() {
@@ -47,34 +50,34 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     }
 
     /**
-     * Sets a {@link TypingListener} to run when a character is typed.
+     * Sets a {@link TriFunction} to run when a character is typed.
      *
      * @param onCharTyped The function.
      * @return The control itself.
      */
-    public TextEditControl onCharTyped(TypingListener<TextEditControl> onCharTyped) {
+    public TextEditControl onCharTyped(TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped) {
         this.onCharTyped = onCharTyped;
         return this;
     }
 
     /**
-     * Sets a {@link GuiFunction} to run when the TextEditControl gains focus.
+     * Sets a {@link BiConsumer} to run when the TextEditControl gains focus.
      *
      * @param onFocused The function.
      * @return The control itself.
      */
-    public TextEditControl onFocused(GuiFunction<TextEditControl> onFocused) {
+    public TextEditControl onFocused(BiConsumer<ControlGui, TextEditControl> onFocused) {
         this.onFocused = onFocused;
         return this;
     }
 
     /**
-     * Sets a {@link GuiFunction} to run when the TextEditControl loses focus.
+     * Sets a {@link BiConsumer} to run when the TextEditControl loses focus.
      *
      * @param onFocusLost The function.
      * @return The control itself.
      */
-    public TextEditControl onFocusLost(GuiFunction<TextEditControl> onFocusLost) {
+    public TextEditControl onFocusLost(BiConsumer<ControlGui, TextEditControl> onFocusLost) {
         this.onFocusLost = onFocusLost;
         return this;
     }
@@ -187,9 +190,14 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
                         deleteSelection(gui);
                         cursor.toSelectionStart();
                     }
-                    insertCharacter(onCharTyped.invoke(gui.getLastChar().get(), this), gui);
-                    cursor.moveRight();
-                    if (oldSize + 1 == lines.size()) cursor.moveRight();
+
+                    @Nullable Character character = onCharTyped.apply(gui, this, gui.getLastChar().get());
+
+                    if (character != null) {
+                        insertCharacter(character, gui);
+                        cursor.moveRight();
+                        if (oldSize + 1 == lines.size()) cursor.moveRight();
+                    }
                 }
                 long handle = MinecraftClient.getInstance().getWindow().getHandle();
 
@@ -248,7 +256,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
                 if (enter(handle)) {
                     if (enterTicks == 0 || enterTicks > 20 && enterTicks % 2 == 0) {
-                        onEnter.invoke(gui, this);
+                        onEnter.accept(gui, this);
                         if (selection.active) {
                             deleteSelection(gui);
                             cursor.toSelectionStart();
@@ -371,14 +379,14 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
         if (gui.mouseButtonJustClicked("left")) {
             if (isMouseWithin && !focused) {
                 focused = true;
-                onFocused.invoke(gui, this);
+                onFocused.accept(gui, this);
                 cursorTicks = 0;
             }
             else if (focused) {
                 focused = false;
                 selection.cancel();
                 cursor.toStart();
-                onFocusLost.invoke(gui, this);
+                onFocusLost.accept(gui, this);
             }
             else {
                 selection.cancel();

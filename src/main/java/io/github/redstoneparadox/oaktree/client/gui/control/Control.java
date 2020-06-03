@@ -6,11 +6,11 @@ import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
 import net.minecraft.client.MinecraftClient;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
-import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * The base class for all controls.
@@ -20,7 +20,7 @@ public class Control<C extends Control<C>> {
 
     public boolean visible = true;
     public ControlAnchor anchor = ControlAnchor.TOP_LEFT;
-    public GuiFunction<C> onTick = (gui, control) -> {};
+    public BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
     public Style defaultStyle = null;
     public boolean expand = false;
     public String id;
@@ -135,7 +135,7 @@ public class Control<C extends Control<C>> {
      * @param function the function to run.
      * @return The node itself.
      */
-    public C onTick(GuiFunction<C> function) {
+    public C onTick(BiConsumer<ControlGui, C> function) {
         onTick = function;
         return (C)this;
     }
@@ -156,7 +156,7 @@ public class Control<C extends Control<C>> {
     public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
         if (!visible) return;
 
-        onTick.invoke(gui, (C)this);
+        onTick.accept(gui, (C)this);
 
         if (!expand) {
             Vector2D anchorOffset = anchor.getOffset(containerWidth, containerHeight);

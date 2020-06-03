@@ -3,13 +3,14 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
-import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
+
+import java.util.function.BiConsumer;
 
 public class ButtonControl extends InteractiveControl<ButtonControl> {
 
-    public GuiFunction<ButtonControl> onClick = (((gui, node) -> {}));
-    public GuiFunction<ButtonControl> whileHeld = (((gui, node) -> {}));
-    public GuiFunction<ButtonControl> onRelease = (((gui, node) -> {}));
+    public BiConsumer<ControlGui, ButtonControl> onClick = (gui, node) -> {};
+    public BiConsumer<ControlGui, ButtonControl> whileHeld = (gui, node) -> {};
+    public BiConsumer<ControlGui, ButtonControl> onRelease = (gui, node) -> {};
 
     public boolean toggleable = false;
 
@@ -40,17 +41,17 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
         return this;
     }
 
-    public ButtonControl onClick(GuiFunction<ButtonControl> listener) {
+    public ButtonControl onClick(BiConsumer<ControlGui, ButtonControl> listener) {
         onClick = listener;
         return this;
     }
 
-    public ButtonControl whileHeld(GuiFunction<ButtonControl> listener) {
+    public ButtonControl whileHeld(BiConsumer<ControlGui, ButtonControl> listener) {
         whileHeld = listener;
         return this;
     }
 
-    public ButtonControl onRelease(GuiFunction<ButtonControl> listener) {
+    public ButtonControl onRelease(BiConsumer<ControlGui, ButtonControl> listener) {
         onRelease = listener;
         return this;
     }
@@ -66,14 +67,14 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
                     held = !held;
 
                     if (held) {
-                        whileHeld.invoke(gui, this);
+                        whileHeld.accept(gui, this);
                     }
                     else {
-                        onRelease.invoke(gui, this);
+                        onRelease.accept(gui, this);
                     }
                 }
                 else if (gui.mouseButtonHeld("left") && held) {
-                    whileHeld.invoke(gui, this);
+                    whileHeld.accept(gui, this);
                 }
                 else if (!held){
                     hovered = true;
@@ -84,14 +85,14 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
             if (isMouseWithin) {
                 if (gui.mouseButtonHeld("left") && !held) {
                     held = true;
-                    onClick.invoke(gui, this);
+                    onClick.accept(gui, this);
                 }
                 else if (held && gui.mouseButtonHeld("left")) {
-                    whileHeld.invoke(gui, this);
+                    whileHeld.accept(gui, this);
                 }
                 else if (held && !gui.mouseButtonHeld("left")) {
                     held = false;
-                    onRelease.invoke(gui, this);
+                    onRelease.accept(gui, this);
                 }
                 else if (!held) {
                     hovered = true;
@@ -99,7 +100,7 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
             }
             else if (held) {
                 held = false;
-                onRelease.invoke(gui, this);
+                onRelease.accept(gui, this);
             }
         }
 

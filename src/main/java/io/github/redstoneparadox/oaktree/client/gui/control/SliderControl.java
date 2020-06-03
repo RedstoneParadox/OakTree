@@ -3,16 +3,17 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
-import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.BiConsumer;
 
 public class SliderControl extends InteractiveControl<SliderControl> {
     public Style sliderStyle = null;
     public float scrollPercent = 0.0f;
     public boolean horizontal = false;
 
-    @NotNull public GuiFunction<SliderControl> onSlide = (gui, control) -> {};
+    @NotNull public BiConsumer<ControlGui, SliderControl> onSlide = (gui, control) -> {};
 
     public int barLength = 1;
 
@@ -40,7 +41,7 @@ public class SliderControl extends InteractiveControl<SliderControl> {
         return this;
     }
 
-    public SliderControl onSlide(@NotNull GuiFunction<SliderControl> onSlide) {
+    public SliderControl onSlide(@NotNull BiConsumer<ControlGui, SliderControl> onSlide) {
         this.onSlide = onSlide;
         return this;
     }
@@ -57,7 +58,7 @@ public class SliderControl extends InteractiveControl<SliderControl> {
                 scrollPercent = Math.max(0.0f, Math.min(((float)mouseY - trueY)/(area.height - barLength) * 100.0f, 100.0f));
             }
 
-            onSlide.invoke(gui, this);
+            onSlide.accept(gui, this);
         }
     }
 
