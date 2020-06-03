@@ -1,14 +1,14 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 
 public class SliderControl extends InteractiveControl<SliderControl> {
-    public StyleBox sliderStyle = null;
+    public Style sliderStyle = null;
     public float scrollPercent = 0.0f;
     public boolean horizontal = false;
 
@@ -20,7 +20,7 @@ public class SliderControl extends InteractiveControl<SliderControl> {
         this.id = "slider";
     }
 
-    public SliderControl sliderStyle(StyleBox sliderStyle) {
+    public SliderControl sliderStyle(Style sliderStyle) {
         this.sliderStyle = sliderStyle;
         return this;
     }

@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlDirection;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -10,7 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
  */
 public class ProgressBarControl extends Control<ProgressBarControl> {
 
-    StyleBox barStyle = null;
+    Style barStyle = null;
 
     public float percent = 100.0f;
 
@@ -24,12 +24,12 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
     }
 
     /**
-     * Sets the {@link StyleBox} for the progress bar.
+     * Sets the {@link Style} for the progress bar.
      *
-     * @param style The {@link StyleBox} to draw.
+     * @param style The {@link Style} to draw.
      * @return The node itself.
      */
-    public ProgressBarControl barStyle(StyleBox style) {
+    public ProgressBarControl barStyle(Style style) {
         barStyle = style;
         return this;
     }

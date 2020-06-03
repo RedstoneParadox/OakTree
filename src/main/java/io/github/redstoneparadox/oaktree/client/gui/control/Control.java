@@ -1,10 +1,10 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenRect;
 import net.minecraft.client.MinecraftClient;
-import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
 import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
@@ -21,11 +21,11 @@ public class Control<C extends Control<C>> {
     public boolean visible = true;
     public ControlAnchor anchor = ControlAnchor.TOP_LEFT;
     public GuiFunction<C> onTick = (gui, control) -> {};
-    public StyleBox defaultStyle = null;
+    public Style defaultStyle = null;
     public boolean expand = false;
     public String id;
 
-    StyleBox currentStyle = null;
+    Style currentStyle = null;
     Theme internalTheme = new Theme();
 
     int trueX = 0;
@@ -100,14 +100,14 @@ public class Control<C extends Control<C>> {
     }
 
     /**
-     * Sets the default {@link StyleBox} for this node. For most
+     * Sets the default {@link Style} for this node. For most
      * nodes, this is the only style, but some will have multiple
      * styles so it is considered the default style.
      *
      * @param style The StyleBox for this node.
      * @return The node itself.
      */
-    public C defaultStyle(StyleBox style) {
+    public C defaultStyle(Style style) {
         defaultStyle = style;
         internalTheme.add("self", style);
         return (C)this;
@@ -191,8 +191,8 @@ public class Control<C extends Control<C>> {
         defaultStyle = getStyle(theme, "default");
     }
 
-    final StyleBox getStyle(Theme theme, String name) {
-        StyleBox style = internalTheme.get("self/" + name);
+    final Style getStyle(Theme theme, String name) {
+        Style style = internalTheme.get("self/" + name);
         if (style == null && theme != null) style = theme.get(id + "/" + name);
         return style;
     }

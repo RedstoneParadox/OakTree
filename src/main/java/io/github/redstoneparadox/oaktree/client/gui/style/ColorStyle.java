@@ -8,19 +8,19 @@ import net.minecraft.client.render.VertexFormats;
 import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
 import io.github.redstoneparadox.oaktree.client.gui.util.ScreenVec;
 
-public class ColorStyleBox extends StyleBox {
+public class ColorStyle extends Style {
 
     private RGBAColor color;
     private RGBAColor borderColor;
     private int borderWidth;
 
-    public ColorStyleBox(RGBAColor color, RGBAColor borderColor, int borderWidth) {
+    public ColorStyle(RGBAColor color, RGBAColor borderColor, int borderWidth) {
         this.color = color;
         this.borderColor = borderColor;
         this.borderWidth = borderWidth;
     }
 
-    public ColorStyleBox(RGBAColor color) {
+    public ColorStyle(RGBAColor color) {
         this(color, null, 1);
     }
 

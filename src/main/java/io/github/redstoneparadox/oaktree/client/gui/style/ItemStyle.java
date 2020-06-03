@@ -11,23 +11,23 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.registry.Registry;
 
-public class ItemStyleBox extends StyleBox {
+public class ItemStyle extends Style {
 
     private ItemStack stack;
 
-    public ItemStyleBox(Identifier identifier, int count) {
+    public ItemStyle(Identifier identifier, int count) {
         this.stack = new ItemStack(Registry.ITEM.get(identifier), count);
     }
 
-    public ItemStyleBox(Identifier identifier) {
+    public ItemStyle(Identifier identifier) {
         this(identifier, 1);
     }
 
-    public ItemStyleBox(String identifier) {
+    public ItemStyle(String identifier) {
         this(new Identifier(identifier), 1);
     }
 
-    public ItemStyleBox(String identifier, int count) {
+    public ItemStyle(String identifier, int count) {
         this(new Identifier(identifier), count);
     }
 

@@ -7,7 +7,7 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
  * can be drawn as a color or texture, so this class and its children were created to
  * reduce redundancy.
  */
-public abstract class StyleBox {
+public abstract class Style {
 
     public abstract void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical);
 

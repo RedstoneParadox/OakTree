@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.style.StyleBox;
+import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.util.GuiFunction;
 
@@ -16,8 +16,8 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
     private boolean held = false;
     private boolean hovered = false;
 
-    public StyleBox heldStyle = null;
-    public StyleBox hoverStyle = null;
+    public Style heldStyle = null;
+    public Style hoverStyle = null;
 
     public ButtonControl() {
         this.id = "button";
@@ -28,13 +28,13 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
         return this;
     }
 
-    public ButtonControl heldStyle(StyleBox heldStyle) {
+    public ButtonControl heldStyle(Style heldStyle) {
         this.heldStyle = heldStyle;
         internalTheme.add("self", "held", heldStyle);
         return this;
     }
 
-    public ButtonControl hoverStyle(StyleBox hoverStyle) {
+    public ButtonControl hoverStyle(Style hoverStyle) {
         this.hoverStyle = hoverStyle;
         internalTheme.add("self", "hover", hoverStyle);
         return this;

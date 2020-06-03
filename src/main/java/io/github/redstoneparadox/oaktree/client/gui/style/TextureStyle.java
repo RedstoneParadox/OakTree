@@ -10,7 +10,7 @@ import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
-public class TextureStyleBox extends StyleBox {
+public class TextureStyle extends Style {
     Identifier textureID;
     int drawLeft = 0;
     int drawTop = 0;
@@ -22,11 +22,11 @@ public class TextureStyleBox extends StyleBox {
     private float fileHeight = 0;
     private float scale = 2;
 
-    public TextureStyleBox(String path) {
+    public TextureStyle(String path) {
         textureID = new Identifier(path);
     }
 
-    public TextureStyleBox drawOrigin(int left, int top) {
+    public TextureStyle drawOrigin(int left, int top) {
         drawLeft = left;
         drawTop = top;
         return this;
@@ -39,24 +39,24 @@ public class TextureStyleBox extends StyleBox {
      * @param tiled The value to set.
      * @return The StyleBox itself.
      */
-    public TextureStyleBox tiled(boolean tiled) {
+    public TextureStyle tiled(boolean tiled) {
         this.tiled = tiled;
         return this;
     }
 
-    public TextureStyleBox textureSize(int textureWidth, int textureHeight) {
+    public TextureStyle textureSize(int textureWidth, int textureHeight) {
         this.textureWidth = textureWidth;
         this.textureHeight = textureHeight;
         return this;
     }
 
-    public TextureStyleBox fileDimensions(float fileWidth, float fileHeight) {
+    public TextureStyle fileDimensions(float fileWidth, float fileHeight) {
         this.fileWidth = fileWidth;
         this.fileHeight = fileHeight;
         return this;
     }
 
-    public TextureStyleBox tint(RGBAColor tint) {
+    public TextureStyle tint(RGBAColor tint) {
         this.tint = tint;
         return this;
     }
@@ -68,7 +68,7 @@ public class TextureStyleBox extends StyleBox {
      * @param scale The value to set.
      * @return This
      */
-    public TextureStyleBox scale(float scale) {
+    public TextureStyle scale(float scale) {
         this.scale = scale;
         return this;
     }
