@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
+import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 
 public abstract class PaddingControl<C extends PaddingControl<C>> extends Control<C> {
     public int topPadding = 0;
@@ -72,17 +72,17 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
         super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
     }
 
-    Vector2D innerDimensions(int spaceWidth, int spaceHeight) {
+    ScreenPos innerDimensions(int spaceWidth, int spaceHeight) {
         int innerWidth = spaceWidth - leftPadding - rightPadding;
         int innerHeight = spaceHeight - topPadding - bottomPadding;
 
-        return new Vector2D(innerWidth, innerHeight);
+        return new ScreenPos(innerWidth, innerHeight);
     }
 
-    Vector2D innerPosition(int spaceX, int spaceY) {
+    ScreenPos innerPosition(int spaceX, int spaceY) {
         int innerX = spaceX + leftPadding;
         int innerY = spaceY + topPadding;
 
-        return new Vector2D(innerX, innerY);
+        return new ScreenPos(innerX, innerY);
     }
 }

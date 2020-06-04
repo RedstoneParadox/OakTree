@@ -6,7 +6,7 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
-import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
+import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 
 public class ColorStyle extends Style {
 
@@ -36,10 +36,10 @@ public class ColorStyle extends Style {
         GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
         GlStateManager.blendColor(color.red, color.green, color.blue, color.alpha);
 
-        Vector2D vert1 = new Vector2D(x, y);
-        Vector2D vert2 = new Vector2D(x, y + height);
-        Vector2D vert3 = new Vector2D(x + width, y + height);
-        Vector2D vert4 = new Vector2D(x + width, y);
+        ScreenPos vert1 = new ScreenPos(x, y);
+        ScreenPos vert2 = new ScreenPos(x, y + height);
+        ScreenPos vert3 = new ScreenPos(x + width, y + height);
+        ScreenPos vert4 = new ScreenPos(x + width, y);
 
         if (mirroredHorizontal) {
             vert1.x = vert1.x - width;
@@ -76,10 +76,10 @@ public class ColorStyle extends Style {
         GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
         GlStateManager.color4f(borderColor.red, borderColor.green, borderColor.blue, borderColor.alpha);
 
-        Vector2D vert1 = new Vector2D(x - borderWidth, y - borderWidth);
-        Vector2D vert2 = new Vector2D(x - borderWidth, y + height + borderWidth);
-        Vector2D vert3 = new Vector2D(x + width + borderWidth, y + height + borderWidth);
-        Vector2D vert4 = new Vector2D(x + width + borderWidth, y - borderWidth);
+        ScreenPos vert1 = new ScreenPos(x - borderWidth, y - borderWidth);
+        ScreenPos vert2 = new ScreenPos(x - borderWidth, y + height + borderWidth);
+        ScreenPos vert3 = new ScreenPos(x + width + borderWidth, y + height + borderWidth);
+        ScreenPos vert4 = new ScreenPos(x + width + borderWidth, y - borderWidth);
 
         if (mirroredHorizontal) {
             vert1.x = vert1.x - width;

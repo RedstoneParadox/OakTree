@@ -9,7 +9,7 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
-import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
+import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
@@ -124,10 +124,10 @@ public interface TextControl<TC extends TextControl> {
         int width = renderer.getWidth(string);
         int height = renderer.fontHeight;
 
-        Vector2D vert1 = new Vector2D(x + 1, y + 1);
-        Vector2D vert2 = new Vector2D(x + 1, y + 3 + height);
-        Vector2D vert3 = new Vector2D(x + 3 + width, y + 3 + height);
-        Vector2D vert4 = new Vector2D(x + 3 + width, y + 1);
+        ScreenPos vert1 = new ScreenPos(x + 1, y + 1);
+        ScreenPos vert2 = new ScreenPos(x + 1, y + 3 + height);
+        ScreenPos vert3 = new ScreenPos(x + 3 + width, y + 3 + height);
+        ScreenPos vert4 = new ScreenPos(x + 3 + width, y + 1);
 
         float red = highlightColor.red * 255;
         float green = highlightColor.green * 255;

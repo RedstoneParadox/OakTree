@@ -5,7 +5,7 @@ import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
 import net.minecraft.client.MinecraftClient;
-import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
+import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.List;
@@ -139,8 +139,8 @@ public class Control<C extends Control<C>> {
         return (C)this;
     }
 
-    public Vector2D getTruePosition() {
-        return new Vector2D(trueX, trueY);
+    public ScreenPos getTruePosition() {
+        return new ScreenPos(trueX, trueY);
     }
 
     public void zIndex(List<Control<?>> controls) {
@@ -158,8 +158,8 @@ public class Control<C extends Control<C>> {
         onTick.accept(gui, (C)this);
 
         if (!expand) {
-            Vector2D anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-            Vector2D drawOffset = anchor.getOffset(area.width, area.height);
+            ScreenPos anchorOffset = anchor.getOffset(containerWidth, containerHeight);
+            ScreenPos drawOffset = anchor.getOffset(area.width, area.height);
 
             trueX = area.x + anchorOffset.x + offsetX - drawOffset.x;
             trueY = area.y + anchorOffset.y + offsetY - drawOffset.y;
