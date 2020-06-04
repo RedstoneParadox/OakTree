@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.util.*;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -34,8 +34,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private boolean updateText = false;
 
     public boolean shadow = false;
-    public RGBAColor fontColor = RGBAColor.white();
-    public RGBAColor highlightColor = RGBAColor.blue();
+    public Color fontColor = Color.white();
+    public Color highlightColor = Color.blue();
     public int maxLines = 1;
     public int displayedLines = 1;
 
@@ -138,7 +138,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
      * @param fontColor The RGBA Color
      * @return The control itself.
      */
-    public TextEditControl fontColor(RGBAColor fontColor) {
+    public TextEditControl fontColor(Color fontColor) {
         this.fontColor = fontColor;
         return this;
     }

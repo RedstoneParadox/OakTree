@@ -7,7 +7,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import io.github.redstoneparadox.oaktree.client.gui.Color;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class LabelControl extends Control<LabelControl> implements TextControl<LabelControl> {
     public @NotNull Text text = LiteralText.EMPTY;
     public boolean shadow = false;
-    public RGBAColor fontColor = RGBAColor.white();
+    public Color fontColor = Color.white();
     public int maxLines = 1;
     public boolean resizable = false;
 
@@ -91,7 +91,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
      * @param fontColor The RGBA Color
      * @return The control itself.
      */
-    public LabelControl fontColor(RGBAColor fontColor) {
+    public LabelControl fontColor(Color fontColor) {
         this.fontColor = fontColor;
         return this;
     }

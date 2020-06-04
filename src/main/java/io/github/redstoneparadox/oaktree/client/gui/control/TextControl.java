@@ -8,7 +8,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
-import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -71,10 +71,10 @@ public interface TextControl<TC extends TextControl> {
         return builder.toString();
     }
 
-    default void drawString(MatrixStack matrices, String string, ControlGui gui, float x, float y, Anchor alignment, boolean withShadow, RGBAColor fontColor) {
-        int redInt = (int) fontColor.redChannel * 255;
-        int greenInt = (int) fontColor.greenChannel * 255;
-        int blueInt = (int) fontColor.blueChannel * 255;
+    default void drawString(MatrixStack matrices, String string, ControlGui gui, float x, float y, Anchor alignment, boolean withShadow, Color fontColor) {
+        int redInt = (int) fontColor.red * 255;
+        int greenInt = (int) fontColor.green * 255;
+        int blueInt = (int) fontColor.blue * 255;
 
         int colorInt = redInt << 16 | greenInt << 8 | blueInt;
 
@@ -109,10 +109,10 @@ public interface TextControl<TC extends TextControl> {
         return lines;
     }
 
-    default void drawText(MatrixStack matrices, class_5348 text, TextRenderer renderer, int x, int y, boolean shadow, RGBAColor fontColor) {
-        int redInt = (int) fontColor.redChannel * 255;
-        int greenInt = (int) fontColor.greenChannel * 255;
-        int blueInt = (int) fontColor.blueChannel * 255;
+    default void drawText(MatrixStack matrices, class_5348 text, TextRenderer renderer, int x, int y, boolean shadow, Color fontColor) {
+        int redInt = (int) fontColor.red * 255;
+        int greenInt = (int) fontColor.green * 255;
+        int blueInt = (int) fontColor.blue * 255;
 
         int colorInt = redInt << 16 | greenInt << 8 | blueInt;
 
@@ -120,7 +120,7 @@ public interface TextControl<TC extends TextControl> {
         else renderer.draw(matrices, text, x + 2, y + 2, colorInt);
     }
 
-    default void drawHighlights(String string, TextRenderer renderer, int x, int y, RGBAColor highlightColor) {
+    default void drawHighlights(String string, TextRenderer renderer, int x, int y, Color highlightColor) {
         int width = renderer.getWidth(string);
         int height = renderer.fontHeight;
 
@@ -129,10 +129,10 @@ public interface TextControl<TC extends TextControl> {
         Vector2D vert3 = new Vector2D(x + 3 + width, y + 3 + height);
         Vector2D vert4 = new Vector2D(x + 3 + width, y + 1);
 
-        float red = highlightColor.redChannel * 255;
-        float green = highlightColor.greenChannel * 255;
-        float blue = highlightColor.blueChannel * 255;
-        float alpha = highlightColor.alphaChannel * 255;
+        float red = highlightColor.red * 255;
+        float green = highlightColor.green * 255;
+        float blue = highlightColor.blue * 255;
+        float alpha = highlightColor.alpha * 255;
 
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();

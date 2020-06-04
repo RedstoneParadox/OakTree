@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
-import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import io.github.redstoneparadox.oaktree.client.gui.Color;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,11 +38,11 @@ public class Theme {
                         .heights(4, 2, 4)
                         .fileDimensions(256, 256)
                         .scale(1f))
-                .add("text_edit", new ColorStyle(RGBAColor.black(), new RGBAColor(0.63f, 0.63f, 0.63f), 1))
+                .add("text_edit", new ColorStyle(Color.BLACK, Color.rgb(0.63f, 0.63f, 0.63f), 1))
                 .add("background", new TextureStyle("textures/gui/options_background.png")
                         .textureSize(16, 16)
                         .fileDimensions(16, 16)
-                        .tint(new RGBAColor(64, 64, 64))
+                        .tint(Color.rgb(64, 64, 64))
                         .tiled(true))
                 .add("button", "held", new NinePatchStyle("oaktree:textures/gui/ui.png")
                         .widths(3, 12, 3)

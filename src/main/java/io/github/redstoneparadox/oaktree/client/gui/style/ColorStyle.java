@@ -5,22 +5,22 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
-import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.geometry.Vector2D;
 
 public class ColorStyle extends Style {
 
-    private RGBAColor color;
-    private RGBAColor borderColor;
+    private Color color;
+    private Color borderColor;
     private int borderWidth;
 
-    public ColorStyle(RGBAColor color, RGBAColor borderColor, int borderWidth) {
+    public ColorStyle(Color color, Color borderColor, int borderWidth) {
         this.color = color;
         this.borderColor = borderColor;
         this.borderWidth = borderWidth;
     }
 
-    public ColorStyle(RGBAColor color) {
+    public ColorStyle(Color color) {
         this(color, null, 1);
     }
 
@@ -34,7 +34,7 @@ public class ColorStyle extends Style {
         GlStateManager.enableBlend();
         GlStateManager.disableTexture();
         GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
-        GlStateManager.blendColor(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
+        GlStateManager.blendColor(color.red, color.green, color.blue, color.alpha);
 
         Vector2D vert1 = new Vector2D(x, y);
         Vector2D vert2 = new Vector2D(x, y + height);
@@ -56,10 +56,10 @@ public class ColorStyle extends Style {
         }
 
         builder.begin(7, VertexFormats.POSITION_COLOR);
-        builder.vertex(vert1.x, vert1.y, 0.0).color(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel).next();
-        builder.vertex(vert2.x, vert2.y, 0.0).color(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel).next();
-        builder.vertex(vert3.x, vert3.y, 0.0).color(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel).next();
-        builder.vertex(vert4.x, vert4.y, 0.0).color(color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel).next();
+        builder.vertex(vert1.x, vert1.y, 0.0).color(color.red, color.green, color.blue, color.alpha).next();
+        builder.vertex(vert2.x, vert2.y, 0.0).color(color.red, color.green, color.blue, color.alpha).next();
+        builder.vertex(vert3.x, vert3.y, 0.0).color(color.red, color.green, color.blue, color.alpha).next();
+        builder.vertex(vert4.x, vert4.y, 0.0).color(color.red, color.green, color.blue, color.alpha).next();
 
         tessellator.draw();
 
@@ -74,7 +74,7 @@ public class ColorStyle extends Style {
         GlStateManager.enableBlend();
         GlStateManager.disableTexture();
         GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
-        GlStateManager.color4f(borderColor.redChannel, borderColor.greenChannel, borderColor.blueChannel, borderColor.alphaChannel);
+        GlStateManager.color4f(borderColor.red, borderColor.green, borderColor.blue, borderColor.alpha);
 
         Vector2D vert1 = new Vector2D(x - borderWidth, y - borderWidth);
         Vector2D vert2 = new Vector2D(x - borderWidth, y + height + borderWidth);

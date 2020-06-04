@@ -2,7 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.util.RGBAColor;
+import io.github.redstoneparadox.oaktree.client.gui.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -17,7 +17,7 @@ public class TextureStyle extends Style {
     private boolean tiled;
     private int textureWidth = 0;
     private int textureHeight = 0;
-    private RGBAColor tint = RGBAColor.white();
+    private Color tint = Color.white();
     private float fileWidth = 0;
     private float fileHeight = 0;
     private float scale = 2;
@@ -56,7 +56,7 @@ public class TextureStyle extends Style {
         return this;
     }
 
-    public TextureStyle tint(RGBAColor tint) {
+    public TextureStyle tint(Color tint) {
         this.tint = tint;
         return this;
     }
@@ -110,10 +110,10 @@ public class TextureStyle extends Style {
     }
 
     void drawTexture(float x, float y, float left, float top, float width, float height) {
-        int r = (int) (tint.redChannel * 255.0f);
-        int g = (int) (tint.greenChannel * 255.0f);
-        int b = (int) (tint.blueChannel * 255.0f);
-        int a = (int) (tint.alphaChannel * 255.0f);
+        int r = (int) (tint.red * 255.0f);
+        int g = (int) (tint.green * 255.0f);
+        int b = (int) (tint.blue * 255.0f);
+        int a = (int) (tint.alpha * 255.0f);
 
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
