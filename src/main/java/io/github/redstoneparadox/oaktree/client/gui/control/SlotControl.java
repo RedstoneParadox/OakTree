@@ -185,14 +185,13 @@ public class SlotControl extends InteractiveControl<SlotControl> {
             if (screenHandler instanceof InventoryScreenHandler) {
                 super.draw(matrices, mouseX, mouseY, deltaTime, gui);
                 ItemStack stack = ((InventoryScreenHandler) screenHandler).getInventory(inventoryID).getStack(slot);
-                matrices.translate(0.0, 0.0, 100.0);
                 RenderHelper.drawItemStackCentered(trueX, trueY, area.width, area.height, stack);
 
-                matrices.translate(0.0, 0.0, 200.0);
                 if (isMouseWithin) {
+                    if (!stack.isEmpty()) matrices.translate(0.0, 0.0, 200.0);
                     highlightStyle.draw(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), gui);
+                    if (!stack.isEmpty()) matrices.translate(0.0, 0.0, -200);
                 }
-                matrices.translate(0.0, 0.0, -300.0);
             }
         });
     }
