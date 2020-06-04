@@ -1,14 +1,10 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
+import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.render.DiffuseLighting;
-import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.registry.Registry;
 
 public class ItemStyle extends Style {
@@ -49,10 +45,8 @@ public class ItemStyle extends Style {
 
     @Override
     public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
-        ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
-        DiffuseLighting.enableForLevel(new Matrix4f());
-        renderer.renderGuiItem(stack, (int)x - 7, (int)y - 7);
-        TextRenderer textRenderer = gui.getTextRenderer();
-        renderer.renderGuiItemOverlay(textRenderer, stack, (int)x - 7, (int)y - 7);
+        if (!stack.isEmpty()) {
+            RenderHelper.drawItemStackCentered(x, y, width, height, stack);
+        }
     }
 }

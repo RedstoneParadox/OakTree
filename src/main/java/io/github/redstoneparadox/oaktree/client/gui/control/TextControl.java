@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.class_5348;
 import net.minecraft.client.font.TextRenderer;
@@ -14,6 +15,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -120,33 +122,12 @@ public interface TextControl<TC extends TextControl> {
         else renderer.draw(matrices, text, x + 2, y + 2, colorInt);
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
     default void drawHighlights(String string, TextRenderer renderer, int x, int y, Color highlightColor) {
         int width = renderer.getWidth(string);
         int height = renderer.fontHeight;
 
-        ScreenPos vert1 = new ScreenPos(x + 1, y + 1);
-        ScreenPos vert2 = new ScreenPos(x + 1, y + 3 + height);
-        ScreenPos vert3 = new ScreenPos(x + 3 + width, y + 3 + height);
-        ScreenPos vert4 = new ScreenPos(x + 3 + width, y + 1);
-
-        float red = highlightColor.red * 255;
-        float green = highlightColor.green * 255;
-        float blue = highlightColor.blue * 255;
-        float alpha = highlightColor.alpha * 255;
-
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder builder = tessellator.getBuffer();
-        RenderSystem.color4f(red, green, blue, alpha);
-        RenderSystem.disableTexture();
-        RenderSystem.enableColorLogicOp();
-        RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
-        builder.begin(7, VertexFormats.POSITION);
-        builder.vertex(vert1.x, vert1.y, 0.0).next();
-        builder.vertex(vert2.x, vert2.y, 0.0).next();
-        builder.vertex(vert3.x, vert3.y, 0.0).next();
-        builder.vertex(vert4.x, vert4.y, 0.0).next();
-        tessellator.draw();
-        RenderSystem.disableColorLogicOp();
-        RenderSystem.enableTexture();
+        RenderHelper.drawRectangle(x, y, width, height, highlightColor);
     }
 }

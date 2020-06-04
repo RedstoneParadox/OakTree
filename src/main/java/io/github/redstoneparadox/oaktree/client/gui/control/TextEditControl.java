@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.TypingListener;
@@ -538,7 +539,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
             int x = trueX + renderer.getWidth(line.substring(0, startIndex));
             String highlightedPortion = line.substring(startIndex, endIndex);
-            drawHighlights(highlightedPortion, renderer, x, lineY, highlightColor);
+            RenderHelper.drawRectangle(x, lineY, renderer.getWidth(highlightedPortion), renderer.fontHeight, highlightColor);
         }
     }
 

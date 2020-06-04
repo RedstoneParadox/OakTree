@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import net.minecraft.client.MinecraftClient;
@@ -82,6 +83,8 @@ public class TextureStyle extends Style {
             int drawHeight = Math.min((int)height, textureHeight);
 
             drawTexture(x, y, drawLeft, drawTop, drawWidth, drawHeight);
+
+            RenderHelper.drawTexture(x, y, drawLeft, drawTop, drawWidth, drawHeight, fileWidth, fileHeight, scale, textureID, tint);
         }
         else {
             drawTiled(x, y, drawLeft, drawTop, textureWidth, textureHeight, (int)width, (int)height);
@@ -110,27 +113,6 @@ public class TextureStyle extends Style {
     }
 
     void drawTexture(float x, float y, float left, float top, float width, float height) {
-        int r = (int) (tint.red * 255.0f);
-        int g = (int) (tint.green * 255.0f);
-        int b = (int) (tint.blue * 255.0f);
-        int a = (int) (tint.alpha * 255.0f);
-
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuffer();
-
-        RenderSystem.enableBlend();
-        RenderSystem.blendFuncSeparate(770, 771, 1, 0);
-        RenderSystem.color4f(255, 255, 255, 255);
-
-        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
-
-        bufferBuilder.vertex(x * scale, (y + height) * scale, 0.0).color(r, g, b, a).texture(left/fileWidth, (top + height)/fileHeight).next();
-        bufferBuilder.vertex((x + width) * scale, (y + height) * scale, 0.0).color(r, g, b, a).texture((left + width)/fileWidth, (top + height)/fileHeight).next();
-        bufferBuilder.vertex((x + width) * scale, y * scale, 0.0).color(r, g, b, a).texture((left + width)/fileWidth, top/fileHeight).next();
-        bufferBuilder.vertex(x * scale, y * scale, 0.0).color(r, g, b, a).texture(left/fileWidth, top/fileHeight).next();
-
-        tessellator.draw();
-
-        RenderSystem.disableBlend();
+        RenderHelper.drawTexture(x, y, left, top, width, height, fileWidth, fileHeight, scale, textureID, tint);
     }
 }

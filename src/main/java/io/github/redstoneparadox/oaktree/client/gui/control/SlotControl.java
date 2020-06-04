@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Style;
@@ -176,14 +177,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
             if (screenHandler instanceof InventoryScreenHandler) {
                 super.draw(matrices, mouseX, mouseY, deltaTime, gui);
                 ItemStack stack = ((InventoryScreenHandler) screenHandler).getInventory(inventoryID).getStack(slot);
-                ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
-
-                int itemX = (area.width - 16)/2 + trueX;
-                int itemY = (area.height - 16)/2 + trueY;
-
-                renderer.renderGuiItem(stack, itemX, itemY);
-                TextRenderer textRenderer = gui.getTextRenderer();
-                renderer.renderGuiItemOverlay(textRenderer, stack, itemX, itemY);
+                RenderHelper.drawItemStackCentered(trueX, trueY, area.width, area.height, stack);
 
                 if (isMouseWithin) {
                     highlightStyle.draw(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), gui);
