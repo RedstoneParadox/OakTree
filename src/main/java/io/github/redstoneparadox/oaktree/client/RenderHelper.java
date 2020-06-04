@@ -4,12 +4,14 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
+import net.minecraft.class_5348;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -84,5 +86,18 @@ public class RenderHelper {
         tessellator.draw();
 
         RenderSystem.disableBlend();
+    }
+
+    public static void drawText(MatrixStack matrices, class_5348 text, int x, int y, boolean shadow, Color fontColor) {
+        TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
+
+        int redInt = (int) fontColor.red * 255;
+        int greenInt = (int) fontColor.green * 255;
+        int blueInt = (int) fontColor.blue * 255;
+
+        int colorInt = redInt << 16 | greenInt << 8 | blueInt;
+
+        if (shadow) renderer.drawWithShadow(matrices, text, x + 2, y + 2, colorInt);
+        else renderer.draw(matrices, text, x + 2, y + 2, colorInt);
     }
 }

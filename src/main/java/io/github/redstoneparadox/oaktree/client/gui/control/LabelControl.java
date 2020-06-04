@@ -1,5 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.RenderHelper;
+import io.github.redstoneparadox.oaktree.client.TextHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.class_5348;
 import net.minecraft.client.MinecraftClient;
@@ -13,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class LabelControl extends Control<LabelControl> implements TextControl<LabelControl> {
+public class LabelControl extends Control<LabelControl> {
     public @NotNull Text text = LiteralText.EMPTY;
     public boolean shadow = false;
     public Color fontColor = Color.WHITE;
@@ -59,7 +61,7 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
             area.height = renderer.fontHeight * texts.size() + 4;
         }
 
-        this.text = combine(texts);
+        this.text = TextHelper.combine(texts);
         return this;
     }
 
@@ -124,9 +126,9 @@ public class LabelControl extends Control<LabelControl> implements TextControl<L
         super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
         if (renderer != null) {
-            List<class_5348> lines = wrapText(text, renderer, area.width, 0, maxLines, shadow);
+            List<class_5348> lines = TextHelper.wrapText(text, area.width, 0, maxLines, shadow);
             for (class_5348 line: lines) {
-                drawText(matrices, line, renderer, trueX, trueY, shadow, fontColor);
+                RenderHelper.drawText(matrices, line, trueX, trueY, shadow, fontColor);
             }
         }
     }
