@@ -16,7 +16,7 @@ import java.util.List;
 public class LabelControl extends Control<LabelControl> implements TextControl<LabelControl> {
     public @NotNull Text text = LiteralText.EMPTY;
     public boolean shadow = false;
-    public Color fontColor = Color.white();
+    public Color fontColor = Color.WHITE;
     public int maxLines = 1;
     public boolean resizable = false;
 

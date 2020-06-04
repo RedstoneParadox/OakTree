@@ -37,8 +37,8 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
     private boolean updateText = false;
 
     public boolean shadow = false;
-    public Color fontColor = Color.white();
-    public Color highlightColor = Color.blue();
+    public Color fontColor = Color.WHITE;
+    public Color highlightColor = Color.BLUE;
     public int maxLines = 1;
     public int displayedLines = 1;
 

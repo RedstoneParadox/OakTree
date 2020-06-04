@@ -18,7 +18,7 @@ public class TextureStyle extends Style {
     private boolean tiled;
     private int textureWidth = 0;
     private int textureHeight = 0;
-    private Color tint = Color.white();
+    private Color tint = Color.WHITE;
     private float fileWidth = 0;
     private float fileHeight = 0;
     private float scale = 2;

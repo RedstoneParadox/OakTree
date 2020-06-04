@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * A class for storing color values.
  */
-public class Color {
+public final class Color {
     public static final Color BLACK = rgb(0.0f, 0.0f, 0.0f);
     public static final Color DARK_BLUE = rgb(170);
     public static final Color DARK_GREEN = rgb(43520);
@@ -108,6 +108,10 @@ public class Color {
 
     private static Color toRGBA(double r, double b, double g, float a) {
         return rgba((byte)(r*255.0) + 128, (byte)(r*255.0) + 128, (byte)(r*255.0) + 128, a);
+    }
+
+    public Color withAlpha(float alpha) {
+        return new Color(this.red, this.blue, this.green, alpha);
     }
 
     @Deprecated
