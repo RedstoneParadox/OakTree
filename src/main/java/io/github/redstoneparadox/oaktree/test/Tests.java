@@ -326,17 +326,10 @@ public class Tests {
         SlotControl slot2 = new SlotControl(1, 1)
                 .canTake((slotControl, stack) -> false);
 
-        return new SplitPanelControl()
+        return new PanelControl<>()
                 .id("base")
                 .size(180, 120)
-                .splitSize(30)
                 .anchor(Anchor.CENTER)
-                .child(
-                        new GridPanelControl()
-                                .size(36, 18)
-                                .rows(1).columns(2)
-                                .child(slot1).child(slot2)
-                )
                 .child(playerInvGrid);
     }
 

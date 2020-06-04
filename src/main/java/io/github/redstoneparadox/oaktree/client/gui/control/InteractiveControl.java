@@ -46,7 +46,11 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 
     @Override
     public void postDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-        if (tooltip != null) tooltip.draw(matrices, mouseX, mouseY, deltaTime, gui);
+        if (tooltip != null) {
+            matrices.translate(0.0, 0.0, 500.0);
+            tooltip.draw(matrices, mouseX, mouseY, deltaTime, gui);
+            matrices.translate(0.0, 0.0, -500.0);
+        }
     }
 
     protected ScreenPos relativeMousePosition(int mouseX, int mouseY) {

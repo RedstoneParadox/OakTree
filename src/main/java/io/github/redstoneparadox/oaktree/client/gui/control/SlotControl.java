@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyle;
@@ -128,6 +129,8 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                                 stackChanged = true;
                             }
                         }
+
+                        if (tooltip != null) tooltip.visible(true);
                     }
                     else {
                         ItemStack cursorStack = playerInventory.getCursorStack();
@@ -155,17 +158,22 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                                 }
                             }
                         }
+
                     }
 
                     if (stackChanged) {
                         OakTreeClientNetworking.syncStack(slot, inventoryID, handler.syncId, inventory.getStack(slot));
                     }
-                    if (!stackInSlot.isEmpty()) {
-                        List<Text> texts = stackInSlot.getTooltip(player, TooltipContext.Default.NORMAL);
-                        if (tooltip instanceof LabelControl) {
+                    if (tooltip instanceof LabelControl) {
+                        if (!stackInSlot.isEmpty()) {
+                            List<Text> texts = stackInSlot.getTooltip(player, TooltipContext.Default.NORMAL);
                             ((LabelControl) tooltip).text(texts);
                         }
+                        else {
+                            ((LabelControl) tooltip).clear();
+                        }
                     }
+
                 }
             }
         });
@@ -177,11 +185,14 @@ public class SlotControl extends InteractiveControl<SlotControl> {
             if (screenHandler instanceof InventoryScreenHandler) {
                 super.draw(matrices, mouseX, mouseY, deltaTime, gui);
                 ItemStack stack = ((InventoryScreenHandler) screenHandler).getInventory(inventoryID).getStack(slot);
+                matrices.translate(0.0, 0.0, 100.0);
                 RenderHelper.drawItemStackCentered(trueX, trueY, area.width, area.height, stack);
 
+                matrices.translate(0.0, 0.0, 200.0);
                 if (isMouseWithin) {
                     highlightStyle.draw(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), gui);
                 }
+                matrices.translate(0.0, 0.0, -300.0);
             }
         });
     }
