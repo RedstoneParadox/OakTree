@@ -6,6 +6,7 @@ import io.github.redstoneparadox.oaktree.client.gui.style.Style;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
+import io.github.redstoneparadox.oaktree.util.TriPredicate;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.item.TooltipContext;
@@ -18,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -26,8 +28,8 @@ public class SlotControl extends InteractiveControl<SlotControl> {
     public Style highlightStyle = new ColorStyle(Color.rgba(0.75f, 0.75f, 0.75f, 0.5f));
     public int slotBorder = 1;
 
-    public BiFunction<SlotControl, ItemStack, Boolean> canInsert = (slotControl, stack) -> true;
-    public BiFunction<SlotControl, ItemStack, Boolean> canTake = (slotControl, stack) -> true;
+    public TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
+    public TriPredicate<ControlGui, SlotControl, ItemStack> canTake = (gui, control, stack) -> true;
 
     private final int slot;
     private final int inventoryID;
@@ -50,13 +52,20 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         return this;
     }
 
-    public SlotControl canInsert(BiFunction<SlotControl, ItemStack, Boolean> canInsert) {
+    public SlotControl canInsert(TriPredicate<ControlGui, SlotControl, ItemStack> canInsert) {
         this.canInsert = canInsert;
         return this;
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
+    public SlotControl canInsert(BiFunction<SlotControl, ItemStack, Boolean> canInsert) {
+        this.canInsert = ((gui, control, stack) -> canInsert.apply(control, stack));
+        return this;
+    }
+
     public SlotControl filter(Item... items) {
-        this.canInsert = ((slotControl, stack) -> {
+        this.canInsert = ((gui, control, stack) -> {
             for (Item item: items) {
                 if (stack.getItem() != item) return false;
             }
@@ -66,7 +75,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
     }
 
     public SlotControl filter(Tag<Item>... tags) {
-        this.canInsert = ((slotControl, stack) -> {
+        this.canInsert = ((gui, control, stack) -> {
             for (Tag<Item> tag: tags) {
                 if (!tag.contains(stack.getItem())) return false;
             }
@@ -75,8 +84,15 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         return this;
     }
 
-    public SlotControl canTake(BiFunction<SlotControl, ItemStack, Boolean> canTake) {
+    public SlotControl canTake(TriPredicate<ControlGui, SlotControl, ItemStack> canTake) {
         this.canTake = canTake;
+        return this;
+    }
+
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
+    public SlotControl canTake(BiFunction<SlotControl, ItemStack, Boolean> canTake) {
+        this.canTake = ((gui, control, stack) -> canTake.apply(control, stack));
         return this;
     }
 
@@ -101,7 +117,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                     ItemStack stackInSlot = inventory.getStack(slot);
 
                     if (playerInventory.getCursorStack().isEmpty()) {
-                        if (canTake.apply(this, stackInSlot)) {
+                        if (canTake.test(gui, this, stackInSlot)) {
                             if (gui.mouseButtonJustClicked("left")) {
                                 playerInventory.setCursorStack(inventory.removeStack(slot));
                                 stackChanged = true;
@@ -115,7 +131,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                     else {
                         ItemStack cursorStack = playerInventory.getCursorStack();
 
-                        if (canInsert.apply(this, cursorStack)) {
+                        if (canInsert.test(gui, this, cursorStack)) {
                             if (gui.mouseButtonJustClicked("left")) {
                                 if (stackInSlot.isEmpty()) {
                                     inventory.setStack(slot, playerInventory.getCursorStack());
