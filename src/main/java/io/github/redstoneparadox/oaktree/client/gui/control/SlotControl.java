@@ -185,7 +185,9 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                 RenderHelper.drawItemStackCentered(trueX, trueY, area.width, area.height, stack);
 
                 if (isMouseWithin) {
+                    RenderHelper.setzOffset(200.0);
                     highlightStyle.draw(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), gui);
+                    RenderHelper.setzOffset(0.0);
                 }
             }
         });

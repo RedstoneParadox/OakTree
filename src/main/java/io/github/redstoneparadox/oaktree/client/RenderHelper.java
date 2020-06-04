@@ -16,6 +16,12 @@ import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 public class RenderHelper {
+    private static double zOffset = 0.0;
+
+    public static void setzOffset(double zOffset) {
+        RenderHelper.zOffset = zOffset;
+    }
+
     public static void drawRectangle(int x, int y, int width, int height, @NotNull Color color) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
@@ -32,10 +38,10 @@ public class RenderHelper {
         ScreenPos vert4 = new ScreenPos(x + width, y);
 
         builder.begin(7, VertexFormats.POSITION_COLOR);
-        builder.vertex(vert1.x, vert1.y, 0.0).color(color.red, color.green, color.blue, color.alpha).next();
-        builder.vertex(vert2.x, vert2.y, 0.0).color(color.red, color.green, color.blue, color.alpha).next();
-        builder.vertex(vert3.x, vert3.y, 0.0).color(color.red, color.green, color.blue, color.alpha).next();
-        builder.vertex(vert4.x, vert4.y, 0.0).color(color.red, color.green, color.blue, color.alpha).next();
+        builder.vertex(vert1.x, vert1.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
+        builder.vertex(vert2.x, vert2.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
+        builder.vertex(vert3.x, vert3.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
+        builder.vertex(vert4.x, vert4.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
 
         tessellator.draw();
 
