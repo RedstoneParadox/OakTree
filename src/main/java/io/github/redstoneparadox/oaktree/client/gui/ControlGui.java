@@ -105,9 +105,7 @@ public final class ControlGui {
         }
 
         root.preDraw(this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), mouseX, mouseY);
-        matrices.translate(0.0, 0.0, -100.0);
         root.draw(matrices, mouseX, mouseY, delta, this);
-        matrices.translate(0.0, 0.0, 100.0);
         if (hovered != null) hovered.postDraw(matrices, mouseX, mouseY, delta, this);
 
         screen.setSize(root.area.width, root.area.height);

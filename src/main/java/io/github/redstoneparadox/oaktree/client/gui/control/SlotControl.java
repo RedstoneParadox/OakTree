@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyle;
@@ -10,9 +9,7 @@ import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworki
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import io.github.redstoneparadox.oaktree.util.TriPredicate;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -188,9 +185,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                 RenderHelper.drawItemStackCentered(trueX, trueY, area.width, area.height, stack);
 
                 if (isMouseWithin) {
-                    if (!stack.isEmpty()) matrices.translate(0.0, 0.0, 200.0);
                     highlightStyle.draw(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), gui);
-                    if (!stack.isEmpty()) matrices.translate(0.0, 0.0, -200);
                 }
             }
         });
