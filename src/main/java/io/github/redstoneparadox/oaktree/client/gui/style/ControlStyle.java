@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * A StyleBox represents the part of the node that actually gets drawn. Multiple Nodes
@@ -9,9 +10,13 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
  */
 public abstract class ControlStyle {
 
-    public abstract void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical);
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
+    public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+        draw(x, y, width, height, gui);
+    }
 
-    public final void draw(int x, int y, int width, int height, ControlGui gui) {
-        draw(x, y, width, height, gui, false, false);
+    public void draw(int x, int y, int width, int height, ControlGui gui) {
+
     }
 }

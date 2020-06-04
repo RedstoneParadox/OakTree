@@ -70,7 +70,7 @@ public class TextureControlStyle extends ControlStyle {
     }
 
     @Override
-    public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+    public void draw(int x, int y, int width, int height, ControlGui gui) {
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
         
         if (!tiled) {

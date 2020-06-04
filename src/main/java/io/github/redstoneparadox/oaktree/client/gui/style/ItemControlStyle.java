@@ -44,7 +44,7 @@ public class ItemControlStyle extends ControlStyle {
     }
 
     @Override
-    public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+    public void draw(int x, int y, int width, int height, ControlGui gui) {
         if (!stack.isEmpty()) {
             RenderHelper.drawItemStackCentered(x, y, width, height, stack);
         }

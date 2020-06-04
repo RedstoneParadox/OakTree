@@ -32,12 +32,11 @@ public class NinePatchControlStyle extends TextureControlStyle {
     }
 
     @Override
-    public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
-        GlStateManager.color4f(1.0f,1.0f, 1.0f, 1.0f);
+    public void draw(int x, int y, int width, int height, ControlGui gui) {
         MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
 
-        int fullSecondWidth = (int) (width - firstWidth - thirdWidth);
-        int fullSecondHeight = (int) (height - firstHeight - thirdHeight);
+        int fullSecondWidth = width - firstWidth - thirdWidth;
+        int fullSecondHeight = height - firstHeight - thirdHeight;
 
         float secondX = x + firstWidth;
         float secondY = y + firstHeight;
