@@ -7,7 +7,6 @@ import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
 import net.minecraft.client.MinecraftClient;
 import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import net.minecraft.client.util.math.MatrixStack;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -18,7 +17,6 @@ import java.util.function.BiConsumer;
 public class Control<C extends Control<C>> {
     public final Rectangle area = new Rectangle(0, 0, 1, 1);
 
-    public @Nullable Control<?> tooltip = null;
     public boolean visible = true;
     public Anchor anchor = Anchor.TOP_LEFT;
     public BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
@@ -129,11 +127,6 @@ public class Control<C extends Control<C>> {
         return (C)this;
     }
 
-    public C tooltip(@Nullable Control<?> tooltip) {
-        this.tooltip = tooltip;
-        return (C) this;
-    }
-
     /**
      * Sets a function to run every time this
      * node is ticked.
@@ -187,11 +180,10 @@ public class Control<C extends Control<C>> {
         if (currentStyle != null) {
             currentStyle.draw(trueX, trueY, area.width, area.height, gui);
         }
-        if (tooltip != null) {
-            matrices.translate(0.0, 0.0, 500.0);
-            tooltip.draw(matrices, mouseX, mouseY, deltaTime, gui);
-            matrices.translate(0.0, 0.0, -500.0);
-        }
+    }
+
+    public void postDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+
     }
 
     void applyTheme(Theme theme) {
