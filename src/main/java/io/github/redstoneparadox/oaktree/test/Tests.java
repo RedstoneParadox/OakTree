@@ -3,8 +3,7 @@ package io.github.redstoneparadox.oaktree.test;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
-import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyle;
-import io.github.redstoneparadox.oaktree.client.gui.style.Style;
+import io.github.redstoneparadox.oaktree.client.gui.style.ColorControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.gui.control.Anchor;
 import io.github.redstoneparadox.oaktree.client.geometry.Direction2D;
@@ -360,7 +359,7 @@ public class Tests {
     private Control<?> testFive() {
         return new Control<>()
                 .size(200, 200)
-                .defaultStyle(new ColorStyle(Color.DARK_BLUE))
+                .defaultStyle(new ColorControlStyle(Color.DARK_BLUE))
                 .anchor(Anchor.CENTER);
     }
 }

@@ -1,17 +1,12 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
-import org.lwjgl.opengl.GL11;
 
-public class TextureStyle extends Style {
+public class TextureControlStyle extends ControlStyle {
     Identifier textureID;
     int drawLeft = 0;
     int drawTop = 0;
@@ -23,11 +18,11 @@ public class TextureStyle extends Style {
     private float fileHeight = 0;
     private float scale = 2;
 
-    public TextureStyle(String path) {
+    public TextureControlStyle(String path) {
         textureID = new Identifier(path);
     }
 
-    public TextureStyle drawOrigin(int left, int top) {
+    public TextureControlStyle drawOrigin(int left, int top) {
         drawLeft = left;
         drawTop = top;
         return this;
@@ -40,24 +35,24 @@ public class TextureStyle extends Style {
      * @param tiled The value to set.
      * @return The StyleBox itself.
      */
-    public TextureStyle tiled(boolean tiled) {
+    public TextureControlStyle tiled(boolean tiled) {
         this.tiled = tiled;
         return this;
     }
 
-    public TextureStyle textureSize(int textureWidth, int textureHeight) {
+    public TextureControlStyle textureSize(int textureWidth, int textureHeight) {
         this.textureWidth = textureWidth;
         this.textureHeight = textureHeight;
         return this;
     }
 
-    public TextureStyle fileDimensions(float fileWidth, float fileHeight) {
+    public TextureControlStyle fileDimensions(float fileWidth, float fileHeight) {
         this.fileWidth = fileWidth;
         this.fileHeight = fileHeight;
         return this;
     }
 
-    public TextureStyle tint(Color tint) {
+    public TextureControlStyle tint(Color tint) {
         this.tint = tint;
         return this;
     }
@@ -69,7 +64,7 @@ public class TextureStyle extends Style {
      * @param scale The value to set.
      * @return This
      */
-    public TextureStyle scale(float scale) {
+    public TextureControlStyle scale(float scale) {
         this.scale = scale;
         return this;
     }

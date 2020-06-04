@@ -4,19 +4,19 @@ import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 
-public class ColorStyle extends Style {
+public class ColorControlStyle extends ControlStyle {
 
     private Color color;
     private Color borderColor;
     private int borderWidth;
 
-    public ColorStyle(Color color, Color borderColor, int borderWidth) {
+    public ColorControlStyle(Color color, Color borderColor, int borderWidth) {
         this.color = color;
         this.borderColor = borderColor;
         this.borderWidth = borderWidth;
     }
 
-    public ColorStyle(Color color) {
+    public ColorControlStyle(Color color) {
         this(color, null, 1);
     }
 

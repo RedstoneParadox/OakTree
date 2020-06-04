@@ -7,23 +7,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ItemStyle extends Style {
+public class ItemControlStyle extends ControlStyle {
 
     private ItemStack stack;
 
-    public ItemStyle(Identifier identifier, int count) {
+    public ItemControlStyle(Identifier identifier, int count) {
         this.stack = new ItemStack(Registry.ITEM.get(identifier), count);
     }
 
-    public ItemStyle(Identifier identifier) {
+    public ItemControlStyle(Identifier identifier) {
         this(identifier, 1);
     }
 
-    public ItemStyle(String identifier) {
+    public ItemControlStyle(String identifier) {
         this(new Identifier(identifier), 1);
     }
 
-    public ItemStyle(String identifier, int count) {
+    public ItemControlStyle(String identifier, int count) {
         this(new Identifier(identifier), count);
     }
 

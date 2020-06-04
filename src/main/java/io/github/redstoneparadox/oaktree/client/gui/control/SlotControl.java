@@ -2,8 +2,8 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.style.ColorStyle;
-import io.github.redstoneparadox.oaktree.client.gui.style.Style;
+import io.github.redstoneparadox.oaktree.client.gui.style.ColorControlStyle;
+import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class SlotControl extends InteractiveControl<SlotControl> {
-    public Style highlightStyle = new ColorStyle(Color.rgba(0.75f, 0.75f, 0.75f, 0.5f));
+    public ControlStyle highlightStyle = new ColorControlStyle(Color.rgba(0.75f, 0.75f, 0.75f, 0.5f));
     public int slotBorder = 1;
 
     public TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
@@ -41,7 +41,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         this.size(18, 18);
     }
 
-    public SlotControl highlightStyle(Style highlightStyle) {
+    public SlotControl highlightStyle(ControlStyle highlightStyle) {
         this.highlightStyle = highlightStyle;
         return this;
     }

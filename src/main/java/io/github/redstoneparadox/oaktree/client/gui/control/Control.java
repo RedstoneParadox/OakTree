@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.style.Style;
+import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
 import net.minecraft.client.MinecraftClient;
@@ -20,11 +20,11 @@ public class Control<C extends Control<C>> {
     public boolean visible = true;
     public Anchor anchor = Anchor.TOP_LEFT;
     public BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
-    public Style defaultStyle = null;
+    public ControlStyle defaultStyle = null;
     public boolean expand = false;
     public String id;
 
-    Style currentStyle = null;
+    ControlStyle currentStyle = null;
     Theme internalTheme = new Theme();
 
     int trueX = 0;
@@ -99,14 +99,14 @@ public class Control<C extends Control<C>> {
     }
 
     /**
-     * Sets the default {@link Style} for this node. For most
+     * Sets the default {@link ControlStyle} for this node. For most
      * nodes, this is the only style, but some will have multiple
      * styles so it is considered the default style.
      *
      * @param style The StyleBox for this node.
      * @return The node itself.
      */
-    public C defaultStyle(Style style) {
+    public C defaultStyle(ControlStyle style) {
         defaultStyle = style;
         internalTheme.add("self", style);
         return (C)this;
@@ -186,8 +186,8 @@ public class Control<C extends Control<C>> {
         defaultStyle = getStyle(theme, "default");
     }
 
-    final Style getStyle(Theme theme, String name) {
-        Style style = internalTheme.get("self/" + name);
+    final ControlStyle getStyle(Theme theme, String name) {
+        ControlStyle style = internalTheme.get("self/" + name);
         if (style == null && theme != null) style = theme.get(id + "/" + name);
         return style;
     }

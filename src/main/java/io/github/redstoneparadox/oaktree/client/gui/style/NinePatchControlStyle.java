@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.MinecraftClient;
 
-public class NinePatchStyle extends TextureStyle {
+public class NinePatchControlStyle extends TextureControlStyle {
     int firstWidth = 1;
     int secondWidth = 1;
     int thirdWidth = 1;
@@ -13,18 +13,18 @@ public class NinePatchStyle extends TextureStyle {
     int secondHeight = 1;
     int thirdHeight = 1;
 
-    public NinePatchStyle(String path) {
+    public NinePatchControlStyle(String path) {
         super(path);
     }
 
-    public NinePatchStyle heights(int firstHeight, int secondHeight, int thirdHeight) {
+    public NinePatchControlStyle heights(int firstHeight, int secondHeight, int thirdHeight) {
         this.firstHeight = firstHeight;
         this.secondHeight = secondHeight;
         this.thirdHeight = thirdHeight;
         return this;
     }
 
-    public NinePatchStyle widths(int firstWidth, int secondWidth, int thirdWidth) {
+    public NinePatchControlStyle widths(int firstWidth, int secondWidth, int thirdWidth) {
         this.firstWidth = firstWidth;
         this.secondWidth = secondWidth;
         this.thirdWidth = thirdWidth;

@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.style.Style;
+import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 
 import java.util.function.BiConsumer;
@@ -14,13 +14,13 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 
     private boolean mouseCurrentlyWithin = false;
 
-    public Style hoverStyle = null;
+    public ControlStyle hoverStyle = null;
 
     public HoverControl() {
         this.id = "hover";
     }
 
-    public HoverControl hoverStyle(Style value) {
+    public HoverControl hoverStyle(ControlStyle value) {
         hoverStyle = value;
         internalTheme.add("self", "hover", hoverStyle);
         return this;
