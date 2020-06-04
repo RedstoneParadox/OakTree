@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Mixin(Screen.class)
 public abstract class MixinScreen implements ScreenHooks {
-    @Shadow protected net.minecraft.client.font.TextRenderer textRenderer;
+    @Shadow protected TextRenderer textRenderer;
     @Shadow protected MinecraftClient client;
 
     @Shadow public int width;
