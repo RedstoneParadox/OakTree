@@ -84,13 +84,15 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 
         switch (direction) {
             case UP:
-                barStyle.draw(barX, barY + barHeight, barWidth, (int) (barHeight * (this.percent/100.0f)), gui, false, true);
+                int drawHeight = (int) (barHeight * (this.percent/100.0f));
+                barStyle.draw(barX, barY + (barHeight - drawHeight), barWidth, drawHeight, gui);
                 break;
             case DOWN:
                 barStyle.draw(barX, barY, barWidth, (int) (barHeight * (this.percent/100.0f)), gui);
                 break;
             case LEFT:
-                barStyle.draw(barX + barWidth, barY, (int) (barWidth * (this.percent/100.0f)), barHeight, gui, true, false);
+                int drawWidth = (int) (barWidth * (this.percent/100.0f));
+                barStyle.draw(barX - drawWidth, barY, drawWidth, barHeight, gui);
                 break;
             case RIGHT:
                 barStyle.draw(barX, barY, (int) (barWidth * (this.percent/100.0f)), barHeight, gui);
