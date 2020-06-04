@@ -24,6 +24,7 @@ public class RenderHelper {
         GlStateManager.disableTexture();
         GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
         GlStateManager.blendColor(color.red, color.green, color.blue, color.alpha);
+        GlStateManager.enableDepthTest();
 
         ScreenPos vert1 = new ScreenPos(x, y);
         ScreenPos vert2 = new ScreenPos(x, y + height);
@@ -64,7 +65,8 @@ public class RenderHelper {
 
         RenderSystem.enableBlend();
         RenderSystem.blendFuncSeparate(770, 771, 1, 0);
-        RenderSystem.color4f(255, 255, 255, 255);
+        RenderSystem.blendColor(255, 255, 255, 255);
+        RenderSystem.enableDepthTest();
 
         bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
 
