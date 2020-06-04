@@ -61,7 +61,8 @@ public class LabelControl extends Control<LabelControl> {
             area.height = renderer.fontHeight * texts.size() + 4;
         }
 
-        this.text = TextHelper.combine(texts);
+        this.text = TextHelper.combine(texts, true);
+        this.maxLines = texts.size();
         return this;
     }
 
@@ -127,8 +128,10 @@ public class LabelControl extends Control<LabelControl> {
 
         if (renderer != null) {
             List<class_5348> lines = TextHelper.wrapText(text, area.width, 0, maxLines, shadow);
-            for (class_5348 line: lines) {
-                RenderHelper.drawText(matrices, line, trueX, trueY, shadow, fontColor);
+            int yOffset = 0;
+            for (class_5348 line : lines) {
+                RenderHelper.drawText(matrices, line, trueX, trueY + yOffset, shadow, fontColor);
+                yOffset += TextHelper.getFontHeight();
             }
         }
     }

@@ -6,16 +6,20 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class TextHelper {
-    public static Text combine(List<Text> texts) {
+    public static int getFontHeight() {
+        return MinecraftClient.getInstance().textRenderer.fontHeight;
+    }
+
+    public static Text combine(List<Text> texts, boolean newline) {
         if (texts.isEmpty()) return new LiteralText("");
 
         MutableText text = texts.get(0).shallowCopy();
         for (int index = 1; index < texts.size(); index += 1) {
+            if (newline) text.append(new LiteralText("\n"));
             text.append(texts.get(index));
         }
 
