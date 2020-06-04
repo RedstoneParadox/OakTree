@@ -106,7 +106,7 @@ public final class ControlGui {
 
         root.preDraw(this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), mouseX, mouseY);
         root.draw(matrices, mouseX, mouseY, delta, this);
-        if (hovered != null) hovered.postDraw(matrices, mouseX, mouseY, delta, this);
+        if (hovered != null) hovered.drawTooltip(matrices, mouseX, mouseY, delta, this);
 
         screen.setSize(root.area.width, root.area.height);
 

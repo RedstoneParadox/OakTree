@@ -182,10 +182,6 @@ public class Control<C extends Control<C>> {
         }
     }
 
-    public void postDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-
-    }
-
     void applyTheme(Theme theme) {
         defaultStyle = getStyle(theme, "default");
     }

@@ -78,10 +78,10 @@ public class RenderHelper {
 
         bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
 
-        bufferBuilder.vertex(x * scale, (y + height) * scale, 0.0).color(r, g, b, a).texture(left/fileWidth, (top + height)/fileHeight).next();
-        bufferBuilder.vertex((x + width) * scale, (y + height) * scale, 0.0).color(r, g, b, a).texture((left + width)/fileWidth, (top + height)/fileHeight).next();
-        bufferBuilder.vertex((x + width) * scale, y * scale, 0.0).color(r, g, b, a).texture((left + width)/fileWidth, top/fileHeight).next();
-        bufferBuilder.vertex(x * scale, y * scale, 0.0).color(r, g, b, a).texture(left/fileWidth, top/fileHeight).next();
+        bufferBuilder.vertex(x * scale, (y + height) * scale, zOffset).color(r, g, b, a).texture(left/fileWidth, (top + height)/fileHeight).next();
+        bufferBuilder.vertex((x + width) * scale, (y + height) * scale, zOffset).color(r, g, b, a).texture((left + width)/fileWidth, (top + height)/fileHeight).next();
+        bufferBuilder.vertex((x + width) * scale, y * scale, zOffset).color(r, g, b, a).texture((left + width)/fileWidth, top/fileHeight).next();
+        bufferBuilder.vertex(x * scale, y * scale, zOffset).color(r, g, b, a).texture(left/fileWidth, top/fileHeight).next();
 
         tessellator.draw();
 
@@ -97,7 +97,9 @@ public class RenderHelper {
 
         int colorInt = redInt << 16 | greenInt << 8 | blueInt;
 
-        if (shadow) renderer.drawWithShadow(matrices, text, x + 2, y + 2, colorInt);
-        else renderer.draw(matrices, text, x + 2, y + 2, colorInt);
+        matrices.translate(0.0, 0.0, zOffset);
+        if (shadow) renderer.drawWithShadow(matrices, text, x + 4, y + 4, colorInt);
+        else renderer.draw(matrices, text, x + 4, y + 4, colorInt);
+        matrices.translate(0.0, 0.0, -zOffset);
     }
 }

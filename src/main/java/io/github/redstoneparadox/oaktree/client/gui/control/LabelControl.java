@@ -53,12 +53,14 @@ public class LabelControl extends Control<LabelControl> {
 
     public LabelControl text(List<Text> texts) {
         if (resizable && renderer != null) {
+            this.area.width = 0;
+
             for (Text text: texts) {
                 this.area.width = Math.max(this.area.width, renderer.getWidth(text));
             }
 
-            this.area.width += 4;
-            area.height = renderer.fontHeight * texts.size() + 4;
+            this.area.width += 8;
+            area.height = TextHelper.getFontHeight() * texts.size() + 8;
         }
 
         this.text = TextHelper.combine(texts, true);

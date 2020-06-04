@@ -37,7 +37,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
         this.slot = slot;
         this.inventoryID = inventoryID;
         this.id = "item_slot";
-        this.tooltip = new LabelControl().id("tooltip").resizable(true);
+        this.tooltip = new LabelControl().id("tooltip").shadow(true).resizable(true);
         this.size(18, 18);
     }
 
@@ -126,8 +126,6 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                                 stackChanged = true;
                             }
                         }
-
-                        if (tooltip != null) tooltip.visible(true);
                     }
                     else {
                         ItemStack cursorStack = playerInventory.getCursorStack();
@@ -158,6 +156,8 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 
                     }
 
+                    stackInSlot = inventory.getStack(slot);
+
                     if (stackChanged) {
                         OakTreeClientNetworking.syncStack(slot, inventoryID, handler.syncId, inventory.getStack(slot));
                     }
@@ -168,9 +168,11 @@ public class SlotControl extends InteractiveControl<SlotControl> {
                         }
                         else {
                             ((LabelControl) tooltip).clear();
+                            tooltip.visible(false);
                         }
                     }
 
+                    if (stackInSlot.isEmpty() && tooltip != null) tooltip.visible = false;
                 }
             }
         });

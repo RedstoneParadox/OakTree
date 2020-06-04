@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import net.minecraft.client.util.math.MatrixStack;
@@ -44,12 +45,11 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
         }
     }
 
-    @Override
-    public void postDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+    public void drawTooltip(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
         if (tooltip != null) {
-            matrices.translate(0.0, 0.0, 500.0);
+            RenderHelper.setzOffset(300);
             tooltip.draw(matrices, mouseX, mouseY, deltaTime, gui);
-            matrices.translate(0.0, 0.0, -500.0);
+            RenderHelper.setzOffset(0);
         }
     }
 

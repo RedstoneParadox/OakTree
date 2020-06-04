@@ -73,6 +73,13 @@ public class Theme {
                         .heights(3, 12, 3)
                         .drawOrigin(0, 18)
                         .fileDimensions(256, 256)
-                        .scale(1));
+                        .scale(1))
+                .add("tooltip", new NinePatchStyle("oaktree:textures/gui/ui.png")
+                        .widths(2, 1, 2)
+                        .heights(2, 1, 2)
+                        .drawOrigin(36, 0)
+                        .fileDimensions(256, 256)
+                        .scale(1)
+                        .tint(Color.WHITE.withAlpha(0.95f)));
     }
 }
