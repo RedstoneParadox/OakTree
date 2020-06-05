@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -26,8 +27,8 @@ import java.util.function.BiFunction;
 public class SlotControl extends InteractiveControl<SlotControl> {
 	private ControlStyle highlightStyle = new ColorControlStyle(Color.rgba(0.75f, 0.75f, 0.75f, 0.5f));
 	protected int slotBorder = 1;
-	protected TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
-	protected TriPredicate<ControlGui, SlotControl, ItemStack> canTake = (gui, control, stack) -> true;
+	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
+	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canTake = (gui, control, stack) -> true;
 
 	private final int slot;
 	private final int inventoryID;
@@ -54,14 +55,14 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 		return slotBorder;
 	}
 
-	public SlotControl canInsert(TriPredicate<ControlGui, SlotControl, ItemStack> canInsert) {
+	public SlotControl canInsert(@NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert) {
 		this.canInsert = canInsert;
 		return this;
 	}
 
 	@Deprecated
 	@ApiStatus.ScheduledForRemoval
-	public SlotControl canInsert(BiFunction<SlotControl, ItemStack, Boolean> canInsert) {
+	public SlotControl canInsert(@NotNull BiFunction<SlotControl, ItemStack, Boolean> canInsert) {
 		this.canInsert = ((gui, control, stack) -> canInsert.apply(control, stack));
 		return this;
 	}
@@ -86,14 +87,14 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 		return this;
 	}
 
-	public SlotControl canTake(TriPredicate<ControlGui, SlotControl, ItemStack> canTake) {
+	public SlotControl canTake(@NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canTake) {
 		this.canTake = canTake;
 		return this;
 	}
 
 	@Deprecated
 	@ApiStatus.ScheduledForRemoval
-	public SlotControl canTake(BiFunction<SlotControl, ItemStack, Boolean> canTake) {
+	public SlotControl canTake(@NotNull BiFunction<SlotControl, ItemStack, Boolean> canTake) {
 		this.canTake = ((gui, control, stack) -> canTake.apply(control, stack));
 		return this;
 	}

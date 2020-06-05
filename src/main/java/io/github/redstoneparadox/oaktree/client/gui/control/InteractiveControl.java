@@ -21,6 +21,10 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 		return (C) this;
 	}
 
+	public @Nullable Control<?> getTooltip() {
+		return tooltip;
+	}
+
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);

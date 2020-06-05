@@ -8,6 +8,7 @@ import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -16,12 +17,12 @@ import java.util.function.BiConsumer;
  * The base class for all controls.
  */
 public class Control<C extends Control<C>> {
-	protected String id;
-	protected Anchor anchor = Anchor.TOP_LEFT;
-	protected final Rectangle area = new Rectangle(0, 0, 1, 1);
+	protected @NotNull String id = "control";
+	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
+	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
 	protected boolean visible = true;
-	protected BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
+	protected @NotNull  BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
 
 	protected ControlStyle currentStyle = null;
 	protected Theme internalTheme = new Theme();
@@ -29,13 +30,13 @@ public class Control<C extends Control<C>> {
 	protected int trueX = 0;
 	protected int trueY = 0;
 
-	public Control() {
-		this.id = "control";
-	}
-
-	public C id(String id) {
+	public C id(@NotNull  String id) {
 		this.id = id;
 		return (C)this;
+	}
+
+	public @NotNull String getId() {
+		return this.id;
 	}
 
 	/**
@@ -48,9 +49,13 @@ public class Control<C extends Control<C>> {
 	 * @param anchor The {@link Anchor} to anchor to.
 	 * @return The node itself.
 	 */
-	public C anchor(Anchor anchor) {
+	public C anchor(@NotNull Anchor anchor) {
 		this.anchor = anchor;
 		return (C)this;
+	}
+
+	public @NotNull Anchor getAnchor() {
+		return anchor;
 	}
 
 	/**
@@ -86,7 +91,7 @@ public class Control<C extends Control<C>> {
 		return (C)this;
 	}
 
-	public Rectangle getArea() {
+	public @NotNull Rectangle getArea() {
 		return this.area;
 	}
 
@@ -144,7 +149,7 @@ public class Control<C extends Control<C>> {
 	 * @param function the function to run.
 	 * @return The node itself.
 	 */
-	public C onTick(BiConsumer<ControlGui, C> function) {
+	public C onTick(@NotNull BiConsumer<ControlGui, C> function) {
 		onTick = function;
 		return (C)this;
 	}

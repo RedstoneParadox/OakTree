@@ -3,14 +3,15 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
 
 public class ButtonControl extends InteractiveControl<ButtonControl> {
 	protected boolean toggleable = false;
-	protected BiConsumer<ControlGui, ButtonControl> onClick = (gui, node) -> {};
-	protected BiConsumer<ControlGui, ButtonControl> whileHeld = (gui, node) -> {};
-	protected BiConsumer<ControlGui, ButtonControl> onRelease = (gui, node) -> {};
+	protected @NotNull BiConsumer<ControlGui, ButtonControl> onClick = (gui, node) -> {};
+	protected @NotNull BiConsumer<ControlGui, ButtonControl> whileHeld = (gui, node) -> {};
+	protected @NotNull BiConsumer<ControlGui, ButtonControl> onRelease = (gui, node) -> {};
 
 	private boolean held = false;
 	private boolean hovered = false;
@@ -38,17 +39,17 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 		return this;
 	}
 
-	public ButtonControl onClick(BiConsumer<ControlGui, ButtonControl> listener) {
+	public ButtonControl onClick(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
 		onClick = listener;
 		return this;
 	}
 
-	public ButtonControl whileHeld(BiConsumer<ControlGui, ButtonControl> listener) {
+	public ButtonControl whileHeld(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
 		whileHeld = listener;
 		return this;
 	}
 
-	public ButtonControl onRelease(BiConsumer<ControlGui, ButtonControl> listener) {
+	public ButtonControl onRelease(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
 		onRelease = listener;
 		return this;
 	}

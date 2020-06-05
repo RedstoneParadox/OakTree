@@ -3,13 +3,14 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
 
 public class HoverControl extends InteractiveControl<HoverControl> {
-	protected BiConsumer<ControlGui, HoverControl> mouseEnter = (gui, node) -> {};
-	protected BiConsumer<ControlGui, HoverControl> mouseExit = (gui, node) -> {};
-	protected BiConsumer<ControlGui, HoverControl> whileHovered = (gui, node) -> {};
+	protected @NotNull BiConsumer<ControlGui, HoverControl> mouseEnter = (gui, node) -> {};
+	protected @NotNull BiConsumer<ControlGui, HoverControl> mouseExit = (gui, node) -> {};
+	protected @NotNull BiConsumer<ControlGui, HoverControl> whileHovered = (gui, node) -> {};
 
 	private boolean mouseCurrentlyWithin = false;
 
@@ -22,17 +23,17 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 		return this;
 	}
 
-	public HoverControl onMouseEnter(BiConsumer<ControlGui, HoverControl> listener) {
+	public HoverControl onMouseEnter(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
 		mouseEnter = listener;
 		return this;
 	}
 
-	public HoverControl onMouseExit(BiConsumer<ControlGui, HoverControl> listener) {
+	public HoverControl onMouseExit(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
 		mouseExit = listener;
 		return this;
 	}
 
-	public HoverControl whileMouseHovers(BiConsumer<ControlGui, HoverControl> listener) {
+	public HoverControl whileMouseHovers(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
 		whileHovered = listener;
 		return this;
 	}

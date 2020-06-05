@@ -4,6 +4,8 @@ import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.util.ListUtils;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Subclass of {@link PanelControl} that lays out its children in
@@ -63,10 +65,24 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 	public GridPanelControl child(Control<?> child, int row, int column) throws IndexOutOfBoundsException {
 		if (row >= rows || column >= columns) throw new GridCellOutOfBoundsException(row, column);
 
-		int index = row * columns + column;
+		int index = (row - 1) * columns + column;
 		if (index >= children.size()) ListUtils.growList(children, index + 1);
 		children.set(index, child);
 		return this;
+	}
+
+	public @Nullable Control<?> getChild(int row, int column) {
+		if (row >= rows || column >= columns) {
+			throw new GridCellOutOfBoundsException(row, column);
+		}
+
+		int index = (row - 1) * columns + column;
+
+		if (index >= children.size()) {
+			return null;
+		}
+
+		return children.get(index);
 	}
 
 	/**

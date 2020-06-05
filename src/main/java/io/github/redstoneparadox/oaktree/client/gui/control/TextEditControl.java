@@ -12,6 +12,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -37,15 +38,15 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	private boolean updateText = false;
 
 	protected boolean shadow = false;
-	protected Color fontColor = Color.WHITE;
-	protected Color highlightColor = Color.BLUE;
+	protected @NotNull Color fontColor = Color.WHITE;
+	protected @NotNull Color highlightColor = Color.BLUE;
 	protected int maxLines = 1;
 	protected int displayedLines = 1;
 
-	protected TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped = (gui, control, character) -> character;
-	protected BiConsumer<ControlGui, TextEditControl> onFocused = (gui, control) -> {};
-	protected BiConsumer<ControlGui, TextEditControl> onFocusLost = (gui, control) -> {};
-	protected BiConsumer<ControlGui, TextEditControl> onEnter = (gui, control) -> {};
+	protected @NotNull TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped = (gui, control, character) -> character;
+	protected @NotNull BiConsumer<ControlGui, TextEditControl> onFocused = (gui, control) -> {};
+	protected @NotNull BiConsumer<ControlGui, TextEditControl> onFocusLost = (gui, control) -> {};
+	protected @NotNull BiConsumer<ControlGui, TextEditControl> onEnter = (gui, control) -> {};
 
 
 	public TextEditControl() {
@@ -58,7 +59,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * @param onCharTyped The function.
 	 * @return The control itself.
 	 */
-	public TextEditControl onCharTyped(TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped) {
+	public TextEditControl onCharTyped(@NotNull TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped) {
 		this.onCharTyped = onCharTyped;
 		return this;
 	}
@@ -71,7 +72,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 */
 	@Deprecated
 	@ApiStatus.ScheduledForRemoval
-	public TextEditControl onCharTyped(TypingListener<TextEditControl> onCharTyped) {
+	public TextEditControl onCharTyped(@NotNull TypingListener<TextEditControl> onCharTyped) {
 		this.onCharTyped = ((gui, control, character) -> onCharTyped.invoke(character, control));
 		return this;
 	}
@@ -82,7 +83,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * @param onFocused The function.
 	 * @return The control itself.
 	 */
-	public TextEditControl onFocused(BiConsumer<ControlGui, TextEditControl> onFocused) {
+	public TextEditControl onFocused(@NotNull BiConsumer<ControlGui, TextEditControl> onFocused) {
 		this.onFocused = onFocused;
 		return this;
 	}
@@ -93,7 +94,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * @param onFocusLost The function.
 	 * @return The control itself.
 	 */
-	public TextEditControl onFocusLost(BiConsumer<ControlGui, TextEditControl> onFocusLost) {
+	public TextEditControl onFocusLost(@NotNull BiConsumer<ControlGui, TextEditControl> onFocusLost) {
 		this.onFocusLost = onFocusLost;
 		return this;
 	}
@@ -104,7 +105,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * @param text The text.
 	 * @return The control itself.
 	 */
-	public TextEditControl text(String text) {
+	public TextEditControl text(@NotNull String text) {
 		this.text = text;
 		updateText = true;
 		return this;
@@ -116,7 +117,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * @param text The text.
 	 * @return The control itself.
 	 */
-	public TextEditControl text(Text text) {
+	public TextEditControl text(@NotNull Text text) {
 		this.text = text.getString();
 		updateText = true;
 		return this;
@@ -158,7 +159,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * @param fontColor The RGBA Color
 	 * @return The control itself.
 	 */
-	public TextEditControl fontColor(Color fontColor) {
+	public TextEditControl fontColor(@NotNull Color fontColor) {
 		this.fontColor = fontColor;
 		return this;
 	}
