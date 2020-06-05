@@ -17,7 +17,7 @@ import java.util.List;
  * single child.
  */
 public class BoxControl extends PaddingControl<BoxControl> {
-	public @NotNull Control<?> child = new Control<>();
+	protected  @NotNull Control<?> child = new Control<>();
 
 	public BoxControl() {
 		this.id = "box";
@@ -34,6 +34,10 @@ public class BoxControl extends PaddingControl<BoxControl> {
 	public BoxControl child(@NotNull Control<?> child) {
 		this.child = child;
 		return this;
+	}
+
+	public @NotNull Control<?> getChild() {
+		return child;
 	}
 
 	@Override
