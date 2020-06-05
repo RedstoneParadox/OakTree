@@ -43,7 +43,6 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		if (!visible) return;
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 
 		if (!mouseCurrentlyWithin && isMouseWithin) {

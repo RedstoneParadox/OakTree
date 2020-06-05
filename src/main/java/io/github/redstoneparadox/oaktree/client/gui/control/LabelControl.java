@@ -125,7 +125,6 @@ public class LabelControl extends Control<LabelControl> {
 
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		if (!visible) return;
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
 		if (renderer != null) {

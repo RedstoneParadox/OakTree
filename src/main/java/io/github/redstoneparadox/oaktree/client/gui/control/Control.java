@@ -104,6 +104,10 @@ public class Control<C extends Control<C>> {
 		return (C)this;
 	}
 
+	public boolean isVisible() {
+		return this.visible;
+	}
+
 	/**
 	 * Sets whether or not this should automatically expand to the
 	 * size of the parent node. If set to true, any size and position settings

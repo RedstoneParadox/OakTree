@@ -1,7 +1,9 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
 import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import org.jetbrains.annotations.ApiStatus;
 
 public abstract class PaddingControl<C extends PaddingControl<C>> extends Control<C> {
 	public int topPadding = 0;

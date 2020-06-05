@@ -39,7 +39,7 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
 		ScreenPos innerPosition = innerPosition(trueX, trueY);
 		ScreenPos innerDimensions = innerDimensions(area.width, area.height);
 
-		if (child != null) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
+		if (child.isVisible()) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 	}
 
 	@Override

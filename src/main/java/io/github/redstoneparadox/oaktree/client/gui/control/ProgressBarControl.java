@@ -76,7 +76,6 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		if (!visible) return;
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
 		int barX = trueX + ((area.width/2) - (barWidth/2));

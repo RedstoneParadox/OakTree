@@ -1,9 +1,12 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
 import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ import java.util.function.Function;
  * @param <C> The {@link PanelControl} type.
  */
 public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
-	public final List<Control<?>> children = new ArrayList<>();
+	public final List<@NotNull Control<?>> children = new ArrayList<>();
 
 	public PanelControl() {
 		this.id = "panel";
@@ -30,7 +33,7 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	 * @param child The child control.
 	 * @return The panel control itself.
 	 */
-	public C child(Control<?> child) {
+	public C child(@NotNull Control<?> child) {
 		children.add(child);
 		return (C) this;
 	}
@@ -65,13 +68,12 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 		if (!visible) return;
 		controls.add(this);
 		for (Control<?> child: children) {
-			child.zIndex(controls);
+			if (child.isVisible()) child.zIndex(controls);
 		}
 	}
 
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		if (!visible) return;
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 		arrangeChildren(gui, mouseX, mouseY);
 	}
@@ -79,18 +81,16 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		ScreenPos innerPosition = innerPosition(trueX, trueY);
 		ScreenPos innerDimensions = innerDimensions(area.width, area.height);
-
 		for (Control<?> child: children) {
-			if (child != null) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
+			if (child.isVisible()) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 		}
 	}
 
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		if (!visible) return;
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 		for (Control<?> child: children) {
-			if (child != null && shouldDraw(child)) child.draw(matrices, mouseX, mouseY, deltaTime, gui);
+			if (child.isVisible() && shouldDraw(child)) child.draw(matrices, mouseX, mouseY, deltaTime, gui);
 		}
 	}
 

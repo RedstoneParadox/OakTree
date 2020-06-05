@@ -96,7 +96,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 				int cellY = innerPosition.y + (j * cellHeight);
 
 				Control<?> child = children.get(index);
-				if (child != null) child.preDraw(gui, cellX, cellY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
+				if (child.isVisible()) child.preDraw(gui, cellX, cellY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 
 				index += 1;
 			}

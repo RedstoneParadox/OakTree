@@ -185,7 +185,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	// Abandon hope all Ye who enter here!
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		if (!visible) return;
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 		updateFocused(gui);
 		if (lines.isEmpty()) lines.add("");

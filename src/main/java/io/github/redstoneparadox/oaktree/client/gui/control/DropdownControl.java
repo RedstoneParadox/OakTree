@@ -44,7 +44,6 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		if (!visible) return;
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 
 		if (isMouseWithin) {
@@ -77,7 +76,6 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		if (!visible) return;
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 		dropdown.draw(matrices, mouseX, mouseY, deltaTime, gui);
 	}

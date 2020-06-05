@@ -53,7 +53,7 @@ public final class ControlGui {
 	}
 
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		if (!initialized) return;
+		if (!initialized || !root.isVisible()) return;
 
 		Window window = screen.getClient().getWindow();
 		MouseHooks mouse = (MouseHooks) screen.getClient().mouse;

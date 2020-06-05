@@ -95,14 +95,14 @@ public class SplitControl extends Control<SplitControl> {
 			secondArea.height = area.height;
 		}
 
-		if (first.visible) first.preDraw(gui, firstArea.x, firstArea.y, firstArea.width, firstArea.height, mouseX, mouseY);
-		if (second.visible) second.preDraw(gui, secondArea.x, secondArea.y, secondArea.width, secondArea.height, mouseX, mouseY);
+		if (first.isVisible()) first.preDraw(gui, firstArea.x, firstArea.y, firstArea.width, firstArea.height, mouseX, mouseY);
+		if (second.isVisible()) second.preDraw(gui, secondArea.x, secondArea.y, secondArea.width, secondArea.height, mouseX, mouseY);
 	}
 
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-		if (first.visible) first.draw(matrices, mouseX, mouseY, deltaTime, gui);
-		if (second.visible && splitSize > 0) second.draw(matrices, mouseX, mouseY, deltaTime, gui);
+		if (first.isVisible()) first.draw(matrices, mouseX, mouseY, deltaTime, gui);
+		if (second.isVisible() && splitSize > 0) second.draw(matrices, mouseX, mouseY, deltaTime, gui);
 	}
 }

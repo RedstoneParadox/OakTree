@@ -23,7 +23,6 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		if (!visible) return;
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 
 		if (tooltip != null) {
@@ -46,7 +45,7 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 	}
 
 	public void drawTooltip(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		if (tooltip != null) {
+		if (tooltip != null && tooltip.isVisible()) {
 			RenderHelper.setzOffset(300);
 			tooltip.draw(matrices, mouseX, mouseY, deltaTime, gui);
 			RenderHelper.setzOffset(0);

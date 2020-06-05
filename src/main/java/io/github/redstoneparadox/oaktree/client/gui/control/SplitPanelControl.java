@@ -60,7 +60,7 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
 			float half = children.size()/2.0f;
 			for (int i = 0; i < children.size(); i += 1) {
 				Control<?> child = children.get(i);
-				if (child != null) {
+				if (child.isVisible()) {
 					if (i < half) child.preDraw(gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, mouseX, mouseY);
 					else child.preDraw(gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, mouseX, mouseY);
 				}
@@ -69,9 +69,12 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
 		else if (distribution == Distribution.EVERY_OTHER) {
 			boolean second = false;
 			for (Control<?> child: children) {
-				if (child != null) {
-					if (second) child.preDraw(gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, mouseX, mouseY);
-					else child.preDraw(gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, mouseX, mouseY);
+				if (child.isVisible()) {
+					if (second) {
+						 child.preDraw(gui, secondPosition.x, secondPosition.y, secondDimension.x, secondDimension.y, mouseX, mouseY);
+					} else {
+						child.preDraw(gui, firstPosition.x, firstPosition.y, firstDimensions.x, firstDimensions.y, mouseX, mouseY);
+					}
 				}
 				second = !second;
 			}
