@@ -2,7 +2,10 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import org.jetbrains.annotations.ApiStatus;
 
+@Deprecated
+@ApiStatus.ScheduledForRemoval
 public class SplitPanelControl extends PanelControl<SplitPanelControl> {
     public int splitSize = 0;
     public Distribution distribution = Distribution.HALF;

@@ -295,13 +295,12 @@ public class Tests {
                 .barLength(10)
                 .anchor(Anchor.CENTER);
 
-        return new SplitPanelControl()
-                .everyOther()
+        return new SplitControl()
                 .id("base")
                 .size(140, 120)
-                .splitSize(30)
-                .child(scrollBar)
-                .child(listPanel)
+                .splitSize(110)
+                .first(scrollBar)
+                .second(listPanel)
                 .anchor(Anchor.CENTER);
     }
 
