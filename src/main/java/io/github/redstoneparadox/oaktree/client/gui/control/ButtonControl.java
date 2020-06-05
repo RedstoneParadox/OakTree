@@ -7,12 +7,10 @@ import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import java.util.function.BiConsumer;
 
 public class ButtonControl extends InteractiveControl<ButtonControl> {
-
-	public BiConsumer<ControlGui, ButtonControl> onClick = (gui, node) -> {};
-	public BiConsumer<ControlGui, ButtonControl> whileHeld = (gui, node) -> {};
-	public BiConsumer<ControlGui, ButtonControl> onRelease = (gui, node) -> {};
-
-	public boolean toggleable = false;
+	protected boolean toggleable = false;
+	protected BiConsumer<ControlGui, ButtonControl> onClick = (gui, node) -> {};
+	protected BiConsumer<ControlGui, ButtonControl> whileHeld = (gui, node) -> {};
+	protected BiConsumer<ControlGui, ButtonControl> onRelease = (gui, node) -> {};
 
 	private boolean held = false;
 	private boolean hovered = false;
@@ -24,6 +22,10 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 	public ButtonControl toggleable(boolean toggleable) {
 		this.toggleable = toggleable;
 		return this;
+	}
+
+	public boolean isToggleable() {
+		return toggleable;
 	}
 
 	public ButtonControl heldStyle(ControlStyle heldStyle) {
