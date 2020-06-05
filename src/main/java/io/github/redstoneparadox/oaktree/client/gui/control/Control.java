@@ -161,8 +161,6 @@ public class Control<C extends Control<C>> {
 	}
 
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		if (!visible) return;
-
 		onTick.accept(gui, (C)this);
 
 		if (!expand) {
@@ -183,8 +181,6 @@ public class Control<C extends Control<C>> {
 	}
 
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		if (!visible) return;
-
 		if (currentStyle != null) {
 			currentStyle.draw(trueX, trueY, area.width, area.height, gui);
 		}
