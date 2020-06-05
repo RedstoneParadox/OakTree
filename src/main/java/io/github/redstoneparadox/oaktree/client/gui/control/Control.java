@@ -15,20 +15,20 @@ import java.util.function.BiConsumer;
  * The base class for all controls.
  */
 public class Control<C extends Control<C>> {
-	public final Rectangle area = new Rectangle(0, 0, 1, 1);
+	protected String id;
+	protected Anchor anchor = Anchor.TOP_LEFT;
+	protected final Rectangle area = new Rectangle(0, 0, 1, 1);
+	protected boolean expand = false;
+	protected boolean visible = true;
 
-	public boolean visible = true;
-	public Anchor anchor = Anchor.TOP_LEFT;
-	public BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
-	public ControlStyle defaultStyle = null;
-	public boolean expand = false;
-	public String id;
+	public ControlStyle baseStyle = null;
+	protected BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
 
-	ControlStyle currentStyle = null;
-	Theme internalTheme = new Theme();
+	protected ControlStyle currentStyle = null;
+	protected Theme internalTheme = new Theme();
 
-	int trueX = 0;
-	int trueY = 0;
+	protected int trueX = 0;
+	protected int trueY = 0;
 
 	public Control() {
 		this.id = "control";
@@ -36,6 +36,21 @@ public class Control<C extends Control<C>> {
 
 	public C id(String id) {
 		this.id = id;
+		return (C)this;
+	}
+
+	/**
+	 * Anchors the position of this node relative to the parent using
+	 * a {@link Anchor}. For example, a value of
+	 * {@link Anchor#CENTER} and a position of (10, 0)
+	 * will result in the node being placed 10 pixels to the left of
+	 * the parent node's center.
+	 *
+	 * @param anchor The {@link Anchor} to anchor to.
+	 * @return The node itself.
+	 */
+	public C anchor(Anchor anchor) {
+		this.anchor = anchor;
 		return (C)this;
 	}
 
@@ -72,6 +87,10 @@ public class Control<C extends Control<C>> {
 		return (C)this;
 	}
 
+	public Rectangle getArea() {
+		return this.area;
+	}
+
 	/**
 	 * Sets whether or not this node should be visible. Any nodes that
 	 * are not visible will not be drawn, cannot be interacted with,
@@ -99,31 +118,16 @@ public class Control<C extends Control<C>> {
 	}
 
 	/**
-	 * Sets the default {@link ControlStyle} for this node. For most
+	 * Sets the base {@link ControlStyle} for this node. For most
 	 * nodes, this is the only style, but some will have multiple
 	 * styles so it is considered the default style.
 	 *
-	 * @param style The StyleBox for this node.
+	 * @param baseStyle The StyleBox for this node.
 	 * @return The node itself.
 	 */
-	public C defaultStyle(ControlStyle style) {
-		defaultStyle = style;
-		internalTheme.add("self", style);
-		return (C)this;
-	}
-
-	/**
-	 * Anchors the position of this node relative to the parent using
-	 * a {@link Anchor}. For example, a value of
-	 * {@link Anchor#CENTER} and a position of (10, 0)
-	 * will result in the node being placed 10 pixels to the left of
-	 * the parent node's center.
-	 *
-	 * @param anchor The {@link Anchor} to anchor to.
-	 * @return The node itself.
-	 */
-	public C anchor(Anchor anchor) {
-		this.anchor = anchor;
+	public C baseStyle(ControlStyle baseStyle) {
+		this.baseStyle = baseStyle;
+		internalTheme.add("self", baseStyle);
 		return (C)this;
 	}
 
@@ -171,7 +175,7 @@ public class Control<C extends Control<C>> {
 			area.width = (int)containerWidth;
 			area.height = (int)containerHeight;
 		}
-		currentStyle = defaultStyle;
+		currentStyle = baseStyle;
 	}
 
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
@@ -183,7 +187,7 @@ public class Control<C extends Control<C>> {
 	}
 
 	void applyTheme(Theme theme) {
-		defaultStyle = getStyle(theme, "default");
+		baseStyle = getStyle(theme, "default");
 	}
 
 	final ControlStyle getStyle(Theme theme, String name) {

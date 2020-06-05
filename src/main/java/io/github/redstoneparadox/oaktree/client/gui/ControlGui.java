@@ -93,7 +93,7 @@ public final class ControlGui {
 		boolean mouseCaptured = false;
 		for (Control<?> control: controlList) {
 			ScreenPos truePos = control.getTruePosition();
-			if (control.area.offset(truePos.x, truePos.y).isPointWithin(mouseX, mouseY) && !mouseCaptured) {
+			if (control.getArea().offset(truePos.x, truePos.y).isPointWithin(mouseX, mouseY) && !mouseCaptured) {
 				mouseCaptured = true;
 				if (control instanceof InteractiveControl<?>) {
 					((InteractiveControl<?>)control).setMouseWithin(true);
@@ -111,7 +111,7 @@ public final class ControlGui {
 		root.draw(matrices, mouseX, mouseY, delta, this);
 		if (hovered != null) hovered.drawTooltip(matrices, mouseX, mouseY, delta, this);
 
-		screen.setSize(root.area.width, root.area.height);
+		screen.setSize(root.getArea().width, root.getArea().height);
 
 		lastChar = null;
 	}

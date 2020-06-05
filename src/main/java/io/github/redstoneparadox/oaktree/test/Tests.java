@@ -357,7 +357,7 @@ public class Tests {
 	private Control<?> testFive() {
 		return new Control<>()
 				.size(200, 200)
-				.defaultStyle(new ColorControlStyle(Color.DARK_BLUE))
+				.baseStyle(new ColorControlStyle(Color.DARK_BLUE))
 				.anchor(Anchor.CENTER);
 	}
 }

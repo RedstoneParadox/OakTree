@@ -86,7 +86,7 @@ public class SliderControl extends InteractiveControl<SliderControl> {
 
 	@Override
 	void applyTheme(Theme theme) {
-		defaultStyle = getStyle(theme, "default");
+		baseStyle = getStyle(theme, "default");
 		sliderStyle = getStyle(theme, "slider");
 	}
 }
