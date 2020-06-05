@@ -21,9 +21,6 @@ public class Control<C extends Control<C>> {
 	protected final Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
 	protected boolean visible = true;
-
-	public ControlStyle baseStyle = null;
-
 	protected BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
 
 	protected ControlStyle currentStyle = null;
