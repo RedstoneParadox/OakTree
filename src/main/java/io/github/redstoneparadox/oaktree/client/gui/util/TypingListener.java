@@ -7,5 +7,5 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.ScheduledForRemoval
 public interface TypingListener<T> {
 
-    Character invoke(Character character, T node);
+	Character invoke(Character character, T node);
 }

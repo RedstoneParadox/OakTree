@@ -8,15 +8,15 @@ import java.util.Optional;
 
 public interface ScreenHooks {
 
-    Optional<ScreenHandler> getHandler();
+	Optional<ScreenHandler> getHandler();
 
-    TextRenderer getTextRenderer();
+	TextRenderer getTextRenderer();
 
-    MinecraftClient getClient();
+	MinecraftClient getClient();
 
-    int getX();
+	int getX();
 
-    int getY();
+	int getY();
 
-    void setSize(int width, int height);
+	void setSize(int width, int height);
 }

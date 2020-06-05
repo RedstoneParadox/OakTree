@@ -10,13 +10,13 @@ import org.jetbrains.annotations.ApiStatus;
  */
 public abstract class ControlStyle {
 
-    @Deprecated
-    @ApiStatus.ScheduledForRemoval
-    public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
-        draw(x, y, width, height, gui);
-    }
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
+	public void draw(int x, int y, int width, int height, ControlGui gui, boolean mirroredHorizontal, boolean mirroredVertical) {
+		draw(x, y, width, height, gui);
+	}
 
-    public void draw(int x, int y, int width, int height, ControlGui gui) {
+	public void draw(int x, int y, int width, int height, ControlGui gui) {
 
-    }
+	}
 }

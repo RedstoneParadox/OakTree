@@ -9,28 +9,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Mouse.class)
 public abstract class MixinMouse implements MouseHooks {
-    private boolean rightButton = false;
-    private boolean leftButton = false;
+	private boolean rightButton = false;
+	private boolean leftButton = false;
 
-    @Inject(method = "onMouseButton", at = @At("HEAD"))
-    private void onMouseButton(long window, int button, int action, int mods, CallbackInfo ci) {
-        if (action == 1) {
-            if (button == 1) rightButton = true;
-            if (button == 0) leftButton = true;
-        }
-        else if (action == 0) {
-            if (button == 1) rightButton = false;
-            if (button == 0) leftButton = false;
-        }
-    }
+	@Inject(method = "onMouseButton", at = @At("HEAD"))
+	private void onMouseButton(long window, int button, int action, int mods, CallbackInfo ci) {
+		if (action == 1) {
+			if (button == 1) rightButton = true;
+			if (button == 0) leftButton = true;
+		}
+		else if (action == 0) {
+			if (button == 1) rightButton = false;
+			if (button == 0) leftButton = false;
+		}
+	}
 
-    @Override
-    public boolean leftButton() {
-        return leftButton;
-    }
+	@Override
+	public boolean leftButton() {
+		return leftButton;
+	}
 
-    @Override
-    public boolean rightButton() {
-        return rightButton;
-    }
+	@Override
+	public boolean rightButton() {
+		return rightButton;
+	}
 }

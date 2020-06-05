@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.4.15'
 	id 'maven-publish'
+	id 'checkstyle'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -9,6 +10,8 @@ targetCompatibility = JavaVersion.VERSION_1_8
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+apply plugin: 'checkstyle'
 
 minecraft {
 }
@@ -26,6 +29,11 @@ dependencies {
 	// You may need to force-disable transitiveness on them.
 
 	compile "org.jetbrains:annotations:${project.jetbrains_annotations}"
+}
+
+checkstyle {
+	configFile = rootProject.file("checkstyle.xml")
+	toolVersion = '8.31'
 }
 
 processResources {

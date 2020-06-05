@@ -11,15 +11,15 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(Slot.class)
 public interface SlotAccessor {
 
-    @Accessor("x")
-    public abstract int getX();
+	@Accessor("x")
+	public abstract int getX();
 
-    @Accessor("x")
-    public abstract void setX(int xPosition);
+	@Accessor("x")
+	public abstract void setX(int xPosition);
 
-    @Accessor("y")
-    public abstract int getY();
+	@Accessor("y")
+	public abstract int getY();
 
-    @Accessor("y")
-    public abstract void setY(int yPosition);
+	@Accessor("y")
+	public abstract void setY(int yPosition);
 }
