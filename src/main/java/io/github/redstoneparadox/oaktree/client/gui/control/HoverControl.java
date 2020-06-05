@@ -14,15 +14,12 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 
 	private boolean mouseCurrentlyWithin = false;
 
-	public ControlStyle hoverStyle = null;
-
 	public HoverControl() {
 		this.id = "hover";
 	}
 
-	public HoverControl hoverStyle(ControlStyle value) {
-		hoverStyle = value;
-		internalTheme.add("self", "hover", hoverStyle);
+	public HoverControl hoverStyle(ControlStyle style) {
+		internalTheme.add("self", "hover", style);
 		return this;
 	}
 

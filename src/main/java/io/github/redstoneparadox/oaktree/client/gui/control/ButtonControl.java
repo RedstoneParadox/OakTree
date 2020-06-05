@@ -17,9 +17,6 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 	private boolean held = false;
 	private boolean hovered = false;
 
-	public ControlStyle heldStyle = null;
-	public ControlStyle hoverStyle = null;
-
 	public ButtonControl() {
 		this.id = "button";
 	}
@@ -30,13 +27,11 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 	}
 
 	public ButtonControl heldStyle(ControlStyle heldStyle) {
-		this.heldStyle = heldStyle;
 		internalTheme.add("self", "held", heldStyle);
 		return this;
 	}
 
 	public ButtonControl hoverStyle(ControlStyle hoverStyle) {
-		this.hoverStyle = hoverStyle;
 		internalTheme.add("self", "hover", hoverStyle);
 		return this;
 	}
