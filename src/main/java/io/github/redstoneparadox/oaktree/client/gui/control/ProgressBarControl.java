@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.geometry.Direction2D;
+import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import net.minecraft.client.util.math.MatrixStack;
@@ -9,15 +10,12 @@ import net.minecraft.client.util.math.MatrixStack;
  * A node representing a percent-based progress bar.
  */
 public class ProgressBarControl extends Control<ProgressBarControl> {
+	protected float percent = 100.0f;
+	protected int barWidth = 1;
+	protected int barHeight = 1;
+	protected Direction2D direction = Direction2D.RIGHT;
 
-	ControlStyle barStyle = null;
-
-	public float percent = 100.0f;
-
-	int barWidth = 1;
-	int barHeight = 1;
-
-	Direction2D direction = Direction2D.RIGHT;
+	private ControlStyle barStyle = null;
 
 	public ProgressBarControl() {
 		this.id = "progress_bar";
@@ -30,7 +28,7 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 	 * @return The node itself.
 	 */
 	public ProgressBarControl barStyle(ControlStyle style) {
-		barStyle = style;
+		internalTheme.add("bar", "bar", style);
 		return this;
 	}
 
@@ -43,6 +41,10 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 	public ProgressBarControl percent(float percent) {
 		this.percent = percent;
 		return this;
+	}
+
+	public float getPercent() {
+		return percent;
 	}
 
 	/**
@@ -60,6 +62,10 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 		return this;
 	}
 
+	public ScreenPos getBarSize() {
+		return new ScreenPos(barWidth, barHeight);
+	}
+
 	/**
 	 * Sets the {@link Direction2D} for the bar to be
 	 * drawn in. A values of {@link Direction2D#DOWN}
@@ -72,6 +78,12 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 	public ProgressBarControl drawDirection(Direction2D direction) {
 		this.direction = direction;
 		return this;
+	}
+
+	@Override
+	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
+		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
+		barStyle = getStyle(gui.getTheme(), "bar");
 	}
 
 	@Override

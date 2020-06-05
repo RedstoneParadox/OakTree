@@ -16,11 +16,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class LabelControl extends Control<LabelControl> {
-	public @NotNull Text text = LiteralText.EMPTY;
-	public boolean shadow = false;
-	public Color fontColor = Color.WHITE;
-	public int maxLines = 1;
-	public boolean resizable = false;
+	protected  @NotNull Text text = LiteralText.EMPTY;
+	protected boolean shadow = false;
+	public @NotNull Color fontColor = Color.WHITE;
+	protected int maxLines = 1;
+	protected boolean resizable = false;
 
 	private @Nullable TextRenderer renderer = null;
 
@@ -78,6 +78,10 @@ public class LabelControl extends Control<LabelControl> {
 		return this;
 	}
 
+	public @NotNull Text getText() {
+		return text;
+	}
+
 	/**
 	 * Sets whether the text should be drawn with a shadow.
 	 *
@@ -89,6 +93,10 @@ public class LabelControl extends Control<LabelControl> {
 		return this;
 	}
 
+	public boolean isShadow() {
+		return shadow;
+	}
+
 	/**
 	 * Sets the color of the font to be drawn. Note that transparency
 	 * is ignored here due to Minecraft internals.
@@ -96,9 +104,13 @@ public class LabelControl extends Control<LabelControl> {
 	 * @param fontColor The RGBA Color
 	 * @return The control itself.
 	 */
-	public LabelControl fontColor(Color fontColor) {
+	public LabelControl fontColor(@NotNull Color fontColor) {
 		this.fontColor = fontColor;
 		return this;
+	}
+
+	public @NotNull Color getFontColor() {
+		return fontColor;
 	}
 
 	/**
@@ -112,9 +124,17 @@ public class LabelControl extends Control<LabelControl> {
 		return this;
 	}
 
+	public int getMaxLines() {
+		return maxLines;
+	}
+
 	public LabelControl resizable(boolean resizable) {
 		this.resizable = resizable;
 		return this;
+	}
+
+	public boolean isResizable() {
+		return resizable;
 	}
 
 	@Override

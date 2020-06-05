@@ -36,16 +36,16 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	private String text = "";
 	private boolean updateText = false;
 
-	public boolean shadow = false;
-	public Color fontColor = Color.WHITE;
-	public Color highlightColor = Color.BLUE;
-	public int maxLines = 1;
-	public int displayedLines = 1;
+	protected boolean shadow = false;
+	protected Color fontColor = Color.WHITE;
+	protected Color highlightColor = Color.BLUE;
+	protected int maxLines = 1;
+	protected int displayedLines = 1;
 
-	public TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped = (gui, control, character) -> character;
-	public BiConsumer<ControlGui, TextEditControl> onFocused = (gui, control) -> {};
-	public BiConsumer<ControlGui, TextEditControl> onFocusLost = (gui, control) -> {};
-	public BiConsumer<ControlGui, TextEditControl> onEnter = (gui, control) -> {};
+	protected TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped = (gui, control, character) -> character;
+	protected BiConsumer<ControlGui, TextEditControl> onFocused = (gui, control) -> {};
+	protected BiConsumer<ControlGui, TextEditControl> onFocusLost = (gui, control) -> {};
+	protected BiConsumer<ControlGui, TextEditControl> onEnter = (gui, control) -> {};
 
 
 	public TextEditControl() {
@@ -147,6 +147,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		return this;
 	}
 
+	public boolean isShadow() {
+		return shadow;
+	}
+
 	/**
 	 * Sets the color of the font to be drawn. Note that transparency
 	 * is ignored here due to Minecraft internals.
@@ -157,6 +161,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	public TextEditControl fontColor(Color fontColor) {
 		this.fontColor = fontColor;
 		return this;
+	}
+
+	public Color getFontColor() {
+		return this.fontColor;
 	}
 
 	/**
@@ -170,6 +178,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		return this;
 	}
 
+	public int getMaxLines() {
+		return maxLines;
+	}
+
 	/**
 	 * Set the maximum number of lines to be
 	 * displayed.
@@ -180,6 +192,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	public TextEditControl displayedLines(int displayedLines) {
 		if (displayedLines > 0) this.displayedLines = displayedLines;
 		return this;
+	}
+
+	public int getDisplayedLines() {
+		return displayedLines;
 	}
 
 	// Abandon hope all Ye who enter here!

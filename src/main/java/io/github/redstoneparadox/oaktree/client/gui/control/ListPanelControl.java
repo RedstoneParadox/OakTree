@@ -4,9 +4,9 @@ import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 
 public class ListPanelControl extends PanelControl<ListPanelControl> {
-	public boolean horizontal = false;
-	public int displayCount = 1;
-	public int startIndex = 0;
+	protected boolean horizontal = false;
+	protected int displayCount = 1;
+	protected int startIndex = 0;
 
 	public ListPanelControl() {
 		id = "list_panel";
@@ -17,11 +17,19 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
 		return this;
 	}
 
+	public boolean isHorizontal() {
+		return horizontal;
+	}
+
 	// TODO: Display count should only be clamped during preDraw
 	public ListPanelControl displayCount(int displayCount) {
 		if (displayCount < 1) this.displayCount = 1;
 		else this.displayCount = Math.min(displayCount, children.size());
 		return this;
+	}
+
+	public int getDisplayCount() {
+		return displayCount;
 	}
 
 	public ListPanelControl startIndex(int currentIndex) {
@@ -32,6 +40,10 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
 
 	public ListPanelControl scroll(int amount) {
 		return startIndex(startIndex + amount);
+	}
+
+	protected int getStartIndex() {
+		return startIndex;
 	}
 
 	@Override

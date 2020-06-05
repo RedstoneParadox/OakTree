@@ -4,7 +4,7 @@ import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 
 public class PagePanelControl extends PanelControl<PagePanelControl> {
-	public int page = 0;
+	protected int page = 0;
 
 	public PagePanelControl() {
 		this.id = "page_panel";
@@ -31,6 +31,10 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
 	public PagePanelControl flipPages(int count) {
 		page(page + count);
 		return this;
+	}
+
+	public int getPage() {
+		return page;
 	}
 
 	@Override

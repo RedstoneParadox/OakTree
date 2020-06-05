@@ -7,10 +7,9 @@ import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import java.util.function.BiConsumer;
 
 public class HoverControl extends InteractiveControl<HoverControl> {
-
-	public BiConsumer<ControlGui, HoverControl> mouseEnter = (gui, node) -> {};
-	public BiConsumer<ControlGui, HoverControl> mouseExit = (gui, node) -> {};
-	public BiConsumer<ControlGui, HoverControl> whileHovered = (gui, node) -> {};
+	protected BiConsumer<ControlGui, HoverControl> mouseEnter = (gui, node) -> {};
+	protected BiConsumer<ControlGui, HoverControl> mouseExit = (gui, node) -> {};
+	protected BiConsumer<ControlGui, HoverControl> whileHovered = (gui, node) -> {};
 
 	private boolean mouseCurrentlyWithin = false;
 

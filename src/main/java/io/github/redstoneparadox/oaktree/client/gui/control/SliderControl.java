@@ -9,20 +9,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.BiConsumer;
 
 public class SliderControl extends InteractiveControl<SliderControl> {
-	public ControlStyle sliderStyle = null;
-	public float scrollPercent = 0.0f;
-	public boolean horizontal = false;
+	protected float scrollPercent = 0.0f;
+	protected int barLength = 1;
+	protected boolean horizontal = false;
+	protected @NotNull BiConsumer<ControlGui, SliderControl> onSlide = (gui, control) -> {};
 
-	@NotNull public BiConsumer<ControlGui, SliderControl> onSlide = (gui, control) -> {};
-
-	public int barLength = 1;
+	protected ControlStyle sliderStyle = null;
 
 	public SliderControl() {
 		this.id = "slider";
 	}
 
 	public SliderControl sliderStyle(ControlStyle sliderStyle) {
-		this.sliderStyle = sliderStyle;
+		internalTheme.add("slider", "slider", sliderStyle);
 		return this;
 	}
 
@@ -31,14 +30,26 @@ public class SliderControl extends InteractiveControl<SliderControl> {
 		return this;
 	}
 
-	public SliderControl horizontal(boolean horizontal) {
-		this.horizontal = horizontal;
-		return this;
+	public float getScrollPercent() {
+		return scrollPercent;
 	}
 
 	public SliderControl barLength(int barLength) {
 		this.barLength = barLength;
 		return this;
+	}
+
+	public int getBarLength() {
+		return barLength;
+	}
+
+	public SliderControl horizontal(boolean horizontal) {
+		this.horizontal = horizontal;
+		return this;
+	}
+
+	public boolean isHorizontal() {
+		return horizontal;
 	}
 
 	public SliderControl onSlide(@NotNull BiConsumer<ControlGui, SliderControl> onSlide) {

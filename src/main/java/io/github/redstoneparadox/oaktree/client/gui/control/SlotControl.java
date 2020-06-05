@@ -24,11 +24,10 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class SlotControl extends InteractiveControl<SlotControl> {
-	public ControlStyle highlightStyle = new ColorControlStyle(Color.rgba(0.75f, 0.75f, 0.75f, 0.5f));
-	public int slotBorder = 1;
-
-	public TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
-	public TriPredicate<ControlGui, SlotControl, ItemStack> canTake = (gui, control, stack) -> true;
+	private ControlStyle highlightStyle = new ColorControlStyle(Color.rgba(0.75f, 0.75f, 0.75f, 0.5f));
+	protected int slotBorder = 1;
+	protected TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
+	protected TriPredicate<ControlGui, SlotControl, ItemStack> canTake = (gui, control, stack) -> true;
 
 	private final int slot;
 	private final int inventoryID;
@@ -49,6 +48,10 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 	public SlotControl slotBorder(int slotBorder) {
 		this.slotBorder = slotBorder;
 		return this;
+	}
+
+	public int getSlotBorder() {
+		return slotBorder;
 	}
 
 	public SlotControl canInsert(TriPredicate<ControlGui, SlotControl, ItemStack> canInsert) {

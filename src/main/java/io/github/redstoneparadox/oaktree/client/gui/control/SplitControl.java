@@ -9,10 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SplitControl extends Control<SplitControl> {
-	private int splitSize = 0;
-	private boolean vertical = false;
-	private @NotNull Control<?> first = new Control<>();
-	private @NotNull Control<?> second = new Control<>();
+	protected int splitSize = 0;
+	protected boolean vertical = false;
+	protected @NotNull Control<?> first = new Control<>();
+	protected @NotNull Control<?> second = new Control<>();
 
 	private final Rectangle firstArea = new Rectangle(trueX, trueY, area.width, area.height);
 	private final Rectangle secondArea = new Rectangle(trueX + firstArea.width, trueY, 0, area.height);

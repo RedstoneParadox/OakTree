@@ -236,25 +236,27 @@ public class Tests {
 	}
 
 	private Control<?> testOne() {
-		DropdownControl leftDropdown = new DropdownControl(
-				new ListPanelControl()
-						.id("base")
-						.size(80, 80)
-						.children(4, this::itemLabel)
-						.displayCount(4)
-		)
+		DropdownControl leftDropdown = new DropdownControl()
+				.dropdown(
+						new ListPanelControl()
+								.id("base")
+								.size(80, 80)
+								.children(4, this::itemLabel)
+								.displayCount(4)
+				)
 				.size(40, 20)
 				.id("button")
 				.dropdownDirection(Direction2D.LEFT)
 				.anchor(Anchor.CENTER);
 
-		DropdownControl rightDropdown = new DropdownControl(
-				new ListPanelControl()
-						.id("base")
-						.size(80, 80)
-						.children(4, this::itemLabel)
-						.displayCount(4)
-		)
+		DropdownControl rightDropdown = new DropdownControl()
+				.dropdown(
+						new ListPanelControl()
+								.id("base")
+								.size(80, 80)
+								.children(4, this::itemLabel)
+								.displayCount(4)
+				)
 				.size(40, 20)
 				.id("button")
 				.dropdownDirection(Direction2D.RIGHT)
@@ -262,13 +264,14 @@ public class Tests {
 
 
 		return new PanelControl<>()
-				.child(new DropdownControl(
-						new ListPanelControl()
-								.id("base")
-								.size(60, 60)
-								.child(leftDropdown)
-								.child(rightDropdown)
-								.displayCount(2)
+				.child(new DropdownControl()
+						.dropdown(
+								new ListPanelControl()
+										.id("base")
+										.size(60, 60)
+										.child(leftDropdown)
+										.child(rightDropdown)
+										.displayCount(2)
 						)
 						.size(60, 20)
 						.id("button")
@@ -289,7 +292,7 @@ public class Tests {
 		SliderControl scrollBar = new SliderControl()
 				.size(20, 100)
 				.onSlide((gui, control) -> {
-					listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.displayCount) * (control.scrollPercent)/100)));
+					listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.getDisplayCount()) * (control.getScrollPercent())/100)));
 				})
 				.barLength(10)
 				.anchor(Anchor.CENTER);

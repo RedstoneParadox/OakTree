@@ -10,8 +10,8 @@ import io.github.redstoneparadox.oaktree.util.TriFunction;
  * a grid pattern.
  */
 public class GridPanelControl extends PanelControl<GridPanelControl> {
-	public int rows = 1;
-	public int columns = 1;
+	protected int rows = 1;
+	protected int columns = 1;
 
 	public GridPanelControl() {
 		this.id = "grid_panel";
@@ -29,6 +29,10 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 		return this;
 	}
 
+	public int getRows() {
+		return rows;
+	}
+
 	/**
 	 * Sets the number of columns to divide
 	 * the panel into.
@@ -39,6 +43,10 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 	public GridPanelControl columns(int columns) {
 		this.columns = columns;
 		return this;
+	}
+
+	public int getColumns() {
+		return columns;
 	}
 
 	/**

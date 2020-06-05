@@ -9,10 +9,10 @@ import org.jetbrains.annotations.Nullable;
 
 
 public abstract class InteractiveControl<C extends InteractiveControl<C>> extends Control<C> {
-	public @Nullable Control<?> tooltip = null;
-	public boolean lockTooltipPos = false;
-	public int tooltipOffsetX = 8;
-	public int tooltipOffsetY = -10;
+	protected @Nullable Control<?> tooltip = null;
+	protected boolean lockTooltipPos = false;
+	protected int tooltipOffsetX = 8;
+	protected int tooltipOffsetY = -10;
 
 	protected boolean isMouseWithin = false;
 

@@ -9,11 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class DropdownControl extends InteractiveControl<DropdownControl> {
-	@NotNull public Control<?> dropdown;
-	@NotNull public Direction2D dropdownDirection = Direction2D.DOWN;
+	@NotNull protected Control<?> dropdown = new Control<>();
+	@NotNull protected Direction2D dropdownDirection = Direction2D.DOWN;
 
-	public DropdownControl(@NotNull Control<?> dropdown) {
-		this.dropdown = dropdown;
+	public DropdownControl() {
 		this.dropdown.visible(false);
 		this.id = "dropdown";
 	}
@@ -24,9 +23,17 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 		return this;
 	}
 
+	public @NotNull Control<?> getDropdown() {
+		return dropdown;
+	}
+
 	public DropdownControl dropdownDirection(@NotNull Direction2D dropdownDirection) {
 		this.dropdownDirection = dropdownDirection;
 		return this;
+	}
+
+	public @NotNull Direction2D getDropdownDirection() {
+		return this.dropdownDirection;
 	}
 
 	@Override
