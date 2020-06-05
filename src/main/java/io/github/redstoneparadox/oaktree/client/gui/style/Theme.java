@@ -14,7 +14,7 @@ public class Theme {
 	}
 
 	public Theme add(String controlID, ControlStyle style) {
-		styles.put(controlID + "/default", style);
+		styles.put(controlID + "/base", style);
 		return this;
 	}
 
@@ -23,6 +23,10 @@ public class Theme {
 			return styles.get(style);
 		}
 		return null;
+	}
+
+	public boolean containsStyle(String styleID) {
+		return styles.containsKey(styleID);
 	}
 
 	public static Theme vanilla() {

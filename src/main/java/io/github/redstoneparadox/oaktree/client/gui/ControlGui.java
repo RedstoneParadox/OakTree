@@ -33,7 +33,7 @@ public final class ControlGui {
 
 	private Character lastChar = null;
 
-	private Theme theme = null;
+	private Theme theme = new Theme();
 
 	public ControlGui(Screen screen, Control<?> root) {
 		this.screen = (ScreenHooks)screen;
@@ -164,6 +164,5 @@ public final class ControlGui {
 
 	public void applyTheme(Theme theme) {
 		this.theme = theme;
-		if (initialized) root.setup(screen.getClient(), this);
 	}
 }

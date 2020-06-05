@@ -7,6 +7,7 @@ import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -22,6 +23,7 @@ public class Control<C extends Control<C>> {
 	protected boolean visible = true;
 
 	public ControlStyle baseStyle = null;
+
 	protected BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
 
 	protected ControlStyle currentStyle = null;
@@ -130,7 +132,6 @@ public class Control<C extends Control<C>> {
 	 * @return The node itself.
 	 */
 	public C baseStyle(ControlStyle baseStyle) {
-		this.baseStyle = baseStyle;
 		internalTheme.add("self", baseStyle);
 		return (C)this;
 	}
@@ -157,11 +158,12 @@ public class Control<C extends Control<C>> {
 	}
 
 	public void setup(MinecraftClient client, ControlGui gui) {
-		applyTheme(gui.getTheme());
+
 	}
 
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		onTick.accept(gui, (C)this);
+		currentStyle = getStyle(gui.getTheme(), "base");
 
 		if (!expand) {
 			ScreenPos anchorOffset = anchor.getOffset(containerWidth, containerHeight);
@@ -174,10 +176,9 @@ public class Control<C extends Control<C>> {
 			trueX = offsetX;
 			trueY = offsetY;
 
-			area.width = (int)containerWidth;
-			area.height = (int)containerHeight;
+			area.width = containerWidth;
+			area.height = containerHeight;
 		}
-		currentStyle = baseStyle;
 	}
 
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
@@ -186,13 +187,19 @@ public class Control<C extends Control<C>> {
 		}
 	}
 
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
 	void applyTheme(Theme theme) {
-		baseStyle = getStyle(theme, "default");
+
 	}
 
-	final ControlStyle getStyle(Theme theme, String name) {
+	protected final ControlStyle getStyle(Theme theme, String name) {
 		ControlStyle style = internalTheme.get("self/" + name);
-		if (style == null && theme != null) style = theme.get(id + "/" + name);
+
+		if (style == null && theme != null) {
+			style = theme.get(id + "/" + name);
+		}
+
 		return style;
 	}
 }

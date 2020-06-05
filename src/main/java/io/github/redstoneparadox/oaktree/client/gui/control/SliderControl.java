@@ -49,6 +49,7 @@ public class SliderControl extends InteractiveControl<SliderControl> {
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
+		sliderStyle = getStyle(gui.getTheme(), "slider");
 
 		if (isMouseWithin && gui.mouseButtonHeld("left")) {
 			if (horizontal) {
@@ -82,11 +83,5 @@ public class SliderControl extends InteractiveControl<SliderControl> {
 		}
 
 		if (sliderStyle != null) sliderStyle.draw(sliderX, sliderY, sliderWidth, sliderHeight, gui);
-	}
-
-	@Override
-	void applyTheme(Theme theme) {
-		baseStyle = getStyle(theme, "default");
-		sliderStyle = getStyle(theme, "slider");
 	}
 }

@@ -104,21 +104,17 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 		}
 
 
-		if (held && heldStyle != null) {
-			currentStyle = heldStyle;
+		if (held) {
+			currentStyle = getStyle(gui.getTheme(), "held");
+		}
+		else if (hovered) {
+			currentStyle = getStyle(gui.getTheme(), "hover");
+		}
+		if (currentStyle == null) {
+			currentStyle = getStyle(gui.getTheme(), "base");
 		}
 
-		if (hovered && hoverStyle != null) {
-			currentStyle = hoverStyle;
-		}
 
 		hovered = false;
-	}
-
-	@Override
-	void applyTheme(Theme theme) {
-		super.applyTheme(theme);
-		heldStyle = getStyle(theme, "held");
-		hoverStyle = getStyle(theme, "hover");
 	}
 }

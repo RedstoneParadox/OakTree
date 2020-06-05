@@ -58,14 +58,11 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 			whileHovered.accept(gui, this);
 		}
 
-		if (mouseCurrentlyWithin && hoverStyle != null) {
-			currentStyle = hoverStyle;
+		if (mouseCurrentlyWithin) {
+			currentStyle = getStyle(gui.getTheme(), "hover");
 		}
-	}
-
-	@Override
-	void applyTheme(Theme theme) {
-		super.applyTheme(theme);
-		hoverStyle = getStyle(theme, "hover");
+		if (currentStyle == null) {
+			currentStyle = getStyle(gui.getTheme(), "base");
+		}
 	}
 }
