@@ -91,6 +91,23 @@ public class Control<C extends Control<C>> {
 	}
 
 	/**
+	 * Sets whether or not this should automatically expand to the
+	 * size of the parent node. If set to true, any size and position settings
+	 * will be ignored when drawing the node.
+	 *
+	 * @param value
+	 * @return The node itself.
+	 */
+	public C expand(boolean value) {
+		expand = value;
+		return (C)this;
+	}
+
+	public boolean shouldExpand() {
+		return expand;
+	}
+
+	/**
 	 * Sets whether or not this node should be visible. Any nodes that
 	 * are not visible will not be drawn, cannot be interacted with,
 	 * and will cause their children to not be drawn (if they have any).
@@ -105,19 +122,6 @@ public class Control<C extends Control<C>> {
 
 	public boolean isVisible() {
 		return this.visible;
-	}
-
-	/**
-	 * Sets whether or not this should automatically expand to the
-	 * size of the parent node. If set to true, any size and position settings
-	 * will be ignored when drawing the node.
-	 *
-	 * @param value
-	 * @return The node itself.
-	 */
-	public C expand(boolean value) {
-		expand = value;
-		return (C)this;
 	}
 
 	/**
