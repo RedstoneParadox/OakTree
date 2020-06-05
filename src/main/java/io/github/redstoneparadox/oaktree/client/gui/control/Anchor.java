@@ -1,11 +1,8 @@
-package io.github.redstoneparadox.oaktree.client.gui.util;
+package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
-import org.jetbrains.annotations.ApiStatus;
 
-@Deprecated
-@ApiStatus.ScheduledForRemoval
-public enum ControlAnchor {
+public enum Anchor {
 	TOP_LEFT,
 	TOP_CENTER,
 	TOP_RIGHT,

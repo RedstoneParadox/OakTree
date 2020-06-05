@@ -6,7 +6,6 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
 import io.github.redstoneparadox.oaktree.client.gui.style.ColorControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
@@ -247,7 +246,7 @@ public class Tests {
 				.size(40, 20)
 				.id("button")
 				.dropdownDirection(Direction2D.LEFT)
-				.anchor(ControlAnchor.CENTER);
+				.anchor(Anchor.CENTER);
 
 		DropdownControl rightDropdown = new DropdownControl(
 				new ListPanelControl()
@@ -259,7 +258,7 @@ public class Tests {
 				.size(40, 20)
 				.id("button")
 				.dropdownDirection(Direction2D.RIGHT)
-				.anchor(ControlAnchor.CENTER);
+				.anchor(Anchor.CENTER);
 
 
 		return new PanelControl<>()
@@ -273,10 +272,10 @@ public class Tests {
 						)
 						.size(60, 20)
 						.id("button")
-						.anchor(ControlAnchor.CENTER)
+						.anchor(Anchor.CENTER)
 				)
 				.size(90, 50)
-				.anchor(ControlAnchor.CENTER)
+				.anchor(Anchor.CENTER)
 				.id("base");
 	}
 
@@ -285,7 +284,7 @@ public class Tests {
 				.size(100, 100)
 				.children(20, this::itemLabel)
 				.displayCount(5)
-				.anchor(ControlAnchor.CENTER);
+				.anchor(Anchor.CENTER);
 
 		SliderControl scrollBar = new SliderControl()
 				.size(20, 100)
@@ -293,7 +292,7 @@ public class Tests {
 					listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.displayCount) * (control.scrollPercent)/100)));
 				})
 				.barLength(10)
-				.anchor(ControlAnchor.CENTER);
+				.anchor(Anchor.CENTER);
 
 		return new SplitControl()
 				.id("base")
@@ -301,13 +300,13 @@ public class Tests {
 				.splitSize(110)
 				.first(scrollBar)
 				.second(listPanel)
-				.anchor(ControlAnchor.CENTER);
+				.anchor(Anchor.CENTER);
 	}
 
 	private Control<?> testThree() {
 		GridPanelControl playerInvGrid = new GridPanelControl()
 				.size(162, 72)
-				.anchor(ControlAnchor.CENTER)
+				.anchor(Anchor.CENTER)
 				.rows(4)
 				.columns(9)
 				.children(36, integer -> {
@@ -331,7 +330,7 @@ public class Tests {
 		return new PanelControl<>()
 				.id("base")
 				.size(180, 120)
-				.anchor(ControlAnchor.CENTER)
+				.anchor(Anchor.CENTER)
 				.child(playerInvGrid);
 	}
 
@@ -339,7 +338,7 @@ public class Tests {
 		return new LabelControl()
 				.size(60, 20)
 				.text("Item No. " + (number + 1))
-				.anchor(ControlAnchor.CENTER)
+				.anchor(Anchor.CENTER)
 				.shadow(true);
 	}
 
@@ -347,7 +346,7 @@ public class Tests {
 		return new ButtonControl()
 				.id("button")
 				.size(200, 20)
-				.anchor(ControlAnchor.CENTER)
+				.anchor(Anchor.CENTER)
 				.tooltip(
 						new LabelControl()
 								.text("Hi!")
@@ -359,6 +358,6 @@ public class Tests {
 		return new Control<>()
 				.size(200, 200)
 				.baseStyle(new ColorControlStyle(Color.DARK_BLUE))
-				.anchor(ControlAnchor.CENTER);
+				.anchor(Anchor.CENTER);
 	}
 }

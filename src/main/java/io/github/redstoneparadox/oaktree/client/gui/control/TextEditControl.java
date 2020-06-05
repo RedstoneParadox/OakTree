@@ -3,7 +3,6 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.util.ControlAnchor;
 import io.github.redstoneparadox.oaktree.client.gui.util.TypingListener;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
 import net.minecraft.client.MinecraftClient;
@@ -521,7 +520,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 			String line = lines.get(row);
 			if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
 			int lineY = trueY + (row - firstLine) * gui.getTextRenderer().fontHeight;
-			drawString(matrices, line, gui, trueX, lineY, ControlAnchor.CENTER, shadow, fontColor);
+			drawString(matrices, line, gui, trueX, lineY, Anchor.CENTER, shadow, fontColor);
 			drawHighlights(line, gui.getTextRenderer(), lineY, row);
 		}
 	}
@@ -546,7 +545,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
 	private void drawCursor(MatrixStack matrices, ControlGui gui) {
 		if (lines.isEmpty()) {
-			drawString(matrices, "_", gui, trueX, trueY, ControlAnchor.CENTER, shadow, fontColor);
+			drawString(matrices, "_", gui, trueX, trueY, Anchor.CENTER, shadow, fontColor);
 			return;
 		}
 
@@ -559,7 +558,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		String cursorString = "_";
 		if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine, renderer)) cursorString = "|";
 
-		drawString(matrices, cursorString, gui, cursorX, cursorY, ControlAnchor.CENTER, shadow, fontColor);
+		drawString(matrices, cursorString, gui, cursorX, cursorY, Anchor.CENTER, shadow, fontColor);
 	}
 
 	private boolean lineOccupiesFullSpace(String cursorLine, TextRenderer renderer) {
