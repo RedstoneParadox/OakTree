@@ -3,8 +3,6 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.style.ColorControlStyle;
-import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import io.github.redstoneparadox.oaktree.util.TriPredicate;
@@ -24,6 +22,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.function.BiFunction;
 
+/**
+ * <p>A {@link Control} that can be used for interacting
+ * with items in an inventory. Rather than delegating to
+ * a vanilla {@link net.minecraft.screen.slot.Slot}, it
+ * is implemented from scratch and requires your
+ * {@link net.minecraft.screen.ScreenHandler} to
+ * implement {@link InventoryScreenHandler} in order to
+ * work. Syncing inventory contents is also handled
+ * through the same interface so avoid implementing that
+ * yourself.</p>
+ */
 public class SlotControl extends InteractiveControl<SlotControl> {
 	protected @NotNull Color highlightColor = Color.rgba(0.75f, 0.75f, 0.75f, 0.5f);
 	protected int slotBorder = 1;
@@ -33,6 +42,14 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 	private final int slot;
 	private final int inventoryID;
 
+	/**
+	 *
+	 * @param slot The index of the "slot" in your
+	 *             {@link Inventory} implementation.
+	 * @param inventoryID The integer ID of the inventory;
+	 *                    See {@link InventoryScreenHandler}
+	 *                    for more details.
+	 */
 	public SlotControl(int slot, int inventoryID) {
 		this.slot = slot;
 		this.inventoryID = inventoryID;
@@ -41,7 +58,15 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 		this.size(18, 18);
 	}
 
-	public SlotControl highlightColor(Color highlightColor) {
+	/**
+	 * Sets what color should be used to highlight this {@link SlotControl}
+	 * when hovering over it in the GUI. Default value is
+	 * {@code Color.rgba(0.75f, 0.75f, 0.75f, 0.5f)}.
+	 *
+	 * @param highlightColor The color to be used.
+	 * @return This {@link Control} for further modification.
+	 */
+	public SlotControl highlightColor(@NotNull Color highlightColor) {
 		this.highlightColor = highlightColor;
 		return this;
 	}
