@@ -27,8 +27,6 @@ public class LabelControl extends Control<LabelControl> {
 	protected int maxLines = 1;
 	protected boolean fitText = false;
 
-	private @Nullable TextRenderer renderer = null;
-
 	public LabelControl() {
 		this.id = "label";
 	}
@@ -68,11 +66,11 @@ public class LabelControl extends Control<LabelControl> {
 	 * @return The {@link Control} for further modification.
 	 */
 	public LabelControl text(List<Text> texts) {
-		if (fitText && renderer != null) {
+		if (fitText) {
 			this.area.width = 0;
 
 			for (Text text: texts) {
-				this.area.width = Math.max(this.area.width, renderer.getWidth(text));
+				this.area.width = Math.max(this.area.width, TextHelper.getWidth(text));
 			}
 
 			this.area.width += 8;
@@ -165,22 +163,14 @@ public class LabelControl extends Control<LabelControl> {
 	}
 
 	@Override
-	public void setup(MinecraftClient client, ControlGui gui) {
-		super.setup(client, gui);
-		this.renderer = gui.getTextRenderer();
-	}
-
-	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
-		if (renderer != null) {
-			List<class_5348> lines = TextHelper.wrapText(text, area.width, 0, maxLines, shadow);
-			int yOffset = 0;
-			for (class_5348 line : lines) {
-				RenderHelper.drawText(matrices, line, trueX, trueY + yOffset, shadow, fontColor);
-				yOffset += TextHelper.getFontHeight();
-			}
+		List<class_5348> lines = TextHelper.wrapText(text, area.width, 0, maxLines, shadow);
+		int yOffset = 0;
+		for (class_5348 line : lines) {
+			RenderHelper.drawText(matrices, line, trueX, trueY + yOffset, shadow, fontColor);
+			yOffset += TextHelper.getFontHeight();
 		}
 	}
 }

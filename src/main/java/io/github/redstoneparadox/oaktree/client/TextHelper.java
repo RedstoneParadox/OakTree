@@ -14,6 +14,10 @@ public class TextHelper {
 		return MinecraftClient.getInstance().textRenderer.fontHeight;
 	}
 
+	public static int getWidth(Text text) {
+		return MinecraftClient.getInstance().textRenderer.getWidth(text);
+	}
+
 	public static Text combine(List<Text> texts, boolean newline) {
 		if (texts.isEmpty()) return new LiteralText("");
 
