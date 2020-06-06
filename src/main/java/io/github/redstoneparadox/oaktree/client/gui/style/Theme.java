@@ -1,28 +1,40 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import io.github.redstoneparadox.oaktree.client.gui.Color;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Theme {
-	private Map<String, ControlStyle> styles = new HashMap<>();
+	public static final Theme EMPTY = new Theme(true);
 
-	public Theme add(String controlID, String controlState, ControlStyle style) {
+	private Map<String, @NotNull ControlStyle> styles = new HashMap<>();
+	private final boolean empty;
+
+	public Theme() {
+		this.empty = false;
+	}
+
+	private Theme(boolean empty) {
+		this.empty = empty;
+	}
+
+	public Theme add(String controlID, String controlState, @NotNull ControlStyle style) {
 		styles.put(controlID + "/" + controlState, style);
 		return this;
 	}
 
-	public Theme add(String controlID, ControlStyle style) {
+	public Theme add(String controlID, @NotNull ControlStyle style) {
 		styles.put(controlID + "/base", style);
 		return this;
 	}
 
-	public ControlStyle get(String style) {
+	public @NotNull ControlStyle get(String style) {
 		if (styles.containsKey(style)) {
 			return styles.get(style);
 		}
-		return null;
+		return ControlStyle.BLANK;
 	}
 
 	public boolean containsStyle(String styleID) {

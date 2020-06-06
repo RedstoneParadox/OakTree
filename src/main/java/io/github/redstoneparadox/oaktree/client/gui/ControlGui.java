@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenHandler;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +34,7 @@ public final class ControlGui {
 
 	private Character lastChar = null;
 
-	private Theme theme = new Theme();
+	private @NotNull Theme theme = Theme.EMPTY;
 
 	public ControlGui(Screen screen, Control<?> root) {
 		this.screen = (ScreenHooks)screen;
@@ -158,11 +159,11 @@ public final class ControlGui {
 		return screen.getY();
 	}
 
-	public Theme getTheme() {
+	public @NotNull Theme getTheme() {
 		return theme;
 	}
 
-	public void applyTheme(Theme theme) {
+	public void applyTheme(@NotNull Theme theme) {
 		this.theme = theme;
 	}
 }
