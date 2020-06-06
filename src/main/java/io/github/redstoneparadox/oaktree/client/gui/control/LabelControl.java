@@ -15,6 +15,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+/**
+ * A type of {@link Control} that allows you to display
+ * text in your GUIs. Fully supports {@link Text} so
+ * you can apply formatting.
+ */
 public class LabelControl extends Control<LabelControl> {
 	protected  @NotNull Text text = LiteralText.EMPTY;
 	protected boolean shadow = false;
@@ -32,23 +37,25 @@ public class LabelControl extends Control<LabelControl> {
 	 * Sets the text for this LabelControl
 	 * to display.
 	 *
-	 * @param text The text to display
-	 * @return The control itself.
-	 */
-	public LabelControl text(String text) {
-		return this.text(new LiteralText(text));
-	}
-
-	/**
-	 * Sets the text for this LabelControl
-	 * to display.
-	 *
-	 * @param text The text to display
+	 * @param text The {@link Text} to display
 	 * @return The control itself.
 	 */
 	public LabelControl text(Text text) {
 		this.text = text;
 		return this;
+	}
+
+	/**
+	 * Sets the text for this LabelControl
+	 * to display. Useful if you want to
+	 * display a string without creating
+	 * a {@link LiteralText} instance.
+	 *
+	 * @param text The text to display
+	 * @return The control itself.
+	 */
+	public LabelControl text(String text) {
+		return this.text(new LiteralText(text));
 	}
 
 	/**
