@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class SlotControl extends InteractiveControl<SlotControl> {
-	private ControlStyle highlightStyle = new ColorControlStyle(Color.rgba(0.75f, 0.75f, 0.75f, 0.5f));
+	protected @NotNull Color highlightColor = Color.rgba(0.75f, 0.75f, 0.75f, 0.5f);
 	protected int slotBorder = 1;
 	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
 	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canTake = (gui, control, stack) -> true;
@@ -41,8 +41,8 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 		this.size(18, 18);
 	}
 
-	public SlotControl highlightStyle(ControlStyle highlightStyle) {
-		this.highlightStyle = highlightStyle;
+	public SlotControl highlightColor(Color highlightColor) {
+		this.highlightColor = highlightColor;
 		return this;
 	}
 
@@ -192,7 +192,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 
 				if (isMouseWithin) {
 					RenderHelper.setzOffset(200.0);
-					highlightStyle.draw(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), gui);
+					RenderHelper.drawRectangle(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), highlightColor);
 					RenderHelper.setzOffset(0.0);
 				}
 			}
