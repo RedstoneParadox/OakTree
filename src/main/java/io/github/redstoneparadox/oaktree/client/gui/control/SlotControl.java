@@ -37,7 +37,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 		this.slot = slot;
 		this.inventoryID = inventoryID;
 		this.id = "item_slot";
-		this.tooltip = new LabelControl().id("tooltip").shadow(true).resizable(true);
+		this.tooltip = new LabelControl().id("tooltip").shadow(true).fitText(true);
 		this.size(18, 18);
 	}
 

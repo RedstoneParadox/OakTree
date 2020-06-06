@@ -20,7 +20,7 @@ public class LabelControl extends Control<LabelControl> {
 	protected boolean shadow = false;
 	public @NotNull Color fontColor = Color.WHITE;
 	protected int maxLines = 1;
-	protected boolean resizable = false;
+	protected boolean fitText = false;
 
 	private @Nullable TextRenderer renderer = null;
 
@@ -51,8 +51,17 @@ public class LabelControl extends Control<LabelControl> {
 		return this;
 	}
 
+	/**
+	 * <p>Sets the text for this {@link LabelControl}
+	 * to display. Useful for when you have a
+	 * {@link List<Text>} and don't want to add
+	 * the newlines yourself.</p>
+	 *
+	 * @param texts A {@link List<Text>}
+	 * @return The {@link Control} for further modification.
+	 */
 	public LabelControl text(List<Text> texts) {
-		if (resizable && renderer != null) {
+		if (fitText && renderer != null) {
 			this.area.width = 0;
 
 			for (Text text: texts) {
@@ -128,13 +137,24 @@ public class LabelControl extends Control<LabelControl> {
 		return maxLines;
 	}
 
-	public LabelControl resizable(boolean resizable) {
-		this.resizable = resizable;
+	/**
+	 * Sets whether or not this {@link LabelControl}
+	 * should resize to fit its text. The only way
+	 * to get newlines in this mode is to insert
+	 * them yourself or pass a list to.
+	 * {@link LabelControl#text(List)}
+	 *
+	 * @param fitText The value itself
+	 * @return The {@link Control} for further
+	 * 		modification.
+	 */
+	public LabelControl fitText(boolean fitText) {
+		this.fitText = fitText;
 		return this;
 	}
 
-	public boolean isResizable() {
-		return resizable;
+	public boolean isFitText() {
+		return fitText;
 	}
 
 	@Override
