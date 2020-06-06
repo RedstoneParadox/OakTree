@@ -5,13 +5,10 @@ import io.github.redstoneparadox.oaktree.client.TextHelper;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.class_5348;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -25,6 +22,7 @@ public class LabelControl extends Control<LabelControl> {
 	protected boolean shadow = false;
 	public @NotNull Color fontColor = Color.WHITE;
 	protected int maxLines = 1;
+	protected int firstLine = 0;
 	protected boolean fitText = false;
 
 	public LabelControl() {
@@ -134,12 +132,21 @@ public class LabelControl extends Control<LabelControl> {
 	 * @return The control itself.
 	 */
 	public LabelControl maxLines(int maxLines) {
-		if (maxLines > 0) this.maxLines = maxLines;
+		this.maxLines = Math.max(0, firstLine);
 		return this;
 	}
 
 	public int getMaxLines() {
 		return maxLines;
+	}
+
+	public LabelControl firstLine(int firstLine) {
+		this.firstLine = Math.max(0, firstLine);
+		return this;
+	}
+
+	public int getFirstLine() {
+		return firstLine;
 	}
 
 	/**
@@ -158,6 +165,16 @@ public class LabelControl extends Control<LabelControl> {
 		return this;
 	}
 
+	public LabelControl toStart() {
+		this.firstLine = 0;
+		return this;
+	}
+
+	public LabelControl toEnd() {
+		this.firstLine = TextHelper.wrapText(text, area.width, 0, Integer.MAX_VALUE, shadow, true).size() - maxLines;
+		return this;
+	}
+
 	public boolean isFitText() {
 		return fitText;
 	}
@@ -166,11 +183,14 @@ public class LabelControl extends Control<LabelControl> {
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
-		List<class_5348> lines = TextHelper.wrapText(text, area.width, 0, maxLines, shadow);
-		int yOffset = 0;
-		for (class_5348 line : lines) {
-			RenderHelper.drawText(matrices, line, trueX, trueY + yOffset, shadow, fontColor);
-			yOffset += TextHelper.getFontHeight();
+		if (maxLines > 0) {
+			List<class_5348> lines = TextHelper.wrapText(text, area.width, firstLine, maxLines, shadow, false);
+			int yOffset = 0;
+
+			for (class_5348 line: lines) {
+				RenderHelper.drawText(matrices, line, trueX, trueY + yOffset, shadow, fontColor);
+				yOffset += TextHelper.getFontHeight();
+			}
 		}
 	}
 }

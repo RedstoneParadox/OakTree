@@ -31,7 +31,7 @@ public class TextHelper {
 		return text;
 	}
 
-	public static List<class_5348> wrapText(class_5348 text, int width, int start, int max, boolean shadow) {
+	public static List<class_5348> wrapText(class_5348 text, int width, int start, int max, boolean shadow, boolean pastEnd) {
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
 		List<class_5348> lines;
@@ -40,6 +40,10 @@ public class TextHelper {
 			lines = textRenderer.wrapLines(text, width - 1);
 		} else {
 			lines = textRenderer.wrapLines(text, width);
+		}
+
+		if (!pastEnd && start + max >= lines.size()) {
+			start = lines.size() - max;
 		}
 
 		if (start + max <= lines.size()) {
