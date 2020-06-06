@@ -25,6 +25,10 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 		return tooltip;
 	}
 
+	public boolean isMouseWithin() {
+		return isMouseWithin;
+	}
+
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);

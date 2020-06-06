@@ -14,7 +14,6 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 	protected @NotNull BiConsumer<ControlGui, ButtonControl> onRelease = (gui, node) -> {};
 
 	private boolean held = false;
-	private boolean hovered = false;
 
 	public ButtonControl() {
 		this.id = "button";
@@ -58,61 +57,51 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
+
 		if (toggleable) {
 			if (isMouseWithin) {
 				if (gui.mouseButtonJustClicked("left")) {
 					held = !held;
 
 					if (held) {
-						whileHeld.accept(gui, this);
+						onClick.accept(gui, this);
 					}
 					else {
 						onRelease.accept(gui, this);
 					}
 				}
-				else if (gui.mouseButtonHeld("left") && held) {
-					whileHeld.accept(gui, this);
-				}
-				else if (!held){
-					hovered = true;
-				}
+			}
+
+			if (held) {
+				whileHeld.accept(gui, this);
 			}
 		}
-		else {
-			if (isMouseWithin) {
-				if (gui.mouseButtonHeld("left") && !held) {
+		else if (isMouseWithin) {
+			if (gui.mouseButtonHeld("left")) {
+				if (!held) {
 					held = true;
 					onClick.accept(gui, this);
 				}
-				else if (held && gui.mouseButtonHeld("left")) {
-					whileHeld.accept(gui, this);
-				}
-				else if (held && !gui.mouseButtonHeld("left")) {
-					held = false;
-					onRelease.accept(gui, this);
-				}
-				else if (!held) {
-					hovered = true;
-				}
-			}
-			else if (held) {
+
+				whileHeld.accept(gui, this);
+			} else {
 				held = false;
 				onRelease.accept(gui, this);
 			}
+		} else if (held) {
+			held = false;
+			onRelease.accept(gui, this);
 		}
 
 
 		if (held) {
 			currentStyle = getStyle(gui.getTheme(), "held");
 		}
-		else if (hovered) {
+		else if (isMouseWithin) {
 			currentStyle = getStyle(gui.getTheme(), "hover");
 		}
-		if (currentStyle == null) {
+		if (currentStyle.blank) {
 			currentStyle = getStyle(gui.getTheme(), "base");
 		}
-
-
-		hovered = false;
 	}
 }
