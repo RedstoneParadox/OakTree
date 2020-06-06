@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 
+//TODO: Make fields protected and replace with getters.
 public abstract class PaddingControl<C extends PaddingControl<C>> extends Control<C> {
 	public int topPadding = 0;
 	public int bottomPadding = 0;
