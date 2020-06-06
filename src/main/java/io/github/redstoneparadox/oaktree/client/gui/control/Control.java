@@ -24,7 +24,7 @@ public class Control<C extends Control<C>> {
 	protected boolean visible = true;
 	protected @NotNull  BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
 
-	protected ControlStyle currentStyle = null;
+	protected ControlStyle currentStyle = ControlStyle.BLANK;
 	protected Theme internalTheme = new Theme();
 
 	protected int trueX = 0;
@@ -188,9 +188,7 @@ public class Control<C extends Control<C>> {
 	}
 
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		if (currentStyle != null) {
-			currentStyle.draw(trueX, trueY, area.width, area.height, gui);
-		}
+		currentStyle.draw(trueX, trueY, area.width, area.height, gui);
 	}
 
 	@Deprecated
@@ -202,7 +200,7 @@ public class Control<C extends Control<C>> {
 	protected final ControlStyle getStyle(Theme theme, String name) {
 		ControlStyle style = internalTheme.get("self/" + name);
 
-		if (style == null && theme != null) {
+		if (style.blank) {
 			style = theme.get(id + "/" + name);
 		}
 
