@@ -9,6 +9,7 @@ import org.jetbrains.annotations.ApiStatus;
  * reduce redundancy.
  */
 public abstract class ControlStyle {
+	public static final ControlStyle BLANK = new ControlStyle() {};
 
 	@Deprecated
 	@ApiStatus.ScheduledForRemoval
