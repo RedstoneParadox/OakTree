@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
@@ -36,7 +36,7 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 		if (tooltip != null) {
 			tooltip.expand = false;
 
-			ScreenPos mousePos = relativeMousePosition(mouseX, mouseY);
+			Vector2 mousePos = relativeMousePosition(mouseX, mouseY);
 
 			if (isMouseWithin) {
 				if (!tooltip.visible || !lockTooltipPos) {
@@ -60,8 +60,8 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 		}
 	}
 
-	protected ScreenPos relativeMousePosition(int mouseX, int mouseY) {
-		return new ScreenPos(mouseX - trueX, mouseY - trueY);
+	protected Vector2 relativeMousePosition(int mouseX, int mouseY) {
+		return new Vector2(mouseX - trueX, mouseY - trueY);
 	}
 
 	@ApiStatus.Internal

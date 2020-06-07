@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 
 //TODO: Make fields protected and replace with getters.
@@ -89,17 +89,17 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 	}
 
-	ScreenPos innerDimensions(int spaceWidth, int spaceHeight) {
+	Vector2 innerDimensions(int spaceWidth, int spaceHeight) {
 		int innerWidth = spaceWidth - leftPadding - rightPadding;
 		int innerHeight = spaceHeight - topPadding - bottomPadding;
 
-		return new ScreenPos(innerWidth, innerHeight);
+		return new Vector2(innerWidth, innerHeight);
 	}
 
-	ScreenPos innerPosition(int spaceX, int spaceY) {
+	Vector2 innerPosition(int spaceX, int spaceY) {
 		int innerX = spaceX + leftPadding;
 		int innerY = spaceY + topPadding;
 
-		return new ScreenPos(innerX, innerY);
+		return new Vector2(innerX, innerY);
 	}
 }

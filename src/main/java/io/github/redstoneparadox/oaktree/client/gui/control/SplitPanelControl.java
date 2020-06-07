@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -37,11 +37,11 @@ public class SplitPanelControl extends PanelControl<SplitPanelControl> {
 
 	@Override
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
-		ScreenPos firstPosition = innerPosition(trueX, trueY);
-		ScreenPos firstDimensions;
+		Vector2 firstPosition = innerPosition(trueX, trueY);
+		Vector2 firstDimensions;
 
-		ScreenPos secondPosition;
-		ScreenPos secondDimension;
+		Vector2 secondPosition;
+		Vector2 secondDimension;
 
 		if (verticalSplit) {
 			firstDimensions = innerDimensions(area.width, splitSize);

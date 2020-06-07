@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 
 public class PagePanelControl extends PanelControl<PagePanelControl> {
@@ -40,8 +40,8 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
 	@Override
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		Control<?> child = children.get(page);
-		ScreenPos innerPosition = innerPosition(trueX, trueY);
-		ScreenPos innerDimensions = innerDimensions(area.width, area.height);
+		Vector2 innerPosition = innerPosition(trueX, trueY);
+		Vector2 innerDimensions = innerDimensions(area.width, area.height);
 
 		if (child.isVisible()) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 	}

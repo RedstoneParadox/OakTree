@@ -1,4 +1,4 @@
-package io.github.redstoneparadox.oaktree.client.geometry;
+package io.github.redstoneparadox.oaktree.client.math;
 
 public class Rectangle {
 	public int x;

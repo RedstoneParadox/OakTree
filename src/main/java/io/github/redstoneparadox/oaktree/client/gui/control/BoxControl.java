@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
@@ -56,8 +56,8 @@ public class BoxControl extends PaddingControl<BoxControl> {
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-		ScreenPos innerPosition = innerPosition(trueX, trueY);
-		ScreenPos innerDimensions = innerDimensions(area.width, area.height);
+		Vector2 innerPosition = innerPosition(trueX, trueY);
+		Vector2 innerDimensions = innerDimensions(area.width, area.height);
 
 		if (child.isVisible()) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 	}

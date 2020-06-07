@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 
 public enum Anchor {
 	TOP_LEFT,
@@ -13,8 +13,8 @@ public enum Anchor {
 	BOTTOM_CENTER,
 	BOTTOM_RIGHT;
 
-	public ScreenPos getOffset(int width, int height) {
-		ScreenPos offset = new ScreenPos();
+	public Vector2 getOffset(int width, int height) {
+		Vector2 offset = new Vector2();
 
 		if (this == TOP_CENTER || this == CENTER || this == BOTTOM_CENTER) {
 			offset.x = width/2;

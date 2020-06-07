@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
+import io.github.redstoneparadox.oaktree.client.math.Rectangle;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;

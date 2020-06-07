@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.Direction2D;
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Direction2D;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import net.minecraft.client.util.math.MatrixStack;
@@ -62,8 +62,8 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 		return this;
 	}
 
-	public ScreenPos getBarSize() {
-		return new ScreenPos(barWidth, barHeight);
+	public Vector2 getBarSize() {
+		return new Vector2(barWidth, barHeight);
 	}
 
 	/**

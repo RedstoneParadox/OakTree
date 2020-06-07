@@ -1,10 +1,9 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.util.ListUtils;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -109,8 +108,8 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		int cellWidth = area.width/columns;
 		int cellHeight = area.height/rows;
-		ScreenPos innerDimensions = innerDimensions(cellWidth, cellHeight);
-		ScreenPos innerPosition = innerPosition(trueX, trueY);
+		Vector2 innerDimensions = innerDimensions(cellWidth, cellHeight);
+		Vector2 innerPosition = innerPosition(trueX, trueY);
 
 		int index = 0;
 

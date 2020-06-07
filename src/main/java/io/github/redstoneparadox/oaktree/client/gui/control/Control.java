@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.geometry.Rectangle;
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Rectangle;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
@@ -154,8 +154,8 @@ public class Control<C extends Control<C>> {
 		return (C)this;
 	}
 
-	public ScreenPos getTruePosition() {
-		return new ScreenPos(trueX, trueY);
+	public Vector2 getTruePosition() {
+		return new Vector2(trueX, trueY);
 	}
 
 	public void zIndex(List<Control<?>> controls) {
@@ -172,8 +172,8 @@ public class Control<C extends Control<C>> {
 		currentStyle = getStyle(gui.getTheme(), "base");
 
 		if (!expand) {
-			ScreenPos anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-			ScreenPos drawOffset = anchor.getOffset(area.width, area.height);
+			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
+			Vector2 drawOffset = anchor.getOffset(area.width, area.height);
 
 			trueX = area.x + anchorOffset.x + offsetX - drawOffset.x;
 			trueY = area.y + anchorOffset.y + offsetY - drawOffset.y;

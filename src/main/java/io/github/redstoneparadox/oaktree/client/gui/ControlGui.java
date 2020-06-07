@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.control.Control;
 import io.github.redstoneparadox.oaktree.client.gui.control.InteractiveControl;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
@@ -94,7 +94,7 @@ public final class ControlGui {
 		InteractiveControl<?> hovered = null;
 		boolean mouseCaptured = false;
 		for (Control<?> control: controlList) {
-			ScreenPos truePos = control.getTruePosition();
+			Vector2 truePos = control.getTruePosition();
 			if (control.getArea().offset(truePos.x, truePos.y).isPointWithin(mouseX, mouseY) && !mouseCaptured) {
 				mouseCaptured = true;
 				if (control instanceof InteractiveControl<?>) {

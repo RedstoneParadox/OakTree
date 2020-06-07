@@ -2,7 +2,7 @@ package io.github.redstoneparadox.oaktree.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import io.github.redstoneparadox.oaktree.client.geometry.ScreenPos;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
@@ -35,10 +35,10 @@ public class RenderHelper {
 		GlStateManager.blendColor(color.red, color.green, color.blue, color.alpha);
 		GlStateManager.enableDepthTest();
 
-		ScreenPos vert1 = new ScreenPos(x, y);
-		ScreenPos vert2 = new ScreenPos(x, y + height);
-		ScreenPos vert3 = new ScreenPos(x + width, y + height);
-		ScreenPos vert4 = new ScreenPos(x + width, y);
+		Vector2 vert1 = new Vector2(x, y);
+		Vector2 vert2 = new Vector2(x, y + height);
+		Vector2 vert3 = new Vector2(x + width, y + height);
+		Vector2 vert4 = new Vector2(x + width, y);
 
 		builder.begin(7, VertexFormats.POSITION_COLOR);
 		builder.vertex(vert1.x, vert1.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
