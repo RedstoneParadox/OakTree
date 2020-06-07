@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
+import io.github.redstoneparadox.oaktree.client.TextHelper;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.util.TypingListener;
@@ -10,6 +11,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +24,7 @@ import java.util.function.BiConsumer;
 /**
  * @apiNote  Work in Progress!
  */
-public class TextEditControl extends InteractiveControl<TextEditControl> implements TextControl<TextEditControl> {
+public class TextEditControl extends InteractiveControl<TextEditControl> {
 	private final List<String> lines = new ArrayList<>();
 	private int firstLine = 0;
 	private final Cursor cursor = new Cursor(true);
@@ -124,7 +126,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	}
 
 	public String getText() {
-		return combine(lines, true);
+		return TextHelper.combineStrings(lines, true);
 	}
 
 	/**
@@ -209,7 +211,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 			if (focused) {
 				if (updateText) {
 					lines.clear();
-					lines.addAll(wrapLines(text, gui, area.width, maxLines, shadow));
+					lines.addAll(TextHelper.wrapLines(text, area.width, maxLines, shadow));
 					selection.cancel();
 					cursor.toEnd();
 					updateText = false;
@@ -357,7 +359,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 			if (lines.isEmpty() || (lines.size() == 1 && lines.get(0).isEmpty())) {
 				selection.cancel();
 			}
-			drawText(matrices, gui);
+			drawText(matrices);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -434,7 +436,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	private String getSelection() {
 		if (lines.isEmpty()) return null;
 
-		String text = combine(lines, false);
+		String text = TextHelper.combineStrings(lines, false);
 		int startPosition = getCursorPosition(selection.start());
 		int endPosition = getCursorPosition(selection.end());
 
@@ -446,7 +448,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	private void deleteSelection(ControlGui gui) {
 		if (lines.isEmpty()) return;
 
-		String text = combine(lines, false);
+		String text = TextHelper.combineStrings(lines, false);
 		int startPosition = getCursorPosition(selection.start());
 		int endPosition = getCursorPosition(selection.end());
 
@@ -454,7 +456,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
 		String newText = text.substring(0, startPosition) + text.substring(endPosition);
 		lines.clear();
-		lines.addAll(wrapLines(newText, gui, area.width, maxLines, shadow));
+		lines.addAll(TextHelper.wrapLines(newText, area.width, maxLines, shadow));
 	}
 
 	private void insertCharacter(char c, ControlGui gui) {
@@ -463,7 +465,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 			return;
 		}
 
-		String text = combine(lines, false);
+		String text = TextHelper.combineStrings(lines, false);
 		int cursorPosition = getCursorPosition(cursor);
 
 		String newText;
@@ -474,16 +476,16 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		}
 
 		lines.clear();
-		lines.addAll(wrapLines(newText, gui, area.width, maxLines, shadow));
+		lines.addAll(TextHelper.wrapLines(newText, area.width, maxLines, shadow));
 	}
 
 	private void insertString(String st, ControlGui gui)  {
 		if (lines.isEmpty()) {
-			lines.addAll(wrapLines(st, gui, area.width, maxLines, shadow));
+			lines.addAll(TextHelper.wrapLines(st, area.width, maxLines, shadow));
 			return;
 		}
 
-		String text = combine(lines, false);
+		String text = TextHelper.combineStrings(lines, false);
 		int cursorPosition = getCursorPosition(cursor);
 
 		String newText;
@@ -494,11 +496,11 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		}
 
 		lines.clear();
-		lines.addAll(wrapLines(newText, gui, area.width, maxLines, shadow));
+		lines.addAll(TextHelper.wrapLines(newText, area.width, maxLines, shadow));
 	}
 
 	private void removeCharacter(ControlGui gui) {
-		String text = combine(lines, false);
+		String text = TextHelper.combineStrings(lines, false);
 		int cursorPosition = getCursorPosition(cursor);
 
 		String newText;
@@ -516,7 +518,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		}
 
 		lines.clear();
-		lines.addAll(wrapLines(newText, gui, area.width, maxLines, shadow));
+		lines.addAll(TextHelper.wrapLines(newText, area.width, maxLines, shadow));
 	}
 
 	private int getCursorPosition(Cursor cursor) {
@@ -529,19 +531,19 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		return cursorPosition;
 	}
 
-	private void drawText(MatrixStack matrices, ControlGui gui) {
+	private void drawText(MatrixStack matrices) {
 		int length = Math.min(lines.size(), displayedLines);
 
 		for (int row = firstLine; row < firstLine + length; row += 1) {
 			String line = lines.get(row);
 			if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
-			int lineY = trueY + (row - firstLine) * gui.getTextRenderer().fontHeight;
-			drawString(matrices, line, gui, trueX, lineY, Anchor.CENTER, shadow, fontColor);
-			drawHighlights(line, gui.getTextRenderer(), lineY, row);
+			int lineY = trueY + (row - firstLine) * TextHelper.getFontHeight();
+			RenderHelper.drawText(matrices, new LiteralText(line), trueX, lineY, shadow, fontColor);
+			drawHighlights(line, lineY, row);
 		}
 	}
 
-	private void drawHighlights(String line, TextRenderer renderer, int lineY, int row) {
+	private void drawHighlights(String line, int lineY, int row) {
 		if (selection.isHighlighted(row)) {
 			int startIndex;
 			if (selection.start().row != row) startIndex = 0;
@@ -553,33 +555,32 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
 			if (startIndex == endIndex) return;
 
-			int x = trueX + renderer.getWidth(line.substring(0, startIndex));
+			int x = trueX + TextHelper.getWidth(line.substring(0, startIndex));
 			String highlightedPortion = line.substring(startIndex, endIndex);
-			RenderHelper.drawRectangle(x, lineY, renderer.getWidth(highlightedPortion), renderer.fontHeight, highlightColor);
+			RenderHelper.drawRectangle(x, lineY, TextHelper.getWidth(highlightedPortion), TextHelper.getFontHeight(), highlightColor);
 		}
 	}
 
 	private void drawCursor(MatrixStack matrices, ControlGui gui) {
 		if (lines.isEmpty()) {
-			drawString(matrices, "_", gui, trueX, trueY, Anchor.CENTER, shadow, fontColor);
+			RenderHelper.drawText(matrices, new LiteralText("_"), trueX, trueY, shadow, fontColor);
 			return;
 		}
 
 		int actualRow = cursor.row - firstLine;
 		String cursorLine = lines.get(cursor.row);
-		TextRenderer renderer = gui.getTextRenderer();
-		int cursorX = (int) (trueX + renderer.getWidth(cursorLine.substring(0, cursor.column)));
-		int cursorY = (int) (trueY + actualRow * renderer.fontHeight);
+		int cursorX = (int) (trueX + TextHelper.getWidth(cursorLine.substring(0, cursor.column)));
+		int cursorY = (int) (trueY + actualRow * TextHelper.getFontHeight());
 
 		String cursorString = "_";
-		if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine, renderer)) cursorString = "|";
+		if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine)) cursorString = "|";
 
-		drawString(matrices, cursorString, gui, cursorX, cursorY, Anchor.CENTER, shadow, fontColor);
+		RenderHelper.drawText(matrices, new LiteralText(cursorString), cursorX, cursorY, shadow, fontColor);
 	}
 
-	private boolean lineOccupiesFullSpace(String cursorLine, TextRenderer renderer) {
+	private boolean lineOccupiesFullSpace(String cursorLine) {
 		int width = area.width - 3;
-		return renderer.getWidth(cursorLine) >= width;
+		return TextHelper.getWidth(cursorLine) >= width;
 	}
 
 	private class Cursor {

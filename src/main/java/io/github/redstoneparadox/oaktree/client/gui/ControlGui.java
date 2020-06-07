@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenHandler;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -147,6 +148,8 @@ public final class ControlGui {
 		return lastChar == null ? Optional.empty() : Optional.of(lastChar);
 	}
 
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
 	public TextRenderer getTextRenderer() {
 		return screen.getTextRenderer();
 	}

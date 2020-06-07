@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.class_5348;
@@ -13,6 +14,8 @@ public class TextHelper {
 	public static int getFontHeight() {
 		return MinecraftClient.getInstance().textRenderer.fontHeight;
 	}
+
+	public static int getWidth(String string) { return MinecraftClient.getInstance().textRenderer.getWidth(string); }
 
 	public static int getWidth(Text text) {
 		return MinecraftClient.getInstance().textRenderer.getWidth(text);
@@ -53,5 +56,55 @@ public class TextHelper {
 		}
 
 		return lines;
+	}
+
+	public static List<String> wrapLines(String string, float width, int max, boolean withShadow) {
+		List<String> strings;
+		if (withShadow) {
+			strings = wrapLines(string, (int) (width - 1));
+		}
+		else {
+			strings = wrapLines(string, (int) (width));
+		}
+
+		if (strings.size() > max) {
+			strings = strings.subList(0, max);
+		}
+
+		return strings;
+	}
+
+	private static List<String> wrapLines(String string, int width) {
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+		List<String> strings = new ArrayList<>();
+		StringBuilder builder = new StringBuilder();
+
+		for (char c: string.toCharArray()) {
+			if (c == '\n') {
+				builder.append('\n');
+				strings.add(builder.toString());
+				builder.setLength(0);
+				continue;
+			};
+			if (textRenderer.getWidth(builder.toString() + c) > width) {
+				strings.add(builder.toString());
+				builder.setLength(0);
+			}
+			builder.append(c);
+		}
+
+		strings.add(builder.toString());
+		return strings;
+	}
+
+	public static String combineStrings(List<String> strings, boolean addNewlines) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < strings.size() - 1; i += 1) {
+			String line = strings.get(i);
+			builder.append(line);
+			if (addNewlines && !line.endsWith("\n")) builder.append('\n');
+		}
+		builder.append(strings.get(strings.size() - 1));
+		return builder.toString();
 	}
 }

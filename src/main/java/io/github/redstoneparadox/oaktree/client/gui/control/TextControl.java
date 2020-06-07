@@ -12,7 +12,7 @@ import java.util.List;
 
 @Deprecated
 @ApiStatus.ScheduledForRemoval
-public interface TextControl<TC extends TextControl> {
+public interface TextControl<TC extends TextControl<TC>> {
 
 	default List<String> wrapLines(String string, ControlGui gui, float width, int max, boolean withShadow) {
 		List<String> strings;
@@ -77,8 +77,6 @@ public interface TextControl<TC extends TextControl> {
 		else textRenderer.draw(matrices, string, x + 2, y + 2, colorInt);
 	}
 
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
 	default void drawHighlights(String string, TextRenderer renderer, int x, int y, Color highlightColor) {
 		int width = renderer.getWidth(string);
 		int height = renderer.fontHeight;
