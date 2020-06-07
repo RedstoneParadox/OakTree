@@ -5,10 +5,10 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 
 //TODO: Make fields protected and replace with getters.
 public abstract class PaddingControl<C extends PaddingControl<C>> extends Control<C> {
-	public int topPadding = 0;
-	public int bottomPadding = 0;
-	public int leftPadding = 0;
-	public int rightPadding = 0;
+	protected int topPadding = 0;
+	protected int bottomPadding = 0;
+	protected int leftPadding = 0;
+	protected int rightPadding = 0;
 
 	/**
 	 * Sets the padding for all 4 sides.
@@ -35,6 +35,10 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 		return (C) this;
 	}
 
+	public int getTopPadding() {
+		return topPadding;
+	}
+
 	/**
 	 * Sets the padding for the bottom.
 	 *
@@ -44,6 +48,10 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 	public C bottomPadding(int bottomPadding) {
 		this.bottomPadding = bottomPadding;
 		return (C) this;
+	}
+
+	public int getBottomPadding() {
+		return bottomPadding;
 	}
 
 	/**
@@ -57,6 +65,10 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 		return (C) this;
 	}
 
+	public int getLeftPadding() {
+		return leftPadding;
+	}
+
 	/**
 	 * Sets the padding for the right side.
 	 *
@@ -66,6 +78,10 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 	public C rightPadding(int rightPadding) {
 		this.rightPadding = rightPadding;
 		return (C) this;
+	}
+
+	public int getRightPadding() {
+		return rightPadding;
 	}
 
 	@Override
