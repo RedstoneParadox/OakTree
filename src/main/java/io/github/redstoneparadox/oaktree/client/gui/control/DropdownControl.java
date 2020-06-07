@@ -78,12 +78,12 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 		}
 
 		dropdown.expand = false;
-		dropdown.preDraw(gui, dropdownX + trueX, dropdownY + trueY, containerWidth, containerHeight, mouseX, mouseY);
+		if (dropdown.visible) dropdown.preDraw(gui, dropdownX + trueX, dropdownY + trueY, containerWidth, containerHeight, mouseX, mouseY);
 	}
 
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-		dropdown.draw(matrices, mouseX, mouseY, deltaTime, gui);
+		if (dropdown.visible) dropdown.draw(matrices, mouseX, mouseY, deltaTime, gui);
 	}
 }

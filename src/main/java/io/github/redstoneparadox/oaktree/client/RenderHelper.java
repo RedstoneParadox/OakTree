@@ -59,7 +59,7 @@ public class RenderHelper {
 		ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
-		itemRenderer.renderGuiItem(stack, x + offsetX, y + offsetY);
+		itemRenderer.renderGuiItemIcon(stack, x + offsetX, y + offsetY);
 		itemRenderer.renderGuiItemOverlay(textRenderer, stack, x + offsetX, y + offsetY);
 	}
 

@@ -21,17 +21,17 @@ public class Theme {
 	}
 
 	public Theme add(String controlID, String controlState, @NotNull ControlStyle style) {
-		styles.put(controlID + "/" + controlState, style);
+		if (!empty) styles.put(controlID + "/" + controlState, style);
 		return this;
 	}
 
 	public Theme add(String controlID, @NotNull ControlStyle style) {
-		styles.put(controlID + "/base", style);
+		if (!empty) styles.put(controlID + "/base", style);
 		return this;
 	}
 
 	public @NotNull ControlStyle get(String style) {
-		if (styles.containsKey(style)) {
+		if (!empty && styles.containsKey(style)) {
 			return styles.get(style);
 		}
 		return ControlStyle.BLANK;

@@ -328,7 +328,7 @@ public class Tests {
 				.filter(Items.ANDESITE);
 
 		SlotControl slot2 = new SlotControl(1, 1)
-				.canTake((slotControl, stack) -> false);
+				.canTake((gui, slotControl, stack) -> false);
 
 		return new PanelControl<>()
 				.id("base")
