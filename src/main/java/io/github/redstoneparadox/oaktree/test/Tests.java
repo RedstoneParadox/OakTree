@@ -1,10 +1,8 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.client.geometry.Direction2D;
-import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.control.*;
-import io.github.redstoneparadox.oaktree.client.gui.style.ColorControlStyle;
 import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
@@ -27,6 +25,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
@@ -38,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Supplier;
 
 public class Tests {
@@ -358,9 +358,56 @@ public class Tests {
 	}
 
 	private Control<?> testFive() {
-		return new Control<>()
-				.size(200, 200)
-				.baseStyle(new ColorControlStyle(Color.DARK_BLUE))
+		List<Text> texts = createText(50);
+
+		LabelControl label = new LabelControl()
+				.size(100, 100)
+				.maxDisplayedLines(10)
+				.id("tooltip")
+				.text(texts)
 				.anchor(Anchor.CENTER);
+
+		SliderControl scrollBar = new SliderControl()
+				.size(20, 100)
+				.onSlide((gui, control) -> label.firstLine((int) Math.floor((45) * control.getScrollPercent()/100)))
+				.barLength(10)
+				.anchor(Anchor.CENTER);
+
+		return new SplitControl()
+				.id("base")
+				.size(140, 120)
+				.splitSize(110)
+				.first(scrollBar)
+				.second(label)
+				.anchor(Anchor.CENTER);
+	}
+
+	private List<Text> createText(int lines) {
+		List<Text> texts = new ArrayList<>();
+		Random random = new Random();
+
+		for (int i = 0; i < lines; i += 1) {
+			LiteralText text = new LiteralText("Text.");
+			int j = random.nextInt(3);
+			Text formatted;
+
+			switch (j) {
+				case 0:
+					formatted = text.formatted(Formatting.BOLD);
+					break;
+				case 1:
+					formatted = text.formatted(Formatting.ITALIC);
+					break;
+				case 2:
+					formatted = text.formatted(Formatting.UNDERLINE);
+					break;
+				default:
+					throw new IllegalStateException("Unexpected value: " + j);
+			}
+
+			texts.add(formatted);
+		}
+
+		return texts;
 	}
 }

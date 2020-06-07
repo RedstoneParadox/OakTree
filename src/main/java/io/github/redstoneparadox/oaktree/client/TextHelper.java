@@ -47,7 +47,7 @@ public class TextHelper {
 		}
 
 		if (start + max <= lines.size()) {
-			return lines.subList(start, max);
+			return lines.subList(start, start + max);
 		} else if (start < lines.size()) {
 			return lines.subList(start, lines.size());
 		}

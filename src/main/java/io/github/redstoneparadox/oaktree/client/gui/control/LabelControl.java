@@ -21,7 +21,7 @@ public class LabelControl extends Control<LabelControl> {
 	protected  @NotNull Text text = LiteralText.EMPTY;
 	protected boolean shadow = false;
 	public @NotNull Color fontColor = Color.WHITE;
-	protected int maxLines = 1;
+	protected int maxDisplayedLines = 1;
 	protected int firstLine = 0;
 	protected boolean fitText = false;
 
@@ -73,10 +73,10 @@ public class LabelControl extends Control<LabelControl> {
 
 			this.area.width += 8;
 			area.height = TextHelper.getFontHeight() * texts.size() + 8;
+			this.maxDisplayedLines = texts.size();
 		}
 
 		this.text = TextHelper.combine(texts, true);
-		this.maxLines = texts.size();
 		return this;
 	}
 
@@ -128,16 +128,16 @@ public class LabelControl extends Control<LabelControl> {
 	/**
 	 * Sets the maximum number of lines.
 	 *
-	 * @param maxLines The max number of lines.
+	 * @param maxDisplayedLines The max number of lines.
 	 * @return The control itself.
 	 */
-	public LabelControl maxLines(int maxLines) {
-		this.maxLines = Math.max(0, firstLine);
+	public LabelControl maxDisplayedLines(int maxDisplayedLines) {
+		this.maxDisplayedLines = Math.max(0, maxDisplayedLines);
 		return this;
 	}
 
-	public int getMaxLines() {
-		return maxLines;
+	public int getMaxDisplayedLines() {
+		return maxDisplayedLines;
 	}
 
 	public LabelControl firstLine(int firstLine) {
@@ -171,7 +171,7 @@ public class LabelControl extends Control<LabelControl> {
 	}
 
 	public LabelControl toEnd() {
-		this.firstLine = TextHelper.wrapText(text, area.width, 0, Integer.MAX_VALUE, shadow, true).size() - maxLines;
+		this.firstLine = TextHelper.wrapText(text, area.width, 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
 		return this;
 	}
 
@@ -183,8 +183,8 @@ public class LabelControl extends Control<LabelControl> {
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
-		if (maxLines > 0) {
-			List<class_5348> lines = TextHelper.wrapText(text, area.width, firstLine, maxLines, shadow, false);
+		if (maxDisplayedLines > 0) {
+			List<class_5348> lines = TextHelper.wrapText(text, area.width, firstLine, maxDisplayedLines, shadow, false);
 			int yOffset = 0;
 
 			for (class_5348 line: lines) {
