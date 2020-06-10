@@ -60,7 +60,7 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 
 		if (toggleable) {
 			if (isMouseWithin) {
-				if (gui.mouseButtonJustClicked("left")) {
+				if (leftMouseClicked) {
 					held = !held;
 
 					if (held) {
@@ -77,7 +77,7 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 			}
 		}
 		else if (isMouseWithin) {
-			if (gui.mouseButtonHeld("left")) {
+			if (leftMouseHeld) {
 				if (!held) {
 					held = true;
 					onClick.accept(gui, this);

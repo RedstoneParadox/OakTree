@@ -122,6 +122,8 @@ public final class ControlGui {
 		return screen.getHandler();
 	}
 
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
 	public boolean mouseButtonHeld(String mouseButton) {
 		switch (mouseButton) {
 			case "left":
@@ -133,6 +135,8 @@ public final class ControlGui {
 		}
 	}
 
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
 	public boolean mouseButtonJustClicked(String mouseButton) {
 		switch (mouseButton) {
 			case "left":

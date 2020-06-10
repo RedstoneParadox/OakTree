@@ -132,11 +132,11 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 
 					if (playerInventory.getCursorStack().isEmpty()) {
 						if (canTake.test(gui, this, stackInSlot)) {
-							if (gui.mouseButtonJustClicked("left")) {
+							if (leftMouseClicked) {
 								playerInventory.setCursorStack(inventory.removeStack(slot));
 								stackChanged = true;
 							}
-							else if (gui.mouseButtonJustClicked("right")) {
+							else if (rightMouseClicked) {
 								playerInventory.setCursorStack(inventory.removeStack(slot, stackInSlot.getCount()/2));
 								stackChanged = true;
 							}
@@ -146,7 +146,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 						ItemStack cursorStack = playerInventory.getCursorStack();
 
 						if (canInsert.test(gui, this, cursorStack)) {
-							if (gui.mouseButtonJustClicked("left")) {
+							if (leftMouseClicked) {
 								if (stackInSlot.isEmpty()) {
 									inventory.setStack(slot, playerInventory.getCursorStack());
 									playerInventory.setCursorStack(ItemStack.EMPTY);
@@ -157,7 +157,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 									stackChanged = true;
 								}
 							}
-							else if (gui.mouseButtonJustClicked("right")) {
+							else if (rightMouseClicked) {
 								if (stackInSlot.isEmpty()) {
 									inventory.setStack(slot, playerInventory.getCursorStack().split(1));
 									stackChanged = true;

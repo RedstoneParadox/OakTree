@@ -62,7 +62,7 @@ public class SliderControl extends InteractiveControl<SliderControl> {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 		sliderStyle = getStyle(gui.getTheme(), "slider");
 
-		if (isMouseWithin && gui.mouseButtonHeld("left")) {
+		if (isMouseWithin && leftMouseHeld) {
 			if (horizontal) {
 				scrollPercent = Math.max(0.0f, Math.min(((float)mouseX - trueX)/(area.width - barLength) * 100.0f, 100.0f));
 			}

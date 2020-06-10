@@ -54,7 +54,7 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 
 		if (isMouseWithin) {
-			if (gui.mouseButtonJustClicked("left")) {
+			if (leftMouseClicked) {
 				dropdown.visible = !dropdown.visible;
 			}
 		}

@@ -396,7 +396,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 	}
 
 	private void updateFocused(ControlGui gui) {
-		if (gui.mouseButtonJustClicked("left")) {
+		if (leftMouseClicked) {
 			if (isMouseWithin && !focused) {
 				focused = true;
 				onFocused.accept(gui, this);
