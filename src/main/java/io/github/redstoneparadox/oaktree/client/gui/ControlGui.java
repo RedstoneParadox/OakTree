@@ -151,10 +151,14 @@ public final class ControlGui {
 		return lastChar == null ? Optional.empty() : Optional.of(lastChar);
 	}
 
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
 	public int getX() {
 		return screen.getX();
 	}
 
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
 	public int getY() {
 		return screen.getY();
 	}
