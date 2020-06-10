@@ -1,14 +1,14 @@
 package io.github.redstoneparadox.oaktree.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.class_5348;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TextHelper {
 	public static int getFontHeight() {

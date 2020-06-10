@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.style;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import org.jetbrains.annotations.ApiStatus;
 
 /**
  * A StyleBox represents the part of the node that actually gets drawn. Multiple Nodes

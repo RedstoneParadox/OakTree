@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
-import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;

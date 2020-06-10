@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.networking;
 
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
