@@ -43,10 +43,6 @@ public final class ControlGui {
 		((KeyboardHooks)(MinecraftClient.getInstance().keyboard)).onCharTyped(character -> this.lastChar = character);
 	}
 
-	public void close() {
-
-	}
-
 	public void init() {
 		if (initialized) return;
 		root.setup(screen.getClient(), this);
@@ -117,6 +113,10 @@ public final class ControlGui {
 		lastChar = null;
 	}
 
+	public void close() {
+
+	}
+
 	public Optional<ScreenHandler> getScreenHandler() {
 		return screen.getHandler();
 	}
@@ -147,6 +147,8 @@ public final class ControlGui {
 		}
 	}
 
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
 	public Optional<Character> getLastChar() {
 		return lastChar == null ? Optional.empty() : Optional.of(lastChar);
 	}

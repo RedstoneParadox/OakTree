@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.TextHelper;
+import io.github.redstoneparadox.oaktree.client.event.ClientEvents;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
@@ -185,6 +186,26 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 		return displayedLines;
 	}
 
+	@Override
+	public void setup(MinecraftClient client, ControlGui gui) {
+		super.setup(client, gui);
+		ClientEvents.ON_CHAR_TYPED.register(c -> {
+			int oldSize = lines.size();
+			if (selection.active) {
+				deleteSelection(gui);
+				cursor.toSelectionStart();
+
+				@Nullable Character character = onCharTyped.apply(gui, this, c);
+
+				if (character != null) {
+					insertCharacter(character, gui);
+					cursor.moveRight();
+					if (oldSize + 1 == lines.size()) cursor.moveRight();
+				}
+			}
+		});
+	}
+
 	// Abandon hope all Ye who enter here!
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
@@ -200,22 +221,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 					cursor.toEnd();
 					updateText = false;
 					text = "";
-				}
-
-				if (gui.getLastChar().isPresent()) {
-					int oldSize = lines.size();
-					if (selection.active) {
-						deleteSelection(gui);
-						cursor.toSelectionStart();
-					}
-
-					@Nullable Character character = onCharTyped.apply(gui, this, gui.getLastChar().get());
-
-					if (character != null) {
-						insertCharacter(character, gui);
-						cursor.moveRight();
-						if (oldSize + 1 == lines.size()) cursor.moveRight();
-					}
 				}
 				long handle = MinecraftClient.getInstance().getWindow().getHandle();
 
