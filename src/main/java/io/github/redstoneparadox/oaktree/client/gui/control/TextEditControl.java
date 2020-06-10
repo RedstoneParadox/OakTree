@@ -190,17 +190,19 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
 		ClientEvents.ON_CHAR_TYPED.register(c -> {
-			int oldSize = lines.size();
-			if (selection.active) {
-				deleteSelection(gui);
-				cursor.toSelectionStart();
+			if (focused) {
+				int oldSize = lines.size();
+				if (selection.active) {
+					deleteSelection(gui);
+					cursor.toSelectionStart();
 
-				@Nullable Character character = onCharTyped.apply(gui, this, c);
+					@Nullable Character character = onCharTyped.apply(gui, this, c);
 
-				if (character != null) {
-					insertCharacter(character, gui);
-					cursor.moveRight();
-					if (oldSize + 1 == lines.size()) cursor.moveRight();
+					if (character != null) {
+						insertCharacter(character, gui);
+						cursor.moveRight();
+						if (oldSize + 1 == lines.size()) cursor.moveRight();
+					}
 				}
 			}
 		});
