@@ -85,13 +85,6 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 		return this;
 	}
 
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public SlotControl canInsert(@NotNull BiFunction<SlotControl, ItemStack, Boolean> canInsert) {
-		this.canInsert = ((gui, control, stack) -> canInsert.apply(control, stack));
-		return this;
-	}
-
 	public SlotControl filter(Item... items) {
 		this.canInsert = ((gui, control, stack) -> {
 			for (Item item: items) {
@@ -114,13 +107,6 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 
 	public SlotControl canTake(@NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canTake) {
 		this.canTake = canTake;
-		return this;
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public SlotControl canTake(@NotNull BiFunction<SlotControl, ItemStack, Boolean> canTake) {
-		this.canTake = ((gui, control, stack) -> canTake.apply(control, stack));
 		return this;
 	}
 

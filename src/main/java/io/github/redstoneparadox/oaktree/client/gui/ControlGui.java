@@ -148,12 +148,6 @@ public final class ControlGui {
 		return lastChar == null ? Optional.empty() : Optional.of(lastChar);
 	}
 
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public TextRenderer getTextRenderer() {
-		return screen.getTextRenderer();
-	}
-
 	public int getX() {
 		return screen.getX();
 	}

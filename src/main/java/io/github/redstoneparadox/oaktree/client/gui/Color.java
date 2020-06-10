@@ -114,36 +114,6 @@ public final class Color {
 		return new Color(this.red, this.blue, this.green, alpha);
 	}
 
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public static Color white() {
-		return WHITE;
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public static Color black() {
-		return BLACK;
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public static Color red() {
-		return RED;
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public static Color green() {
-		return GREEN;
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public static Color blue() {
-		return BLUE;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

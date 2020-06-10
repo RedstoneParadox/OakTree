@@ -4,7 +4,6 @@ import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.TextHelper;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.util.TypingListener;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -63,19 +62,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 	 */
 	public TextEditControl onCharTyped(@NotNull TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped) {
 		this.onCharTyped = onCharTyped;
-		return this;
-	}
-
-	/**
-	 * Sets a {@link TypingListener} to run when a character is typed.
-	 *
-	 * @param onCharTyped The function.
-	 * @return The control itself.
-	 */
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public TextEditControl onCharTyped(@NotNull TypingListener<TextEditControl> onCharTyped) {
-		this.onCharTyped = ((gui, control, character) -> onCharTyped.invoke(character, control));
 		return this;
 	}
 
