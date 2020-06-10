@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
+import io.github.redstoneparadox.oaktree.client.event.ClientEvents;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
@@ -35,38 +36,27 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 	}
 
 	@Override
+	public void setup(MinecraftClient client, ControlGui gui) {
+		super.setup(client, gui);
+		ClientEvents.ON_MOUSE_BUTTON.register((button, released) -> {
+			switch (button) {
+				case LEFT:
+					leftMouseClicked = !released;
+					leftMouseHeld = !released;
+					break;
+				case RIGHT:
+					rightMouseClicked = !released;
+					rightMouseHeld = !released;
+					break;
+				case CENTER:
+					break;
+			}
+		});
+	}
+
+	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-		MouseHooks mouse = getMouse();
-
-		if (mouse.leftButton()) {
-			if (leftMouseHeld) {
-				leftMouseClicked = false;
-			}
-			else {
-				leftMouseClicked = true;
-				leftMouseHeld = true;
-			}
-		}
-		else {
-			leftMouseClicked = false;
-			leftMouseHeld = false;
-		}
-
-		if (mouse.rightButton()) {
-			if (rightMouseHeld) {
-				rightMouseClicked = false;
-			}
-			else {
-				rightMouseClicked = true;
-				rightMouseHeld = true;
-			}
-		}
-		else {
-			rightMouseClicked = false;
-			rightMouseHeld = false;
-		}
-
 
 		if (tooltip != null) {
 			tooltip.expand = false;
@@ -85,6 +75,9 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 
 			tooltip.preDraw(gui, trueX, trueY, 0, 0, mouseX, mouseY);
 		}
+
+		leftMouseHeld = false;
+		rightMouseHeld = false;
 	}
 
 	public void drawTooltip(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
@@ -102,9 +95,5 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 	@ApiStatus.Internal
 	public void setMouseWithin(boolean isMouseWithin) {
 		this.isMouseWithin = isMouseWithin;
-	}
-
-	protected MouseHooks getMouse() {
-		return (MouseHooks) MinecraftClient.getInstance().mouse;
 	}
 }

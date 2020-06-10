@@ -9,4 +9,9 @@ public class ClientEvents {
 			listener.onCharTyped(c);
 		}
 	}));
+	public static Event<MouseButtonCallback> ON_MOUSE_BUTTON = EventFactory.createArrayBacked(MouseButtonCallback.class, (listeners -> (button, released) -> {
+		for (MouseButtonCallback listener: listeners) {
+			listener.onMouseButton(button, released);
+		}
+	}));
 }
