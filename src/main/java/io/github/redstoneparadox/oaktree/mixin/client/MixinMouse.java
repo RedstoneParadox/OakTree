@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.client.event.ClientEvents;
 import io.github.redstoneparadox.oaktree.client.event.MouseButtonCallback;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import net.minecraft.client.Mouse;
+import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,22 +17,22 @@ public abstract class MixinMouse implements MouseHooks {
 
 	@Inject(method = "onMouseButton", at = @At("HEAD"))
 	private void onMouseButton(long window, int button, int action, int mods, CallbackInfo ci) {
-		if (action == 1) {
-			if (button == 1) {
+		if (action == GLFW.GLFW_PRESS) {
+			if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && !rightButton) {
 				rightButton = true;
 				ClientEvents.ON_MOUSE_BUTTON.invoker().onMouseButton(MouseButtonCallback.MouseButton.RIGHT, false);
 			}
-			if (button == 0) {
+			if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && !leftButton) {
 				leftButton = true;
 				ClientEvents.ON_MOUSE_BUTTON.invoker().onMouseButton(MouseButtonCallback.MouseButton.LEFT, false);
 			}
 		}
-		else if (action == 0) {
-			if (button == 1) {
+		else if (action == GLFW.GLFW_RELEASE) {
+			if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && rightButton) {
 				rightButton = false;
 				ClientEvents.ON_MOUSE_BUTTON.invoker().onMouseButton(MouseButtonCallback.MouseButton.RIGHT, true);
 			}
-			if (button == 0) {
+			if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && leftButton) {
 				leftButton = false;
 				ClientEvents.ON_MOUSE_BUTTON.invoker().onMouseButton(MouseButtonCallback.MouseButton.LEFT, true);
 			}

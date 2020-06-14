@@ -38,25 +38,36 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
-		ClientEvents.ON_MOUSE_BUTTON.register((button, released) -> {
-			switch (button) {
-				case LEFT:
-					leftMouseClicked = !released;
-					leftMouseHeld = !released;
-					break;
-				case RIGHT:
-					rightMouseClicked = !released;
-					rightMouseHeld = !released;
-					break;
-				case CENTER:
-					break;
-			}
-		});
 	}
 
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
+
+		MouseHooks mouse = getMouse();
+
+		if (mouse.leftButton()) {
+			if (leftMouseHeld) {
+				leftMouseClicked = false;
+			}
+			else {
+				leftMouseClicked = true;
+				leftMouseHeld = true;
+			}
+		}
+		else {
+			leftMouseClicked = false;
+			leftMouseHeld = false;
+		}
+
+		if (mouse.rightButton()) {
+			if (rightMouseHeld) {
+				rightMouseClicked = false;
+			} else {
+				rightMouseClicked = true;
+				rightMouseHeld = true;
+			}
+		}
 
 		if (tooltip != null) {
 			tooltip.expand = false;
@@ -76,8 +87,8 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 			tooltip.preDraw(gui, trueX, trueY, 0, 0, mouseX, mouseY);
 		}
 
-		leftMouseHeld = false;
-		rightMouseHeld = false;
+		leftMouseClicked = false;
+		rightMouseClicked = false;
 	}
 
 	public void drawTooltip(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
@@ -95,5 +106,9 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 	@ApiStatus.Internal
 	public void setMouseWithin(boolean isMouseWithin) {
 		this.isMouseWithin = isMouseWithin;
+	}
+
+	protected MouseHooks getMouse() {
+		return (MouseHooks) MinecraftClient.getInstance().mouse;
 	}
 }

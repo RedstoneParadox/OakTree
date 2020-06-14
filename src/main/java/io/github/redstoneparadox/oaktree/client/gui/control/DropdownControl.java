@@ -1,5 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
+import io.github.redstoneparadox.oaktree.client.event.ClientEvents;
+import io.github.redstoneparadox.oaktree.client.event.MouseButtonCallback;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.math.Direction2D;
 import net.minecraft.client.MinecraftClient;
@@ -40,6 +42,11 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
 		dropdown.setup(client, gui);
+		ClientEvents.ON_MOUSE_BUTTON.register((button, released) -> {
+			if (button == MouseButtonCallback.MouseButton.LEFT && !released && isMouseWithin) {
+				dropdown.visible = !dropdown.visible;
+			}
+		});
 	}
 
 	@Override
@@ -52,12 +59,6 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-
-		if (isMouseWithin) {
-			if (leftMouseClicked) {
-				dropdown.visible = !dropdown.visible;
-			}
-		}
 
 		int dropdownX = 0;
 		int dropdownY = 0;
