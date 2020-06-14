@@ -3,6 +3,8 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import io.github.redstoneparadox.oaktree.client.listeners.ClientListeners;
+import io.github.redstoneparadox.oaktree.client.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.client.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import io.github.redstoneparadox.oaktree.util.TriPredicate;
@@ -17,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
@@ -31,7 +34,7 @@ import java.util.List;
  * through the same interface so avoid implementing that
  * yourself.</p>
  */
-public class SlotControl extends InteractiveControl<SlotControl> {
+public class SlotControl extends InteractiveControl<SlotControl> implements MouseButtonListener {
 	protected @NotNull Color highlightColor = Color.rgba(0.75f, 0.75f, 0.75f, 0.5f);
 	protected int slotBorder = 1;
 	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
@@ -39,6 +42,8 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 
 	private final int slot;
 	private final int inventoryID;
+	private boolean leftClicked = false;
+	private boolean rightClicked = false;
 
 	/**
 	 *
@@ -111,7 +116,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
-		if (tooltip != null) tooltip.setup(client, gui);
+		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
 	@Override
@@ -130,11 +135,11 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 
 					if (playerInventory.getCursorStack().isEmpty()) {
 						if (canTake.test(gui, this, stackInSlot)) {
-							if (leftMouseClicked) {
+							if (leftClicked) {
 								playerInventory.setCursorStack(inventory.removeStack(slot));
 								stackChanged = true;
 							}
-							else if (rightMouseClicked) {
+							else if (rightClicked) {
 								playerInventory.setCursorStack(inventory.removeStack(slot, stackInSlot.getCount()/2));
 								stackChanged = true;
 							}
@@ -144,7 +149,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 						ItemStack cursorStack = playerInventory.getCursorStack();
 
 						if (canInsert.test(gui, this, cursorStack)) {
-							if (leftMouseClicked) {
+							if (leftClicked) {
 								if (stackInSlot.isEmpty()) {
 									inventory.setStack(slot, playerInventory.getCursorStack());
 									playerInventory.setCursorStack(ItemStack.EMPTY);
@@ -155,7 +160,7 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 									stackChanged = true;
 								}
 							}
-							else if (rightMouseClicked) {
+							else if (rightClicked) {
 								if (stackInSlot.isEmpty()) {
 									inventory.setStack(slot, playerInventory.getCursorStack().split(1));
 									stackChanged = true;
@@ -218,6 +223,16 @@ public class SlotControl extends InteractiveControl<SlotControl> {
 		else if (ItemStack.areItemsEqual(from, to)) {
 			from.decrement(amount);
 			to.increment(amount);
+		}
+	}
+
+	@Override
+	public void onMouseButton(int button, boolean justPressed, boolean released) {
+		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+			leftClicked = justPressed;
+		}
+		else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+			rightClicked = justPressed;
 		}
 	}
 }

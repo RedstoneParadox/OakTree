@@ -2,9 +2,12 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.TextHelper;
-import io.github.redstoneparadox.oaktree.client.event.ClientEvents;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import io.github.redstoneparadox.oaktree.client.listeners.CharTypedListener;
+import io.github.redstoneparadox.oaktree.client.listeners.ClientListeners;
+import io.github.redstoneparadox.oaktree.client.listeners.MouseButtonListener;
+import io.github.redstoneparadox.oaktree.util.OptionalChar;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -22,7 +25,7 @@ import java.util.function.BiConsumer;
 /**
  * @apiNote  Work in Progress!
  */
-public class TextEditControl extends InteractiveControl<TextEditControl> {
+public class TextEditControl extends InteractiveControl<TextEditControl> implements CharTypedListener, MouseButtonListener {
 	private final List<String> lines = new ArrayList<>();
 	private int firstLine = 0;
 	private final Cursor cursor = new Cursor(true);
@@ -34,8 +37,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 	private int pasteTicks = 0;
 	private int cursorTicks = 0;
 	private boolean focused = false;
+	private boolean clicked = false;
 	private String text = "";
 	private boolean updateText = false;
+	private OptionalChar lastChar = OptionalChar.empty();
 
 	protected boolean shadow = false;
 	protected @NotNull Color fontColor = Color.WHITE;
@@ -189,23 +194,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
-		ClientEvents.ON_CHAR_TYPED.register(c -> {
-			if (focused) {
-				int oldSize = lines.size();
-				if (selection.active) {
-					deleteSelection(gui);
-					cursor.toSelectionStart();
-
-					@Nullable Character character = onCharTyped.apply(gui, this, c);
-
-					if (character != null) {
-						insertCharacter(character, gui);
-						cursor.moveRight();
-						if (oldSize + 1 == lines.size()) cursor.moveRight();
-					}
-				}
-			}
-		});
+		ClientListeners.CHAR_TYPED_LISTENERS.add(this);
 	}
 
 	// Abandon hope all Ye who enter here!
@@ -216,6 +205,22 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 		if (lines.isEmpty()) lines.add("");
 		try {
 			if (focused) {
+				int oldSize = lines.size();
+				if (selection.active) {
+					deleteSelection(gui);
+					cursor.toSelectionStart();
+
+					if (lastChar.isPresent()) {
+						@Nullable Character character = onCharTyped.apply(gui, this, lastChar.get());
+
+						if (character != null) {
+							insertCharacter(character, gui);
+							cursor.moveRight();
+							if (oldSize + 1 == lines.size()) cursor.moveRight();
+						}
+					}
+				}
+
 				if (updateText) {
 					lines.clear();
 					lines.addAll(TextHelper.wrapLines(text, area.width, maxLines, shadow));
@@ -327,7 +332,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 							cursor.toSelectionStart();
 						}
 						String st = MinecraftClient.getInstance().keyboard.getClipboard();
-						int oldSize = lines.size();
+						oldSize = lines.size();
 						insertString(st, gui);
 						for (int i = 0; i < st.length(); i += 1) cursor.moveRight();
 						if (oldSize < lines.size()) cursor.moveRight();
@@ -401,7 +406,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 	}
 
 	private void updateFocused(ControlGui gui) {
-		if (leftMouseClicked) {
+		if (clicked) {
 			if (isMouseWithin && !focused) {
 				focused = true;
 				onFocused.accept(gui, this);
@@ -572,6 +577,16 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 	private boolean lineOccupiesFullSpace(String cursorLine) {
 		int width = area.width - 3;
 		return TextHelper.getWidth(cursorLine) >= width;
+	}
+
+	@Override
+	public void onCharTyped(char c) {
+		lastChar = OptionalChar.of(c);
+	}
+
+	@Override
+	public void onMouseButton(int button, boolean justPressed, boolean released) {
+		clicked = justPressed;
 	}
 
 	private class Cursor {

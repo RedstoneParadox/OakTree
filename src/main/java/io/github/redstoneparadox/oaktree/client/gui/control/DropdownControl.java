@@ -1,16 +1,17 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.event.ClientEvents;
-import io.github.redstoneparadox.oaktree.client.event.MouseButtonCallback;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import io.github.redstoneparadox.oaktree.client.listeners.ClientListeners;
+import io.github.redstoneparadox.oaktree.client.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.client.math.Direction2D;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
-public class DropdownControl extends InteractiveControl<DropdownControl> {
+public class DropdownControl extends InteractiveControl<DropdownControl> implements MouseButtonListener {
 	@NotNull protected Control<?> dropdown = new Control<>();
 	@NotNull protected Direction2D dropdownDirection = Direction2D.DOWN;
 
@@ -42,11 +43,7 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
 		dropdown.setup(client, gui);
-		ClientEvents.ON_MOUSE_BUTTON.register((button, released) -> {
-			if (button == MouseButtonCallback.MouseButton.LEFT && !released && isMouseWithin) {
-				dropdown.visible = !dropdown.visible;
-			}
-		});
+		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
 	@Override
@@ -86,5 +83,12 @@ public class DropdownControl extends InteractiveControl<DropdownControl> {
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 		if (dropdown.visible) dropdown.draw(matrices, mouseX, mouseY, deltaTime, gui);
+	}
+
+	@Override
+	public void onMouseButton(int button, boolean justPressed, boolean released) {
+		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && justPressed && isMouseWithin) {
+			dropdown.visible = !dropdown.visible;
+		}
 	}
 }

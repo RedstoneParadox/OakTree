@@ -2,17 +2,21 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
+import io.github.redstoneparadox.oaktree.client.listeners.ClientListeners;
+import io.github.redstoneparadox.oaktree.client.listeners.MouseButtonListener;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.function.BiConsumer;
 
-public class SliderControl extends InteractiveControl<SliderControl> {
+public class SliderControl extends InteractiveControl<SliderControl> implements MouseButtonListener {
 	protected float scrollPercent = 0.0f;
 	protected int barLength = 1;
 	protected boolean horizontal = false;
 	protected @NotNull BiConsumer<ControlGui, SliderControl> onSlide = (gui, control) -> {};
-
+	protected boolean held = false;
 	protected ControlStyle sliderStyle = null;
 
 	public SliderControl() {
@@ -57,11 +61,17 @@ public class SliderControl extends InteractiveControl<SliderControl> {
 	}
 
 	@Override
+	public void setup(MinecraftClient client, ControlGui gui) {
+		super.setup(client, gui);
+		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
+	}
+
+	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 		sliderStyle = getStyle(gui.getTheme(), "slider");
 
-		if (isMouseWithin && leftMouseHeld) {
+		if (isMouseWithin && held) {
 			if (horizontal) {
 				scrollPercent = Math.max(0.0f, Math.min(((float)mouseX - trueX)/(area.width - barLength) * 100.0f, 100.0f));
 			}
@@ -93,5 +103,12 @@ public class SliderControl extends InteractiveControl<SliderControl> {
 		}
 
 		if (sliderStyle != null) sliderStyle.draw(sliderX, sliderY, sliderWidth, sliderHeight, gui);
+	}
+
+	@Override
+	public void onMouseButton(int button, boolean justPressed, boolean released) {
+		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+			held = !released;
+		}
 	}
 }

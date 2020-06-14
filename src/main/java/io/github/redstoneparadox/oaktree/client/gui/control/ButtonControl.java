@@ -2,17 +2,22 @@ package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.gui.style.ControlStyle;
+import io.github.redstoneparadox.oaktree.client.listeners.ClientListeners;
+import io.github.redstoneparadox.oaktree.client.listeners.MouseButtonListener;
+import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.function.BiConsumer;
 
-public class ButtonControl extends InteractiveControl<ButtonControl> {
+public class ButtonControl extends InteractiveControl<ButtonControl> implements MouseButtonListener {
 	protected boolean toggleable = false;
 	protected @NotNull BiConsumer<ControlGui, ButtonControl> onClick = (gui, node) -> {};
 	protected @NotNull BiConsumer<ControlGui, ButtonControl> whileHeld = (gui, node) -> {};
 	protected @NotNull BiConsumer<ControlGui, ButtonControl> onRelease = (gui, node) -> {};
-
-	private boolean held = false;
+	private boolean mouseClicked = false;
+	private boolean mouseHeld = false;
+	private boolean buttonHeld = false;
 
 	public ButtonControl() {
 		this.id = "button";
@@ -52,6 +57,11 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 		return this;
 	}
 
+	@Override
+	public void setup(MinecraftClient client, ControlGui gui) {
+		super.setup(client, gui);
+		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
+	}
 
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
@@ -59,10 +69,10 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 
 		if (toggleable) {
 			if (isMouseWithin) {
-				if (leftMouseClicked) {
-					held = !held;
+				if (mouseClicked) {
+					buttonHeld = !buttonHeld;
 
-					if (held) {
+					if (buttonHeld) {
 						onClick.accept(gui, this);
 					}
 					else {
@@ -71,29 +81,29 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 				}
 			}
 
-			if (held) {
+			if (buttonHeld) {
 				whileHeld.accept(gui, this);
 			}
 		}
 		else if (isMouseWithin) {
-			if (leftMouseHeld) {
-				if (!held) {
-					held = true;
+			if (mouseHeld) {
+				if (!buttonHeld) {
+					buttonHeld = true;
 					onClick.accept(gui, this);
 				}
 
 				whileHeld.accept(gui, this);
 			} else {
-				held = false;
+				buttonHeld = false;
 				onRelease.accept(gui, this);
 			}
-		} else if (held) {
-			held = false;
+		} else if (buttonHeld) {
+			buttonHeld = false;
 			onRelease.accept(gui, this);
 		}
 
 
-		if (held) {
+		if (buttonHeld) {
 			currentStyle = getStyle(gui.getTheme(), "held");
 		}
 		else if (isMouseWithin) {
@@ -101,6 +111,14 @@ public class ButtonControl extends InteractiveControl<ButtonControl> {
 		}
 		if (currentStyle.blank) {
 			currentStyle = getStyle(gui.getTheme(), "base");
+		}
+	}
+
+	@Override
+	public void onMouseButton(int button, boolean justPressed, boolean released) {
+		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+			mouseClicked = justPressed && !released;
+			mouseHeld = !released;
 		}
 	}
 }

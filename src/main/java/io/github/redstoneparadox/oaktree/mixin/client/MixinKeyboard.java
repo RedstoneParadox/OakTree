@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.mixin.client;
 
-import io.github.redstoneparadox.oaktree.client.event.ClientEvents;
+import io.github.redstoneparadox.oaktree.client.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import net.minecraft.client.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ public abstract class MixinKeyboard implements KeyboardHooks {
 
 	@Inject(method = "onChar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;wrapScreenError(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V"))
 	private void onChar(long window, int i, int j, CallbackInfo ci) {
-		ClientEvents.ON_CHAR_TYPED.invoker().onCharTyped((char) i);
+		ClientListeners.onCharTyped((char) i);
 
 		for (Consumer<Character> listener: charTypedListeners) {
 			listener.accept((char)i);

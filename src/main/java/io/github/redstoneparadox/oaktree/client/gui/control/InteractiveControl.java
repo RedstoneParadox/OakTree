@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
 import io.github.redstoneparadox.oaktree.client.RenderHelper;
-import io.github.redstoneparadox.oaktree.client.event.ClientEvents;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
@@ -38,6 +37,7 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
+		if (tooltip != null) tooltip.setup(client, gui);
 	}
 
 	@Override
