@@ -4,9 +4,9 @@ import io.github.redstoneparadox.oaktree.client.RenderHelper;
 import io.github.redstoneparadox.oaktree.client.TextHelper;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import net.minecraft.class_5348;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.StringRenderable;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
@@ -184,10 +184,10 @@ public class LabelControl extends Control<LabelControl> {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
 		if (maxDisplayedLines > 0) {
-			List<class_5348> lines = TextHelper.wrapText(text, area.width, firstLine, maxDisplayedLines, shadow, false);
+			List<StringRenderable> lines = TextHelper.wrapText(text, area.width, firstLine, maxDisplayedLines, shadow, false);
 			int yOffset = 0;
 
-			for (class_5348 line: lines) {
+			for (StringRenderable line: lines) {
 				RenderHelper.drawText(matrices, line, trueX, trueY + yOffset, shadow, fontColor);
 				yOffset += TextHelper.getFontHeight();
 			}
