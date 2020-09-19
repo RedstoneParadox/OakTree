@@ -13,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -135,8 +136,8 @@ public class Tests {
 		}
 
 		@Override
-		protected void init() {
-			super.init();
+		public void init(MinecraftClient minecraftClient, int i, int j) {
+			super.init(minecraftClient, i, j);
 			gui.init();
 		}
 
@@ -162,8 +163,8 @@ public class Tests {
 		}
 
 		@Override
-		protected void init() {
-			super.init();
+		public void init(MinecraftClient minecraftClient, int i, int j) {
+			super.init(minecraftClient, i, j);
 			gui.init();
 		}
 
@@ -180,18 +181,13 @@ public class Tests {
 
 		@Override
 		public boolean isPauseScreen() {
-			return false;
+			return super.isPauseScreen();
 		}
 
 		@Override
 		public void onClose() {
 			super.onClose();
 			handler.close(handler.player);
-		}
-
-		@Override
-		public void removed() {
-			super.removed();
 		}
 	}
 

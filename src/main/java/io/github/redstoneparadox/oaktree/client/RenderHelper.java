@@ -4,7 +4,12 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.redstoneparadox.oaktree.client.gui.Color;
 import io.github.redstoneparadox.oaktree.client.math.Vector2;
-import net.minecraft.text.StringRenderable;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.StringVisitable;
+import net.minecraft.text.Text;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.BufferBuilder;
@@ -88,7 +93,7 @@ public class RenderHelper {
 		RenderSystem.disableBlend();
 	}
 
-	public static void drawText(MatrixStack matrices, StringRenderable text, int x, int y, boolean shadow, Color fontColor) {
+	public static void drawText(MatrixStack matrices, OrderedText text, int x, int y, boolean shadow, Color fontColor) {
 		TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
 
 		int redInt = (int) fontColor.red * 255;

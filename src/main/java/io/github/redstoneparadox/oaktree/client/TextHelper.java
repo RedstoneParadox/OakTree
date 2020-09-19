@@ -1,11 +1,11 @@
 package io.github.redstoneparadox.oaktree.client;
 
-import net.minecraft.text.StringRenderable;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.minecraft.text.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +34,10 @@ public class TextHelper {
 		return text;
 	}
 
-	public static List<StringRenderable> wrapText(StringRenderable text, int width, int start, int max, boolean shadow, boolean pastEnd) {
+	public static List<OrderedText> wrapText(StringVisitable text, int width, int start, int max, boolean shadow, boolean pastEnd) {
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
-		List<StringRenderable> lines;
+		List<OrderedText> lines;
 
 		if (shadow) {
 			lines = textRenderer.wrapLines(text, width - 1);
