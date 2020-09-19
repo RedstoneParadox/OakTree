@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree;
 
 import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
 import io.github.redstoneparadox.oaktree.test.Tests;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;

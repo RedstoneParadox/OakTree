@@ -1,8 +1,8 @@
 package io.github.redstoneparadox.oaktree.client.gui;
 
-import java.util.Objects;
-
 import org.jetbrains.annotations.ApiStatus;
+
+import java.util.Objects;
 
 /**
  * A class for storing color values.

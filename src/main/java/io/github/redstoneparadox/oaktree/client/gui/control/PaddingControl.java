@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.client.gui.control;
 
-import io.github.redstoneparadox.oaktree.client.math.Vector2;
 import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import io.github.redstoneparadox.oaktree.client.math.Vector2;
 
 //TODO: Make fields protected and replace with getters.
 public abstract class PaddingControl<C extends PaddingControl<C>> extends Control<C> {
