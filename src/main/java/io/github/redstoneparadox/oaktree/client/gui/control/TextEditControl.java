@@ -67,19 +67,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 	}
 
 	/**
-	 * Sets a {@link TypingListener} to run when a character is typed.
-	 *
-	 * @param onCharTyped The function.
-	 * @return The control itself.
-	 */
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public TextEditControl onCharTyped(@NotNull TypingListener<TextEditControl> onCharTyped) {
-		this.onCharTyped = ((gui, control, character) -> onCharTyped.invoke(character, control));
-		return this;
-	}
-
-	/**
 	 * Sets a {@link BiConsumer} to run when the TextEditControl gains focus.
 	 *
 	 * @param onFocused The function.
@@ -538,7 +525,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 			String line = lines.get(row);
 			if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
 			int lineY = trueY + (row - firstLine) * TextHelper.getFontHeight();
-			RenderHelper.drawText(matrices, new LiteralText(line), trueX, lineY, shadow, fontColor);
+			RenderHelper.drawText(matrices, new LiteralText(line).asOrderedText(), trueX, lineY, shadow, fontColor);
 			drawHighlights(line, lineY, row);
 		}
 	}
@@ -563,7 +550,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 
 	private void drawCursor(MatrixStack matrices, ControlGui gui) {
 		if (lines.isEmpty()) {
-			RenderHelper.drawText(matrices, new LiteralText("_"), trueX, trueY, shadow, fontColor);
+			RenderHelper.drawText(matrices, new LiteralText("_").asOrderedText(), trueX, trueY, shadow, fontColor);
 			return;
 		}
 
@@ -575,7 +562,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> {
 		String cursorString = "_";
 		if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine)) cursorString = "|";
 
-		RenderHelper.drawText(matrices, new LiteralText(cursorString), cursorX, cursorY, shadow, fontColor);
+		RenderHelper.drawText(matrices, new LiteralText(cursorString).asOrderedText(), cursorX, cursorY, shadow, fontColor);
 	}
 
 	private boolean lineOccupiesFullSpace(String cursorLine) {

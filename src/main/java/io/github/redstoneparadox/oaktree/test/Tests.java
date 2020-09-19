@@ -148,7 +148,7 @@ public class Tests {
 		}
 
 		@Override
-		public boolean at_() {
+		public boolean isPauseScreen() {
 			return false;
 		}
 	}
@@ -180,13 +180,13 @@ public class Tests {
 		}
 
 		@Override
-		public boolean at_() {
-			return super.at_();
+		public boolean isPauseScreen() {
+			return super.isPauseScreen();
 		}
 
 		@Override
-		public void e() {
-			super.e();
+		public void onClose() {
+			super.onClose();
 			handler.close(handler.player);
 		}
 	}
