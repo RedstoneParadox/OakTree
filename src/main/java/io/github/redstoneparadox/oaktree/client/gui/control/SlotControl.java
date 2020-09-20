@@ -39,6 +39,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 	protected int slotBorder = 1;
 	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
 	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canTake = (gui, control, stack) -> true;
+	protected boolean locked = false;
 
 	private final int slot;
 	private final int inventoryID;
@@ -113,6 +114,18 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		return this;
 	}
 
+	/**
+	 * Used to disable or enable interactions with
+	 * this {@link SlotControl}.
+	 *
+	 * @param locked Whether or not the slot should be locked.
+	 * @return This {@link Control} for further modification.
+	 */
+	public SlotControl locked(boolean locked) {
+		this.locked = locked;
+		return this;
+	}
+
 	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
@@ -134,7 +147,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 					ItemStack stackInSlot = inventory.getStack(slot);
 
 					if (playerInventory.getCursorStack().isEmpty()) {
-						if (canTake.test(gui, this, stackInSlot)) {
+						if (!locked && canTake.test(gui, this, stackInSlot)) {
 							if (leftClicked) {
 								playerInventory.setCursorStack(inventory.removeStack(slot));
 								stackChanged = true;
@@ -148,7 +161,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 					else {
 						ItemStack cursorStack = playerInventory.getCursorStack();
 
-						if (canInsert.test(gui, this, cursorStack)) {
+						if (!locked && canInsert.test(gui, this, cursorStack)) {
 							if (leftClicked) {
 								if (stackInSlot.isEmpty()) {
 									inventory.setStack(slot, playerInventory.getCursorStack());
