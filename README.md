@@ -1,6 +1,6 @@
 # Oak Tree
 
-[ ![Download](https://api.bintray.com/packages/redstoneparadox/mods/OakTree/images/download.svg?version=0.4.0-beta) ](https://bintray.com/redstoneparadox/mods/OakTree/0.4.0-beta/link)
+[ ![Download](https://api.bintray.com/packages/redstoneparadox/mods/OakTree/images/download.svg?version=0.4.1-Beta) ](https://bintray.com/redstoneparadox/mods/OakTree/0.4.1-Beta/link)
 
 Oak Tree is a GUI toolkit for use in Modded Minecraft alongside the Fabric modding API.
 
@@ -8,9 +8,9 @@ Discord: https://discord.gg/xSZHvCc
 
 ### Adding Oak Tree To Your Project
 
-build.gradle:
+(**Note: If this doesn't work, use JitPack instead.**)
 
-**Note: If this doesn't work, use JitPack instead.**
+build.gradle:
 
 ```gradle
 repositories {
