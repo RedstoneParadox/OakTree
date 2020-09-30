@@ -9,6 +9,9 @@ Discord: https://discord.gg/xSZHvCc
 ### Adding Oak Tree To Your Project
 
 build.gradle:
+
+**Note: If this doesn't work, use JitPack instead.**
+
 ```gradle
 repositories {
     maven {
