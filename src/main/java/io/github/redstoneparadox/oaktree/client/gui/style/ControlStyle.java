@@ -8,7 +8,12 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
  * reduce redundancy.
  */
 public abstract class ControlStyle {
-	public static final ControlStyle BLANK = new ControlStyle(true) {};
+	public static final ControlStyle BLANK = new ControlStyle(true) {
+		@Override
+		public ControlStyle copy() {
+			return this;
+		}
+	};
 	
 	public final boolean blank;
 
@@ -23,4 +28,6 @@ public abstract class ControlStyle {
 	public void draw(int x, int y, int width, int height, ControlGui gui) {
 
 	}
+
+	public abstract ControlStyle copy();
 }

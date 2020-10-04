@@ -90,6 +90,20 @@ public class TextureControlStyle extends ControlStyle {
 		}
 	}
 
+	@Override
+	public TextureControlStyle copy() {
+		TextureControlStyle copy = new TextureControlStyle(textureID);
+
+		copy.drawOrigin(drawLeft, drawTop);
+		copy.tiled(tiled);
+		copy.textureSize(textureWidth, textureHeight);
+		copy.tint(tint);
+		copy.fileDimensions(fileWidth, fileHeight);
+		copy.scale(scale);
+
+		return copy;
+	}
+
 	void drawTiled(float x, float y, int left, int top, int drawWidth, int drawHeight, int width, int height) {
 		int remainingWidth = width;
 		int remainingHeight = height;

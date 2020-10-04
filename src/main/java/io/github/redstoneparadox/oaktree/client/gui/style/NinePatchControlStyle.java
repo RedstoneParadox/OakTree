@@ -31,6 +31,16 @@ public class NinePatchControlStyle extends TextureControlStyle {
 	}
 
 	@Override
+	public NinePatchControlStyle copy() {
+		NinePatchControlStyle copy = (NinePatchControlStyle) super.copy();
+
+		copy.heights(firstHeight, secondHeight, thirdHeight);
+		copy.widths(firstWidth, secondWidth, thirdWidth);
+
+		return copy;
+	}
+
+	@Override
 	public void draw(int x, int y, int width, int height, ControlGui gui) {
 		MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
 
