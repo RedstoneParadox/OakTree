@@ -19,7 +19,11 @@ public class TextureControlStyle extends ControlStyle {
 	private float scale = 2;
 
 	public TextureControlStyle(String path) {
-		textureID = new Identifier(path);
+		this.textureID = new Identifier(path);
+	}
+	
+	public TextureControlStyle(Identifier textureID) {
+		this.textureID = textureID;
 	}
 
 	public TextureControlStyle drawOrigin(int left, int top) {
