@@ -37,6 +37,16 @@ public class Theme {
 		return ControlStyle.BLANK;
 	}
 
+	public Theme copy() {
+		Theme copy = new Theme();
+
+		for (Map.Entry<String, @NotNull ControlStyle> entry: styles.entrySet()) {
+			copy.add(entry.getKey(), entry.getValue());
+		}
+
+		return copy;
+	}
+
 	public boolean containsStyle(String styleID) {
 		return styles.containsKey(styleID);
 	}

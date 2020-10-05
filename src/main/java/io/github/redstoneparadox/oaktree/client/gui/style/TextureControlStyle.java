@@ -19,7 +19,11 @@ public class TextureControlStyle extends ControlStyle {
 	private float scale = 2;
 
 	public TextureControlStyle(String path) {
-		textureID = new Identifier(path);
+		this.textureID = new Identifier(path);
+	}
+	
+	public TextureControlStyle(Identifier textureID) {
+		this.textureID = textureID;
 	}
 
 	public TextureControlStyle drawOrigin(int left, int top) {
@@ -84,6 +88,20 @@ public class TextureControlStyle extends ControlStyle {
 		else {
 			drawTiled(x, y, drawLeft, drawTop, textureWidth, textureHeight, (int)width, (int)height);
 		}
+	}
+
+	@Override
+	public TextureControlStyle copy() {
+		TextureControlStyle copy = new TextureControlStyle(textureID);
+
+		copy.drawOrigin(drawLeft, drawTop);
+		copy.tiled(tiled);
+		copy.textureSize(textureWidth, textureHeight);
+		copy.tint(tint);
+		copy.fileDimensions(fileWidth, fileHeight);
+		copy.scale(scale);
+
+		return copy;
 	}
 
 	void drawTiled(float x, float y, int left, int top, int drawWidth, int drawHeight, int width, int height) {

@@ -8,11 +8,14 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class ItemControlStyle extends ControlStyle {
-
 	private ItemStack stack;
 
 	public ItemControlStyle(Identifier identifier, int count) {
 		this.stack = new ItemStack(Registry.ITEM.get(identifier), count);
+	}
+
+	public ItemControlStyle(ItemStack stack) {
+		this.stack = stack;
 	}
 
 	public ItemControlStyle(Identifier identifier) {
@@ -48,5 +51,10 @@ public class ItemControlStyle extends ControlStyle {
 		if (!stack.isEmpty()) {
 			RenderHelper.drawItemStackCentered(x, y, width, height, stack);
 		}
+	}
+
+	@Override
+	public ControlStyle copy() {
+		return new ItemControlStyle(stack);
 	}
 }
