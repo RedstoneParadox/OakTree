@@ -88,13 +88,18 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		this.canInsert = canInsert;
 		return this;
 	}
-
-	public SlotControl filter(Item... items) {
+	
+	/**
+	 * @param allow Whether to allow the following items to be inserted
+	 * @param items items to allow/disallow
+	 * @return the control itself
+	 */
+	public SlotControl filter(boolean allow, Item... items) {
 		this.canInsert = ((gui, control, stack) -> {
-			for (Item item: items) {
-				if (stack.getItem() != item) return false;
+			for (Item item : items) {
+				if (stack.getItem() == item) return allow;
 			}
-			return true;
+			return !allow;
 		});
 		return this;
 	}

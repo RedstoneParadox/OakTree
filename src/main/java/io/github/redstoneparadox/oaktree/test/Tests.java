@@ -7,8 +7,10 @@ import io.github.redstoneparadox.oaktree.client.math.Direction2D;
 import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -52,8 +54,7 @@ public class Tests {
 		register(new ContainerTestBlock(true, this::testThree, testThree), "three");
 		register(new TestBlock(true, this::testFour), "four");
 		register(new TestBlock(true, this::testFive), "five");
-
-
+		
 		ScreenProviderRegistry.INSTANCE.registerFactory(testThree, (screenHandler -> {
 			return new HandledTestScreen((TestScreenHandler) screenHandler, new LiteralText(""), true, testThree());
 		}));
@@ -321,7 +322,7 @@ public class Tests {
 				});
 
 		SlotControl slot1 = new SlotControl(0, 1)
-				.filter(Items.ANDESITE);
+				.filter(true, Items.ANDESITE);
 
 		SlotControl slot2 = new SlotControl(1, 1)
 				.canTake((gui, slotControl, stack) -> false);
