@@ -91,7 +91,7 @@ public class Tests {
 		Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
 	}
 
-	class TestBlock extends Block {
+	static class TestBlock extends Block {
 		private final Supplier<Control<?>> supplier;
 		private final boolean vanilla;
 
@@ -110,7 +110,7 @@ public class Tests {
 		}
 	}
 
-	class ContainerTestBlock extends TestBlock {
+	static class ContainerTestBlock extends TestBlock {
 		private final Identifier containerID;
 
 		ContainerTestBlock(boolean vanilla, Supplier<Control<?>> supplier, Identifier containerID) {
@@ -288,9 +288,9 @@ public class Tests {
 
 		SliderControl scrollBar = new SliderControl()
 				.size(20, 100)
-				.onSlide((gui, control) -> {
-					listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.getDisplayCount()) * (control.getScrollPercent())/100)));
-				})
+				.onSlide((gui, control) -> listPanel.startIndex((int) Math.floor((
+						(listPanel.children.size() - listPanel.getDisplayCount())
+						* (control.getScrollPercent())/100))))
 				.barLength(10)
 				.anchor(Anchor.CENTER);
 
