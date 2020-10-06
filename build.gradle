@@ -71,6 +71,22 @@ jar {
 	from "LICENSE"
 }
 
+bintray {
+	user = System.getenv('BINTRAY_USER')
+	key = System.getenv('BINTRAY_KEY')
+	pkg {
+		repo = 'generic'
+		name = 'OakTree'
+		licenses = ['MIT']
+		version {
+			name = '0.4.2 Beta'
+			desc = 'Some minor polish'
+			released = new Date()
+			vcsTag = '0.4.2-beta'
+		}
+	}
+}
+
 // configure the maven publication
 publishing {
 	publications {
@@ -85,6 +101,12 @@ publishing {
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
+		}
+		MyPublication(MavenPublication) {
+			from components.java
+			groupId 'io.github.redstoneparadox'
+			artifactId 'OakTree'
+			version '0.4.2-beta'
 		}
 	}
 
