@@ -320,7 +320,7 @@ public class Tests {
 				});
 
 		SlotControl slot1 = new SlotControl(0, 1)
-				.filter(Items.ANDESITE);
+				.filter(true, Items.ANDESITE);
 
 		SlotControl slot2 = new SlotControl(1, 1)
 				.canTake((gui, slotControl, stack) -> false);
