@@ -158,15 +158,18 @@ public class Control<C extends Control<C>> {
 		return new Vector2(trueX, trueY);
 	}
 
+	@ApiStatus.Internal
 	public void zIndex(List<Control<?>> controls) {
 		if (!visible) return;
 		controls.add(this);
 	}
 
+	@ApiStatus.Internal
 	public void setup(MinecraftClient client, ControlGui gui) {
 
 	}
 
+	@ApiStatus.Internal
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		onTick.accept(gui, (C)this);
 		currentStyle = getStyle(gui.getTheme(), "base");
@@ -187,6 +190,7 @@ public class Control<C extends Control<C>> {
 		}
 	}
 
+	@ApiStatus.Internal
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		currentStyle.draw(trueX, trueY, area.width, area.height, gui);
 	}
@@ -197,6 +201,7 @@ public class Control<C extends Control<C>> {
 
 	}
 
+	@ApiStatus.Internal
 	protected final ControlStyle getStyle(Theme theme, String name) {
 		ControlStyle style = internalTheme.get("self/" + name);
 

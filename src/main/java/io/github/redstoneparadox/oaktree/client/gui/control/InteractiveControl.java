@@ -25,6 +25,7 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 		return tooltip;
 	}
 
+	@ApiStatus.Internal
 	public boolean isMouseWithin() {
 		return isMouseWithin;
 	}
