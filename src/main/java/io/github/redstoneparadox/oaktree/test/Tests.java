@@ -13,7 +13,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -321,7 +320,7 @@ public class Tests {
 				});
 
 		SlotControl slot1 = new SlotControl(0, 1)
-				.filter(Items.ANDESITE);
+				.filter(true, Items.ANDESITE);
 
 		SlotControl slot2 = new SlotControl(1, 1)
 				.canTake((gui, slotControl, stack) -> false);

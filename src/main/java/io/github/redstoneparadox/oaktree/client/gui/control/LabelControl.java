@@ -7,7 +7,6 @@ import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
-import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 

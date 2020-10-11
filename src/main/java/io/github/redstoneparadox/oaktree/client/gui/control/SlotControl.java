@@ -89,22 +89,47 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		return this;
 	}
 
-	public SlotControl filter(Item... items) {
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
+	public SlotControl canInsert(@NotNull BiFunction<SlotControl, ItemStack, Boolean> canInsert) {
+		this.canInsert = ((gui, control, stack) -> canInsert.apply(control, stack));
+		return this;
+	}
+
+	/**
+	 * Helper method for setting a list of {@link Item }
+	 * to match against when inserting into slot.
+	 *
+	 * @param allow Whether matching an item in the list
+	 *              should allow or deny inserting a stack.
+	 * @param items The items to allow/deny.
+	 * @return The {@link SlotControl} for further modification.
+	 */
+	public SlotControl filter(boolean allow, Item... items) {
 		this.canInsert = ((gui, control, stack) -> {
 			for (Item item: items) {
-				if (stack.getItem() != item) return false;
+				if (stack.getItem() == item) return allow;
 			}
-			return true;
+			return !allow;
 		});
 		return this;
 	}
 
-	public SlotControl filter(Tag<Item>... tags) {
+	/**
+	 * Helper method for setting a list of {@link Tag<Item>}
+	 * to match against when inserting into slot.
+	 *
+	 * @param allow Whether matching an item tag in the list
+	 *              should allow or deny inserting a stack.
+	 * @param tags The item tags to match against.
+	 * @return The {@link SlotControl} for further modification.
+	 */
+	public SlotControl filter(boolean allow, Tag<Item>... tags) {
 		this.canInsert = ((gui, control, stack) -> {
 			for (Tag<Item> tag: tags) {
-				if (!tag.contains(stack.getItem())) return false;
+				if (tag.contains(stack.getItem())) return allow;
 			}
-			return true;
+			return !allow;
 		});
 		return this;
 	}

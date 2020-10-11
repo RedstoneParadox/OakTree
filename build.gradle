@@ -2,6 +2,7 @@ plugins {
 	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
 	//id 'checkstyle'
+	id "com.jfrog.bintray" version "1.8.5"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -70,6 +71,23 @@ jar {
 	from "LICENSE"
 }
 
+bintray {
+	user = System.getenv('BINTRAY_USER')
+	key = System.getenv('BINTRAY_KEY')
+	setPublications("bintray")
+	publish = true
+	pkg {
+		repo = "mods"
+		name = archivesBaseName
+		licenses = ['MIT']
+		version {
+			name = "0.4.2-beta"
+			released = new Date()
+			githubRepo = "RedstoneParadox/" + archivesBaseName
+		}
+	}
+}
+
 // configure the maven publication
 publishing {
 	publications {
@@ -81,6 +99,19 @@ publishing {
 			artifact(jar) {
 				builtBy jar
 			}
+			artifact(sourcesJar) {
+				builtBy remapSourcesJar
+			}
+		}
+		bintray(MavenPublication) {
+			groupId(group)
+			artifactId(archivesBaseName)
+			version(version)
+
+			artifact(remapJar) {
+				builtBy remapJar
+			}
+
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
