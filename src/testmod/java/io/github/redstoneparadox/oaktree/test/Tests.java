@@ -1,10 +1,10 @@
 package io.github.redstoneparadox.oaktree.test;
 
-import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
-import io.github.redstoneparadox.oaktree.client.gui.control.*;
-import io.github.redstoneparadox.oaktree.client.gui.style.Theme;
-import io.github.redstoneparadox.oaktree.client.math.Direction2D;
-import io.github.redstoneparadox.oaktree.networking.OakTreeNetworking;
+import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.control.*;
+import io.github.redstoneparadox.oaktree.style.Theme;
+import io.github.redstoneparadox.oaktree.math.Direction2D;
+import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
 import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
@@ -199,7 +199,7 @@ public class Tests {
 			this.player = player;
 			inventories.add(player.inventory);
 
-			if (!player.world.isClient) OakTreeNetworking.listenForStackSync(this);
+			if (!player.world.isClient) OakTreeServerNetworking.listenForStackSync(this);
 			inventories.add(new SimpleInventory(ItemStack.EMPTY, ItemStack.EMPTY));
 		}
 
@@ -226,7 +226,7 @@ public class Tests {
 		@Override
 		public void close(PlayerEntity player) {
 			super.close(player);
-			OakTreeNetworking.stopListening(this);
+			OakTreeServerNetworking.stopListening(this);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.mixin.client;
 
-import io.github.redstoneparadox.oaktree.client.listeners.ClientListeners;
+import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import net.minecraft.client.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
