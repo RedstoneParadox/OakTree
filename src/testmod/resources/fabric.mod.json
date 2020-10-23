@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "oaktree_test",
+  "version": "0.5.0-beta",
+
+  "name": "Oak Tree Test Mod",
+  "description": "You should not be seeing this description",
+  "authors": [
+    "RedstoneParadox"
+  ],
+
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/RedstoneParadox/OakTree"
+  },
+
+  "license": "MIT",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.redstoneparadox.oaktree.OakTreeTest"
+    ]
+  },
+  "mixins": [
+    "oaktree.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": ">=0.3.1"
+  }
+}

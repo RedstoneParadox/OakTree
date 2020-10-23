@@ -42,15 +42,15 @@ import java.util.function.Supplier;
 
 public class Tests {
 
-	public void init() {
+	public static void init() {
 
 		Identifier testThree = new Identifier("oaktree:test_three");
 
-		register(new TestBlock(true, this::testOne), "one");
-		register(new TestBlock(true, this::testTwo), "two");
-		register(new ContainerTestBlock(true, this::testThree, testThree), "three");
-		register(new TestBlock(true, this::testFour), "four");
-		register(new TestBlock(true, this::testFive), "five");
+		register(new TestBlock(true, Tests::testOne), "one");
+		register(new TestBlock(true, Tests::testTwo), "two");
+		register(new ContainerTestBlock(true, Tests::testThree, testThree), "three");
+		register(new TestBlock(true, Tests::testFour), "four");
+		register(new TestBlock(true, Tests::testFive), "five");
 
 
 		ScreenProviderRegistry.INSTANCE.registerFactory(testThree, (screenHandler -> {
@@ -85,11 +85,11 @@ public class Tests {
 		return FabricBlockSettings.of(Material.METAL);
 	}
 
-	private void register(Block block, String suffix) {
+	private static void register(Block block, String suffix) {
 		Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
 	}
 
-	class TestBlock extends Block {
+	static class TestBlock extends Block {
 		private final Supplier<Control<?>> supplier;
 		private final boolean vanilla;
 
@@ -108,7 +108,7 @@ public class Tests {
 		}
 	}
 
-	class ContainerTestBlock extends TestBlock {
+	static class ContainerTestBlock extends TestBlock {
 		private final Identifier containerID;
 
 		ContainerTestBlock(boolean vanilla, Supplier<Control<?>> supplier, Identifier containerID) {
@@ -230,13 +230,13 @@ public class Tests {
 		}
 	}
 
-	private Control<?> testOne() {
+	private static Control<?> testOne() {
 		DropdownControl leftDropdown = new DropdownControl()
 				.dropdown(
 						new ListPanelControl()
 								.id("base")
 								.size(80, 80)
-								.children(4, this::itemLabel)
+								.children(4, Tests::itemLabel)
 								.displayCount(4)
 				)
 				.size(40, 20)
@@ -249,7 +249,7 @@ public class Tests {
 						new ListPanelControl()
 								.id("base")
 								.size(80, 80)
-								.children(4, this::itemLabel)
+								.children(4, Tests::itemLabel)
 								.displayCount(4)
 				)
 				.size(40, 20)
@@ -277,10 +277,10 @@ public class Tests {
 				.id("base");
 	}
 
-	private Control<?> testTwo() {
+	private static Control<?> testTwo() {
 		ListPanelControl listPanel = new ListPanelControl()
 				.size(100, 100)
-				.children(20, this::itemLabel)
+				.children(20, Tests::itemLabel)
 				.displayCount(5)
 				.anchor(Anchor.CENTER);
 
@@ -301,7 +301,7 @@ public class Tests {
 				.anchor(Anchor.CENTER);
 	}
 
-	private Control<?> testThree() {
+	private static Control<?> testThree() {
 		GridPanelControl playerInvGrid = new GridPanelControl()
 				.size(162, 72)
 				.anchor(Anchor.CENTER)
@@ -332,7 +332,7 @@ public class Tests {
 				.child(playerInvGrid);
 	}
 
-	private Control<?> itemLabel(int number) {
+	private static Control<?> itemLabel(int number) {
 		return new LabelControl()
 				.size(60, 20)
 				.text("Item No. " + (number + 1))
@@ -340,7 +340,7 @@ public class Tests {
 				.shadow(true);
 	}
 
-	private Control<?> testFour() {
+	private static Control<?> testFour() {
 		return new ButtonControl()
 				.id("button")
 				.size(200, 20)
@@ -352,7 +352,7 @@ public class Tests {
 				);
 	}
 
-	private Control<?> testFive() {
+	private static Control<?> testFive() {
 		List<Text> texts = createText(50);
 
 		LabelControl label = new LabelControl()
@@ -377,7 +377,7 @@ public class Tests {
 				.anchor(Anchor.CENTER);
 	}
 
-	private List<Text> createText(int lines) {
+	private static List<Text> createText(int lines) {
 		List<Text> texts = new ArrayList<>();
 		Random random = new Random();
 
