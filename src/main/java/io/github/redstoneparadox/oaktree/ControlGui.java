@@ -121,50 +121,6 @@ public final class ControlGui {
 		return screen.getHandler();
 	}
 
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public boolean mouseButtonHeld(String mouseButton) {
-		switch (mouseButton) {
-			case "left":
-				return leftMouseHeld;
-			case "right":
-				return rightMouseHeld;
-			default:
-				return false;
-		}
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public boolean mouseButtonJustClicked(String mouseButton) {
-		switch (mouseButton) {
-			case "left":
-				return leftMouseClicked;
-			case "right":
-				return rightMouseClicked;
-			default:
-				return false;
-		}
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public Optional<Character> getLastChar() {
-		return lastChar == null ? Optional.empty() : Optional.of(lastChar);
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public int getX() {
-		return screen.getX();
-	}
-
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public int getY() {
-		return screen.getY();
-	}
-
 	public @NotNull Theme getTheme() {
 		return theme;
 	}

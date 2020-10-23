@@ -195,12 +195,6 @@ public class Control<C extends Control<C>> {
 		currentStyle.draw(trueX, trueY, area.width, area.height, gui);
 	}
 
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	void applyTheme(Theme theme) {
-
-	}
-
 	@ApiStatus.Internal
 	protected final ControlStyle getStyle(Theme theme, String name) {
 		ControlStyle style = internalTheme.get("self/" + name);
