@@ -23,7 +23,6 @@ public class Rectangle {
 		return new Rectangle(x + offsetX, y + offsetY, width, height);
 	}
 
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
