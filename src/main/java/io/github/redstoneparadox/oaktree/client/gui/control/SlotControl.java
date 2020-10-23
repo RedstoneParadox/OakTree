@@ -89,13 +89,6 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		return this;
 	}
 
-	@Deprecated
-	@ApiStatus.ScheduledForRemoval
-	public SlotControl canInsert(@NotNull BiFunction<SlotControl, ItemStack, Boolean> canInsert) {
-		this.canInsert = ((gui, control, stack) -> canInsert.apply(control, stack));
-		return this;
-	}
-
 	/**
 	 * Helper method for setting a list of {@link Item }
 	 * to match against when inserting into slot.
