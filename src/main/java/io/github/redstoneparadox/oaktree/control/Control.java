@@ -30,13 +30,19 @@ public class Control<C extends Control<C>> {
 	protected int trueX = 0;
 	protected int trueY = 0;
 
-	public C id(@NotNull  String id) {
+	public void setId(@NotNull String id) {
 		this.id = id;
-		return (C)this;
 	}
 
 	public @NotNull String getId() {
 		return this.id;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C id(@NotNull  String id) {
+		this.id = id;
+		return (C)this;
 	}
 
 	/**
@@ -47,28 +53,57 @@ public class Control<C extends Control<C>> {
 	 * the parent node's center.
 	 *
 	 * @param anchor The {@link Anchor} to anchor to.
-	 * @return The node itself.
 	 */
-	public C anchor(@NotNull Anchor anchor) {
+	public void setAnchor(@NotNull Anchor anchor) {
 		this.anchor = anchor;
-		return (C)this;
 	}
 
 	public @NotNull Anchor getAnchor() {
 		return anchor;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C anchor(@NotNull Anchor anchor) {
+		this.anchor = anchor;
+		return (C)this;
+	}
+
 	/**
-	 * Sets the position of the node on the screen relative to the parent.
+	 * Sets the offset of the node on the screen relative to the anchor.
 	 * Values are in pixels. Due to the way screen coordinates work,
 	 * positive y is down so a position of (10, 10) will place the node 10
 	 * pixels to the left and 10 pixels below the top-left corner of the
 	 * screen.
 	 *
-	 * @param x The new x position in pixels.
-	 * @param y The new y position in pixels.
-	 * @return The node itself.
+	 * @param x The new x offset in pixels.
+	 * @param y The new y offset in pixels.
 	 */
+	public void setOffset(int x, int y) {
+		area.x = x;
+		area.y = y;
+	}
+
+	/**
+	 * Sets the offset of the node on the screen relative to the anchor.
+	 * Values are in pixels. Due to the way screen coordinates work,
+	 * positive y is down so a position of (10, 10) will place the node 10
+	 * pixels to the left and 10 pixels below the top-left corner of the
+	 * screen.
+	 *
+	 * @param offset The offset in Vector2 form.
+	 */
+	public void setOffset(@NotNull Vector2 offset) {
+		area.x = offset.x;
+		area.y = offset.y;
+	}
+
+	public @NotNull Vector2 getOffset() {
+		return new Vector2(area.x, area.y);
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public C position(int x, int y) {
 		area.x = x;
 		area.y = y;
@@ -83,8 +118,31 @@ public class Control<C extends Control<C>> {
 	 *
 	 * @param width The new width of this node in pixels.
 	 * @param height The new height of this node in pixels.
-	 * @return The node itself.
 	 */
+	public void setSize(int width, int height) {
+		area.width = width;
+		area.height = height;
+	}
+
+	/**
+	 * Sets the width and height of this node. Values are in pixels.
+	 * Due to the way screen coordinates work, positive y is down so a
+	 * size of (10, 10) would mean that the node extends 10 pixels to the
+	 * left of and 10 pixels down from it's position.
+	 *
+	 * @param size The size in Vector2 form.
+	 */
+	public void setSize(@NotNull Vector2 size) {
+		area.width = size.x;
+		area.height = size.y;
+	}
+
+	public @NotNull Vector2 getSize() {
+		return new Vector2(area.width, area.height);
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public C size(int width, int height) {
 		area.width = width;
 		area.height = height;
@@ -100,16 +158,21 @@ public class Control<C extends Control<C>> {
 	 * size of the parent node. If set to true, any size and position settings
 	 * will be ignored when drawing the node.
 	 *
-	 * @param value
-	 * @return The node itself.
+	 * @param expand The value to set
 	 */
-	public C expand(boolean value) {
-		expand = value;
-		return (C)this;
+	public void setExpand(boolean expand) {
+		this.expand = expand;
 	}
 
 	public boolean shouldExpand() {
 		return expand;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C expand(boolean value) {
+		expand = value;
+		return (C)this;
 	}
 
 	/**
@@ -117,16 +180,22 @@ public class Control<C extends Control<C>> {
 	 * are not visible will not be drawn, cannot be interacted with,
 	 * and will cause their children to not be drawn (if they have any).
 	 *
-	 * @param value Whether or not this node should be visible.
+	 * @param visible Whether or not this node should be visible.
 	 * @return The node itself.
 	 */
-	public C visible(boolean value) {
-		this.visible = value;
-		return (C)this;
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 	public boolean isVisible() {
 		return this.visible;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C visible(boolean value) {
+		this.visible = value;
+		return (C)this;
 	}
 
 	/**
@@ -135,8 +204,17 @@ public class Control<C extends Control<C>> {
 	 * styles so it is considered the default style.
 	 *
 	 * @param baseStyle The StyleBox for this node.
-	 * @return The node itself.
 	 */
+	public void setBaseStyle(ControlStyle baseStyle) {
+		internalTheme.add("self", baseStyle);
+	}
+
+	public ControlStyle getBaseStyle() {
+		return internalTheme.get("self/base");
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public C baseStyle(ControlStyle baseStyle) {
 		internalTheme.add("self", baseStyle);
 		return (C)this;
