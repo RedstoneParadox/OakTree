@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * The base class for all controls.
@@ -223,15 +224,10 @@ public class Control<C extends Control<C>> {
 	/**
 	 * Sets a function to run every time this node is ticked.
 	 *
-	 * @param <T> The type of node; must be specified manually
-	 *           because Java refuses to infer the correct
-	 *           type.
 	 * @param onTick the function to run.
-	 * @param dummy Exists to get around type erasure issues.
-	 *              The passed value does not matter.
 	 */
-	public <T extends Control> void onTick(@NotNull BiConsumer<ControlGui, T> onTick, boolean dummy) {
-		this.onTick = (BiConsumer<ControlGui, Control<C>>) onTick;
+	public void onTick(@NotNull Consumer<ControlGui> onTick) {
+		this.onTick = ((controlGui, cControl) -> onTick.accept(controlGui));
 	}
 
 	@ApiStatus.ScheduledForRemoval
