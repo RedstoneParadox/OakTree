@@ -29,15 +29,18 @@ public class BoxControl extends PaddingControl<BoxControl> {
 	 * created by the internal margins.
 	 *
 	 * @param child The node that is being added as a child.
-	 * @return The node itself.
 	 */
-	public BoxControl child(@NotNull Control<?> child) {
+	public void setChild(@NotNull Control<?> child) {
 		this.child = child;
-		return this;
 	}
 
 	public @NotNull Control<?> getChild() {
 		return child;
+	}
+
+	public BoxControl child(@NotNull Control<?> child) {
+		this.child = child;
+		return this;
 	}
 
 	@Override

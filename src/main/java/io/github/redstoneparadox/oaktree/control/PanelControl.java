@@ -5,6 +5,7 @@ import io.github.redstoneparadox.oaktree.math.Util;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,9 +46,8 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	 * @param child The child control.
 	 * @return The panel control itself.
 	 */
-	public C child(@NotNull Control<?> child) {
+	public void addChild(@NotNull Control<?> child) {
 		children.add(child);
-		return (C) this;
 	}
 
 	/**
@@ -56,15 +56,14 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	 * index for that child.
 	 *
 	 * @param count The amount of children to add.
+	 * @param clear Whether existing children should be removed.
 	 * @param function The function to supply children.
-	 * @return The PanelControl itself.
 	 */
-	public C children(int count, Function<Integer, Control<?>> function) {
+	public void addChildren(int count, boolean clear, Function<Integer, Control<?>> function) {
 		children.clear();
 		for (int i  = 0; i < count; i++) {
 			children.add(function.apply(i));
 		}
-		return (C) this;
 	}
 
 	public @Nullable Control<?> getChild(int index) {
@@ -75,11 +74,26 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 		return null;
 	}
 
-	public C scroll(int x, int y) {
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C child(@NotNull Control<?> child) {
+		children.add(child);
+		return (C) this;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C children(int count, Function<Integer, Control<?>> function) {
+		children.clear();
+		for (int i  = 0; i < count; i++) {
+			children.add(function.apply(i));
+		}
+		return (C) this;
+	}
+
+	public void scroll(int x, int y) {
 		scrollPosX += Util.floorTo(x, scrollSpeedX);
 		scrollPosY += Util.floorTo(y, scrollSpeedY);
-
-		return (C) this;
 	}
 
 	@Override

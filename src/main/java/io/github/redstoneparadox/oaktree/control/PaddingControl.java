@@ -2,8 +2,8 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
+import org.jetbrains.annotations.ApiStatus;
 
-//TODO: Make fields protected and replace with getters.
 public abstract class PaddingControl<C extends PaddingControl<C>> extends Control<C> {
 	protected int topPadding = 0;
 	protected int bottomPadding = 0;
@@ -14,8 +14,16 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 	 * Sets the padding for all 4 sides.
 	 *
 	 * @param padding The padding value.
-	 * @return The control itself.
 	 */
+	public void setFullPadding(int padding) {
+		this.topPadding = padding;
+		this.bottomPadding = padding;
+		this.leftPadding = padding;
+		this.rightPadding = padding;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public C padding(int padding) {
 		this.topPadding = padding;
 		this.bottomPadding = padding;
@@ -30,28 +38,39 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 	 * @param topPadding The padding value.
 	 * @return The control itself.
 	 */
-	public C topPadding(int topPadding) {
+	public void setTopPadding(int topPadding) {
 		this.topPadding = topPadding;
-		return (C) this;
 	}
 
 	public int getTopPadding() {
 		return topPadding;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C topPadding(int topPadding) {
+		this.topPadding = topPadding;
+		return (C) this;
+	}
+
 	/**
 	 * Sets the padding for the bottom.
 	 *
 	 * @param bottomPadding The padding value.
-	 * @return The control itself.
 	 */
-	public C bottomPadding(int bottomPadding) {
-		this.bottomPadding = bottomPadding;
-		return (C) this;
+	public void setBottomPadding(int bottomPadding) {
+		this.topPadding = bottomPadding;
 	}
 
 	public int getBottomPadding() {
 		return bottomPadding;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C bottomPadding(int bottomPadding) {
+		this.bottomPadding = bottomPadding;
+		return (C) this;
 	}
 
 	/**
@@ -60,13 +79,19 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 	 * @param leftPadding The padding value.
 	 * @return The control itself.
 	 */
-	public C leftPadding(int leftPadding) {
+	public void setLeftPadding(int leftPadding) {
 		this.leftPadding = leftPadding;
-		return (C) this;
 	}
 
 	public int getLeftPadding() {
 		return leftPadding;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C leftPadding(int leftPadding) {
+		this.leftPadding = leftPadding;
+		return (C) this;
 	}
 
 	/**
@@ -75,13 +100,19 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 	 * @param rightPadding The padding value.
 	 * @return The control itself.
 	 */
-	public C rightPadding(int rightPadding) {
+	public void setRightPadding(int rightPadding) {
 		this.rightPadding = rightPadding;
-		return (C) this;
 	}
 
 	public int getRightPadding() {
 		return rightPadding;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C rightPadding(int rightPadding) {
+		this.rightPadding = rightPadding;
+		return (C) this;
 	}
 
 	@Override
