@@ -244,6 +244,10 @@ public class Tests {
 				.dropdownDirection(Direction2D.LEFT)
 				.anchor(Anchor.CENTER);
 
+		leftDropdown.<DropdownControl>onTick((controlGui, dropdownControlControl) -> {
+			System.out.println("Ticking!");
+		}, false);
+
 		DropdownControl rightDropdown = new DropdownControl()
 				.dropdown(
 						new ListPanelControl()

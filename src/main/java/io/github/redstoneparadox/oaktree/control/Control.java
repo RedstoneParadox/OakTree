@@ -22,7 +22,7 @@ public class Control<C extends Control<C>> {
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
 	protected boolean visible = true;
-	protected @NotNull  BiConsumer<ControlGui, C> onTick = (gui, control) -> {};
+	protected BiConsumer<ControlGui, Control<C>> onTick = (gui, control) -> {};
 
 	protected ControlStyle currentStyle = ControlStyle.BLANK;
 	protected Theme internalTheme = new Theme();
@@ -221,13 +221,22 @@ public class Control<C extends Control<C>> {
 	}
 
 	/**
-	 * Sets a function to run every time this
-	 * node is ticked.
+	 * Sets a function to run every time this node is ticked.
 	 *
-	 * @param function the function to run.
-	 * @return The node itself.
+	 * @param <T> The type of node; must be specified manually
+	 *           because Java refuses to infer the correct
+	 *           type.
+	 * @param onTick the function to run.
+	 * @param dummy Exists to get around type erasure issues.
+	 *              The passed value does not matter.
 	 */
-	public C onTick(@NotNull BiConsumer<ControlGui, C> function) {
+	public <T extends Control> void onTick(@NotNull BiConsumer<ControlGui, T> onTick, boolean dummy) {
+		this.onTick = (BiConsumer<ControlGui, Control<C>>) onTick;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C onTick(BiConsumer<ControlGui, Control<C>> function) {
 		onTick = function;
 		return (C)this;
 	}
@@ -249,7 +258,7 @@ public class Control<C extends Control<C>> {
 
 	@ApiStatus.Internal
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		onTick.accept(gui, (C)this);
+		onTick.accept(gui, this);
 		currentStyle = getStyle(gui.getTheme(), "base");
 
 		if (!expand) {
