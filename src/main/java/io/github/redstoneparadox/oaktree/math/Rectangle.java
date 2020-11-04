@@ -23,6 +23,10 @@ public class Rectangle {
 		return new Rectangle(x + offsetX, y + offsetY, width, height);
 	}
 
+	public Rectangle copy() {
+		return new Rectangle(x, y, width, height);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

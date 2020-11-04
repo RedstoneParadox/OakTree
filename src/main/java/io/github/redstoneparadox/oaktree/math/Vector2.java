@@ -29,6 +29,10 @@ public class Vector2 {
 		return x == vector2.x && y == vector2.y;
 	}
 
+	public Vector2 copy() {
+		return new Vector2(x, y);
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
