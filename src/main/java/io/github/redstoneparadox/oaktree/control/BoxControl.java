@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -38,6 +39,8 @@ public class BoxControl extends PaddingControl<BoxControl> {
 		return child;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public BoxControl child(@NotNull Control<?> child) {
 		this.child = child;
 		return this;
