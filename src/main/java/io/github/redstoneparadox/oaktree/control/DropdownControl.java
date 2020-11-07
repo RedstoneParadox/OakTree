@@ -6,6 +6,7 @@ import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -20,23 +21,36 @@ public class DropdownControl extends InteractiveControl<DropdownControl> impleme
 		this.id = "dropdown";
 	}
 
-	public DropdownControl dropdown(@NotNull Control<?> dropdown) {
+	public void setDropdown(@NotNull Control<?> dropdown) {
 		this.dropdown = dropdown;
-		this.dropdown.visible(false);
-		return this;
+		this.dropdown.setVisible(false);
 	}
 
 	public @NotNull Control<?> getDropdown() {
 		return dropdown;
 	}
 
-	public DropdownControl dropdownDirection(@NotNull Direction2D dropdownDirection) {
-		this.dropdownDirection = dropdownDirection;
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public DropdownControl dropdown(@NotNull Control<?> dropdown) {
+		this.dropdown = dropdown;
+		this.dropdown.visible(false);
 		return this;
+	}
+
+	public void setDropdownDirection(@NotNull Direction2D dropdownDirection) {
+		this.dropdownDirection = dropdownDirection;
 	}
 
 	public @NotNull Direction2D getDropdownDirection() {
 		return this.dropdownDirection;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public DropdownControl dropdownDirection(@NotNull Direction2D dropdownDirection) {
+		this.dropdownDirection = dropdownDirection;
+		return this;
 	}
 
 	@Override

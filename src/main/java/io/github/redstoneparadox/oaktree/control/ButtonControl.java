@@ -5,10 +5,12 @@ import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import net.minecraft.client.MinecraftClient;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class ButtonControl extends InteractiveControl<ButtonControl> implements MouseButtonListener {
 	protected boolean toggleable = false;
@@ -23,35 +25,63 @@ public class ButtonControl extends InteractiveControl<ButtonControl> implements 
 		this.id = "button";
 	}
 
-	public ButtonControl toggleable(boolean toggleable) {
+	public void setToggleable(boolean toggleable) {
 		this.toggleable = toggleable;
-		return this;
 	}
 
 	public boolean isToggleable() {
 		return toggleable;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public ButtonControl toggleable(boolean toggleable) {
+		this.toggleable = toggleable;
+		return this;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public ButtonControl heldStyle(ControlStyle heldStyle) {
 		internalTheme.add("self", "held", heldStyle);
 		return this;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public ButtonControl hoverStyle(ControlStyle hoverStyle) {
 		internalTheme.add("self", "hover", hoverStyle);
 		return this;
 	}
 
+	public void onClick(@NotNull Consumer<ControlGui> onClick) {
+		this.onClick = ((controlGui, cControl) -> onClick.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public ButtonControl onClick(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
 		onClick = listener;
 		return this;
 	}
 
+	public void whileHeld(@NotNull Consumer<ControlGui> whileHeld) {
+		this.onClick = ((controlGui, cControl) -> whileHeld.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public ButtonControl whileHeld(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
 		whileHeld = listener;
 		return this;
 	}
 
+	public void onRelease(@NotNull Consumer<ControlGui> onRelease) {
+		this.onRelease = ((controlGui, cControl) -> onRelease.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public ButtonControl onRelease(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
 		onRelease = listener;
 		return this;

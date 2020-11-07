@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.util.ListUtils;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -23,15 +24,20 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 	 * panel into.
 	 *
 	 * @param rows The number of rows.
-	 * @return The control itself.
 	 */
-	public GridPanelControl rows(int rows) {
+	public void setRows(int rows) {
 		this.rows = rows;
-		return this;
 	}
 
 	public int getRows() {
 		return rows;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public GridPanelControl rows(int rows) {
+		this.rows = rows;
+		return this;
 	}
 
 	/**
@@ -39,15 +45,20 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 	 * the panel into.
 	 *
 	 * @param columns The number of columns.
-	 * @return The control itself.
 	 */
-	public GridPanelControl columns(int columns) {
+	public void setColumns(int columns) {
 		this.columns = columns;
-		return this;
 	}
 
 	public int getColumns() {
 		return columns;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public GridPanelControl columns(int columns) {
+		this.columns = columns;
+		return this;
 	}
 
 	/**
@@ -59,15 +70,13 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 	 * @param child The child {@link Control}
 	 * @param row The row.
 	 * @param column The column
-	 * @return The control itself.
 	 */
-	public GridPanelControl child(Control<?> child, int row, int column) throws IndexOutOfBoundsException {
+	public void addChild(Control<?> child, int row, int column) throws IndexOutOfBoundsException {
 		if (row >= rows || column >= columns) throw new GridCellOutOfBoundsException(row, column);
 
 		int index = (row - 1) * columns + column;
 		if (index >= children.size()) ListUtils.growList(children, index + 1);
 		children.set(index, child);
-		return this;
 	}
 
 	public @Nullable Control<?> getChild(int row, int column) {
@@ -84,14 +93,41 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 		return children.get(index);
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public GridPanelControl child(Control<?> child, int row, int column) throws IndexOutOfBoundsException {
+		if (row >= rows || column >= columns) throw new GridCellOutOfBoundsException(row, column);
+
+		int index = (row - 1) * columns + column;
+		if (index >= children.size()) ListUtils.growList(children, index + 1);
+		children.set(index, child);
+		return this;
+	}
+
 	/**
 	 * Iterates through all cells and adds the results of the function
 	 * to each cell; the function is passed the row, column, and cell
 	 * index in that order.
 	 *
 	 * @param function The function to call.
-	 * @return The control itself.
 	 */
+	//TODO: Improve this
+	public void fillCells(boolean overwriteExisting, TriFunction<Integer, Integer, Integer, Control<?>> function) {
+		int index = 0;
+		for (int j = 0; j < rows; j += 1) {
+			for (int i = 0; i < columns; i += 1) {
+ 				if (!overwriteExisting && children.get(index) != null) {
+ 					continue;
+				}
+
+				children.add(function.apply(j, i, index));
+				index += 1;
+			}
+		}
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public GridPanelControl cells(TriFunction<Integer, Integer, Integer, Control<?>> function) {
 		children.clear();
 		int index = 0;

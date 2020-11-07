@@ -2,12 +2,14 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.style.ControlStyle;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class HoverControl extends InteractiveControl<HoverControl> {
-	protected @NotNull BiConsumer<ControlGui, HoverControl> mouseEnter = (gui, node) -> {};
+	protected @NotNull BiConsumer<ControlGui, HoverControl> onMouseEnter = (gui, node) -> {};
 	protected @NotNull BiConsumer<ControlGui, HoverControl> mouseExit = (gui, node) -> {};
 	protected @NotNull BiConsumer<ControlGui, HoverControl> whileHovered = (gui, node) -> {};
 
@@ -22,16 +24,34 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 		return this;
 	}
 
+	public void onMouseEnter(@NotNull Consumer<ControlGui> onMouseEnter) {
+		this.onMouseEnter = ((controlGui, cControl) -> onMouseEnter.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public HoverControl onMouseEnter(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
-		mouseEnter = listener;
+		onMouseEnter = listener;
 		return this;
 	}
 
+	public void onMouseExit(@NotNull Consumer<ControlGui> onMouseExit) {
+		this.onMouseEnter = ((controlGui, cControl) -> onMouseExit.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public HoverControl onMouseExit(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
 		mouseExit = listener;
 		return this;
 	}
 
+	public void whileHovered(@NotNull Consumer<ControlGui> whileHovered) {
+		this.onMouseEnter = ((controlGui, cControl) -> whileHovered.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public HoverControl whileMouseHovers(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
 		whileHovered = listener;
 		return this;
@@ -43,7 +63,7 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 
 		if (!mouseCurrentlyWithin && isMouseWithin) {
 			mouseCurrentlyWithin = true;
-			mouseEnter.accept(gui, this);
+			onMouseEnter.accept(gui, this);
 		}
 		else if (mouseCurrentlyWithin && !isMouseWithin) {
 			mouseCurrentlyWithin = false;

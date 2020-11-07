@@ -44,7 +44,6 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	 * Adds a child to this PanelControl.
 	 *
 	 * @param child The child control.
-	 * @return The panel control itself.
 	 */
 	public void addChild(@NotNull Control<?> child) {
 		children.add(child);
