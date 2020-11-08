@@ -8,6 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -34,11 +35,9 @@ public class LabelControl extends Control<LabelControl> {
 	 * to display.
 	 *
 	 * @param text The {@link Text} to display
-	 * @return The control itself.
 	 */
-	public LabelControl text(Text text) {
+	public void setText(@NotNull Text text) {
 		this.text = text;
-		return this;
 	}
 
 	/**
@@ -48,10 +47,9 @@ public class LabelControl extends Control<LabelControl> {
 	 * a {@link LiteralText} instance.
 	 *
 	 * @param text The text to display
-	 * @return The control itself.
 	 */
-	public LabelControl text(String text) {
-		return this.text(new LiteralText(text));
+	public void setText(String text) {
+		this.text = new LiteralText(text);
 	}
 
 	/**
@@ -61,8 +59,49 @@ public class LabelControl extends Control<LabelControl> {
 	 * the newlines yourself.</p>
 	 *
 	 * @param texts A {@link List<Text>}
-	 * @return The {@link Control} for further modification.
 	 */
+	public void setText(List<Text> texts) {
+		if (fitText) {
+			this.area.width = 0;
+
+			for (Text text: texts) {
+				this.area.width = Math.max(this.area.width, TextHelper.getWidth(text));
+			}
+
+			this.area.width += 8;
+			area.height = TextHelper.getFontHeight() * texts.size() + 8;
+			this.maxDisplayedLines = texts.size();
+		}
+
+		this.text = TextHelper.combine(texts, true);
+	}
+
+	/**
+	 * Clears the LabelControl.
+	 */
+	public void clearText() {
+		this.text = LiteralText.EMPTY;
+	}
+
+	public @NotNull Text getText() {
+		return text;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public LabelControl text(Text text) {
+		this.text = text;
+		return this;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public LabelControl text(String text) {
+		return this.text(new LiteralText(text));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public LabelControl text(List<Text> texts) {
 		if (fitText) {
 			this.area.width = 0;
@@ -80,33 +119,31 @@ public class LabelControl extends Control<LabelControl> {
 		return this;
 	}
 
-	/**
-	 * Clears the LabelControl
-	 *
-	 * @return The control itself.
-	 */
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public LabelControl clear() {
 		this.text = LiteralText.EMPTY;
 		return this;
-	}
-
-	public @NotNull Text getText() {
-		return text;
 	}
 
 	/**
 	 * Sets whether the text should be drawn with a shadow.
 	 *
 	 * @param shadow The value.
-	 * @return The control itself.
 	 */
-	public LabelControl shadow(boolean shadow) {
+	public void setShadow(boolean shadow) {
 		this.shadow = shadow;
-		return this;
 	}
 
 	public boolean isShadow() {
 		return shadow;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public LabelControl shadow(boolean shadow) {
+		this.shadow = shadow;
+		return this;
 	}
 
 	/**
@@ -114,39 +151,63 @@ public class LabelControl extends Control<LabelControl> {
 	 * is ignored here due to Minecraft internals.
 	 *
 	 * @param fontColor The RGBA Color
-	 * @return The control itself.
 	 */
-	public LabelControl fontColor(@NotNull Color fontColor) {
+	public void setFontColor(@NotNull Color fontColor) {
 		this.fontColor = fontColor;
-		return this;
 	}
 
 	public @NotNull Color getFontColor() {
 		return fontColor;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public LabelControl fontColor(@NotNull Color fontColor) {
+		this.fontColor = fontColor;
+		return this;
+	}
+
 	/**
 	 * Sets the maximum number of lines.
 	 *
 	 * @param maxDisplayedLines The max number of lines.
-	 * @return The control itself.
 	 */
-	public LabelControl maxDisplayedLines(int maxDisplayedLines) {
+	public void setMaxDisplayedLines(int maxDisplayedLines) {
 		this.maxDisplayedLines = Math.max(0, maxDisplayedLines);
-		return this;
 	}
 
 	public int getMaxDisplayedLines() {
 		return maxDisplayedLines;
 	}
 
-	public LabelControl firstLine(int firstLine) {
-		this.firstLine = Math.max(0, firstLine);
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public LabelControl maxDisplayedLines(int maxDisplayedLines) {
+		this.maxDisplayedLines = Math.max(0, maxDisplayedLines);
 		return this;
+	}
+
+	public void setFirstLine(int firstLine) {
+		this.firstLine = Math.max(0, firstLine);
+	}
+
+	public void moveToStart() {
+		this.firstLine = 0;
+	}
+
+	public void moveToEnd() {
+		this.firstLine = TextHelper.wrapText(text, area.width, 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
 	}
 
 	public int getFirstLine() {
 		return firstLine;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public LabelControl firstLine(int firstLine) {
+		this.firstLine = Math.max(0, firstLine);
+		return this;
 	}
 
 	/**
@@ -157,26 +218,40 @@ public class LabelControl extends Control<LabelControl> {
 	 * {@link LabelControl#text(List)}
 	 *
 	 * @param fitText The value itself
-	 * @return The {@link Control} for further
-	 * 		modification.
 	 */
+	public void setFitText(boolean fitText) {
+		this.fitText = fitText;
+	}
+
+	public boolean shouldFitText() {
+		return fitText;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public LabelControl fitText(boolean fitText) {
 		this.fitText = fitText;
 		return this;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public boolean isFitText() {
+		return fitText;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public LabelControl toStart() {
 		this.firstLine = 0;
 		return this;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public LabelControl toEnd() {
 		this.firstLine = TextHelper.wrapText(text, area.width, 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
 		return this;
-	}
-
-	public boolean isFitText() {
-		return fitText;
 	}
 
 	@Override

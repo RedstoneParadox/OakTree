@@ -21,13 +21,19 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 	protected boolean rightMouseHeld = false;
 	protected boolean rightMouseClicked = false;
 
-	public C tooltip(@Nullable Control<?> tooltip) {
+	public void setTooltip(@Nullable Control<?> tooltip) {
 		this.tooltip = tooltip;
-		return (C) this;
 	}
 
 	public @Nullable Control<?> getTooltip() {
 		return tooltip;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public C tooltip(@Nullable Control<?> tooltip) {
+		this.tooltip = tooltip;
+		return (C) this;
 	}
 
 	@ApiStatus.Internal

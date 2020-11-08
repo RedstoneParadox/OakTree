@@ -19,6 +19,16 @@ public class HoverControl extends InteractiveControl<HoverControl> {
 		this.id = "hover";
 	}
 
+	public void setHoverStyle(ControlStyle hoverStyle) {
+		internalTheme.add("self", "hover", hoverStyle);
+	}
+
+	public ControlStyle getHoverStyle() {
+		return internalTheme.get("self/hover");
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public HoverControl hoverStyle(ControlStyle style) {
 		internalTheme.add("self", "hover", style);
 		return this;
