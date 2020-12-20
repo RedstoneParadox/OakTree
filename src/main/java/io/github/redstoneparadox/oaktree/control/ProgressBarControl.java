@@ -5,6 +5,7 @@ import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * A node representing a percent-based progress bar.
@@ -22,29 +23,23 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 	}
 
 	/**
-	 * Sets the {@link ControlStyle} for the progress bar.
-	 *
-	 * @param style The {@link ControlStyle} to draw.
-	 * @return The node itself.
-	 */
-	public ProgressBarControl barStyle(ControlStyle style) {
-		internalTheme.add("bar", "bar", style);
-		return this;
-	}
-
-	/**
 	 * Sets the percentage of the progress bar.
 	 *
 	 * @param percent The percentage.
-	 * @return The node itself.
 	 */
-	public ProgressBarControl percent(float percent) {
+	public void setPercent(float percent) {
 		this.percent = percent;
-		return this;
 	}
 
 	public float getPercent() {
 		return percent;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public ProgressBarControl percent(float percent) {
+		this.percent = percent;
+		return this;
 	}
 
 	/**
@@ -54,16 +49,22 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 	 *
 	 * @param width The width of the progress bar.
 	 * @param height The height of the progress bar.
-	 * @return The node itself.
 	 */
-	public ProgressBarControl barSize(int width, int height) {
-		barWidth = width;
-		barHeight = height;
-		return this;
+	public void setBarSize(int width, int height) {
+		this.barWidth = width;
+		this.barHeight = height;
 	}
 
 	public Vector2 getBarSize() {
 		return new Vector2(barWidth, barHeight);
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public ProgressBarControl barSize(int width, int height) {
+		barWidth = width;
+		barHeight = height;
+		return this;
 	}
 
 	/**
@@ -73,10 +74,39 @@ public class ProgressBarControl extends Control<ProgressBarControl> {
 	 * downwards.
 	 *
 	 * @param direction The direction to face.
-	 * @return The node itself.
 	 */
+	public void setDirection(Direction2D direction) {
+		this.direction = direction;
+	}
+
+	public Direction2D getDirection() {
+		return direction;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public ProgressBarControl drawDirection(Direction2D direction) {
 		this.direction = direction;
+		return this;
+	}
+
+	/**
+	 * Sets the {@link ControlStyle} for the progress bar.
+	 *
+	 * @param style The {@link ControlStyle} to draw.
+	 */
+	public void setBarStyle(ControlStyle style) {
+		internalTheme.add("self/bar", style);
+	}
+
+	public ControlStyle getBarStyle() {
+		return internalTheme.get("self/bar");
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public ProgressBarControl barStyle(ControlStyle style) {
+		internalTheme.add("bar", "bar", style);
 		return this;
 	}
 
