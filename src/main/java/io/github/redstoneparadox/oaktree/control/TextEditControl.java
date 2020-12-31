@@ -15,12 +15,15 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 /**
  * @apiNote  Work in Progress!
@@ -59,71 +62,55 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	}
 
 	/**
-	 * Sets a {@link TriFunction} to run when a character is typed.
-	 *
-	 * @param onCharTyped The function.
-	 * @return The control itself.
-	 */
-	public TextEditControl onCharTyped(@NotNull TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped) {
-		this.onCharTyped = onCharTyped;
-		return this;
-	}
-
-	/**
-	 * Sets a {@link BiConsumer} to run when the TextEditControl gains focus.
-	 *
-	 * @param onFocused The function.
-	 * @return The control itself.
-	 */
-	public TextEditControl onFocused(@NotNull BiConsumer<ControlGui, TextEditControl> onFocused) {
-		this.onFocused = onFocused;
-		return this;
-	}
-
-	/**
-	 * Sets a {@link BiConsumer} to run when the TextEditControl loses focus.
-	 *
-	 * @param onFocusLost The function.
-	 * @return The control itself.
-	 */
-	public TextEditControl onFocusLost(@NotNull BiConsumer<ControlGui, TextEditControl> onFocusLost) {
-		this.onFocusLost = onFocusLost;
-		return this;
-	}
-
-	/**
 	 * Sets the text of this TextEditControl.
 	 *
 	 * @param text The text.
-	 * @return The control itself.
 	 */
-	public TextEditControl text(@NotNull String text) {
+	public void setText(@NotNull String text) {
 		this.text = text;
 		updateText = true;
-		return this;
 	}
 
 	/**
 	 * Sets the text of this TextEditControl.
 	 *
 	 * @param text The text.
-	 * @return The control itself.
 	 */
-	public TextEditControl text(@NotNull Text text) {
+	public void setText(@NotNull Text text) {
 		this.text = text.getString();
 		updateText = true;
-		return this;
+	}
+
+	/**
+	 * Clears the text.
+	 */
+	public void clearText() {
+		this.setText("");
 	}
 
 	public String getText() {
 		return TextHelper.combineStrings(lines, true);
 	}
 
-	/**
-	 * Clears the text.
-	 *
-	 * @return The control itself.
-	 */
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public TextEditControl text(@NotNull String text) {
+		this.text = text;
+		updateText = true;
+		return this;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public TextEditControl text(@NotNull Text text) {
+		this.text = text.getString();
+		updateText = true;
+		return this;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public TextEditControl clear() {
 		this.text("");
 		return this;
@@ -133,15 +120,20 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * Sets whether the text should be drawn with a shadow.
 	 *
 	 * @param shadow The value.
-	 * @return The control itself.
 	 */
-	public TextEditControl shadow(boolean shadow) {
+	public void setShadow(boolean shadow) {
 		this.shadow = shadow;
-		return this;
 	}
 
 	public boolean isShadow() {
 		return shadow;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public TextEditControl shadow(boolean shadow) {
+		this.shadow = shadow;
+		return this;
 	}
 
 	/**
@@ -149,30 +141,40 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * is ignored here due to Minecraft internals.
 	 *
 	 * @param fontColor The RGBA Color
-	 * @return The control itself.
 	 */
-	public TextEditControl fontColor(@NotNull Color fontColor) {
+	public void setFontColor(@NotNull Color fontColor) {
 		this.fontColor = fontColor;
-		return this;
 	}
 
 	public Color getFontColor() {
 		return this.fontColor;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public TextEditControl fontColor(@NotNull Color fontColor) {
+		this.fontColor = fontColor;
+		return this;
+	}
+
 	/**
 	 * Sets the maximum number of lines.
 	 *
 	 * @param maxLines The max number of lines.
-	 * @return The control itself.
 	 */
-	public TextEditControl maxLines(int maxLines) {
-		if (maxLines > 0) this.maxLines = maxLines;
-		return this;
+	public void setMaxLines(int maxLines) {
+		this.maxLines = maxLines;
 	}
 
 	public int getMaxLines() {
 		return maxLines;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public TextEditControl maxLines(int maxLines) {
+		if (maxLines > 0) this.maxLines = maxLines;
+		return this;
 	}
 
 	/**
@@ -180,15 +182,69 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * displayed.
 	 *
 	 * @param displayedLines The max displayed lines.
-	 * @return The control itself.
 	 */
+	public void setDisplayedLines(int displayedLines) {
+		if (displayedLines > 1) this.displayedLines = displayedLines;
+		else displayedLines = 1;
+	}
+
+	public int getDisplayedLines() {
+		return displayedLines;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public TextEditControl displayedLines(int displayedLines) {
 		if (displayedLines > 0) this.displayedLines = displayedLines;
 		return this;
 	}
 
-	public int getDisplayedLines() {
-		return displayedLines;
+	/**
+	 * Sets a {@link TriFunction} to run when a character is typed.
+	 *
+	 * @param onCharTyped The function.
+	 */
+	public void onCharTyped(@NotNull BiFunction<ControlGui, Character, @Nullable Character> onCharTyped) {
+		this.onCharTyped = ((controlGui, textEditControl, character) -> onCharTyped.apply(controlGui, character));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public TextEditControl onCharTyped(@NotNull TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped) {
+		this.onCharTyped = onCharTyped;
+		return this;
+	}
+
+	/**
+	 * Sets a {@link BiConsumer} to run when the TextEditControl gains focus.
+	 *
+	 * @param onFocused The function.
+	 */
+	public void onFocused(@NotNull Consumer<ControlGui> onFocused) {
+		this.onFocused = ((controlGui, textEditControl) -> onFocused.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public TextEditControl onFocused(@NotNull BiConsumer<ControlGui, TextEditControl> onFocused) {
+		this.onFocused = onFocused;
+		return this;
+	}
+
+	/**
+	 * Sets a {@link BiConsumer} to run when the TextEditControl loses focus.
+	 *
+	 * @param onFocusLost The function.
+	 */
+	public void onFocusLost(@NotNull Consumer<ControlGui> onFocusLost) {
+		this.onFocusLost = ((controlGui, textEditControl) -> onFocusLost.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public TextEditControl onFocusLost(@NotNull BiConsumer<ControlGui, TextEditControl> onFocusLost) {
+		this.onFocusLost = onFocusLost;
+		return this;
 	}
 
 	@Override
