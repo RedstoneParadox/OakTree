@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -21,40 +22,64 @@ public class SplitControl extends Control<SplitControl> {
 		this.id = "split";
 	}
 
-	public SplitControl splitSize(int splitSize) {
+	public void setSplitSize(int splitSize) {
 		this.splitSize = splitSize;
-		return this;
 	}
 
 	public int getSplitSize() {
 		return splitSize;
 	}
 
-	public SplitControl vertical(boolean vertical) {
-		this.vertical = vertical;
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SplitControl splitSize(int splitSize) {
+		this.splitSize = splitSize;
 		return this;
+	}
+
+	public void setVertical(boolean vertical) {
+		this.vertical = vertical;
 	}
 
 	public boolean isVertical() {
 		return vertical;
 	}
 
-	public SplitControl first(@NotNull Control<?> first) {
-		this.first = first;
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SplitControl vertical(boolean vertical) {
+		this.vertical = vertical;
 		return this;
+	}
+
+	public void setFirst(@NotNull Control<?> first) {
+		this.first = first;
 	}
 
 	public @NotNull Control<?> getFirst() {
 		return first;
 	}
 
-	public SplitControl second(@NotNull Control<?> second) {
-		this.second = second;
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SplitControl first(@NotNull Control<?> first) {
+		this.first = first;
 		return this;
+	}
+
+	public void setSecond(@NotNull Control<?> second) {
+		this.second = second;
 	}
 
 	public @NotNull Control<?> getSecond() {
 		return second;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SplitControl second(@NotNull Control<?> second) {
+		this.second = second;
+		return this;
 	}
 
 	@Override
