@@ -18,10 +18,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
+import java.util.function.BiPredicate;
 
 /**
  * <p>A {@link Control} that can be used for interacting
@@ -68,25 +70,39 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 	 * {@code Color.rgba(0.75f, 0.75f, 0.75f, 0.5f)}.
 	 *
 	 * @param highlightColor The color to be used.
-	 * @return This {@link Control} for further modification.
 	 */
+	public void setHighlightColor(@NotNull Color highlightColor) {
+		this.highlightColor = highlightColor;
+	}
+
+	public @NotNull Color getHighlightColor() {
+		return highlightColor;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public SlotControl highlightColor(@NotNull Color highlightColor) {
 		this.highlightColor = highlightColor;
 		return this;
 	}
 
-	public SlotControl slotBorder(int slotBorder) {
+	public void setSlotBorder(int slotBorder) {
 		this.slotBorder = slotBorder;
-		return this;
 	}
 
 	public int getSlotBorder() {
 		return slotBorder;
 	}
 
-	public SlotControl canInsert(@NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert) {
-		this.canInsert = canInsert;
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SlotControl slotBorder(int slotBorder) {
+		this.slotBorder = slotBorder;
 		return this;
+	}
+
+	public void canInsert(@NotNull BiPredicate<ControlGui, ItemStack> canInsert) {
+		this.canInsert = ((controlGui, slotControl, stack) -> canInsert.test(controlGui, stack));
 	}
 
 	/**
@@ -127,6 +143,19 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		return this;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SlotControl canInsert(@NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert) {
+		this.canInsert = canInsert;
+		return this;
+	}
+
+	public void canTake(@NotNull BiPredicate<ControlGui, ItemStack> canTake) {
+		this.canTake = ((controlGui, slotControl, stack) -> canTake.test(controlGui, stack));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public SlotControl canTake(@NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canTake) {
 		this.canTake = canTake;
 		return this;
@@ -137,8 +166,17 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 	 * this {@link SlotControl}.
 	 *
 	 * @param locked Whether or not the slot should be locked.
-	 * @return This {@link Control} for further modification.
 	 */
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public SlotControl locked(boolean locked) {
 		this.locked = locked;
 		return this;
