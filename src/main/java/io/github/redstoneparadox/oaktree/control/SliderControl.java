@@ -6,10 +6,12 @@ import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class SliderControl extends InteractiveControl<SliderControl> implements MouseButtonListener {
 	protected float scrollPercent = 0.0f;
@@ -23,38 +25,72 @@ public class SliderControl extends InteractiveControl<SliderControl> implements 
 		this.id = "slider";
 	}
 
-	public SliderControl sliderStyle(ControlStyle sliderStyle) {
-		internalTheme.add("slider", "slider", sliderStyle);
-		return this;
-	}
-
-	public SliderControl scrollPercent(float scrollPercent) {
+	public void setScrollPercent(float scrollPercent) {
 		this.scrollPercent = scrollPercent;
-		return this;
 	}
 
 	public float getScrollPercent() {
 		return scrollPercent;
 	}
 
-	public SliderControl barLength(int barLength) {
-		this.barLength = barLength;
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SliderControl scrollPercent(float scrollPercent) {
+		this.scrollPercent = scrollPercent;
 		return this;
+	}
+
+	public void setBarLength(int barLength) {
+		this.barLength = barLength;
 	}
 
 	public int getBarLength() {
 		return barLength;
 	}
 
-	public SliderControl horizontal(boolean horizontal) {
-		this.horizontal = horizontal;
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SliderControl barLength(int barLength) {
+		this.barLength = barLength;
 		return this;
+	}
+
+	public void setHorizontal(boolean horizontal) {
+		this.horizontal = horizontal;
 	}
 
 	public boolean isHorizontal() {
 		return horizontal;
 	}
 
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SliderControl horizontal(boolean horizontal) {
+		this.horizontal = horizontal;
+		return this;
+	}
+
+	public void setSliderStyle(ControlStyle sliderStyle) {
+		internalTheme.add("self", "slider", sliderStyle);
+	}
+
+	public ControlStyle getSliderStyle() {
+		return internalTheme.get("self/slider");
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
+	public SliderControl sliderStyle(ControlStyle sliderStyle) {
+		internalTheme.add("slider", "slider", sliderStyle);
+		return this;
+	}
+
+	public void onSlide(@NotNull Consumer<ControlGui> onSlide) {
+		this.onSlide = ((controlGui, sliderControl) -> onSlide.accept(controlGui));
+	}
+
+	@ApiStatus.ScheduledForRemoval
+	@Deprecated
 	public SliderControl onSlide(@NotNull BiConsumer<ControlGui, SliderControl> onSlide) {
 		this.onSlide = onSlide;
 		return this;
