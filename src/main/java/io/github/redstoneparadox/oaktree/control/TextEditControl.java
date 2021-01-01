@@ -196,7 +196,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	}
 
 	/**
-	 * Sets a {@link TriFunction} to run when a character is typed.
+	 * Sets a {@link BiFunction} to run when a character is typed.
 	 *
 	 * @param onCharTyped The function.
 	 */
@@ -212,7 +212,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	}
 
 	/**
-	 * Sets a {@link BiConsumer} to run when the TextEditControl gains focus.
+	 * Sets a {@link Consumer} to run when the TextEditControl gains focus.
 	 *
 	 * @param onFocused The function.
 	 */
@@ -228,7 +228,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	}
 
 	/**
-	 * Sets a {@link BiConsumer} to run when the TextEditControl loses focus.
+	 * Sets a {@link Consumer} to run when the TextEditControl loses focus.
 	 *
 	 * @param onFocusLost The function.
 	 */
