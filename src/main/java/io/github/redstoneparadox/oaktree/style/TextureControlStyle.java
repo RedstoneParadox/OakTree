@@ -7,7 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
 public class TextureControlStyle extends ControlStyle {
-	Identifier textureID;
+	Identifier texture;
 	int drawLeft = 0;
 	int drawTop = 0;
 	private boolean tiled;
@@ -19,11 +19,11 @@ public class TextureControlStyle extends ControlStyle {
 	private float scale = 2;
 
 	public TextureControlStyle(String path) {
-		this.textureID = new Identifier(path);
+		this.texture = new Identifier(path);
 	}
 	
-	public TextureControlStyle(Identifier textureID) {
-		this.textureID = textureID;
+	public TextureControlStyle(Identifier texture) {
+		this.texture = texture;
 	}
 
 	public TextureControlStyle drawOrigin(int left, int top) {
@@ -75,24 +75,22 @@ public class TextureControlStyle extends ControlStyle {
 
 	@Override
 	public void draw(int x, int y, int width, int height, ControlGui gui) {
-		MinecraftClient.getInstance().getTextureManager().bindTexture(textureID);
+		MinecraftClient.getInstance().getTextureManager().bindTexture(texture);
 
 		if (!tiled) {
-			int drawWidth = Math.min((int)width, textureWidth);
-			int drawHeight = Math.min((int)height, textureHeight);
+			int drawWidth = Math.min(width, textureWidth);
+			int drawHeight = Math.min(height, textureHeight);
 
 			drawTexture(x, y, drawLeft, drawTop, drawWidth, drawHeight);
-
-			RenderHelper.drawTexture(x, y, drawLeft, drawTop, drawWidth, drawHeight, fileWidth, fileHeight, scale, textureID, tint);
 		}
 		else {
-			drawTiled(x, y, drawLeft, drawTop, textureWidth, textureHeight, (int)width, (int)height);
+			drawTiled(x, y, drawLeft, drawTop, textureWidth, textureHeight, width, height);
 		}
 	}
 
 	@Override
 	public TextureControlStyle copy() {
-		TextureControlStyle copy = new TextureControlStyle(textureID);
+		TextureControlStyle copy = new TextureControlStyle(texture);
 
 		copy.drawOrigin(drawLeft, drawTop);
 		copy.tiled(tiled);
@@ -126,6 +124,6 @@ public class TextureControlStyle extends ControlStyle {
 	}
 
 	void drawTexture(float x, float y, float left, float top, float width, float height) {
-		RenderHelper.drawTexture(x, y, left, top, width, height, fileWidth, fileHeight, scale, textureID, tint);
+		RenderHelper.drawTexture(x, y, left, top, width, height, fileWidth, fileHeight, scale, texture, tint);
 	}
 }

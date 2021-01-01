@@ -62,6 +62,8 @@ public class RenderHelper {
 	}
 
 	public static void drawTexture(float x, float y, float left, float top, float width, float height, float fileWidth, float fileHeight, float scale, Identifier texture, Color tint) {
+		MinecraftClient.getInstance().getTextureManager().bindTexture(texture);
+
 		int r = (int) (tint.red * 255.0f);
 		int g = (int) (tint.green * 255.0f);
 		int b = (int) (tint.blue * 255.0f);
