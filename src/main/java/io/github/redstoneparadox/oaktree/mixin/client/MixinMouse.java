@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.mixin.client;
 
-import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
+import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import net.minecraft.client.Mouse;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;

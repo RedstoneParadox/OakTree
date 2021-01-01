@@ -1,9 +1,9 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import io.github.redstoneparadox.oaktree.ControlGui;
-import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
+import io.github.redstoneparadox.oaktree.math.Vector2;
+import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;

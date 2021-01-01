@@ -1,9 +1,9 @@
 package io.github.redstoneparadox.oaktree.control;
 
+import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import io.github.redstoneparadox.oaktree.util.TextHelper;
-import io.github.redstoneparadox.oaktree.util.Color;
-import io.github.redstoneparadox.oaktree.ControlGui;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;

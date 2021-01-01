@@ -1,14 +1,10 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
-import io.github.redstoneparadox.oaktree.util.TextHelper;
-import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.CharTypedListener;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
-import io.github.redstoneparadox.oaktree.util.OptionalChar;
-import io.github.redstoneparadox.oaktree.util.TriFunction;
+import io.github.redstoneparadox.oaktree.util.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;

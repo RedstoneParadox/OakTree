@@ -1,9 +1,9 @@
 package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
-import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
+import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;

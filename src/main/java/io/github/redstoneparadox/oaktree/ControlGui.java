@@ -2,17 +2,16 @@ package io.github.redstoneparadox.oaktree;
 
 import io.github.redstoneparadox.oaktree.control.Control;
 import io.github.redstoneparadox.oaktree.control.InteractiveControl;
-import io.github.redstoneparadox.oaktree.style.Theme;
-import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
+import io.github.redstoneparadox.oaktree.math.Vector2;
+import io.github.redstoneparadox.oaktree.style.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenHandler;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
