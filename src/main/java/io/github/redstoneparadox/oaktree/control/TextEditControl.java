@@ -263,7 +263,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 					cursor.toSelectionStart();
 
 					if (lastChar.isPresent()) {
-						@Nullable Character character = onCharTyped.apply(gui, this, lastChar.get());
+						@Nullable Character character = onCharTyped.apply(gui, this, lastChar.getAsChar());
 
 						if (character != null) {
 							insertCharacter(character, gui);
