@@ -5,7 +5,7 @@ import io.github.redstoneparadox.oaktree.control.*;
 import io.github.redstoneparadox.oaktree.style.Theme;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
-import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
+import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -190,7 +190,7 @@ public class Tests {
 		}
 	}
 
-	static class TestScreenHandler extends ScreenHandler implements InventoryScreenHandler {
+	static class TestScreenHandler extends ScreenHandler implements InventoryScreenHandlerAccess {
 		private final PlayerEntity player;
 		private final List<Inventory> inventories = new ArrayList<>();
 
@@ -208,8 +208,9 @@ public class Tests {
 			return true;
 		}
 
+		@NotNull
 		@Override
-		public @Nullable Inventory getInventory(int inventoryID) {
+		public Inventory getInventory(int inventoryID) {
 			return inventories.get(inventoryID);
 		}
 

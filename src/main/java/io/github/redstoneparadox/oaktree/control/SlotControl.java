@@ -6,7 +6,7 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.networking.OakTreeClientNetworking;
-import io.github.redstoneparadox.oaktree.util.InventoryScreenHandler;
+import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import io.github.redstoneparadox.oaktree.util.TriPredicate;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
@@ -31,7 +31,7 @@ import java.util.function.BiPredicate;
  * a vanilla {@link net.minecraft.screen.slot.Slot}, it
  * is implemented from scratch and requires your
  * {@link net.minecraft.screen.ScreenHandler} to
- * implement {@link InventoryScreenHandler} in order to
+ * implement {@link InventoryScreenHandlerAccess} in order to
  * work. Syncing inventory contents is also handled
  * through the same interface so avoid implementing that
  * yourself.</p>
@@ -53,7 +53,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 	 * @param slot The index of the "slot" in your
 	 *             {@link Inventory} implementation.
 	 * @param inventoryID The integer ID of the inventory;
-	 *                    See {@link InventoryScreenHandler}
+	 *                    See {@link InventoryScreenHandlerAccess}
 	 *                    for more details.
 	 */
 	public SlotControl(int slot, int inventoryID) {
@@ -191,14 +191,14 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		gui.getScreenHandler().ifPresent(handler -> {
-			if (handler instanceof InventoryScreenHandler) {
+			if (handler instanceof InventoryScreenHandlerAccess) {
 				super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 
-				PlayerEntity player = ((InventoryScreenHandler) handler).getPlayer();
+				PlayerEntity player = ((InventoryScreenHandlerAccess) handler).getPlayer();
 				PlayerInventory playerInventory = player.inventory;
-				Inventory inventory = ((InventoryScreenHandler) handler).getInventory(inventoryID);
+				Inventory inventory = ((InventoryScreenHandlerAccess) handler).getInventory(inventoryID);
 
-				if (isMouseWithin && inventory != null) {
+				if (isMouseWithin) {
 					boolean stackChanged = false;
 					ItemStack stackInSlot = inventory.getStack(slot);
 
@@ -268,9 +268,9 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		gui.getScreenHandler().ifPresent(screenHandler -> {
-			if (screenHandler instanceof InventoryScreenHandler) {
+			if (screenHandler instanceof InventoryScreenHandlerAccess) {
 				super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-				ItemStack stack = ((InventoryScreenHandler) screenHandler).getInventory(inventoryID).getStack(slot);
+				ItemStack stack = ((InventoryScreenHandlerAccess) screenHandler).getInventory(inventoryID).getStack(slot);
 				RenderHelper.drawItemStackCentered(trueX, trueY, area.width, area.height, stack);
 
 				if (isMouseWithin) {
