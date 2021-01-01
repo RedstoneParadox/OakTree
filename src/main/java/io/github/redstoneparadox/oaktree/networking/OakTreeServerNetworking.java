@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OakTreeServerNetworking {
-	public static final Identifier SYNC_STACK = new Identifier("oaktree", "sync_stack");
+	private static final Identifier SYNC_STACK = new Identifier("oaktree", "sync_stack");
 	private static final Map<Integer, InventoryScreenHandlerAccess> ACCESS_MAP = new HashMap<>();
 
 	public static void initPackets() {

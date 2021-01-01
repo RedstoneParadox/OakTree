@@ -7,7 +7,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
 public class OakTreeClientNetworking {
-	public static final Identifier SYNC_STACK = new Identifier("oaktree", "sync_stack");
+	private static final Identifier SYNC_STACK = new Identifier("oaktree", "sync_stack");
 
 	public static void syncStack(int slot, int inventoryID, int syncID, ItemStack stack) {
 		PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
