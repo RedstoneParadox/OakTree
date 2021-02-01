@@ -1,6 +1,6 @@
-package io.github.redstoneparadox.oaktree.client.gui.control;
+package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.client.gui.ControlGui;
+import io.github.redstoneparadox.oaktree.ControlGui;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
