@@ -7,8 +7,10 @@ import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -291,9 +293,9 @@ public class Tests {
 
 		SliderControl scrollBar = new SliderControl()
 				.size(20, 100)
-				.onSlide((gui, control) -> {
-					listPanel.startIndex((int) Math.floor(((listPanel.children.size() - listPanel.getDisplayCount()) * (control.getScrollPercent())/100)));
-				})
+				.onSlide((gui, control) -> listPanel.startIndex((int) Math.floor((
+						(listPanel.children.size() - listPanel.getDisplayCount())
+						* (control.getScrollPercent())/100))))
 				.barLength(10)
 				.anchor(Anchor.CENTER);
 
