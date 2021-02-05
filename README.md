@@ -4,7 +4,7 @@
 
 Oak Tree is a GUI toolkit for use in Modded Minecraft alongside the Fabric modding API.
 
-Discord: https://discord.gg/xSZHvCc
+Discord: https://discord.gg/crZpcjtdJR
 
 ### Adding Oak Tree To Your Project
 
