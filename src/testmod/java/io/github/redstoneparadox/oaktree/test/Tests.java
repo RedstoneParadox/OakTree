@@ -6,9 +6,7 @@ import io.github.redstoneparadox.oaktree.style.Theme;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
@@ -23,7 +21,10 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -35,7 +36,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,44 +43,17 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class Tests {
+	static Identifier testThree = new Identifier("oaktree:test_three");
+	static ScreenHandlerType<TestScreenHandler> handlerType = ScreenHandlerRegistry.registerExtended(testThree, (syncId, playerInventory, buf) -> new TestScreenHandler(syncId, playerInventory.player));
 
 	public static void init() {
-
-		Identifier testThree = new Identifier("oaktree:test_three");
-
 		register(new TestBlock(true, Tests::testOne), "one");
 		register(new TestBlock(true, Tests::testTwo), "two");
-		register(new ContainerTestBlock(true, Tests::testThree, testThree), "three");
+		register(new ScreenHandlerTestBlock(true, Tests::testThree), "three");
 		register(new TestBlock(true, Tests::testFour), "four");
 		register(new TestBlock(true, Tests::testFive), "five");
 
-
-		ScreenProviderRegistry.INSTANCE.registerFactory(testThree, (screenHandler -> {
-			return new HandledTestScreen((TestScreenHandler) screenHandler, new LiteralText(""), true, testThree());
-		}));
-		ContainerProviderRegistry.INSTANCE.registerFactory(testThree, (syncId, identifier, player, buf) -> new TestScreenHandler(syncId, player));
-
-		/*
-		ScreenProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
-			BlockPos pos = buf.readBlockPos();
-			return new ScreenBuilder
-					(
-							testFour()
-					)
-					.container(new TestScreenHandler(syncId, player))
-					.playerInventory(player.inventory)
-					.text(new LiteralText("Test 4"))
-					.buildContainerScreen();
-		});
-
-		ContainerProviderRegistry.INSTANCE.registerFactory(testFourID, (syncId, identifier, player, buf) -> {
-			ScreenHandler screenHandler = new TestScreenHandler(syncId, player);
-			OakTreeNetworking.addContainerForSyncing(screenHandler);
-			return screenHandler;
-		});
-		 */
-
-
+		ScreenRegistry.register(handlerType, (screenHandler, inventory, title) -> new HandledTestScreen(screenHandler, new LiteralText(""), true, testThree()));
 	}
 
 	private static Block.Settings testSettings() {
@@ -89,6 +62,10 @@ public class Tests {
 
 	private static void register(Block block, String suffix) {
 		Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
+	}
+
+	private static NamedScreenHandlerFactory createNamedScreenHandlerFactory() {
+		return new SimpleNamedScreenHandlerFactory((syncId, playerInventory, buf) -> new TestScreenHandler(syncId, playerInventory.player), new LiteralText(""));
 	}
 
 	static class TestBlock extends Block {
@@ -110,18 +87,16 @@ public class Tests {
 		}
 	}
 
-	static class ContainerTestBlock extends TestBlock {
-		private final Identifier containerID;
+	static class ScreenHandlerTestBlock extends TestBlock {
 
-		ContainerTestBlock(boolean vanilla, Supplier<Control<?>> supplier, Identifier containerID) {
+		ScreenHandlerTestBlock(boolean vanilla, Supplier<Control<?>> supplier) {
 			super(vanilla, supplier);
-			this.containerID = containerID;
 		}
 
 		@Override
 		public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 			if (!world.isClient()) {
-				ContainerProviderRegistry.INSTANCE.openContainer(containerID, player, (buf -> buf.writeBlockPos(pos)));
+				player.openHandledScreen(createNamedScreenHandlerFactory());
 			}
 			return ActionResult.SUCCESS;
 		}
