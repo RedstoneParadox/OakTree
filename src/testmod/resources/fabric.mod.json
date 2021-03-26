@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "io.github.redstoneparadox.oaktree.OakTreeTest"
+    ],
+    "client": [
+      "io.github.redstoneparadox.oaktree.OakTreeTestClient"
     ]
   },
   "mixins": [
