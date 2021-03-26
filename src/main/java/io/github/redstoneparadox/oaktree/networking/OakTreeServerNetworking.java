@@ -39,7 +39,6 @@ public class OakTreeServerNetworking {
 			InventoryScreenHandlerAccess handler = ACCESS_MAP.get(syncID);
 			Inventory inventory = handler.getInventory(inventoryID);
 			inventory.setStack(slot, stack);
-			System.out.println(inventory.getStack(slot));
 		}
 		else {
 			System.out.println("InventoryScreenHandler with syncID `" + syncID + "` is not listening for updates.");

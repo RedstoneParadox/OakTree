@@ -209,7 +209,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 								stackChanged = true;
 							}
 							else if (rightClicked) {
-								playerInventory.setCursorStack(inventory.removeStack(slot, stackInSlot.getCount()/2));
+								playerInventory.setCursorStack(inventory.removeStack(slot, Math.max(stackInSlot.getCount()/2, 1)));
 								stackChanged = true;
 							}
 						}
@@ -242,6 +242,10 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 						}
 
 					}
+
+					//TODO: Find out why I actually need to do this and fix the problem at the source.
+					leftClicked = false;
+					rightClicked = false;
 
 					stackInSlot = inventory.getStack(slot);
 
