@@ -111,7 +111,7 @@ public class Tests {
 
 		@Override
 		public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-			if (!world.isClient()) {
+			if (!world.isClient) {
 				NamedScreenHandlerFactory factory = state.createScreenHandlerFactory(world, pos);
 
 				if (factory != null) {
@@ -225,7 +225,7 @@ public class Tests {
 		private final List<Inventory> inventories = new ArrayList<>();
 
 		protected TestScreenHandler(int syncId, PlayerEntity player) {
-			super(null, syncId);
+			super(handlerType, syncId);
 			this.player = player;
 			inventories.add(player.inventory);
 
