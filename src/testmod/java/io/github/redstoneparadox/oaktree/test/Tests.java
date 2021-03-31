@@ -80,10 +80,6 @@ public class Tests {
 		return Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
 	}
 
-	private static NamedScreenHandlerFactory createNamedScreenHandlerFactory() {
-		return new SimpleNamedScreenHandlerFactory((syncId, playerInventory, buf) -> new TestScreenHandler(syncId, playerInventory.player), new LiteralText(""));
-	}
-
 	static class TestBlock extends Block {
 		private final Supplier<Control<?>> supplier;
 		private final boolean vanilla;
@@ -262,6 +258,9 @@ public class Tests {
 	}
 
 	private static Control<?> testOne() {
+		return new Control<>();
+
+		/*
 		DropdownControl leftDropdown = new DropdownControl()
 				.dropdown(
 						new ListPanelControl()
@@ -310,9 +309,14 @@ public class Tests {
 				.size(90, 50)
 				.anchor(Anchor.CENTER)
 				.id("base");
+
+		 */
 	}
 
 	private static Control<?> testTwo() {
+		return new Control<>();
+
+		/*
 		ListPanelControl listPanel = new ListPanelControl()
 				.size(100, 100)
 				.children(20, Tests::itemLabel)
@@ -334,9 +338,14 @@ public class Tests {
 				.first(scrollBar)
 				.second(listPanel)
 				.anchor(Anchor.CENTER);
+
+		 */
 	}
 
 	private static Control<?> testThree() {
+		return new Control<>();
+
+		/*
 		GridPanelControl playerInvGrid = new GridPanelControl()
 				.size(162, 72)
 				.anchor(Anchor.CENTER)
@@ -365,17 +374,27 @@ public class Tests {
 				.size(180, 120)
 				.anchor(Anchor.CENTER)
 				.child(playerInvGrid);
+
+		 */
 	}
 
 	private static Control<?> itemLabel(int number) {
+		return new LabelControl();
+
+		/*
 		return new LabelControl()
 				.size(60, 20)
 				.text("Item No. " + (number + 1))
 				.anchor(Anchor.CENTER)
 				.shadow(true);
+
+		 */
 	}
 
 	private static Control<?> testFour() {
+		return new Control<>();
+
+		/*
 		return new ButtonControl()
 				.id("button")
 				.size(200, 20)
@@ -385,9 +404,14 @@ public class Tests {
 								.text("Hi!")
 								.size(40, 20)
 				);
+
+		 */
 	}
 
 	private static Control<?> testFive() {
+		return new Control<>();
+
+		/*
 		List<Text> texts = createText(50);
 
 		LabelControl label = new LabelControl()
@@ -410,6 +434,8 @@ public class Tests {
 				.first(scrollBar)
 				.second(label)
 				.anchor(Anchor.CENTER);
+
+		 */
 	}
 
 	private static List<Text> createText(int lines) {
