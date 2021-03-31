@@ -33,13 +33,6 @@ public class GridPanelControl extends PanelControl {
 		return rows;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public GridPanelControl rows(int rows) {
-		this.rows = rows;
-		return this;
-	}
-
 	/**
 	 * Sets the number of columns to divide
 	 * the panel into.
@@ -52,13 +45,6 @@ public class GridPanelControl extends PanelControl {
 
 	public int getColumns() {
 		return columns;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public GridPanelControl columns(int columns) {
-		this.columns = columns;
-		return this;
 	}
 
 	/**
@@ -113,20 +99,6 @@ public class GridPanelControl extends PanelControl {
 				index += 1;
 			}
 		}
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public GridPanelControl cells(TriFunction<Integer, Integer, Integer, Control> function) {
-		children.clear();
-		int index = 0;
-		for (int j = 0; j < rows; j += 1) {
-			for (int i = 0; i < columns; i += 1) {
-				children.add(function.apply(j, i, index));
-				index += 1;
-			}
-		}
-		return this;
 	}
 
 	@Override

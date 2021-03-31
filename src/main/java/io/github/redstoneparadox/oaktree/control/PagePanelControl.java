@@ -29,37 +29,6 @@ public class PagePanelControl extends PanelControl {
 		return page;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public PagePanelControl page(int page) {
-		if (page < 0) this.page = 0;
-		else if (page >= children.size()) this.page = children.size() - 1;
-		else this.page = page;
-
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public PagePanelControl nextPage() {
-		page(page + 1);
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public PagePanelControl previousPage() {
-		page(page - 1);
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public PagePanelControl flipPages(int count) {
-		page(page + count);
-		return this;
-	}
-
 	@Override
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		Control child = children.get(page);

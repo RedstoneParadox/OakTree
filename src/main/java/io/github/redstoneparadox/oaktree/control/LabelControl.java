@@ -87,45 +87,6 @@ public class LabelControl extends Control {
 		return text;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl text(Text text) {
-		this.text = text;
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl text(String text) {
-		return this.text(new LiteralText(text));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl text(List<Text> texts) {
-		if (fitText) {
-			this.area.width = 0;
-
-			for (Text text: texts) {
-				this.area.width = Math.max(this.area.width, TextHelper.getWidth(text));
-			}
-
-			this.area.width += 8;
-			area.height = TextHelper.getFontHeight() * texts.size() + 8;
-			this.maxDisplayedLines = texts.size();
-		}
-
-		this.text = TextHelper.combine(texts, true);
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl clear() {
-		this.text = LiteralText.EMPTY;
-		return this;
-	}
-
 	/**
 	 * Sets whether the text should be drawn with a shadow.
 	 *
@@ -137,13 +98,6 @@ public class LabelControl extends Control {
 
 	public boolean isShadow() {
 		return shadow;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl shadow(boolean shadow) {
-		this.shadow = shadow;
-		return this;
 	}
 
 	/**
@@ -160,13 +114,6 @@ public class LabelControl extends Control {
 		return fontColor;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl fontColor(@NotNull Color fontColor) {
-		this.fontColor = fontColor;
-		return this;
-	}
-
 	/**
 	 * Sets the maximum number of lines.
 	 *
@@ -178,13 +125,6 @@ public class LabelControl extends Control {
 
 	public int getMaxDisplayedLines() {
 		return maxDisplayedLines;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl maxDisplayedLines(int maxDisplayedLines) {
-		this.maxDisplayedLines = Math.max(0, maxDisplayedLines);
-		return this;
 	}
 
 	public void setFirstLine(int firstLine) {
@@ -203,19 +143,12 @@ public class LabelControl extends Control {
 		return firstLine;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl firstLine(int firstLine) {
-		this.firstLine = Math.max(0, firstLine);
-		return this;
-	}
-
 	/**
 	 * Sets whether or not this {@link LabelControl}
 	 * should resize to fit its text. The only way
 	 * to get newlines in this mode is to insert
 	 * them yourself or pass a list to.
-	 * {@link LabelControl#text(List)}
+	 * {@link LabelControl#setText(Text)}
 	 *
 	 * @param fitText The value itself
 	 */

@@ -221,10 +221,10 @@ public class SlotControl extends InteractiveControl implements MouseButtonListen
 					if (tooltip instanceof LabelControl) {
 						if (!stackInSlot.isEmpty()) {
 							List<Text> texts = stackInSlot.getTooltip(player, TooltipContext.Default.NORMAL);
-							((LabelControl) tooltip).text(texts);
+							((LabelControl) tooltip).setText(texts);
 						}
 						else {
-							((LabelControl) tooltip).clear();
+							((LabelControl) tooltip).clearText();
 							tooltip.setVisible(false);
 						}
 					}

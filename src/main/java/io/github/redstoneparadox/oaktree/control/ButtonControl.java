@@ -14,9 +14,9 @@ import java.util.function.Consumer;
 
 public class ButtonControl extends InteractiveControl implements MouseButtonListener {
 	protected boolean toggleable = false;
-	protected @NotNull BiConsumer<ControlGui, ButtonControl> onClick = (gui, node) -> {};
-	protected @NotNull BiConsumer<ControlGui, ButtonControl> whileHeld = (gui, node) -> {};
-	protected @NotNull BiConsumer<ControlGui, ButtonControl> onRelease = (gui, node) -> {};
+	protected @NotNull Consumer<ControlGui> onClick = (gui) -> {};
+	protected @NotNull Consumer<ControlGui> whileHeld = (gui) -> {};
+	protected @NotNull Consumer<ControlGui> onRelease = (gui) -> {};
 	private boolean mouseClicked = false;
 	private boolean mouseHeld = false;
 	private boolean buttonHeld = false;
@@ -35,13 +35,6 @@ public class ButtonControl extends InteractiveControl implements MouseButtonList
 
 	@ApiStatus.ScheduledForRemoval
 	@Deprecated
-	public ButtonControl toggleable(boolean toggleable) {
-		this.toggleable = toggleable;
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
 	public ButtonControl heldStyle(ControlStyle heldStyle) {
 		internalTheme.add("self", "held", heldStyle);
 		return this;
@@ -55,36 +48,15 @@ public class ButtonControl extends InteractiveControl implements MouseButtonList
 	}
 
 	public void onClick(@NotNull Consumer<ControlGui> onClick) {
-		this.onClick = ((controlGui, cControl) -> onClick.accept(controlGui));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ButtonControl onClick(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
-		onClick = listener;
-		return this;
+		this.onClick = onClick;
 	}
 
 	public void whileHeld(@NotNull Consumer<ControlGui> whileHeld) {
-		this.onClick = ((controlGui, cControl) -> whileHeld.accept(controlGui));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ButtonControl whileHeld(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
-		whileHeld = listener;
-		return this;
+		this.onClick = whileHeld;
 	}
 
 	public void onRelease(@NotNull Consumer<ControlGui> onRelease) {
-		this.onRelease = ((controlGui, cControl) -> onRelease.accept(controlGui));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ButtonControl onRelease(@NotNull BiConsumer<ControlGui, ButtonControl> listener) {
-		onRelease = listener;
-		return this;
+		this.onRelease = onRelease;
 	}
 
 	@Override
@@ -103,33 +75,33 @@ public class ButtonControl extends InteractiveControl implements MouseButtonList
 					buttonHeld = !buttonHeld;
 
 					if (buttonHeld) {
-						onClick.accept(gui, this);
+						onClick.accept(gui);
 					}
 					else {
-						onRelease.accept(gui, this);
+						onRelease.accept(gui);
 					}
 				}
 			}
 
 			if (buttonHeld) {
-				whileHeld.accept(gui, this);
+				whileHeld.accept(gui);
 			}
 		}
 		else if (isMouseWithin) {
 			if (mouseHeld) {
 				if (!buttonHeld) {
 					buttonHeld = true;
-					onClick.accept(gui, this);
+					onClick.accept(gui);
 				}
 
-				whileHeld.accept(gui, this);
+				whileHeld.accept(gui);
 			} else {
 				buttonHeld = false;
-				onRelease.accept(gui, this);
+				onRelease.accept(gui);
 			}
 		} else if (buttonHeld) {
 			buttonHeld = false;
-			onRelease.accept(gui, this);
+			onRelease.accept(gui);
 		}
 
 

@@ -35,13 +35,6 @@ public class ProgressBarControl extends Control {
 		return percent;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ProgressBarControl percent(float percent) {
-		this.percent = percent;
-		return this;
-	}
-
 	/**
 	 * Sets the width and height of the progress bar. It
 	 * is suggested to make it smaller than the node
@@ -57,14 +50,6 @@ public class ProgressBarControl extends Control {
 
 	public Vector2 getBarSize() {
 		return new Vector2(barWidth, barHeight);
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ProgressBarControl barSize(int width, int height) {
-		barWidth = width;
-		barHeight = height;
-		return this;
 	}
 
 	/**
@@ -83,13 +68,6 @@ public class ProgressBarControl extends Control {
 		return direction;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ProgressBarControl drawDirection(Direction2D direction) {
-		this.direction = direction;
-		return this;
-	}
-
 	/**
 	 * Sets the {@link ControlStyle} for the progress bar.
 	 *
@@ -101,13 +79,6 @@ public class ProgressBarControl extends Control {
 
 	public ControlStyle getBarStyle() {
 		return internalTheme.get("self/bar");
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ProgressBarControl barStyle(ControlStyle style) {
-		internalTheme.add("bar", "bar", style);
-		return this;
 	}
 
 	@Override

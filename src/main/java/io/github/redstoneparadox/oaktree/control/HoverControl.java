@@ -9,9 +9,9 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class HoverControl extends InteractiveControl {
-	protected @NotNull BiConsumer<ControlGui, HoverControl> onMouseEnter = (gui, node) -> {};
-	protected @NotNull BiConsumer<ControlGui, HoverControl> mouseExit = (gui, node) -> {};
-	protected @NotNull BiConsumer<ControlGui, HoverControl> whileHovered = (gui, node) -> {};
+	protected @NotNull Consumer<ControlGui> onMouseEnter = (gui) -> {};
+	protected @NotNull Consumer<ControlGui> mouseExit = (gui) -> {};
+	protected @NotNull Consumer<ControlGui> whileHovered = (gui) -> {};
 
 	private boolean mouseCurrentlyWithin = false;
 
@@ -27,44 +27,16 @@ public class HoverControl extends InteractiveControl {
 		return internalTheme.get("self/hover");
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public HoverControl hoverStyle(ControlStyle style) {
-		internalTheme.add("self", "hover", style);
-		return this;
-	}
-
 	public void onMouseEnter(@NotNull Consumer<ControlGui> onMouseEnter) {
-		this.onMouseEnter = ((controlGui, cControl) -> onMouseEnter.accept(controlGui));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public HoverControl onMouseEnter(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
-		onMouseEnter = listener;
-		return this;
+		this.onMouseEnter = onMouseEnter;
 	}
 
 	public void onMouseExit(@NotNull Consumer<ControlGui> onMouseExit) {
-		this.onMouseEnter = ((controlGui, cControl) -> onMouseExit.accept(controlGui));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public HoverControl onMouseExit(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
-		mouseExit = listener;
-		return this;
+		this.onMouseEnter = onMouseExit;
 	}
 
 	public void whileHovered(@NotNull Consumer<ControlGui> whileHovered) {
-		this.onMouseEnter = ((controlGui, cControl) -> whileHovered.accept(controlGui));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public HoverControl whileMouseHovers(@NotNull BiConsumer<ControlGui, HoverControl> listener) {
-		whileHovered = listener;
-		return this;
+		this.onMouseEnter = whileHovered;
 	}
 
 	@Override
@@ -73,15 +45,15 @@ public class HoverControl extends InteractiveControl {
 
 		if (!mouseCurrentlyWithin && isMouseWithin) {
 			mouseCurrentlyWithin = true;
-			onMouseEnter.accept(gui, this);
+			onMouseEnter.accept(gui);
 		}
 		else if (mouseCurrentlyWithin && !isMouseWithin) {
 			mouseCurrentlyWithin = false;
-			mouseExit.accept(gui, this);
+			mouseExit.accept(gui);
 		}
 
 		if (mouseCurrentlyWithin) {
-			whileHovered.accept(gui, this);
+			whileHovered.accept(gui);
 			currentStyle = getStyle(gui.getTheme(), "hover");
 		}
 

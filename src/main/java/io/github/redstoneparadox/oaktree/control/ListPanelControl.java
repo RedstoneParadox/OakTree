@@ -21,13 +21,6 @@ public class ListPanelControl extends PanelControl {
 		return horizontal;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ListPanelControl horizontal(boolean horizontal) {
-		this.horizontal = horizontal;
-		return this;
-	}
-
 	// TODO: Display count should only be clamped during preDraw
 	public void setDisplayCount(int displayCount) {
 		if (displayCount < 1) this.displayCount = 1;
@@ -36,14 +29,6 @@ public class ListPanelControl extends PanelControl {
 
 	public int getDisplayCount() {
 		return displayCount;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ListPanelControl displayCount(int displayCount) {
-		if (displayCount < 1) this.displayCount = 1;
-		else this.displayCount = Math.min(displayCount, children.size());
-		return this;
 	}
 
 	public void setStartIndex(int startIndex) {
@@ -57,20 +42,6 @@ public class ListPanelControl extends PanelControl {
 
 	public void scrollBy(int amount) {
 		setStartIndex(startIndex + amount);
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ListPanelControl startIndex(int currentIndex) {
-		if (currentIndex < 0) this.startIndex = 0;
-		else this.startIndex = Math.min(currentIndex, children.size() - displayCount);
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ListPanelControl scroll(int amount) {
-		return startIndex(startIndex + amount);
 	}
 
 	@Override

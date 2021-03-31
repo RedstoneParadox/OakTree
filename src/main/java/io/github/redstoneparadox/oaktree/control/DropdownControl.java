@@ -38,13 +38,6 @@ public class DropdownControl extends InteractiveControl implements MouseButtonLi
 		return this.dropdownDirection;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public DropdownControl dropdownDirection(@NotNull Direction2D dropdownDirection) {
-		this.dropdownDirection = dropdownDirection;
-		return this;
-	}
-
 	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);

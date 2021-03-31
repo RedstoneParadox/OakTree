@@ -25,7 +25,6 @@ public abstract class PaddingControl extends Control {
 	 * Sets the padding for the top.
 	 *
 	 * @param topPadding The padding value.
-	 * @return The control itself.
 	 */
 	public void setTopPadding(int topPadding) {
 		this.topPadding = topPadding;
@@ -52,7 +51,6 @@ public abstract class PaddingControl extends Control {
 	 * Sets the padding for the left side.
 	 *
 	 * @param leftPadding The padding value.
-	 * @return The control itself.
 	 */
 	public void setLeftPadding(int leftPadding) {
 		this.leftPadding = leftPadding;
@@ -66,7 +64,6 @@ public abstract class PaddingControl extends Control {
 	 * Sets the padding for the right side.
 	 *
 	 * @param rightPadding The padding value.
-	 * @return The control itself.
 	 */
 	public void setRightPadding(int rightPadding) {
 		this.rightPadding = rightPadding;
