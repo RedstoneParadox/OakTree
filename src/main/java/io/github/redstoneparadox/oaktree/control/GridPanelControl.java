@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
  * Subclass of {@link PanelControl} that lays out its children in
  * a grid pattern.
  */
-public class GridPanelControl extends PanelControl<GridPanelControl> {
+public class GridPanelControl extends PanelControl {
 	protected int rows = 1;
 	protected int columns = 1;
 
@@ -71,7 +71,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 	 * @param row The row.
 	 * @param column The column
 	 */
-	public void addChild(Control<?> child, int row, int column) throws IndexOutOfBoundsException {
+	public void addChild(Control child, int row, int column) throws IndexOutOfBoundsException {
 		if (row >= rows || column >= columns) throw new GridCellOutOfBoundsException(row, column);
 
 		int index = (row - 1) * columns + column;
@@ -79,7 +79,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 		children.set(index, child);
 	}
 
-	public @Nullable Control<?> getChild(int row, int column) {
+	public @Nullable Control getChild(int row, int column) {
 		if (row >= rows || column >= columns) {
 			throw new GridCellOutOfBoundsException(row, column);
 		}
@@ -93,17 +93,6 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 		return children.get(index);
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public GridPanelControl child(Control<?> child, int row, int column) throws IndexOutOfBoundsException {
-		if (row >= rows || column >= columns) throw new GridCellOutOfBoundsException(row, column);
-
-		int index = (row - 1) * columns + column;
-		if (index >= children.size()) ListUtils.growList(children, index + 1);
-		children.set(index, child);
-		return this;
-	}
-
 	/**
 	 * Iterates through all cells and adds the results of the function
 	 * to each cell; the function is passed the row, column, and cell
@@ -112,7 +101,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 	 * @param function The function to call.
 	 */
 	//TODO: Improve this
-	public void fillCells(boolean overwriteExisting, TriFunction<Integer, Integer, Integer, Control<?>> function) {
+	public void fillCells(boolean overwriteExisting, TriFunction<Integer, Integer, Integer, Control> function) {
 		int index = 0;
 		for (int j = 0; j < rows; j += 1) {
 			for (int i = 0; i < columns; i += 1) {
@@ -128,7 +117,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 
 	@ApiStatus.ScheduledForRemoval
 	@Deprecated
-	public GridPanelControl cells(TriFunction<Integer, Integer, Integer, Control<?>> function) {
+	public GridPanelControl cells(TriFunction<Integer, Integer, Integer, Control> function) {
 		children.clear();
 		int index = 0;
 		for (int j = 0; j < rows; j += 1) {
@@ -154,7 +143,7 @@ public class GridPanelControl extends PanelControl<GridPanelControl> {
 				int cellX = innerPosition.x + (i * cellWidth);
 				int cellY = innerPosition.y + (j * cellHeight);
 
-				Control<?> child = children.get(index);
+				Control child = children.get(index);
 				if (child.isVisible()) child.preDraw(gui, cellX, cellY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 
 				index += 1;

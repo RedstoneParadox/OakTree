@@ -5,7 +5,6 @@ import io.github.redstoneparadox.oaktree.math.Util;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,11 +18,9 @@ import java.util.function.Function;
  * {@link Control} instances. Children are drawn
  * without any arrangement applied to them; subclasses
  * offer various arrangement options.
- *
- * @param <C> The {@link PanelControl} type.
  */
-public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
-	public final List<@NotNull Control<?>> children = new ArrayList<>();
+public class PanelControl extends PaddingControl {
+	public final List<@NotNull Control> children = new ArrayList<>();
 	protected int scrollPosX = 0;
 	protected int scrollPosY = 0;
 
@@ -45,7 +42,7 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	 *
 	 * @param child The child control.
 	 */
-	public void addChild(@NotNull Control<?> child) {
+	public void addChild(@NotNull Control child) {
 		children.add(child);
 	}
 
@@ -58,36 +55,19 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	 * @param clear Whether existing children should be removed.
 	 * @param function The function to supply children.
 	 */
-	public void addChildren(int count, boolean clear, Function<Integer, Control<?>> function) {
+	public void addChildren(int count, boolean clear, Function<Integer, Control> function) {
 		children.clear();
 		for (int i  = 0; i < count; i++) {
 			children.add(function.apply(i));
 		}
 	}
 
-	public @Nullable Control<?> getChild(int index) {
+	public @Nullable Control getChild(int index) {
 		if (index < children.size()) {
 			return children.get(index);
 		}
 
 		return null;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C child(@NotNull Control<?> child) {
-		children.add(child);
-		return (C) this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C children(int count, Function<Integer, Control<?>> function) {
-		children.clear();
-		for (int i  = 0; i < count; i++) {
-			children.add(function.apply(i));
-		}
-		return (C) this;
 	}
 
 	public void scroll(int x, int y) {
@@ -98,16 +78,16 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
-		for (Control<?> child: children) {
+		for (Control child: children) {
 			child.setup(client, gui);
 		}
 	}
 
 	@Override
-	public void zIndex(List<Control<?>> controls) {
+	public void zIndex(List<Control> controls) {
 		if (!visible) return;
 		controls.add(this);
-		for (Control<?> child: children) {
+		for (Control child: children) {
 			if (child.isVisible()) child.zIndex(controls);
 		}
 	}
@@ -121,7 +101,7 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		Vector2 innerPosition = innerPosition(trueX, trueY);
 		Vector2 innerDimensions = innerDimensions(area.width, area.height);
-		for (Control<?> child: children) {
+		for (Control child: children) {
 			if (child.isVisible()) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 		}
 	}
@@ -129,12 +109,12 @@ public class PanelControl<C extends PanelControl<C>> extends PaddingControl<C> {
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-		for (Control<?> child: children) {
+		for (Control child: children) {
 			if (child.isVisible() && shouldDraw(child)) child.draw(matrices, mouseX, mouseY, deltaTime, gui);
 		}
 	}
 
-	boolean shouldDraw(Control<?> child) {
+	boolean shouldDraw(Control child) {
 		return true;
 	}
 

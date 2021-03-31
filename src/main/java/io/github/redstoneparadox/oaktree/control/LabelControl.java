@@ -18,7 +18,7 @@ import java.util.List;
  * text in your GUIs. Fully supports {@link Text} so
  * you can apply formatting.
  */
-public class LabelControl extends Control<LabelControl> {
+public class LabelControl extends Control {
 	protected  @NotNull Text text = LiteralText.EMPTY;
 	protected boolean shadow = false;
 	public @NotNull Color fontColor = Color.WHITE;
@@ -225,33 +225,6 @@ public class LabelControl extends Control<LabelControl> {
 
 	public boolean shouldFitText() {
 		return fitText;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl fitText(boolean fitText) {
-		this.fitText = fitText;
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public boolean isFitText() {
-		return fitText;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl toStart() {
-		this.firstLine = 0;
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public LabelControl toEnd() {
-		this.firstLine = TextHelper.wrapText(text, area.width, 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
-		return this;
 	}
 
 	@Override

@@ -4,27 +4,28 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.CharTypedListener;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
-import io.github.redstoneparadox.oaktree.util.*;
+import io.github.redstoneparadox.oaktree.util.Color;
+import io.github.redstoneparadox.oaktree.util.OptionalChar;
+import io.github.redstoneparadox.oaktree.util.RenderHelper;
+import io.github.redstoneparadox.oaktree.util.TextHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
  * @apiNote  Work in Progress!
  */
-public class TextEditControl extends InteractiveControl<TextEditControl> implements CharTypedListener, MouseButtonListener {
+public class TextEditControl extends InteractiveControl implements CharTypedListener, MouseButtonListener {
 	private final List<String> lines = new ArrayList<>();
 	private int firstLine = 0;
 	private final Cursor cursor = new Cursor(true);
@@ -47,10 +48,10 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	protected int maxLines = 1;
 	protected int displayedLines = 1;
 
-	protected @NotNull TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped = (gui, control, character) -> character;
-	protected @NotNull BiConsumer<ControlGui, TextEditControl> onFocused = (gui, control) -> {};
-	protected @NotNull BiConsumer<ControlGui, TextEditControl> onFocusLost = (gui, control) -> {};
-	protected @NotNull BiConsumer<ControlGui, TextEditControl> onEnter = (gui, control) -> {};
+	protected @NotNull BiFunction<ControlGui, Character, @Nullable Character> onCharTyped = (gui, character) -> character;
+	protected @NotNull Consumer<ControlGui> onFocused = (gui) -> {};
+	protected @NotNull Consumer<ControlGui> onFocusLost = (gui) -> {};
+	protected @NotNull Consumer<ControlGui> onEnter = (gui) -> {};
 
 
 	public TextEditControl() {
@@ -88,30 +89,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		return TextHelper.combineStrings(lines, true);
 	}
 
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl text(@NotNull String text) {
-		this.text = text;
-		updateText = true;
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl text(@NotNull Text text) {
-		this.text = text.getString();
-		updateText = true;
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl clear() {
-		this.text("");
-		return this;
-	}
-
 	/**
 	 * Sets whether the text should be drawn with a shadow.
 	 *
@@ -123,13 +100,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
 	public boolean isShadow() {
 		return shadow;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl shadow(boolean shadow) {
-		this.shadow = shadow;
-		return this;
 	}
 
 	/**
@@ -146,13 +116,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		return this.fontColor;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl fontColor(@NotNull Color fontColor) {
-		this.fontColor = fontColor;
-		return this;
-	}
-
 	/**
 	 * Sets the maximum number of lines.
 	 *
@@ -164,13 +127,6 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
 	public int getMaxLines() {
 		return maxLines;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl maxLines(int maxLines) {
-		if (maxLines > 0) this.maxLines = maxLines;
-		return this;
 	}
 
 	/**
@@ -188,27 +144,13 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		return displayedLines;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl displayedLines(int displayedLines) {
-		if (displayedLines > 0) this.displayedLines = displayedLines;
-		return this;
-	}
-
 	/**
 	 * Sets a {@link BiFunction} to run when a character is typed.
 	 *
 	 * @param onCharTyped The function.
 	 */
 	public void onCharTyped(@NotNull BiFunction<ControlGui, Character, @Nullable Character> onCharTyped) {
-		this.onCharTyped = ((controlGui, textEditControl, character) -> onCharTyped.apply(controlGui, character));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl onCharTyped(@NotNull TriFunction<ControlGui, TextEditControl, Character, @Nullable Character> onCharTyped) {
 		this.onCharTyped = onCharTyped;
-		return this;
 	}
 
 	/**
@@ -217,14 +159,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * @param onFocused The function.
 	 */
 	public void onFocused(@NotNull Consumer<ControlGui> onFocused) {
-		this.onFocused = ((controlGui, textEditControl) -> onFocused.accept(controlGui));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl onFocused(@NotNull BiConsumer<ControlGui, TextEditControl> onFocused) {
 		this.onFocused = onFocused;
-		return this;
 	}
 
 	/**
@@ -233,14 +168,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 	 * @param onFocusLost The function.
 	 */
 	public void onFocusLost(@NotNull Consumer<ControlGui> onFocusLost) {
-		this.onFocusLost = ((controlGui, textEditControl) -> onFocusLost.accept(controlGui));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public TextEditControl onFocusLost(@NotNull BiConsumer<ControlGui, TextEditControl> onFocusLost) {
 		this.onFocusLost = onFocusLost;
-		return this;
 	}
 
 	@Override
@@ -263,7 +191,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 					cursor.toSelectionStart();
 
 					if (lastChar.isPresent()) {
-						@Nullable Character character = onCharTyped.apply(gui, this, lastChar.getAsChar());
+						@Nullable Character character = onCharTyped.apply(gui, lastChar.getAsChar());
 
 						if (character != null) {
 							insertCharacter(character, gui);
@@ -338,7 +266,7 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 
 				if (enter(handle)) {
 					if (enterTicks == 0 || enterTicks > 20 && enterTicks % 2 == 0) {
-						onEnter.accept(gui, this);
+						onEnter.accept(gui);
 						if (selection.active) {
 							deleteSelection(gui);
 							cursor.toSelectionStart();
@@ -461,14 +389,14 @@ public class TextEditControl extends InteractiveControl<TextEditControl> impleme
 		if (clicked) {
 			if (isMouseWithin && !focused) {
 				focused = true;
-				onFocused.accept(gui, this);
+				onFocused.accept(gui);
 				cursorTicks = 0;
 			}
 			else if (focused) {
 				focused = false;
 				selection.cancel();
 				cursor.toStart();
-				onFocusLost.accept(gui, this);
+				onFocusLost.accept(gui);
 			}
 			else {
 				selection.cancel();

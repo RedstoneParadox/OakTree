@@ -2,9 +2,8 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
-import org.jetbrains.annotations.ApiStatus;
 
-public abstract class PaddingControl<C extends PaddingControl<C>> extends Control<C> {
+public abstract class PaddingControl extends Control {
 	protected int topPadding = 0;
 	protected int bottomPadding = 0;
 	protected int leftPadding = 0;
@@ -22,16 +21,6 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 		this.rightPadding = padding;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C padding(int padding) {
-		this.topPadding = padding;
-		this.bottomPadding = padding;
-		this.leftPadding = padding;
-		this.rightPadding = padding;
-		return (C) this;
-	}
-
 	/**
 	 * Sets the padding for the top.
 	 *
@@ -46,13 +35,6 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 		return topPadding;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C topPadding(int topPadding) {
-		this.topPadding = topPadding;
-		return (C) this;
-	}
-
 	/**
 	 * Sets the padding for the bottom.
 	 *
@@ -64,13 +46,6 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 
 	public int getBottomPadding() {
 		return bottomPadding;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C bottomPadding(int bottomPadding) {
-		this.bottomPadding = bottomPadding;
-		return (C) this;
 	}
 
 	/**
@@ -87,13 +62,6 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 		return leftPadding;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C leftPadding(int leftPadding) {
-		this.leftPadding = leftPadding;
-		return (C) this;
-	}
-
 	/**
 	 * Sets the padding for the right side.
 	 *
@@ -106,13 +74,6 @@ public abstract class PaddingControl<C extends PaddingControl<C>> extends Contro
 
 	public int getRightPadding() {
 		return rightPadding;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C rightPadding(int rightPadding) {
-		this.rightPadding = rightPadding;
-		return (C) this;
 	}
 
 	@Override

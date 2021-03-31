@@ -4,7 +4,7 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import org.jetbrains.annotations.ApiStatus;
 
-public class PagePanelControl extends PanelControl<PagePanelControl> {
+public class PagePanelControl extends PanelControl {
 	protected int page = 0;
 
 	public PagePanelControl() {
@@ -62,7 +62,7 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
 
 	@Override
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
-		Control<?> child = children.get(page);
+		Control child = children.get(page);
 		Vector2 innerPosition = innerPosition(trueX, trueY);
 		Vector2 innerDimensions = innerDimensions(area.width, area.height);
 
@@ -70,7 +70,7 @@ public class PagePanelControl extends PanelControl<PagePanelControl> {
 	}
 
 	@Override
-	boolean shouldDraw(Control<?> child) {
+	boolean shouldDraw(Control child) {
 		return children.indexOf(child) == page;
 	}
 }

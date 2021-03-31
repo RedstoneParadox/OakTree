@@ -4,7 +4,7 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import org.jetbrains.annotations.ApiStatus;
 
-public class ListPanelControl extends PanelControl<ListPanelControl> {
+public class ListPanelControl extends PanelControl {
 	protected boolean horizontal = false;
 	protected int displayCount = 1;
 	protected int startIndex = 0;
@@ -83,7 +83,7 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
 			for (int i = 0; i < displayCount; i += 1) {
 				int entryY = innerPosition.y + (i * sectionHeight);
 
-				Control<?> child = children.get(i + startIndex);
+				Control child = children.get(i + startIndex);
 				if (child.isVisible()) child.preDraw(gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 			}
 		}
@@ -95,14 +95,14 @@ public class ListPanelControl extends PanelControl<ListPanelControl> {
 			for (int i = 0; i < displayCount; i += 1) {
 				int entryX = innerPosition.x + (i * sectionWidth);
 
-				Control<?> child = children.get(i + startIndex);
+				Control child = children.get(i + startIndex);
 				if (child.isVisible()) child.preDraw(gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 			}
 		}
 	}
 
 	@Override
-	boolean shouldDraw(Control<?> child) {
+	boolean shouldDraw(Control child) {
 		int index = children.indexOf(child);
 		return index >= startIndex && index < startIndex + displayCount;
 	}

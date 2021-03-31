@@ -12,7 +12,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class ButtonControl extends InteractiveControl<ButtonControl> implements MouseButtonListener {
+public class ButtonControl extends InteractiveControl implements MouseButtonListener {
 	protected boolean toggleable = false;
 	protected @NotNull BiConsumer<ControlGui, ButtonControl> onClick = (gui, node) -> {};
 	protected @NotNull BiConsumer<ControlGui, ButtonControl> whileHeld = (gui, node) -> {};

@@ -4,7 +4,6 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.List;
  * BoxControl is specialized for dealing with a
  * single child.
  */
-public class BoxControl extends PaddingControl<BoxControl> {
-	protected  @NotNull Control<?> child = new Control<>();
+public class BoxControl extends PaddingControl {
+	protected  @NotNull Control child = new Control();
 
 	public BoxControl() {
 		this.id = "box";
@@ -31,19 +30,12 @@ public class BoxControl extends PaddingControl<BoxControl> {
 	 *
 	 * @param child The node that is being added as a child.
 	 */
-	public void setChild(@NotNull Control<?> child) {
+	public void setChild(@NotNull Control child) {
 		this.child = child;
 	}
 
-	public @NotNull Control<?> getChild() {
+	public @NotNull Control getChild() {
 		return child;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public BoxControl child(@NotNull Control<?> child) {
-		this.child = child;
-		return this;
 	}
 
 	@Override
@@ -53,7 +45,7 @@ public class BoxControl extends PaddingControl<BoxControl> {
 	}
 
 	@Override
-	public void zIndex(List<Control<?>> controls) {
+	public void zIndex(List<Control> controls) {
 		if (!visible) return;
 		controls.add(this);
 		child.zIndex(controls);

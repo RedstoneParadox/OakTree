@@ -7,7 +7,6 @@ import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess
 import io.github.redstoneparadox.oaktree.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
-import io.github.redstoneparadox.oaktree.util.TriPredicate;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,7 +17,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -36,11 +34,11 @@ import java.util.function.BiPredicate;
  * through the same interface so avoid implementing that
  * yourself.</p>
  */
-public class SlotControl extends InteractiveControl<SlotControl> implements MouseButtonListener {
+public class SlotControl extends InteractiveControl implements MouseButtonListener {
 	protected @NotNull Color highlightColor = Color.rgba(0.75f, 0.75f, 0.75f, 0.5f);
 	protected int slotBorder = 1;
-	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert = (gui, control, stack) -> true;
-	protected @NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canTake = (gui, control, stack) -> true;
+	protected @NotNull BiPredicate<ControlGui, ItemStack> canInsert = (gui, stack) -> true;
+	protected @NotNull BiPredicate<ControlGui, ItemStack> canTake = (gui, stack) -> true;
 	protected boolean locked = false;
 
 	private final int slot;
@@ -60,8 +58,11 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		this.slot = slot;
 		this.inventoryID = inventoryID;
 		this.id = "item_slot";
-		this.tooltip = new LabelControl().id("tooltip").shadow(true).fitText(true);
-		this.size(18, 18);
+		this.tooltip = new LabelControl();
+		this.tooltip.setId("tooltip");
+		((LabelControl)this.tooltip).setShadow(true);
+		((LabelControl)this.tooltip).setFitText(true);
+		this.setSize(18, 18);
 	}
 
 	/**
@@ -79,13 +80,6 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		return highlightColor;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SlotControl highlightColor(@NotNull Color highlightColor) {
-		this.highlightColor = highlightColor;
-		return this;
-	}
-
 	public void setSlotBorder(int slotBorder) {
 		this.slotBorder = slotBorder;
 	}
@@ -94,15 +88,8 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		return slotBorder;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SlotControl slotBorder(int slotBorder) {
-		this.slotBorder = slotBorder;
-		return this;
-	}
-
 	public void canInsert(@NotNull BiPredicate<ControlGui, ItemStack> canInsert) {
-		this.canInsert = ((controlGui, slotControl, stack) -> canInsert.test(controlGui, stack));
+		this.canInsert = canInsert;
 	}
 
 	/**
@@ -115,7 +102,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 	 * @return The {@link SlotControl} for further modification.
 	 */
 	public SlotControl filter(boolean allow, Item... items) {
-		this.canInsert = ((gui, control, stack) -> {
+		this.canInsert = ((gui, stack) -> {
 			for (Item item: items) {
 				if (stack.getItem() == item) return allow;
 			}
@@ -134,7 +121,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 	 * @return The {@link SlotControl} for further modification.
 	 */
 	public SlotControl filter(boolean allow, Tag<Item>... tags) {
-		this.canInsert = ((gui, control, stack) -> {
+		this.canInsert = ((gui, stack) -> {
 			for (Tag<Item> tag: tags) {
 				if (tag.contains(stack.getItem())) return allow;
 			}
@@ -143,22 +130,8 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 		return this;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SlotControl canInsert(@NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canInsert) {
-		this.canInsert = canInsert;
-		return this;
-	}
-
 	public void canTake(@NotNull BiPredicate<ControlGui, ItemStack> canTake) {
-		this.canTake = ((controlGui, slotControl, stack) -> canTake.test(controlGui, stack));
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SlotControl canTake(@NotNull TriPredicate<ControlGui, SlotControl, ItemStack> canTake) {
 		this.canTake = canTake;
-		return this;
 	}
 
 	/**
@@ -173,13 +146,6 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 
 	public boolean isLocked() {
 		return locked;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SlotControl locked(boolean locked) {
-		this.locked = locked;
-		return this;
 	}
 
 	@Override
@@ -203,7 +169,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 					ItemStack stackInSlot = inventory.getStack(slot);
 
 					if (playerInventory.getCursorStack().isEmpty()) {
-						if (!locked && canTake.test(gui, this, stackInSlot)) {
+						if (!locked && canTake.test(gui, stackInSlot)) {
 							if (leftClicked) {
 								playerInventory.setCursorStack(inventory.removeStack(slot));
 								stackChanged = true;
@@ -217,7 +183,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 					else {
 						ItemStack cursorStack = playerInventory.getCursorStack();
 
-						if (!locked && canInsert.test(gui, this, cursorStack)) {
+						if (!locked && canInsert.test(gui, cursorStack)) {
 							if (leftClicked) {
 								if (stackInSlot.isEmpty()) {
 									inventory.setStack(slot, playerInventory.getCursorStack());
@@ -259,7 +225,7 @@ public class SlotControl extends InteractiveControl<SlotControl> implements Mous
 						}
 						else {
 							((LabelControl) tooltip).clear();
-							tooltip.visible(false);
+							tooltip.setVisible(false);
 						}
 					}
 

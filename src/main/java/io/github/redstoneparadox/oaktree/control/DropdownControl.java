@@ -12,30 +12,22 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
-public class DropdownControl extends InteractiveControl<DropdownControl> implements MouseButtonListener {
-	@NotNull protected Control<?> dropdown = new Control<>();
+public class DropdownControl extends InteractiveControl implements MouseButtonListener {
+	@NotNull protected Control dropdown = new Control();
 	@NotNull protected Direction2D dropdownDirection = Direction2D.DOWN;
 
 	public DropdownControl() {
-		this.dropdown.visible(false);
+		this.dropdown.setVisible(false);
 		this.id = "dropdown";
 	}
 
-	public void setDropdown(@NotNull Control<?> dropdown) {
+	public void setDropdown(@NotNull Control dropdown) {
 		this.dropdown = dropdown;
 		this.dropdown.setVisible(false);
 	}
 
-	public @NotNull Control<?> getDropdown() {
+	public @NotNull Control getDropdown() {
 		return dropdown;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public DropdownControl dropdown(@NotNull Control<?> dropdown) {
-		this.dropdown = dropdown;
-		this.dropdown.visible(false);
-		return this;
 	}
 
 	public void setDropdownDirection(@NotNull Direction2D dropdownDirection) {
@@ -61,7 +53,7 @@ public class DropdownControl extends InteractiveControl<DropdownControl> impleme
 	}
 
 	@Override
-	public void zIndex(List<Control<?>> controls) {
+	public void zIndex(List<Control> controls) {
 		if (!visible) return;
 		controls.add(this);
 		dropdown.zIndex(controls);

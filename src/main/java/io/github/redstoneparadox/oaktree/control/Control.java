@@ -17,13 +17,13 @@ import java.util.function.Consumer;
 /**
  * The base class for all controls.
  */
-public class Control<C extends Control<C>> {
+public class Control {
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
 	protected boolean visible = true;
-	protected BiConsumer<ControlGui, Control<C>> onTick = (gui, control) -> {};
+	protected BiConsumer<ControlGui, Control> onTick = (gui, control) -> {};
 
 	protected ControlStyle currentStyle = ControlStyle.BLANK;
 	protected Theme internalTheme = new Theme();
@@ -37,13 +37,6 @@ public class Control<C extends Control<C>> {
 
 	public @NotNull String getId() {
 		return this.id;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C id(@NotNull  String id) {
-		this.id = id;
-		return (C)this;
 	}
 
 	/**
@@ -61,13 +54,6 @@ public class Control<C extends Control<C>> {
 
 	public @NotNull Anchor getAnchor() {
 		return anchor;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C anchor(@NotNull Anchor anchor) {
-		this.anchor = anchor;
-		return (C)this;
 	}
 
 	/**
@@ -103,14 +89,6 @@ public class Control<C extends Control<C>> {
 		return new Vector2(area.x, area.y);
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C position(int x, int y) {
-		area.x = x;
-		area.y = y;
-		return (C)this;
-	}
-
 	/**
 	 * Sets the width and height of this node. Values are in pixels.
 	 * Due to the way screen coordinates work, positive y is down so a
@@ -142,14 +120,6 @@ public class Control<C extends Control<C>> {
 		return new Vector2(area.width, area.height);
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C size(int width, int height) {
-		area.width = width;
-		area.height = height;
-		return (C)this;
-	}
-
 	public @NotNull Rectangle getArea() {
 		return this.area;
 	}
@@ -169,13 +139,6 @@ public class Control<C extends Control<C>> {
 		return expand;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C expand(boolean value) {
-		expand = value;
-		return (C)this;
-	}
-
 	/**
 	 * Sets whether or not this node should be visible. Any nodes that
 	 * are not visible will not be drawn, cannot be interacted with,
@@ -190,13 +153,6 @@ public class Control<C extends Control<C>> {
 
 	public boolean isVisible() {
 		return this.visible;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C visible(boolean value) {
-		this.visible = value;
-		return (C)this;
 	}
 
 	/**
@@ -214,13 +170,6 @@ public class Control<C extends Control<C>> {
 		return internalTheme.get("self/base");
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C baseStyle(ControlStyle baseStyle) {
-		internalTheme.add("self", baseStyle);
-		return (C)this;
-	}
-
 	/**
 	 * Sets a function to run every time this node is ticked.
 	 *
@@ -230,19 +179,12 @@ public class Control<C extends Control<C>> {
 		this.onTick = ((controlGui, cControl) -> onTick.accept(controlGui));
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C onTick(BiConsumer<ControlGui, Control<C>> function) {
-		onTick = function;
-		return (C)this;
-	}
-
 	public Vector2 getTruePosition() {
 		return new Vector2(trueX, trueY);
 	}
 
 	@ApiStatus.Internal
-	public void zIndex(List<Control<?>> controls) {
+	public void zIndex(List<Control> controls) {
 		if (!visible) return;
 		controls.add(this);
 	}

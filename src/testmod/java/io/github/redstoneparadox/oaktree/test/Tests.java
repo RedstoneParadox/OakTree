@@ -1,11 +1,11 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
-import io.github.redstoneparadox.oaktree.control.*;
-import io.github.redstoneparadox.oaktree.style.Theme;
-import io.github.redstoneparadox.oaktree.math.Direction2D;
-import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
+import io.github.redstoneparadox.oaktree.control.Control;
+import io.github.redstoneparadox.oaktree.control.LabelControl;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
+import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
+import io.github.redstoneparadox.oaktree.style.Theme;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -25,13 +25,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -81,10 +78,10 @@ public class Tests {
 	}
 
 	static class TestBlock extends Block {
-		private final Supplier<Control<?>> supplier;
+		private final Supplier<Control> supplier;
 		private final boolean vanilla;
 
-		TestBlock(boolean vanilla, Supplier<Control<?>> supplier) {
+		TestBlock(boolean vanilla, Supplier<Control> supplier) {
 			super(testSettings());
 			this.vanilla = vanilla;
 			this.supplier = supplier;
@@ -101,7 +98,7 @@ public class Tests {
 
 	static class ScreenHandlerTestBlock extends TestBlock implements BlockEntityProvider {
 
-		ScreenHandlerTestBlock(boolean vanilla, Supplier<Control<?>> supplier) {
+		ScreenHandlerTestBlock(boolean vanilla, Supplier<Control> supplier) {
 			super(vanilla, supplier);
 		}
 
@@ -154,7 +151,7 @@ public class Tests {
 	static class TestScreen extends Screen {
 		private final ControlGui gui;
 
-		protected TestScreen(Text title, boolean vanilla, Control<?> control) {
+		protected TestScreen(Text title, boolean vanilla, Control control) {
 			super(title);
 			this.gui = new ControlGui(this, control);
 			if (vanilla) this.gui.applyTheme(Theme.vanilla());
@@ -181,7 +178,7 @@ public class Tests {
 	static class HandledTestScreen extends HandledScreen<TestScreenHandler> {
 		private final ControlGui gui;
 
-		public HandledTestScreen(TestScreenHandler handler, Text title, boolean vanilla, Control<?> control) {
+		public HandledTestScreen(TestScreenHandler handler, Text title, boolean vanilla, Control control) {
 			super(handler, handler.player.inventory, title);
 			this.gui = new ControlGui(this, control);
 			if (vanilla) this.gui.applyTheme(Theme.vanilla());
@@ -257,8 +254,8 @@ public class Tests {
 		}
 	}
 
-	private static Control<?> testOne() {
-		return new Control<>();
+	private static Control testOne() {
+		return new Control();
 
 		/*
 		DropdownControl leftDropdown = new DropdownControl()
@@ -313,8 +310,8 @@ public class Tests {
 		 */
 	}
 
-	private static Control<?> testTwo() {
-		return new Control<>();
+	private static Control testTwo() {
+		return new Control();
 
 		/*
 		ListPanelControl listPanel = new ListPanelControl()
@@ -342,8 +339,8 @@ public class Tests {
 		 */
 	}
 
-	private static Control<?> testThree() {
-		return new Control<>();
+	private static Control testThree() {
+		return new Control();
 
 		/*
 		GridPanelControl playerInvGrid = new GridPanelControl()
@@ -378,7 +375,7 @@ public class Tests {
 		 */
 	}
 
-	private static Control<?> itemLabel(int number) {
+	private static Control itemLabel(int number) {
 		return new LabelControl();
 
 		/*
@@ -391,8 +388,8 @@ public class Tests {
 		 */
 	}
 
-	private static Control<?> testFour() {
-		return new Control<>();
+	private static Control testFour() {
+		return new Control();
 
 		/*
 		return new ButtonControl()
@@ -408,8 +405,8 @@ public class Tests {
 		 */
 	}
 
-	private static Control<?> testFive() {
-		return new Control<>();
+	private static Control testFive() {
+		return new Control();
 
 		/*
 		List<Text> texts = createText(50);

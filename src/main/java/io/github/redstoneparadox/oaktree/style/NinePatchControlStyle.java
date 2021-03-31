@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.style;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
-import net.minecraft.client.MinecraftClient;
 
 public class NinePatchControlStyle extends TextureControlStyle {
 	int firstWidth = 1;

@@ -4,16 +4,15 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class SplitControl extends Control<SplitControl> {
+public class SplitControl extends Control {
 	protected int splitSize = 0;
 	protected boolean vertical = false;
-	protected @NotNull Control<?> first = new Control<>();
-	protected @NotNull Control<?> second = new Control<>();
+	protected @NotNull Control first = new Control();
+	protected @NotNull Control second = new Control();
 
 	private final Rectangle firstArea = new Rectangle(trueX, trueY, area.width, area.height);
 	private final Rectangle secondArea = new Rectangle(trueX + firstArea.width, trueY, 0, area.height);
@@ -30,13 +29,6 @@ public class SplitControl extends Control<SplitControl> {
 		return splitSize;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SplitControl splitSize(int splitSize) {
-		this.splitSize = splitSize;
-		return this;
-	}
-
 	public void setVertical(boolean vertical) {
 		this.vertical = vertical;
 	}
@@ -45,45 +37,24 @@ public class SplitControl extends Control<SplitControl> {
 		return vertical;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SplitControl vertical(boolean vertical) {
-		this.vertical = vertical;
-		return this;
-	}
-
-	public void setFirst(@NotNull Control<?> first) {
+	public void setFirst(@NotNull Control first) {
 		this.first = first;
 	}
 
-	public @NotNull Control<?> getFirst() {
+	public @NotNull Control getFirst() {
 		return first;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SplitControl first(@NotNull Control<?> first) {
-		this.first = first;
-		return this;
-	}
-
-	public void setSecond(@NotNull Control<?> second) {
+	public void setSecond(@NotNull Control second) {
 		this.second = second;
 	}
 
-	public @NotNull Control<?> getSecond() {
+	public @NotNull Control getSecond() {
 		return second;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public SplitControl second(@NotNull Control<?> second) {
-		this.second = second;
-		return this;
-	}
-
 	@Override
-	public void zIndex(List<Control<?>> controls) {
+	public void zIndex(List<Control> controls) {
 		super.zIndex(controls);
 		controls.add(first);
 		controls.add(second);

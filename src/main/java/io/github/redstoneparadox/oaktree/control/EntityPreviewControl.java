@@ -8,7 +8,8 @@ import net.minecraft.entity.LivingEntity;
 /**
  * A {@link Control} that displays a {@link LivingEntity}.
  */
-public class EntityPreviewControl extends Control<EntityPreviewControl> {
+// TODO: Clean up.
+public class EntityPreviewControl extends Control {
 	LivingEntity entity;
 	int entitySize;
 	boolean followCursor = true;
@@ -24,29 +25,23 @@ public class EntityPreviewControl extends Control<EntityPreviewControl> {
 	
 	/**
 	 * @param entity the entity to be displayed
-	 * @return the control itself
 	 */
-	public EntityPreviewControl entity(LivingEntity entity) {
+	public void setEntity(LivingEntity entity) {
 		this.entity = entity;
-		return this;
 	}
 	
 	/**
 	 * @param size the size of the entity on-screen (ex: survival inventory uses 30)
-	 * @return the control itself
 	 */
-	public EntityPreviewControl entitySize(int size) {
+	public void setEntitySize(int size) {
 		this.entitySize = size;
-		return this;
 	}
 	
 	/**
 	 * @param flag Whether the displayed entity should look at the cursor on-screen
-	 * @return the control itself
 	 */
-	public EntityPreviewControl followCursor(boolean flag) {
+	public void setFollowCursor(boolean flag) {
 		this.followCursor = flag;
-		return this;
 	}
 	
 	@Override

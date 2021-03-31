@@ -21,7 +21,7 @@ import java.util.Optional;
 
 public final class ControlGui {
 	private final ScreenHooks screen;
-	private final Control<?> root;
+	private final Control root;
 
 	private boolean initialized = false;
 
@@ -35,7 +35,7 @@ public final class ControlGui {
 
 	private @NotNull Theme theme = Theme.EMPTY;
 
-	public ControlGui(Screen screen, Control<?> root) {
+	public ControlGui(Screen screen, Control root) {
 		this.screen = (ScreenHooks)screen;
 		this.root = root;
 
@@ -82,23 +82,23 @@ public final class ControlGui {
 			rightMouseHeld = false;
 		}
 
-		List<Control<?>> controlList = new ArrayList<>();
+		List<Control> controlList = new ArrayList<>();
 		root.zIndex(controlList);
 		Collections.reverse(controlList);
-		InteractiveControl<?> hovered = null;
+		InteractiveControl hovered = null;
 		boolean mouseCaptured = false;
-		for (Control<?> control: controlList) {
+		for (Control control: controlList) {
 			Vector2 truePos = control.getTruePosition();
 			if (control.getArea().offset(truePos.x, truePos.y).isPointWithin(mouseX, mouseY) && !mouseCaptured) {
 				mouseCaptured = true;
-				if (control instanceof InteractiveControl<?>) {
-					((InteractiveControl<?>)control).setMouseWithin(true);
-					hovered = (InteractiveControl<?>) control;
+				if (control instanceof InteractiveControl) {
+					((InteractiveControl)control).setMouseWithin(true);
+					hovered = (InteractiveControl) control;
 				}
 			}
 			else {
-				if (control instanceof InteractiveControl<?>) {
-					((InteractiveControl<?>)control).setMouseWithin(false);
+				if (control instanceof InteractiveControl) {
+					((InteractiveControl)control).setMouseWithin(false);
 				}
 			}
 		}

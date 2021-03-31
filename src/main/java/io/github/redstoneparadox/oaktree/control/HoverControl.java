@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class HoverControl extends InteractiveControl<HoverControl> {
+public class HoverControl extends InteractiveControl {
 	protected @NotNull BiConsumer<ControlGui, HoverControl> onMouseEnter = (gui, node) -> {};
 	protected @NotNull BiConsumer<ControlGui, HoverControl> mouseExit = (gui, node) -> {};
 	protected @NotNull BiConsumer<ControlGui, HoverControl> whileHovered = (gui, node) -> {};

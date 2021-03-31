@@ -10,8 +10,8 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 
-public abstract class InteractiveControl<C extends InteractiveControl<C>> extends Control<C> {
-	protected @Nullable Control<?> tooltip = null;
+public abstract class InteractiveControl extends Control {
+	protected @Nullable Control tooltip = null;
 	protected boolean lockTooltipPos = false;
 	protected int tooltipOffsetX = 8;
 	protected int tooltipOffsetY = -10;
@@ -21,19 +21,12 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 	protected boolean rightMouseHeld = false;
 	protected boolean rightMouseClicked = false;
 
-	public void setTooltip(@Nullable Control<?> tooltip) {
+	public void setTooltip(@Nullable Control tooltip) {
 		this.tooltip = tooltip;
 	}
 
-	public @Nullable Control<?> getTooltip() {
+	public @Nullable Control getTooltip() {
 		return tooltip;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public C tooltip(@Nullable Control<?> tooltip) {
-		this.tooltip = tooltip;
-		return (C) this;
 	}
 
 	@ApiStatus.Internal
@@ -83,7 +76,7 @@ public abstract class InteractiveControl<C extends InteractiveControl<C>> extend
 
 			if (isMouseWithin) {
 				if (!tooltip.visible || !lockTooltipPos) {
-					tooltip.position(mousePos.x + tooltipOffsetX, mousePos.y + tooltipOffsetY);
+					tooltip.setOffset(mousePos.x + tooltipOffsetX, mousePos.y + tooltipOffsetY);
 					tooltip.visible = true;
 				}
 			}

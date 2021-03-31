@@ -10,7 +10,7 @@ import org.jetbrains.annotations.ApiStatus;
 /**
  * A node representing a percent-based progress bar.
  */
-public class ProgressBarControl extends Control<ProgressBarControl> {
+public class ProgressBarControl extends Control {
 	protected float percent = 100.0f;
 	protected int barWidth = 1;
 	protected int barHeight = 1;
