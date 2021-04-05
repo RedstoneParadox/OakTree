@@ -11,20 +11,20 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ZSorter {
-	private final List<@Nullable Control<?>> positiveIndexControls = new ArrayList<>();
-	private final List<@Nullable Control<?>> negativeIndexControls = new ArrayList<>();
+	private final List<@Nullable Control> positiveIndexControls = new ArrayList<>();
+	private final List<@Nullable Control> negativeIndexControls = new ArrayList<>();
 	private int parentZIndex = 0;
 
-	public List<@NotNull Control<?>> getSortedControls() {
+	public List<@NotNull Control> getSortedControls() {
 		Collections.reverse(negativeIndexControls);
 
-		List<@Nullable Control<?>> controls = new ArrayList<>(negativeIndexControls);
+		List<@Nullable Control> controls = new ArrayList<>(negativeIndexControls);
 		controls.addAll(positiveIndexControls);
 
 		return controls.stream().filter(Objects::nonNull).collect(Collectors.toList());
 	}
 
-	public void updateParentZIndex(Control<?> control) throws Exception {
+	public void updateParentZIndex(Control control) throws Exception {
 		parentZIndex = positiveIndexControls.indexOf(control);
 		if (parentZIndex == -1) {
 			parentZIndex = negativeIndexControls.indexOf(control);
@@ -38,7 +38,7 @@ public class ZSorter {
 		}
 	}
 
-	public void addControl(Control<?> control, int zIndex, boolean absolute) {
+	public void addControl(Control control, int zIndex, boolean absolute) {
 		int trueZIndex = zIndex;
 
 		if (!absolute) {
