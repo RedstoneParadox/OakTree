@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.control;
 
+import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.style.Theme;
 import org.jetbrains.annotations.Nullable;
@@ -7,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlTree {
+public class ControlTree extends ControlElement {
 	private final Control root;
 	private Theme theme = Theme.vanilla();
 	private boolean dirty = true;
@@ -15,6 +16,7 @@ public class ControlTree {
 
 	public ControlTree(Control root) {
 		this.root = root;
+		this.root.setParent(this);
 	}
 
 	public Theme getTheme() {
@@ -43,5 +45,10 @@ public class ControlTree {
 		for (Control control: zIndexedControls) {
 			// draw
 		}
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return new Vector2(0, 0);
 	}
 }

@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 /**
  * The base class for all controls.
  */
-public class Control {
+public class Control extends ControlElement {
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle oldArea = new Rectangle(0, 0, 1, 1);
@@ -241,5 +241,11 @@ public class Control {
 
 	protected ControlArea createBaseArea() {
 		return ControlArea.regular(0, 0, 1, 1);
+	}
+
+	@Override
+	protected Vector2 getPosition() {
+		if (parent != null) return Vector2.add(getOffset(), parent.getPosition());
+		return getOffset();
 	}
 }
