@@ -2,7 +2,7 @@ package io.github.redstoneparadox.oaktree.math;
 
 import java.util.Objects;
 
-public class Rectangle implements Shape {
+public class Rectangle {
 	public int x;
 	public int y;
 	public int width;
@@ -15,7 +15,6 @@ public class Rectangle implements Shape {
 		this.height = height;
 	}
 
-	@Override
 	public boolean isPointWithin(int pointX, int pointY) {
 		return pointX >= x && pointY >= y && pointX <= x + width && pointY <= y + height;
 	}
