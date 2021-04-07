@@ -15,6 +15,10 @@ public class Vector2 {
 		this(0, 0);
 	}
 
+	public static Vector2 add(Vector2 left, Vector2 right) {
+		return new Vector2(left.x + right.x, left.y + right.y);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
