@@ -73,10 +73,10 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 
 		if (isMouseWithin && held) {
 			if (horizontal) {
-				scrollPercent = Math.max(0.0f, Math.min(((float)mouseX - trueX)/(area.width - barLength) * 100.0f, 100.0f));
+				scrollPercent = Math.max(0.0f, Math.min(((float)mouseX - trueX)/(oldArea.width - barLength) * 100.0f, 100.0f));
 			}
 			else {
-				scrollPercent = Math.max(0.0f, Math.min(((float)mouseY - trueY)/(area.height - barLength) * 100.0f, 100.0f));
+				scrollPercent = Math.max(0.0f, Math.min(((float)mouseY - trueY)/(oldArea.height - barLength) * 100.0f, 100.0f));
 			}
 
 			onSlide.accept(gui, this);
@@ -90,15 +90,15 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 		int sliderX = trueX;
 		int sliderY = trueY;
 
-		int sliderWidth = area.width;
-		int sliderHeight = area.height;
+		int sliderWidth = oldArea.width;
+		int sliderHeight = oldArea.height;
 
 		if (horizontal) {
-			sliderX += (int)((scrollPercent)/100 * (area.width - barLength));
+			sliderX += (int)((scrollPercent)/100 * (oldArea.width - barLength));
 			sliderWidth = barLength;
 		}
 		else {
-			sliderY += (int)((scrollPercent)/100 * (area.height - barLength));
+			sliderY += (int)((scrollPercent)/100 * (oldArea.height - barLength));
 			sliderHeight = barLength;
 		}
 

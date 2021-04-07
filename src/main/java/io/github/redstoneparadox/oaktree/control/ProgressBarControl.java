@@ -5,7 +5,6 @@ import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import net.minecraft.client.util.math.MatrixStack;
-import org.jetbrains.annotations.ApiStatus;
 
 /**
  * A node representing a percent-based progress bar.
@@ -91,8 +90,8 @@ public class ProgressBarControl extends Control {
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
-		int barX = trueX + ((area.width/2) - (barWidth/2));
-		int barY = trueY + ((area.height/2) - (barHeight/2));
+		int barX = trueX + ((oldArea.width/2) - (barWidth/2));
+		int barY = trueY + ((oldArea.height/2) - (barHeight/2));
 
 		switch (direction) {
 			case UP:

@@ -8,7 +8,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -62,14 +61,14 @@ public class LabelControl extends Control {
 	 */
 	public void setText(List<Text> texts) {
 		if (fitText) {
-			this.area.width = 0;
+			this.oldArea.width = 0;
 
 			for (Text text: texts) {
-				this.area.width = Math.max(this.area.width, TextHelper.getWidth(text));
+				this.oldArea.width = Math.max(this.oldArea.width, TextHelper.getWidth(text));
 			}
 
-			this.area.width += 8;
-			area.height = TextHelper.getFontHeight() * texts.size() + 8;
+			this.oldArea.width += 8;
+			oldArea.height = TextHelper.getFontHeight() * texts.size() + 8;
 			this.maxDisplayedLines = texts.size();
 		}
 
@@ -136,7 +135,7 @@ public class LabelControl extends Control {
 	}
 
 	public void moveToEnd() {
-		this.firstLine = TextHelper.wrapText(text, area.width, 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
+		this.firstLine = TextHelper.wrapText(text, oldArea.width, 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
 	}
 
 	public int getFirstLine() {
@@ -165,7 +164,7 @@ public class LabelControl extends Control {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
 		if (maxDisplayedLines > 0) {
-			List<OrderedText> lines = TextHelper.wrapText(text, area.width, firstLine, maxDisplayedLines, shadow, false);
+			List<OrderedText> lines = TextHelper.wrapText(text, oldArea.width, firstLine, maxDisplayedLines, shadow, false);
 			int yOffset = 0;
 
 			for (OrderedText line: lines) {

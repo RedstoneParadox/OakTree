@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
-import org.jetbrains.annotations.ApiStatus;
 
 public class PagePanelControl extends PanelControl {
 	protected int page = 0;
@@ -33,7 +32,7 @@ public class PagePanelControl extends PanelControl {
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		Control child = children.get(page);
 		Vector2 innerPosition = innerPosition(trueX, trueY);
-		Vector2 innerDimensions = innerDimensions(area.width, area.height);
+		Vector2 innerDimensions = innerDimensions(oldArea.width, oldArea.height);
 
 		if (child.isVisible()) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 	}

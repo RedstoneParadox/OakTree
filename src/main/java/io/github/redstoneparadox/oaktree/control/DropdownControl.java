@@ -6,7 +6,6 @@ import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -61,16 +60,16 @@ public class DropdownControl extends InteractiveControl implements MouseButtonLi
 
 		switch (dropdownDirection) {
 			case UP:
-				dropdownY = -dropdown.area.height;
+				dropdownY = -dropdown.oldArea.height;
 				break;
 			case DOWN:
-				dropdownY = area.y + area.height;
+				dropdownY = oldArea.y + oldArea.height;
 				break;
 			case LEFT:
-				dropdownX = -dropdown.area.width;
+				dropdownX = -dropdown.oldArea.width;
 				break;
 			case RIGHT:
-				dropdownX = area.x + area.width;
+				dropdownX = oldArea.x + oldArea.width;
 				break;
 		}
 

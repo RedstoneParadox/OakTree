@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.control.util.ControlArea;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.style.ControlStyle;
@@ -20,7 +21,8 @@ import java.util.function.Consumer;
 public class Control {
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
-	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
+	protected final @NotNull  Rectangle oldArea = new Rectangle(0, 0, 1, 1);
+	protected final @NotNull ControlArea area = createBaseArea();
 	protected boolean expand = false;
 	protected boolean visible = true;
 	protected BiConsumer<ControlGui, Control> onTick = (gui, control) -> {};
@@ -67,8 +69,8 @@ public class Control {
 	 * @param y The new y offset in pixels.
 	 */
 	public void setOffset(int x, int y) {
-		area.x = x;
-		area.y = y;
+		oldArea.x = x;
+		oldArea.y = y;
 	}
 
 	/**
@@ -81,12 +83,12 @@ public class Control {
 	 * @param offset The offset in Vector2 form.
 	 */
 	public void setOffset(@NotNull Vector2 offset) {
-		area.x = offset.x;
-		area.y = offset.y;
+		oldArea.x = offset.x;
+		oldArea.y = offset.y;
 	}
 
 	public @NotNull Vector2 getOffset() {
-		return new Vector2(area.x, area.y);
+		return new Vector2(oldArea.x, oldArea.y);
 	}
 
 	/**
@@ -99,8 +101,8 @@ public class Control {
 	 * @param height The new height of this node in pixels.
 	 */
 	public void setSize(int width, int height) {
-		area.width = width;
-		area.height = height;
+		oldArea.width = width;
+		oldArea.height = height;
 	}
 
 	/**
@@ -112,16 +114,16 @@ public class Control {
 	 * @param size The size in Vector2 form.
 	 */
 	public void setSize(@NotNull Vector2 size) {
-		area.width = size.x;
-		area.height = size.y;
+		oldArea.width = size.x;
+		oldArea.height = size.y;
 	}
 
 	public @NotNull Vector2 getSize() {
-		return new Vector2(area.width, area.height);
+		return new Vector2(oldArea.width, oldArea.height);
 	}
 
 	public @NotNull Rectangle getArea() {
-		return this.area;
+		return this.oldArea;
 	}
 
 	/**
@@ -201,23 +203,29 @@ public class Control {
 
 		if (!expand) {
 			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-			Vector2 drawOffset = anchor.getOffset(area.width, area.height);
+			Vector2 drawOffset = anchor.getOffset(oldArea.width, oldArea.height);
 
-			trueX = area.x + anchorOffset.x + offsetX - drawOffset.x;
-			trueY = area.y + anchorOffset.y + offsetY - drawOffset.y;
+			trueX = oldArea.x + anchorOffset.x + offsetX - drawOffset.x;
+			trueY = oldArea.y + anchorOffset.y + offsetY - drawOffset.y;
 		}
 		else {
 			trueX = offsetX;
 			trueY = offsetY;
 
-			area.width = containerWidth;
-			area.height = containerHeight;
+			oldArea.width = containerWidth;
+			oldArea.height = containerHeight;
 		}
 	}
 
 	@ApiStatus.Internal
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		currentStyle.draw(trueX, trueY, area.width, area.height, gui);
+		currentStyle.draw(trueX, trueY, oldArea.width, oldArea.height, gui);
+	}
+
+	public boolean onMouseOver() {
+
+
+		return false;
 	}
 
 	@ApiStatus.Internal
@@ -229,5 +237,9 @@ public class Control {
 		}
 
 		return style;
+	}
+
+	protected ControlArea createBaseArea() {
+		return ControlArea.regular(0, 0, 1, 1);
 	}
 }

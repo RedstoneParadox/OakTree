@@ -100,7 +100,7 @@ public class PanelControl extends PaddingControl {
 
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		Vector2 innerPosition = innerPosition(trueX, trueY);
-		Vector2 innerDimensions = innerDimensions(area.width, area.height);
+		Vector2 innerDimensions = innerDimensions(oldArea.width, oldArea.height);
 		for (Control child: children) {
 			if (child.isVisible()) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
 		}

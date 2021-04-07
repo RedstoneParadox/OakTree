@@ -14,8 +14,8 @@ public class SplitControl extends Control {
 	protected @NotNull Control first = new Control();
 	protected @NotNull Control second = new Control();
 
-	private final Rectangle firstArea = new Rectangle(trueX, trueY, area.width, area.height);
-	private final Rectangle secondArea = new Rectangle(trueX + firstArea.width, trueY, 0, area.height);
+	private final Rectangle firstArea = new Rectangle(trueX, trueY, oldArea.width, oldArea.height);
+	private final Rectangle secondArea = new Rectangle(trueX + firstArea.width, trueY, 0, oldArea.height);
 
 	public SplitControl() {
 		this.id = "split";
@@ -75,20 +75,20 @@ public class SplitControl extends Control {
 		firstArea.y = trueY;
 
 		if (vertical) {
-			firstArea.width = area.width;
-			firstArea.height = area.height - splitSize;
+			firstArea.width = oldArea.width;
+			firstArea.height = oldArea.height - splitSize;
 			secondArea.x = trueX;
 			secondArea.y = trueY + firstArea.height;
-			secondArea.width = area.width;
+			secondArea.width = oldArea.width;
 			secondArea.height = splitSize;
 		}
 		else {
-			firstArea.width = area.width - splitSize;
-			firstArea.height = area.height;
+			firstArea.width = oldArea.width - splitSize;
+			firstArea.height = oldArea.height;
 			secondArea.x = trueX + firstArea.width;
 			secondArea.y = trueY;
 			secondArea.width = splitSize;
-			secondArea.height = area.height;
+			secondArea.height = oldArea.height;
 		}
 
 		if (first.isVisible()) first.preDraw(gui, firstArea.x, firstArea.y, firstArea.width, firstArea.height, mouseX, mouseY);

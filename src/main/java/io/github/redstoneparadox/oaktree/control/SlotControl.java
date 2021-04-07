@@ -241,11 +241,11 @@ public class SlotControl extends InteractiveControl implements MouseButtonListen
 			if (screenHandler instanceof InventoryScreenHandlerAccess) {
 				super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 				ItemStack stack = ((InventoryScreenHandlerAccess) screenHandler).getInventory(inventoryID).getStack(slot);
-				RenderHelper.drawItemStackCentered(trueX, trueY, area.width, area.height, stack);
+				RenderHelper.drawItemStackCentered(trueX, trueY, oldArea.width, oldArea.height, stack);
 
 				if (isMouseWithin) {
 					RenderHelper.setzOffset(200.0);
-					RenderHelper.drawRectangle(trueX + slotBorder, trueY + slotBorder, area.width - (2 * slotBorder), area.height - (2 * slotBorder), highlightColor);
+					RenderHelper.drawRectangle(trueX + slotBorder, trueY + slotBorder, oldArea.width - (2 * slotBorder), oldArea.height - (2 * slotBorder), highlightColor);
 					RenderHelper.setzOffset(0.0);
 				}
 			}

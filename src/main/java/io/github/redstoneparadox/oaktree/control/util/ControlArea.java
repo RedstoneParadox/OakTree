@@ -7,15 +7,15 @@ import org.jetbrains.annotations.Nullable;
 
 public final class ControlArea {
 	private final Rectangle rect;
-	private final @Nullable ClickFunction onClick;
+	private final ClickFunction onClick;
 
-	private ControlArea(Rectangle rect, @Nullable ClickFunction onClick) {
+	private ControlArea(Rectangle rect, ClickFunction onClick) {
 		this.rect = rect;
 		this.onClick = onClick;
 	}
 
 	public static ControlArea regular(int x, int y, int width, int height) {
-		return new ControlArea(new Rectangle(x, y, width, height), null);
+		return new ControlArea(new Rectangle(x, y, width, height), (mouseX, mouseY) -> {});
 	}
 
 	public static ControlArea clickable(int x, int y, int width, int height, @NotNull ClickFunction onClick) {
@@ -29,12 +29,20 @@ public final class ControlArea {
 		rect.height = height;
 	}
 
-	public boolean onClick(int mouseX, int mouseY) {
-		if (mouseX < rect.x || mouseY > rect.x + rect.width || mouseY < rect.y || mouseY > rect.y + rect.width) {
-			return false;
-		}
+	public void updateSize(int width, int height) {
+		rect.width = width;
+		rect.height = height;
+	}
 
-		if (onClick != null) onClick.onClick(mouseX, mouseY);
+	public void updatePosition(int x, int y) {
+		rect.x = x;
+		rect.y = y;
+	}
+
+	public boolean captureMouse(int mouseX, int mouseY) {
+		if (!rect.isPointWithin(mouseX, mouseY)) return false;
+
+		onClick.onClick(mouseX, mouseY);
 
 		return true;
 	}
