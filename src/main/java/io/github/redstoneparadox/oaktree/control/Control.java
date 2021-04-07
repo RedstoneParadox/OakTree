@@ -118,6 +118,7 @@ public class Control extends ControlElement {
 		oldArea.height = size.y;
 	}
 
+	@Override
 	public @NotNull Vector2 getSize() {
 		return new Vector2(oldArea.width, oldArea.height);
 	}
@@ -245,7 +246,13 @@ public class Control extends ControlElement {
 
 	@Override
 	protected Vector2 getPosition() {
-		if (parent != null) return Vector2.add(getOffset(), parent.getPosition());
+		if (parent != null) {
+			Vector2 a = Vector2.add(getOffset(), parent.getPosition());
+			Vector2 containerSize = parent.getContainerSize();
+			Vector2 anchorOffset = anchor.getOffset(containerSize.x, containerSize.y);
+
+			return Vector2.add(a, anchorOffset);
+		};
 		return getOffset();
 	}
 }

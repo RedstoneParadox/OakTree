@@ -7,6 +7,12 @@ public abstract class ControlElement {
 
 	protected abstract Vector2 getPosition();
 
+	protected abstract Vector2 getSize();
+
+	protected Vector2 getContainerSize() {
+		return getSize();
+	}
+
 	protected void setParent(ControlElement parent) {
 		this.parent = parent;
 	}

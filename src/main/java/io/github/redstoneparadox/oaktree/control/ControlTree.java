@@ -3,6 +3,8 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.style.Theme;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Window;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -50,5 +52,13 @@ public class ControlTree extends ControlElement {
 	@Override
 	public Vector2 getPosition() {
 		return new Vector2(0, 0);
+	}
+
+	@Override
+	protected Vector2 getSize() {
+		MinecraftClient client = MinecraftClient.getInstance();
+		Window window = client.getWindow();
+
+		return new Vector2(window.getScaledWidth(), window.getScaledHeight());
 	}
 }

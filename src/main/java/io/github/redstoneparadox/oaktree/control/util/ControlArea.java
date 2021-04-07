@@ -39,6 +39,10 @@ public final class ControlArea {
 		rect.y = y;
 	}
 
+	public Rectangle getRect() {
+		return rect;
+	}
+
 	public boolean captureMouse(int mouseX, int mouseY) {
 		if (!rect.isPointWithin(mouseX, mouseY)) return false;
 
