@@ -247,12 +247,13 @@ public class Control extends ControlElement {
 	@Override
 	protected Vector2 getPosition() {
 		if (parent != null) {
-			Vector2 a = Vector2.add(getOffset(), parent.getPosition());
 			Vector2 containerSize = parent.getContainerSize();
 			Vector2 anchorOffset = anchor.getOffset(containerSize.x, containerSize.y);
+			Rectangle rectangle = area.getRect();
+			Vector2 drawOffset = anchor.getOffset(rectangle.width, rectangle.height);
 
-			return Vector2.add(a, anchorOffset);
-		};
+			return Vector2.add(Vector2.add(Vector2.add(getOffset(), parent.getPosition()), anchorOffset), drawOffset);
+		}
 		return getOffset();
 	}
 }
