@@ -25,9 +25,6 @@
       "io.github.redstoneparadox.oaktree.OakTreeTestClient"
     ]
   },
-  "mixins": [
-    "oaktree.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": ">=0.4.0",
