@@ -161,33 +161,32 @@ public class SlotControl extends InteractiveControl implements MouseButtonListen
 				super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 
 				PlayerEntity player = ((InventoryScreenHandlerAccess) handler).getPlayer();
-				PlayerInventory playerInventory = player.inventory;
 				Inventory inventory = ((InventoryScreenHandlerAccess) handler).getInventory(inventoryID);
 
 				if (isMouseWithin) {
 					boolean stackChanged = false;
 					ItemStack stackInSlot = inventory.getStack(slot);
 
-					if (playerInventory.getCursorStack().isEmpty()) {
+					if (handler.getCursorStack().isEmpty()) {
 						if (!locked && canTake.test(gui, stackInSlot)) {
 							if (leftClicked) {
-								playerInventory.setCursorStack(inventory.removeStack(slot));
+								handler.setCursorStack(inventory.removeStack(slot));
 								stackChanged = true;
 							}
 							else if (rightClicked) {
-								playerInventory.setCursorStack(inventory.removeStack(slot, Math.max(stackInSlot.getCount()/2, 1)));
+								handler.setCursorStack(inventory.removeStack(slot, Math.max(stackInSlot.getCount()/2, 1)));
 								stackChanged = true;
 							}
 						}
 					}
 					else {
-						ItemStack cursorStack = playerInventory.getCursorStack();
+						ItemStack cursorStack = handler.getCursorStack();
 
 						if (!locked && canInsert.test(gui, cursorStack)) {
 							if (leftClicked) {
 								if (stackInSlot.isEmpty()) {
-									inventory.setStack(slot, playerInventory.getCursorStack());
-									playerInventory.setCursorStack(ItemStack.EMPTY);
+									inventory.setStack(slot, handler.getCursorStack());
+									handler.setCursorStack(ItemStack.EMPTY);
 									stackChanged = true;
 								}
 								else {
@@ -197,7 +196,7 @@ public class SlotControl extends InteractiveControl implements MouseButtonListen
 							}
 							else if (rightClicked) {
 								if (stackInSlot.isEmpty()) {
-									inventory.setStack(slot, playerInventory.getCursorStack().split(1));
+									inventory.setStack(slot, handler.getCursorStack().split(1));
 									stackChanged = true;
 								}
 								else {

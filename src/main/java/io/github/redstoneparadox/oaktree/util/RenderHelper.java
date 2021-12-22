@@ -7,6 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -27,18 +28,18 @@ public class RenderHelper {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder builder = tessellator.getBuffer();
 
-		GlStateManager.enableBlend();
-		GlStateManager.disableTexture();
-		GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
-		GlStateManager.blendColor(color.red, color.green, color.blue, color.alpha);
-		GlStateManager.enableDepthTest();
+		GlStateManager._enableBlend();
+		GlStateManager._disableTexture();
+		GlStateManager._blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.value, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SrcFactor.ONE.value, GlStateManager.DstFactor.ZERO.value);
+		// GlStateManager.blendColor(color.red, color.green, color.blue, color.alpha);
+		GlStateManager._enableDepthTest();
 
 		Vector2 vert1 = new Vector2(x, y);
 		Vector2 vert2 = new Vector2(x, y + height);
 		Vector2 vert3 = new Vector2(x + width, y + height);
 		Vector2 vert4 = new Vector2(x + width, y);
 
-		builder.begin(7, VertexFormats.POSITION_COLOR);
+		builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 		builder.vertex(vert1.x, vert1.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
 		builder.vertex(vert2.x, vert2.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
 		builder.vertex(vert3.x, vert3.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
@@ -46,8 +47,8 @@ public class RenderHelper {
 
 		tessellator.draw();
 
-		GlStateManager.enableTexture();
-		GlStateManager.disableBlend();
+		GlStateManager._enableTexture();
+		GlStateManager._disableBlend();
 	}
 
 	public static void drawItemStackCentered(int x, int y, int width, int height, ItemStack stack) {
@@ -74,10 +75,10 @@ public class RenderHelper {
 
 		RenderSystem.enableBlend();
 		RenderSystem.blendFuncSeparate(770, 771, 1, 0);
-		RenderSystem.blendColor(255, 255, 255, 255);
+		// RenderSystem.blendColor(255, 255, 255, 255);
 		RenderSystem.enableDepthTest();
 
-		bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
+		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
 
 		bufferBuilder.vertex(x * scale, (y + height) * scale, zOffset).color(r, g, b, a).texture(left/fileWidth, (top + height)/fileHeight).next();
 		bufferBuilder.vertex((x + width) * scale, (y + height) * scale, zOffset).color(r, g, b, a).texture((left + width)/fileWidth, (top + height)/fileHeight).next();
