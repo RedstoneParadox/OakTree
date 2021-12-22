@@ -7,47 +7,20 @@ import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess
 import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
 import io.github.redstoneparadox.oaktree.style.Theme;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class Tests {
 	static Identifier testThree = new Identifier("oaktree:test_three");
@@ -62,196 +35,15 @@ public class Tests {
 		register(new TestBlock(true, Tests::testFour), "four");
 		register(new TestBlock(true, Tests::testFive), "five");
 
-		TEST_THREE_BLOCK_ENTITY_TYPE = Registry.register(Registry.BLOCK_ENTITY_TYPE, "oaktree:test_three_block_entity", BlockEntityType.Builder.create(ScreenHandlerTestBlockEntity::new, TEST_THREE_BLOCK).build(null));
+		TEST_THREE_BLOCK_ENTITY_TYPE = Registry.register(Registry.BLOCK_ENTITY_TYPE, "oaktree:test_three_block_entity", FabricBlockEntityTypeBuilder.create(ScreenHandlerTestBlockEntity::new, TEST_THREE_BLOCK).build(null));
 	}
 
 	public static void initClient() {
 		ScreenRegistry.<TestScreenHandler, HandledTestScreen>register(handlerType, (screenHandler, inventory, title) -> new HandledTestScreen(screenHandler, new LiteralText(""), true, testThree()));
 	}
 
-	private static Block.Settings testSettings() {
-		return FabricBlockSettings.of(Material.METAL);
-	}
-
 	private static Block register(Block block, String suffix) {
 		return Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
-	}
-
-	static class TestBlock extends Block {
-		private final Supplier<Control> supplier;
-		private final boolean vanilla;
-
-		TestBlock(boolean vanilla, Supplier<Control> supplier) {
-			super(testSettings());
-			this.vanilla = vanilla;
-			this.supplier = supplier;
-		}
-
-		@Override
-		public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-			if (world.isClient) {
-				MinecraftClient.getInstance().openScreen(new TestScreen(new LiteralText("test screen"), vanilla, supplier.get()));
-			}
-			return ActionResult.SUCCESS;
-		}
-	}
-
-	static class ScreenHandlerTestBlock extends TestBlock implements BlockEntityProvider {
-
-		ScreenHandlerTestBlock(boolean vanilla, Supplier<Control> supplier) {
-			super(vanilla, supplier);
-		}
-
-		@Override
-		public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-			if (!world.isClient) {
-				NamedScreenHandlerFactory factory = state.createScreenHandlerFactory(world, pos);
-
-				if (factory != null) {
-					player.openHandledScreen(factory);
-				}
-			}
-			return ActionResult.SUCCESS;
-		}
-
-		@Override
-		public @Nullable BlockEntity createBlockEntity(BlockView blockView) {
-			return new ScreenHandlerTestBlockEntity();
-		}
-
-		@Override
-		public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState blockState, World world, BlockPos blockPos) {
-			BlockEntity blockEntity = world.getBlockEntity(blockPos);
-			return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory)blockEntity : null;
-		}
-	}
-
-	static class ScreenHandlerTestBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
-		public ScreenHandlerTestBlockEntity() {
-			super(TEST_THREE_BLOCK_ENTITY_TYPE);
-		}
-
-
-		@Override
-		public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-			buf.writeBlockPos(pos);
-		}
-
-		@Override
-		public Text getDisplayName() {
-			return LiteralText.EMPTY;
-		}
-
-		@Override
-		public @Nullable ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-			return new TestScreenHandler(i, playerEntity);
-		}
-	}
-
-	static class TestScreen extends Screen {
-		private final ControlGui gui;
-
-		protected TestScreen(Text title, boolean vanilla, Control control) {
-			super(title);
-			this.gui = new ControlGui(this, control);
-			if (vanilla) this.gui.applyTheme(Theme.vanilla());
-		}
-
-		@Override
-		public void init(MinecraftClient minecraftClient, int i, int j) {
-			super.init(minecraftClient, i, j);
-			gui.init();
-		}
-
-		@Override
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-			super.render(matrices, mouseX, mouseY, delta);
-			gui.draw(matrices, mouseX, mouseY, delta);
-		}
-
-		@Override
-		public boolean isPauseScreen() {
-			return false;
-		}
-	}
-
-	static class HandledTestScreen extends HandledScreen<TestScreenHandler> {
-		private final ControlGui gui;
-
-		public HandledTestScreen(TestScreenHandler handler, Text title, boolean vanilla, Control control) {
-			super(handler, handler.player.inventory, title);
-			this.gui = new ControlGui(this, control);
-			if (vanilla) this.gui.applyTheme(Theme.vanilla());
-		}
-
-		@Override
-		public void init(MinecraftClient minecraftClient, int i, int j) {
-			super.init(minecraftClient, i, j);
-			gui.init();
-		}
-
-		@Override
-		protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-
-		}
-
-		@Override
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-			super.render(matrices, mouseX, mouseY, delta);
-			gui.draw(matrices, mouseX, mouseY, delta);
-		}
-
-		@Override
-		public boolean isPauseScreen() {
-			return super.isPauseScreen();
-		}
-
-		@Override
-		public void onClose() {
-			super.onClose();
-			handler.close(handler.player);
-		}
-	}
-
-	static class TestScreenHandler extends ScreenHandler implements InventoryScreenHandlerAccess {
-		private final PlayerEntity player;
-		private final List<Inventory> inventories = new ArrayList<>();
-
-		protected TestScreenHandler(int syncId, PlayerEntity player) {
-			super(handlerType, syncId);
-			this.player = player;
-			inventories.add(player.inventory);
-
-			if (!player.world.isClient) OakTreeServerNetworking.listenForStackSync(this);
-			inventories.add(new SimpleInventory(ItemStack.EMPTY, ItemStack.EMPTY));
-		}
-
-		@Override
-		public boolean canUse(PlayerEntity player) {
-			return true;
-		}
-
-		@NotNull
-		@Override
-		public Inventory getInventory(int inventoryID) {
-			return inventories.get(inventoryID);
-		}
-
-		@Override
-		public @NotNull PlayerEntity getPlayer() {
-			return player;
-		}
-
-		@Override
-		public int getSyncID() {
-			return syncId;
-		}
-
-		@Override
-		public void close(PlayerEntity player) {
-			super.close(player);
-			OakTreeServerNetworking.stopListening(this);
-		}
 	}
 
 	private static Control testOne() {

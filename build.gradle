@@ -19,7 +19,9 @@ minecraft {
 sourceSets {
 	testmod {
 		compileClasspath += main.compileClasspath
+		compileClasspath += main.output
 		runtimeClasspath += main.runtimeClasspath
+		runtimeClasspath += main.output
 	}
 }
 
