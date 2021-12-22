@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 /**
  * The base class for all controls.
  */
-public class Control extends ControlElement {
+public class Control {
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle oldArea = new Rectangle(0, 0, 1, 1);
@@ -118,7 +118,6 @@ public class Control extends ControlElement {
 		oldArea.height = size.y;
 	}
 
-	@Override
 	public @NotNull Vector2 getSize() {
 		return new Vector2(oldArea.width, oldArea.height);
 	}
@@ -220,13 +219,40 @@ public class Control extends ControlElement {
 
 	@ApiStatus.Internal
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		currentStyle.draw(trueX, trueY, oldArea.width, oldArea.height, gui);
+		currentStyle.draw(trueX, trueY, oldArea.width, oldArea.height);
 	}
 
 	public boolean onMouseOver() {
 
 
 		return false;
+	}
+
+	public void newDraw(int containerX, int containerY, int containerWidth, int containerHeight, ControlGui gui, ControlTree tree) {
+		int x;
+		int y;
+		int width;
+		int height;
+
+		Rectangle rectangle = area.getRect();
+
+		if (expand) {
+			x = containerX;
+			y = containerY;
+			width = containerWidth;
+			height = containerHeight;
+		}
+		else {
+			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
+			Vector2 drawOffset = anchor.getOffset(rectangle.width, rectangle.height);
+
+			x = rectangle.x + containerX + anchorOffset.x + drawOffset.x;
+			y = rectangle.y + containerY + anchorOffset.y + drawOffset.y;
+			width = rectangle.width;
+			height = rectangle.height;
+		}
+
+		currentStyle.draw(x, y, width, height);
 	}
 
 	@ApiStatus.Internal
@@ -242,18 +268,5 @@ public class Control extends ControlElement {
 
 	protected ControlArea createBaseArea() {
 		return ControlArea.regular(0, 0, 1, 1);
-	}
-
-	@Override
-	protected Vector2 getPosition() {
-		if (parent != null) {
-			Vector2 containerSize = parent.getContainerSize();
-			Vector2 anchorOffset = anchor.getOffset(containerSize.x, containerSize.y);
-			Rectangle rectangle = area.getRect();
-			Vector2 drawOffset = anchor.getOffset(rectangle.width, rectangle.height);
-
-			return Vector2.add(Vector2.add(Vector2.add(getOffset(), parent.getPosition()), anchorOffset), drawOffset);
-		}
-		return getOffset();
 	}
 }

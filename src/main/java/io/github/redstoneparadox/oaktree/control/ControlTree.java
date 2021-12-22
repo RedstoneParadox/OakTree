@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlTree extends ControlElement {
+public class ControlTree {
 	private final Control root;
 	private Theme theme = Theme.vanilla();
 	private boolean dirty = true;
@@ -18,7 +18,6 @@ public class ControlTree extends ControlElement {
 
 	public ControlTree(Control root) {
 		this.root = root;
-		this.root.setParent(this);
 	}
 
 	public Theme getTheme() {
@@ -47,18 +46,5 @@ public class ControlTree extends ControlElement {
 		for (Control control: zIndexedControls) {
 			// draw
 		}
-	}
-
-	@Override
-	public Vector2 getPosition() {
-		return new Vector2(0, 0);
-	}
-
-	@Override
-	protected Vector2 getSize() {
-		MinecraftClient client = MinecraftClient.getInstance();
-		Window window = client.getWindow();
-
-		return new Vector2(window.getScaledWidth(), window.getScaledHeight());
 	}
 }

@@ -25,7 +25,7 @@ public abstract class ControlStyle {
 		this.blank = false;
 	}
 
-	public void draw(int x, int y, int width, int height, ControlGui gui) {
+	public void draw(int x, int y, int width, int height) {
 
 	}
 

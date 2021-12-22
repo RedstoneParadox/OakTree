@@ -40,7 +40,7 @@ public class NinePatchControlStyle extends TextureControlStyle {
 	}
 
 	@Override
-	public void draw(int x, int y, int width, int height, ControlGui gui) {
+	public void draw(int x, int y, int width, int height) {
 		int fullSecondWidth = width - firstWidth - thirdWidth;
 		int fullSecondHeight = height - firstHeight - thirdHeight;
 

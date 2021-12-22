@@ -102,7 +102,7 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 			sliderHeight = barLength;
 		}
 
-		if (sliderStyle != null) sliderStyle.draw(sliderX, sliderY, sliderWidth, sliderHeight, gui);
+		if (sliderStyle != null) sliderStyle.draw(sliderX, sliderY, sliderWidth, sliderHeight);
 	}
 
 	@Override

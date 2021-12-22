@@ -20,7 +20,7 @@ public class ColorControlStyle extends ControlStyle {
 	}
 
 	@Override
-	public void draw(int x, int y, int width, int height, ControlGui gui) {
+	public void draw(int x, int y, int width, int height) {
 		if (borderColor != null) RenderHelper.drawRectangle(x - borderWidth, y - borderWidth, width + 2 * borderWidth, height + 2* borderWidth, color);
 		RenderHelper.drawRectangle(x, y, width, height, color);
 	}
