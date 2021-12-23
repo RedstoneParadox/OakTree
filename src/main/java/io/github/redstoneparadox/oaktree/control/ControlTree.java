@@ -1,13 +1,16 @@
 package io.github.redstoneparadox.oaktree.control;
 
+import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.style.Theme;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Window;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlTree {
+public class ControlTree extends ControlElement {
 	private final Control root;
 	private Theme theme = Theme.vanilla();
 	private boolean dirty = true;
@@ -43,5 +46,18 @@ public class ControlTree {
 		for (Control control: zIndexedControls) {
 			// draw
 		}
+	}
+
+	@Override
+	protected Vector2 getPosition() {
+		return Vector2.ZERO;
+	}
+
+	@Override
+	protected Vector2 getSize() {
+		MinecraftClient client = MinecraftClient.getInstance();
+		Window window = client.getWindow();
+
+		return new Vector2(window.getX(), window.getY());
 	}
 }

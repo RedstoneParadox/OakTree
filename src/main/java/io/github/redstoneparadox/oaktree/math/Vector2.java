@@ -3,6 +3,8 @@ package io.github.redstoneparadox.oaktree.math;
 import java.util.Objects;
 
 public class Vector2 {
+	public static final Vector2 ZERO = new Vector2(0,0);
+
 	private final int x;
 	private final int y;
 
