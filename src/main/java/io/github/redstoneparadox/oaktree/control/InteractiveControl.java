@@ -76,7 +76,7 @@ public abstract class InteractiveControl extends Control {
 
 			if (isMouseWithin) {
 				if (!tooltip.visible || !lockTooltipPos) {
-					tooltip.setOffset(mousePos.x + tooltipOffsetX, mousePos.y + tooltipOffsetY);
+					tooltip.setOffset(mousePos.getX() + tooltipOffsetX, mousePos.getY() + tooltipOffsetY);
 					tooltip.visible = true;
 				}
 			}

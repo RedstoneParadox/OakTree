@@ -83,8 +83,8 @@ public class Control {
 	 * @param offset The offset in Vector2 form.
 	 */
 	public void setOffset(@NotNull Vector2 offset) {
-		oldArea.x = offset.x;
-		oldArea.y = offset.y;
+		oldArea.x = offset.getX();
+		oldArea.y = offset.getY();
 	}
 
 	public @NotNull Vector2 getOffset() {
@@ -114,8 +114,8 @@ public class Control {
 	 * @param size The size in Vector2 form.
 	 */
 	public void setSize(@NotNull Vector2 size) {
-		oldArea.width = size.x;
-		oldArea.height = size.y;
+		oldArea.width = size.getX();
+		oldArea.height = size.getY();
 	}
 
 	public @NotNull Vector2 getSize() {
@@ -205,8 +205,8 @@ public class Control {
 			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
 			Vector2 drawOffset = anchor.getOffset(oldArea.width, oldArea.height);
 
-			trueX = oldArea.x + anchorOffset.x + offsetX - drawOffset.x;
-			trueY = oldArea.y + anchorOffset.y + offsetY - drawOffset.y;
+			trueX = oldArea.x + anchorOffset.getX() + offsetX - drawOffset.getX();
+			trueY = oldArea.y + anchorOffset.getY() + offsetY - drawOffset.getY();
 		}
 		else {
 			trueX = offsetX;
@@ -246,8 +246,8 @@ public class Control {
 			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
 			Vector2 drawOffset = anchor.getOffset(rectangle.width, rectangle.height);
 
-			x = rectangle.x + containerX + anchorOffset.x + drawOffset.x;
-			y = rectangle.y + containerY + anchorOffset.y + drawOffset.y;
+			x = rectangle.x + containerX + anchorOffset.getX() + drawOffset.getX();
+			y = rectangle.y + containerY + anchorOffset.getY() + drawOffset.getY();
 			width = rectangle.width;
 			height = rectangle.height;
 		}

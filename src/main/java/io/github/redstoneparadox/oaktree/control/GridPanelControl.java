@@ -111,11 +111,11 @@ public class GridPanelControl extends PanelControl {
 
 		for (int j = 0; j < rows && index < children.size(); j += 1) {
 			for (int i = 0; i < columns && index < children.size(); i += 1) {
-				int cellX = innerPosition.x + (i * cellWidth);
-				int cellY = innerPosition.y + (j * cellHeight);
+				int cellX = innerPosition.getX() + (i * cellWidth);
+				int cellY = innerPosition.getY() + (j * cellHeight);
 
 				Control child = children.get(index);
-				if (child.isVisible()) child.preDraw(gui, cellX, cellY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
+				if (child.isVisible()) child.preDraw(gui, cellX, cellY, innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
 
 				index += 1;
 			}

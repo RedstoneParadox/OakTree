@@ -57,7 +57,7 @@ public class BoxControl extends PaddingControl {
 		Vector2 innerPosition = innerPosition(trueX, trueY);
 		Vector2 innerDimensions = innerDimensions(oldArea.width, oldArea.height);
 
-		if (child.isVisible()) child.preDraw(gui, innerPosition.x, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
+		if (child.isVisible()) child.preDraw(gui, innerPosition.getX(), innerPosition.getY(), innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
 	}
 
 	@Override

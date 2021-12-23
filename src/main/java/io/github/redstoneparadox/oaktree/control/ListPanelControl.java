@@ -51,10 +51,10 @@ public class ListPanelControl extends PanelControl {
 			Vector2 innerPosition = innerPosition(trueX, trueY);
 
 			for (int i = 0; i < displayCount; i += 1) {
-				int entryY = innerPosition.y + (i * sectionHeight);
+				int entryY = innerPosition.getY() + (i * sectionHeight);
 
 				Control child = children.get(i + startIndex);
-				if (child.isVisible()) child.preDraw(gui, innerPosition.x, entryY, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
+				if (child.isVisible()) child.preDraw(gui, innerPosition.getX(), entryY, innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
 			}
 		}
 		else {
@@ -63,10 +63,10 @@ public class ListPanelControl extends PanelControl {
 			Vector2 innerPosition = innerPosition(trueX, trueY);
 
 			for (int i = 0; i < displayCount; i += 1) {
-				int entryX = innerPosition.x + (i * sectionWidth);
+				int entryX = innerPosition.getX() + (i * sectionWidth);
 
 				Control child = children.get(i + startIndex);
-				if (child.isVisible()) child.preDraw(gui, entryX, innerPosition.y, innerDimensions.x, innerDimensions.y, mouseX, mouseY);
+				if (child.isVisible()) child.preDraw(gui, entryX, innerPosition.getY(), innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
 			}
 		}
 	}
