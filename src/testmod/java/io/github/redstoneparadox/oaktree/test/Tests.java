@@ -1,8 +1,18 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.control.Anchor;
+import io.github.redstoneparadox.oaktree.control.ButtonControl;
 import io.github.redstoneparadox.oaktree.control.Control;
+import io.github.redstoneparadox.oaktree.control.DropdownControl;
+import io.github.redstoneparadox.oaktree.control.GridPanelControl;
 import io.github.redstoneparadox.oaktree.control.LabelControl;
+import io.github.redstoneparadox.oaktree.control.ListPanelControl;
+import io.github.redstoneparadox.oaktree.control.PanelControl;
+import io.github.redstoneparadox.oaktree.control.SliderControl;
+import io.github.redstoneparadox.oaktree.control.SlotControl;
+import io.github.redstoneparadox.oaktree.control.SplitControl;
+import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
 import io.github.redstoneparadox.oaktree.style.Theme;
@@ -11,6 +21,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -47,184 +58,165 @@ public class Tests {
 	}
 
 	private static Control testOne() {
-		return new Control();
+		PanelControl panel = new PanelControl();
+		DropdownControl leftDropdown = new DropdownControl();
+		DropdownControl rightDropdown = new DropdownControl();
+		DropdownControl centerDropdown = new DropdownControl();
+		ListPanelControl leftListPanel = new ListPanelControl();
+		ListPanelControl rightListPanel = new ListPanelControl();
+		ListPanelControl centerListPanel = new ListPanelControl();
 
-		/*
-		DropdownControl leftDropdown = new DropdownControl()
-				.dropdown(
-						new ListPanelControl()
-								.id("base")
-								.size(80, 80)
-								.children(4, Tests::itemLabel)
-								.displayCount(4)
-				)
-				.size(40, 20)
-				.id("button")
-				.dropdownDirection(Direction2D.LEFT)
-				.anchor(Anchor.CENTER);
+		leftListPanel.setId("base");
+		leftListPanel.setSize(80, 80);
+		leftListPanel.addChildren(4, false, Tests::itemLabel);
 
-		leftDropdown.onTick((controlGui) -> {
-			leftDropdown.dropdownDirection(Direction2D.RIGHT);
-		});
+		leftDropdown.setId("button");
+		leftDropdown.setDropdown(leftListPanel);
+		leftDropdown.setSize(40, 20);
+		leftDropdown.setDropdownDirection(Direction2D.LEFT);
+		leftDropdown.setAnchor(Anchor.CENTER);
 
-		DropdownControl rightDropdown = new DropdownControl()
-				.dropdown(
-						new ListPanelControl()
-								.id("base")
-								.size(80, 80)
-								.children(4, Tests::itemLabel)
-								.displayCount(4)
-				)
-				.size(40, 20)
-				.id("button")
-				.dropdownDirection(Direction2D.RIGHT)
-				.anchor(Anchor.CENTER);
+		rightListPanel.setId("base");
+		rightListPanel.setSize(80, 80);
+		rightListPanel.addChildren(4, false, Tests::itemLabel);
 
+		rightDropdown.setId("button");
+		rightDropdown.setDropdown(rightListPanel);
+		rightDropdown.setSize(40, 20);
+		rightDropdown.setDropdownDirection(Direction2D.LEFT);
+		rightDropdown.setAnchor(Anchor.CENTER);
 
-		return new PanelControl<>()
-				.child(new DropdownControl()
-						.dropdown(
-								new ListPanelControl()
-										.id("base")
-										.size(60, 60)
-										.child(leftDropdown)
-										.child(rightDropdown)
-										.displayCount(2)
-						)
-						.size(60, 20)
-						.id("button")
-						.anchor(Anchor.CENTER)
-				)
-				.size(90, 50)
-				.anchor(Anchor.CENTER)
-				.id("base");
+		centerListPanel.setId("base");
+		centerListPanel.setSize(60, 60);
+		centerListPanel.addChild(leftDropdown);
+		centerListPanel.addChild(rightDropdown);
+		centerListPanel.setDisplayCount(2);
 
-		 */
+		centerDropdown.setId("button");
+		centerDropdown.setDropdown(centerListPanel);
+		centerDropdown.setSize(60, 20);
+		centerDropdown.setAnchor(Anchor.CENTER);
+
+		panel.setId("base");
+		panel.addChild(centerDropdown);
+		panel.setSize(90, 50);
+		panel.setAnchor(Anchor.CENTER);
+
+		return panel;
 	}
 
 	private static Control testTwo() {
-		return new Control();
+		SplitControl split = new SplitControl();
+		SliderControl scrollBar = new SliderControl();
+		ListPanelControl listPanel = new ListPanelControl();
 
-		/*
-		ListPanelControl listPanel = new ListPanelControl()
-				.size(100, 100)
-				.children(20, Tests::itemLabel)
-				.displayCount(5)
-				.anchor(Anchor.CENTER);
+		listPanel.setSize(100, 100);
+		listPanel.addChildren(20, false, Tests::itemLabel);
+		listPanel.setDisplayCount(5);
+		listPanel.setAnchor(Anchor.CENTER);
 
-		SliderControl scrollBar = new SliderControl()
-				.size(20, 100)
-				.onSlide((gui, control) -> listPanel.startIndex((int) Math.floor((
-						(listPanel.children.size() - listPanel.getDisplayCount())
-						* (control.getScrollPercent())/100))))
-				.barLength(10)
-				.anchor(Anchor.CENTER);
+		scrollBar.setSize(20, 100);
+		scrollBar.setBarLength(10);
+		scrollBar.setAnchor(Anchor.CENTER);
+		scrollBar.onSlide(gui -> listPanel.setStartIndex(
+				(int) Math.floor((listPanel.children.size() - listPanel.getDisplayCount()) * scrollBar.getScrollPercent() /100)
+		));
 
-		return new SplitControl()
-				.id("base")
-				.size(140, 120)
-				.splitSize(110)
-				.first(scrollBar)
-				.second(listPanel)
-				.anchor(Anchor.CENTER);
+		split.setId("base");
+		split.setSize(140, 120);
+		split.setSplitSize(110);
+		split.setFirst(scrollBar);
+		split.setSecond(listPanel);
+		split.setAnchor(Anchor.CENTER);
 
-		 */
+		return split;
 	}
 
 	private static Control testThree() {
-		return new Control();
+		PanelControl panel = new PanelControl();
+		SlotControl slot1 = new SlotControl(0, 1);
+		SlotControl slot2 = new SlotControl(1, 1);
+		GridPanelControl inventoryPanel = new GridPanelControl();
 
-		/*
-		GridPanelControl playerInvGrid = new GridPanelControl()
-				.size(162, 72)
-				.anchor(Anchor.CENTER)
-				.rows(4)
-				.columns(9)
-				.children(36, integer -> {
-					int index = integer;
-					if (integer < 27) {
-						index += 9;
-					}
-					else {
-						index -= 27;
-					}
+		inventoryPanel.setSize(162, 72);
+		inventoryPanel.setRows(4);
+		inventoryPanel.setColumns(9);
+		inventoryPanel.setAnchor(Anchor.CENTER);
+		inventoryPanel.addChildren(36, false, integer -> {
+			int index = integer;
+			if (integer < 27) {
+				index += 9;
+			}
+			else {
+				index -= 27;
+			}
 
-					return new SlotControl(index, 0);
-				});
+			return new SlotControl(index, 0);
+		});
 
-		SlotControl slot1 = new SlotControl(0, 1)
-				.filter(true, Items.ANDESITE);
+		slot1.filter(true, Items.ANDESITE);
+		slot2.canTake((controlGui, itemStack) -> false);
 
-		SlotControl slot2 = new SlotControl(1, 1)
-				.canTake((gui, slotControl, stack) -> false);
+		panel.setId("base");
+		panel.setSize(180, 120);
+		panel.addChild(inventoryPanel);
+		panel.setAnchor(Anchor.CENTER);
 
-		return new PanelControl<>()
-				.id("base")
-				.size(180, 120)
-				.anchor(Anchor.CENTER)
-				.child(playerInvGrid);
-
-		 */
-	}
-
-	private static Control itemLabel(int number) {
-		return new LabelControl();
-
-		/*
-		return new LabelControl()
-				.size(60, 20)
-				.text("Item No. " + (number + 1))
-				.anchor(Anchor.CENTER)
-				.shadow(true);
-
-		 */
+		return panel;
 	}
 
 	private static Control testFour() {
-		return new Control();
+		ButtonControl button = new ButtonControl();
+		LabelControl tooltip = new LabelControl();
 
-		/*
-		return new ButtonControl()
-				.id("button")
-				.size(200, 20)
-				.anchor(Anchor.CENTER)
-				.tooltip(
-						new LabelControl()
-								.text("Hi!")
-								.size(40, 20)
-				);
+		tooltip.setId("tooltip");
+		tooltip.setText("Hi!");
+		tooltip.setSize(40, 20);
 
-		 */
+		button.setId("button");
+		button.setSize(200, 20);
+		button.setTooltip(tooltip);
+		button.setAnchor(Anchor.CENTER);
+
+		return button;
 	}
 
 	private static Control testFive() {
-		return new Control();
-
-		/*
 		List<Text> texts = createText(50);
+		LabelControl label = new LabelControl();
+		SliderControl scrollbar = new SliderControl();
+		SplitControl split = new SplitControl();
 
-		LabelControl label = new LabelControl()
-				.size(100, 100)
-				.maxDisplayedLines(10)
-				.id("tooltip")
-				.text(texts)
-				.anchor(Anchor.CENTER);
+		label.setId("tooltip");
+		label.setSize(100, 100);
+		label.setMaxDisplayedLines(10);
+		label.setText(texts);
+		label.setAnchor(Anchor.CENTER);
 
-		SliderControl scrollBar = new SliderControl()
-				.size(20, 100)
-				.onSlide((gui, control) -> label.firstLine((int) Math.floor((45) * control.getScrollPercent()/100)))
-				.barLength(10)
-				.anchor(Anchor.CENTER);
+		scrollbar.setSize(20, 100);
+		scrollbar.setAnchor(Anchor.CENTER);
+		scrollbar.setBarLength(10);
+		scrollbar.onSlide(gui -> label.setFirstLine((int) Math.floor((45) * scrollbar.getScrollPercent()/100)));
 
-		return new SplitControl()
-				.id("base")
-				.size(140, 120)
-				.splitSize(110)
-				.first(scrollBar)
-				.second(label)
-				.anchor(Anchor.CENTER);
+		split.setId("base");
+		split.setSize(130, 120);
+		split.setAnchor(Anchor.CENTER);
+		split.setSplitSize(110);
+		split.setFirst(scrollbar);
+		split.setSecond(label);
 
-		 */
+		return split;
+	}
+
+	private static Control itemLabel(int number) {
+		LabelControl label = new LabelControl();
+
+		label.setSize(60, 20);
+		label.setText("Item No. " + (number + 1));
+		label.setShadow(true);
+		label.setAnchor(Anchor.CENTER);
+
+		return label;
 	}
 
 	private static List<Text> createText(int lines) {
@@ -234,21 +226,12 @@ public class Tests {
 		for (int i = 0; i < lines; i += 1) {
 			LiteralText text = new LiteralText("Text.");
 			int j = random.nextInt(3);
-			Text formatted;
-
-			switch (j) {
-				case 0:
-					formatted = text.formatted(Formatting.BOLD);
-					break;
-				case 1:
-					formatted = text.formatted(Formatting.ITALIC);
-					break;
-				case 2:
-					formatted = text.formatted(Formatting.UNDERLINE);
-					break;
-				default:
-					throw new IllegalStateException("Unexpected value: " + j);
-			}
+			Text formatted = switch (j) {
+				case 0 -> text.formatted(Formatting.BOLD);
+				case 1 -> text.formatted(Formatting.ITALIC);
+				case 2 -> text.formatted(Formatting.UNDERLINE);
+				default -> throw new IllegalStateException("Unexpected value: " + j);
+			};
 
 			texts.add(formatted);
 		}
