@@ -34,7 +34,7 @@ public class RenderHelper {
 				GlStateManager.SrcFactor.ONE.value,
 				GlStateManager.DstFactor.ZERO.value
 		);
-		RenderSystem.setShaderColor(color.red, color.green, color.blue, color.alpha);
+		//RenderSystem.setShaderColor(color.red, color.green, color.blue, color.alpha);
 		RenderSystem.enableDepthTest();
 
 		Vector2 vert1 = new Vector2(x, y);
@@ -74,10 +74,10 @@ public class RenderHelper {
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
 
 		RenderSystem.enableBlend();
-		RenderSystem.enableTexture();
 		RenderSystem.setShaderTexture(0, texture);
+		RenderSystem.enableTexture();
 		RenderSystem.blendFuncSeparate(770, 771, 1, 0);
-		RenderSystem.setShaderColor(255, 255, 255, 255);
+		//RenderSystem.setShaderColor(255, 255, 255, 255);
 		RenderSystem.enableDepthTest();
 
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
