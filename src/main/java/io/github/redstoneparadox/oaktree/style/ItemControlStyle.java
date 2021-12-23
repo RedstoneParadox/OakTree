@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.style;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

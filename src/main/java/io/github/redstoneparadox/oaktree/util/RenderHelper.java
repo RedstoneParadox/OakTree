@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.opengl.GL11;
 
 public class RenderHelper {
 	private static double zOffset = 0.0;

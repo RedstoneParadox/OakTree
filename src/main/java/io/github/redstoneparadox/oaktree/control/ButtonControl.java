@@ -9,7 +9,6 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class ButtonControl extends InteractiveControl implements MouseButtonListener {

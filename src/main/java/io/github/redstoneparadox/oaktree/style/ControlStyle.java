@@ -1,7 +1,5 @@
 package io.github.redstoneparadox.oaktree.style;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
-
 /**
  * A StyleBox represents the part of the node that actually gets drawn. Multiple Nodes
  * can be drawn as a color or texture, so this class and its children were created to

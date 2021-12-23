@@ -3,7 +3,6 @@ package io.github.redstoneparadox.oaktree.control.util;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.util.ClickFunction;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public final class ControlArea {
 	private final Rectangle rect;

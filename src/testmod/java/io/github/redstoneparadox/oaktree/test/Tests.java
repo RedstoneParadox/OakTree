@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.test;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.control.Anchor;
 import io.github.redstoneparadox.oaktree.control.ButtonControl;
 import io.github.redstoneparadox.oaktree.control.Control;
@@ -13,9 +12,6 @@ import io.github.redstoneparadox.oaktree.control.SliderControl;
 import io.github.redstoneparadox.oaktree.control.SlotControl;
 import io.github.redstoneparadox.oaktree.control.SplitControl;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
-import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
-import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
-import io.github.redstoneparadox.oaktree.style.Theme;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
