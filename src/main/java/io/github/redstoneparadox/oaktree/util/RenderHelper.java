@@ -27,11 +27,16 @@ public class RenderHelper {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder builder = tessellator.getBuffer();
 
-		GlStateManager._enableBlend();
-		GlStateManager._disableTexture();
-		GlStateManager._blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.value, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SrcFactor.ONE.value, GlStateManager.DstFactor.ZERO.value);
-		// GlStateManager.blendColor(color.red, color.green, color.blue, color.alpha);
-		GlStateManager._enableDepthTest();
+		RenderSystem.enableBlend();
+		RenderSystem.disableTexture();
+		RenderSystem.blendFuncSeparate(
+				GlStateManager.SrcFactor.SRC_COLOR.value,
+				GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value,
+				GlStateManager.SrcFactor.ONE.value,
+				GlStateManager.DstFactor.ZERO.value
+		);
+		RenderSystem.setShaderColor(color.red, color.green, color.blue, color.alpha);
+		RenderSystem.enableDepthTest();
 
 		Vector2 vert1 = new Vector2(x, y);
 		Vector2 vert2 = new Vector2(x, y + height);
@@ -46,8 +51,8 @@ public class RenderHelper {
 
 		tessellator.draw();
 
-		GlStateManager._enableTexture();
-		GlStateManager._disableBlend();
+		RenderSystem.enableTexture();
+		RenderSystem.disableBlend();
 	}
 
 	public static void drawItemStackCentered(int x, int y, int width, int height, ItemStack stack) {
@@ -74,7 +79,7 @@ public class RenderHelper {
 
 		RenderSystem.enableBlend();
 		RenderSystem.blendFuncSeparate(770, 771, 1, 0);
-		// RenderSystem.blendColor(255, 255, 255, 255);
+		RenderSystem.setShaderColor(255, 255, 255, 255);
 		RenderSystem.enableDepthTest();
 
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
