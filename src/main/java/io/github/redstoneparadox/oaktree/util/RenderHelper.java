@@ -28,7 +28,6 @@ public class RenderHelper {
 		BufferBuilder builder = tessellator.getBuffer();
 
 		RenderSystem.enableBlend();
-		RenderSystem.disableTexture();
 		RenderSystem.blendFuncSeparate(
 				GlStateManager.SrcFactor.SRC_COLOR.value,
 				GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value,
@@ -51,7 +50,6 @@ public class RenderHelper {
 
 		tessellator.draw();
 
-		RenderSystem.enableTexture();
 		RenderSystem.disableBlend();
 	}
 
@@ -67,8 +65,6 @@ public class RenderHelper {
 	}
 
 	public static void drawTexture(float x, float y, float left, float top, float width, float height, float fileWidth, float fileHeight, float scale, Identifier texture, Color tint) {
-		MinecraftClient.getInstance().getTextureManager().bindTexture(texture);
-
 		int r = (int) (tint.red * 255.0f);
 		int g = (int) (tint.green * 255.0f);
 		int b = (int) (tint.blue * 255.0f);
@@ -78,6 +74,8 @@ public class RenderHelper {
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
 
 		RenderSystem.enableBlend();
+		RenderSystem.enableTexture();
+		RenderSystem.setShaderTexture(0, texture);
 		RenderSystem.blendFuncSeparate(770, 771, 1, 0);
 		RenderSystem.setShaderColor(255, 255, 255, 255);
 		RenderSystem.enableDepthTest();
@@ -91,6 +89,7 @@ public class RenderHelper {
 
 		tessellator.draw();
 
+		RenderSystem.disableTexture();
 		RenderSystem.disableBlend();
 	}
 
