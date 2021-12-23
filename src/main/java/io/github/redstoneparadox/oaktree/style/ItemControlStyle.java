@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.style;
 
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -46,7 +47,7 @@ public class ItemControlStyle extends ControlStyle {
 	}
 
 	@Override
-	public void draw(int x, int y, int width, int height) {
+	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
 		if (!stack.isEmpty()) {
 			RenderHelper.drawItemStackCentered(x, y, width, height, stack);
 		}

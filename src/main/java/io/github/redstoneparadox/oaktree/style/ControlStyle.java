@@ -1,5 +1,7 @@
 package io.github.redstoneparadox.oaktree.style;
 
+import net.minecraft.client.util.math.MatrixStack;
+
 /**
  * A StyleBox represents the part of the node that actually gets drawn. Multiple Nodes
  * can be drawn as a color or texture, so this class and its children were created to
@@ -23,7 +25,7 @@ public abstract class ControlStyle {
 		this.blank = false;
 	}
 
-	public void draw(int x, int y, int width, int height) {
+	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
 
 	}
 

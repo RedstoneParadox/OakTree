@@ -1,5 +1,7 @@
 package io.github.redstoneparadox.oaktree.style;
 
+import net.minecraft.client.util.math.MatrixStack;
+
 public class NinePatchControlStyle extends TextureControlStyle {
 	int firstWidth = 1;
 	int secondWidth = 1;
@@ -38,7 +40,7 @@ public class NinePatchControlStyle extends TextureControlStyle {
 	}
 
 	@Override
-	public void draw(int x, int y, int width, int height) {
+	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
 		int fullSecondWidth = width - firstWidth - thirdWidth;
 		int fullSecondHeight = height - firstHeight - thirdHeight;
 

@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.style;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class TextureControlStyle extends ControlStyle {
@@ -73,7 +74,7 @@ public class TextureControlStyle extends ControlStyle {
 	}
 
 	@Override
-	public void draw(int x, int y, int width, int height) {
+	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
 		MinecraftClient.getInstance().getTextureManager().bindTexture(texture);
 
 		if (!tiled) {

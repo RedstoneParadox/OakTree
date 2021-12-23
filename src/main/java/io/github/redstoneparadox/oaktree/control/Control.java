@@ -219,7 +219,7 @@ public class Control {
 
 	@ApiStatus.Internal
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		currentStyle.draw(trueX, trueY, oldArea.width, oldArea.height);
+		currentStyle.draw(matrices, trueX, trueY, oldArea.width, oldArea.height);
 	}
 
 	public boolean onMouseOver() {
@@ -228,7 +228,7 @@ public class Control {
 		return false;
 	}
 
-	public void newDraw(int containerX, int containerY, int containerWidth, int containerHeight, ControlGui gui, ControlTree tree) {
+	public void newDraw(MatrixStack matrices, int containerX, int containerY, int containerWidth, int containerHeight, ControlGui gui, ControlTree tree) {
 		int x;
 		int y;
 		int width;
@@ -252,7 +252,7 @@ public class Control {
 			height = rectangle.height;
 		}
 
-		currentStyle.draw(x, y, width, height);
+		currentStyle.draw(matrices, x, y, width, height);
 	}
 
 	@ApiStatus.Internal

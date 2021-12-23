@@ -96,17 +96,17 @@ public class ProgressBarControl extends Control {
 		switch (direction) {
 			case UP:
 				int drawHeight = (int) (barHeight * (this.percent/100.0f));
-				barStyle.draw(barX, barY + (barHeight - drawHeight), barWidth, drawHeight);
+				barStyle.draw(matrices, barX, barY + (barHeight - drawHeight), barWidth, drawHeight);
 				break;
 			case DOWN:
-				barStyle.draw(barX, barY, barWidth, (int) (barHeight * (this.percent/100.0f)));
+				barStyle.draw(matrices, barX, barY, barWidth, (int) (barHeight * (this.percent/100.0f)));
 				break;
 			case LEFT:
 				int drawWidth = (int) (barWidth * (this.percent/100.0f));
-				barStyle.draw(barX - drawWidth, barY, drawWidth, barHeight);
+				barStyle.draw(matrices, barX - drawWidth, barY, drawWidth, barHeight);
 				break;
 			case RIGHT:
-				barStyle.draw(barX, barY, (int) (barWidth * (this.percent/100.0f)), barHeight);
+				barStyle.draw(matrices, barX, barY, (int) (barWidth * (this.percent/100.0f)), barHeight);
 				break;
 		}
 	}

@@ -5,7 +5,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
+import net.minecraft.client.render.DiffuseLighting;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
@@ -23,34 +27,15 @@ public class RenderHelper {
 		RenderHelper.zOffset = zOffset;
 	}
 
-	public static void drawRectangle(int x, int y, int width, int height, @NotNull Color color) {
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder builder = tessellator.getBuffer();
+	public static void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, @NotNull Color color) {
+		int r = (int) (color.red * 255.0f);
+		int g = (int) (color.green * 255.0f);
+		int b = (int) (color.blue * 255.0f);
+		int a = (int) (color.alpha * 255.0f);
 
-		RenderSystem.enableBlend();
-		RenderSystem.blendFuncSeparate(
-				GlStateManager.SrcFactor.SRC_COLOR.value,
-				GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value,
-				GlStateManager.SrcFactor.ONE.value,
-				GlStateManager.DstFactor.ZERO.value
-		);
-		//RenderSystem.setShaderColor(color.red, color.green, color.blue, color.alpha);
-		RenderSystem.enableDepthTest();
+		int c = (r << 24) + (g << 16) + (b << 8) + a;
 
-		Vector2 vert1 = new Vector2(x, y);
-		Vector2 vert2 = new Vector2(x, y + height);
-		Vector2 vert3 = new Vector2(x + width, y + height);
-		Vector2 vert4 = new Vector2(x + width, y);
-
-		builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-		builder.vertex(vert1.x, vert1.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
-		builder.vertex(vert2.x, vert2.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
-		builder.vertex(vert3.x, vert3.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
-		builder.vertex(vert4.x, vert4.y, zOffset).color(color.red, color.green, color.blue, color.alpha).next();
-
-		tessellator.draw();
-
-		RenderSystem.disableBlend();
+		if (width >= 1 && height >= 1) DrawableHelper.fill(matrices, x, y, x + width, y + height, c);
 	}
 
 	public static void drawItemStackCentered(int x, int y, int width, int height, ItemStack stack) {
@@ -65,31 +50,42 @@ public class RenderHelper {
 	}
 
 	public static void drawTexture(float x, float y, float left, float top, float width, float height, float fileWidth, float fileHeight, float scale, Identifier texture, Color tint) {
-		int r = (int) (tint.red * 255.0f);
-		int g = (int) (tint.green * 255.0f);
-		int b = (int) (tint.blue * 255.0f);
-		int a = (int) (tint.alpha * 255.0f);
+		float r = (tint.red);
+		float g = (tint.green);
+		float b = (tint.blue);
+		float a = (tint.alpha);
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
 
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderTexture(0, texture);
-		RenderSystem.enableTexture();
-		RenderSystem.blendFuncSeparate(770, 771, 1, 0);
-		//RenderSystem.setShaderColor(255, 255, 255, 255);
-		RenderSystem.enableDepthTest();
+		RenderSystem.setShaderColor(r, g, b, a);
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
-		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
+		float u1 = left/fileWidth;
+		float u2 = (left + width)/fileWidth;
+		float v1 = top/fileHeight;
+		float v2 = (top + height)/fileHeight;
 
-		bufferBuilder.vertex(x * scale, (y + height) * scale, zOffset).color(r, g, b, a).texture(left/fileWidth, (top + height)/fileHeight).next();
-		bufferBuilder.vertex((x + width) * scale, (y + height) * scale, zOffset).color(r, g, b, a).texture((left + width)/fileWidth, (top + height)/fileHeight).next();
-		bufferBuilder.vertex((x + width) * scale, y * scale, zOffset).color(r, g, b, a).texture((left + width)/fileWidth, top/fileHeight).next();
-		bufferBuilder.vertex(x * scale, y * scale, zOffset).color(r, g, b, a).texture(left/fileWidth, top/fileHeight).next();
+		/*
+		RenderSystem.blendFuncSeparate(
+				GlStateManager.SrcFactor.SRC_COLOR.value,
+				GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value,
+				GlStateManager.SrcFactor.ONE.value,
+				GlStateManager.DstFactor.ZERO.value
+		);
+		*/
 
-		tessellator.draw();
+		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
 
-		RenderSystem.disableTexture();
+		bufferBuilder.vertex(x * scale, (y + height) * scale, zOffset).texture(u1, v2).next();
+		bufferBuilder.vertex((x + width) * scale, (y + height) * scale, zOffset).texture(u2, v2).next();
+		bufferBuilder.vertex((x + width) * scale, y * scale, zOffset).texture(u2, v1).next();
+		bufferBuilder.vertex(x * scale, y * scale, zOffset).texture(u1, v1).next();
+
+		bufferBuilder.end();
+		BufferRenderer.draw(bufferBuilder);
 		RenderSystem.disableBlend();
 	}
 

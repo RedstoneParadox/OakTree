@@ -243,7 +243,7 @@ public class SlotControl extends InteractiveControl implements MouseButtonListen
 
 				if (isMouseWithin) {
 					RenderHelper.setzOffset(200.0);
-					RenderHelper.drawRectangle(trueX + slotBorder, trueY + slotBorder, oldArea.width - (2 * slotBorder), oldArea.height - (2 * slotBorder), highlightColor);
+					RenderHelper.drawRectangle(matrices, trueX + slotBorder, trueY + slotBorder, oldArea.width - (2 * slotBorder), oldArea.height - (2 * slotBorder), highlightColor);
 					RenderHelper.setzOffset(0.0);
 				}
 			}

@@ -515,11 +515,11 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 			if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
 			int lineY = trueY + (row - firstLine) * TextHelper.getFontHeight();
 			RenderHelper.drawText(matrices, new LiteralText(line).asOrderedText(), trueX, lineY, shadow, fontColor);
-			drawHighlights(line, lineY, row);
+			drawHighlights(matrices, line, lineY, row);
 		}
 	}
 
-	private void drawHighlights(String line, int lineY, int row) {
+	private void drawHighlights(MatrixStack matrices, String line, int lineY, int row) {
 		if (selection.isHighlighted(row)) {
 			int startIndex;
 			if (selection.start().row != row) startIndex = 0;
@@ -533,7 +533,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 
 			int x = trueX + TextHelper.getWidth(line.substring(0, startIndex));
 			String highlightedPortion = line.substring(startIndex, endIndex);
-			RenderHelper.drawRectangle(x, lineY, TextHelper.getWidth(highlightedPortion), TextHelper.getFontHeight(), highlightColor);
+			RenderHelper.drawRectangle(matrices, x, lineY, TextHelper.getWidth(highlightedPortion), TextHelper.getFontHeight(), highlightColor);
 		}
 	}
 

@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.style;
 
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class ColorControlStyle extends ControlStyle {
 	private Color color;
@@ -19,9 +20,9 @@ public class ColorControlStyle extends ControlStyle {
 	}
 
 	@Override
-	public void draw(int x, int y, int width, int height) {
-		if (borderColor != null) RenderHelper.drawRectangle(x - borderWidth, y - borderWidth, width + 2 * borderWidth, height + 2* borderWidth, color);
-		RenderHelper.drawRectangle(x, y, width, height, color);
+	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
+		if (borderColor != null) RenderHelper.drawRectangle(matrices,x - borderWidth, y - borderWidth, width + 2 * borderWidth, height + 2* borderWidth, color);
+		RenderHelper.drawRectangle(matrices, x, y, width, height, color);
 	}
 
 	@Override
