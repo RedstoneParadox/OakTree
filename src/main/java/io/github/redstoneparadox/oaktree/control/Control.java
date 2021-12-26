@@ -221,7 +221,7 @@ public class Control extends ControlElement {
 
 	// Draw
 	public void newDraw(MatrixStack matrices) {
-		Vector2 containerOrigin = parent.getContainerOrigin(this);
+		currentStyle.draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	@ApiStatus.Internal
