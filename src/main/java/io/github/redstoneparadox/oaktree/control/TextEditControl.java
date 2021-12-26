@@ -203,7 +203,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 
 				if (updateText) {
 					lines.clear();
-					lines.addAll(TextHelper.wrapLines(text, oldArea.width, maxLines, shadow));
+					lines.addAll(TextHelper.wrapLines(text, oldArea.getWidth(), maxLines, shadow));
 					selection.cancel();
 					cursor.toEnd();
 					updateText = false;
@@ -432,7 +432,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 
 		String newText = text.substring(0, startPosition) + text.substring(endPosition);
 		lines.clear();
-		lines.addAll(TextHelper.wrapLines(newText, oldArea.width, maxLines, shadow));
+		lines.addAll(TextHelper.wrapLines(newText, oldArea.getWidth(), maxLines, shadow));
 	}
 
 	private void insertCharacter(char c, ControlGui gui) {
@@ -452,12 +452,12 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		}
 
 		lines.clear();
-		lines.addAll(TextHelper.wrapLines(newText, oldArea.width, maxLines, shadow));
+		lines.addAll(TextHelper.wrapLines(newText, oldArea.getWidth(), maxLines, shadow));
 	}
 
 	private void insertString(String st, ControlGui gui)  {
 		if (lines.isEmpty()) {
-			lines.addAll(TextHelper.wrapLines(st, oldArea.width, maxLines, shadow));
+			lines.addAll(TextHelper.wrapLines(st, oldArea.getWidth(), maxLines, shadow));
 			return;
 		}
 
@@ -472,7 +472,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		}
 
 		lines.clear();
-		lines.addAll(TextHelper.wrapLines(newText, oldArea.width, maxLines, shadow));
+		lines.addAll(TextHelper.wrapLines(newText, oldArea.getWidth(), maxLines, shadow));
 	}
 
 	private void removeCharacter(ControlGui gui) {
@@ -494,7 +494,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		}
 
 		lines.clear();
-		lines.addAll(TextHelper.wrapLines(newText, oldArea.width, maxLines, shadow));
+		lines.addAll(TextHelper.wrapLines(newText, oldArea.getWidth(), maxLines, shadow));
 	}
 
 	private int getCursorPosition(Cursor cursor) {
@@ -555,7 +555,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 	}
 
 	private boolean lineOccupiesFullSpace(String cursorLine) {
-		int width = oldArea.width - 3;
+		int width = oldArea.getWidth() - 3;
 		return TextHelper.getWidth(cursorLine) >= width;
 	}
 

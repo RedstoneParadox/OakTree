@@ -14,8 +14,8 @@ public class SplitControl extends Control {
 	protected @NotNull Control first = new Control();
 	protected @NotNull Control second = new Control();
 
-	private final Rectangle firstArea = new Rectangle(trueX, trueY, oldArea.width, oldArea.height);
-	private final Rectangle secondArea = new Rectangle(trueX + firstArea.width, trueY, 0, oldArea.height);
+	private final Rectangle firstArea = new Rectangle(trueX, trueY, oldArea.getWidth(), oldArea.getHeight());
+	private final Rectangle secondArea = new Rectangle(trueX + firstArea.getWidth(), trueY, 0, oldArea.getHeight());
 
 	public SplitControl() {
 		this.id = "split";
@@ -71,28 +71,28 @@ public class SplitControl extends Control {
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
 
-		firstArea.x = trueX;
-		firstArea.y = trueY;
+		firstArea.setX(trueX);
+		firstArea.setY(trueY);
 
 		if (vertical) {
-			firstArea.width = oldArea.width;
-			firstArea.height = oldArea.height - splitSize;
-			secondArea.x = trueX;
-			secondArea.y = trueY + firstArea.height;
-			secondArea.width = oldArea.width;
-			secondArea.height = splitSize;
+			firstArea.setWidth(oldArea.getWidth());
+			firstArea.setHeight(oldArea.getHeight() - splitSize);
+			secondArea.setX(trueX);
+			secondArea.setY(trueY + firstArea.getHeight());
+			secondArea.setWidth(oldArea.getWidth());
+			secondArea.setHeight(splitSize);
 		}
 		else {
-			firstArea.width = oldArea.width - splitSize;
-			firstArea.height = oldArea.height;
-			secondArea.x = trueX + firstArea.width;
-			secondArea.y = trueY;
-			secondArea.width = splitSize;
-			secondArea.height = oldArea.height;
+			firstArea.setWidth(oldArea.getWidth() - splitSize);
+			firstArea.setHeight(oldArea.getHeight());
+			secondArea.setX(trueX + firstArea.getWidth());
+			secondArea.setY(trueY);
+			secondArea.setWidth(splitSize);
+			secondArea.setHeight(oldArea.getHeight());
 		}
 
-		if (first.isVisible()) first.preDraw(gui, firstArea.x, firstArea.y, firstArea.width, firstArea.height, mouseX, mouseY);
-		if (second.isVisible()) second.preDraw(gui, secondArea.x, secondArea.y, secondArea.width, secondArea.height, mouseX, mouseY);
+		if (first.isVisible()) first.preDraw(gui, firstArea.getX(), firstArea.getY(), firstArea.getWidth(), firstArea.getHeight(), mouseX, mouseY);
+		if (second.isVisible()) second.preDraw(gui, secondArea.getX(), secondArea.getY(), secondArea.getWidth(), secondArea.getHeight(), mouseX, mouseY);
 	}
 
 	@Override

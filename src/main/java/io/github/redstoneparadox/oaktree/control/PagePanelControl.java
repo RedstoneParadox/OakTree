@@ -32,7 +32,7 @@ public class PagePanelControl extends PanelControl {
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		Control child = children.get(page);
 		Vector2 innerPosition = innerPosition(trueX, trueY);
-		Vector2 innerDimensions = innerDimensions(oldArea.width, oldArea.height);
+		Vector2 innerDimensions = innerDimensions(oldArea.getWidth(), oldArea.getHeight());
 
 		if (child.isVisible()) child.preDraw(gui, innerPosition.getX(), innerPosition.getY(), innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
 	}

@@ -22,20 +22,20 @@ public final class ControlArea {
 	}
 
 	public void updateArea(int x, int y, int width, int height) {
-		rect.x = x;
-		rect.y = y;
-		rect.width = width;
-		rect.height = height;
+		rect.setX(x);
+		rect.setY(y);
+		rect.setWidth(width);
+		rect.setHeight(height);
 	}
 
 	public void updateSize(int width, int height) {
-		rect.width = width;
-		rect.height = height;
+		rect.setWidth(width);
+		rect.setHeight(height);
 	}
 
 	public void updatePosition(int x, int y) {
-		rect.x = x;
-		rect.y = y;
+		rect.setX(x);
+		rect.setY(y);
 	}
 
 	public Rectangle getRect() {

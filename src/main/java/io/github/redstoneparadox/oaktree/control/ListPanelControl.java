@@ -46,8 +46,8 @@ public class ListPanelControl extends PanelControl {
 	@Override
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		if (!horizontal) {
-			int sectionHeight = oldArea.height/displayCount;
-			Vector2 innerDimensions = innerDimensions(oldArea.width, sectionHeight);
+			int sectionHeight = oldArea.getHeight() /displayCount;
+			Vector2 innerDimensions = innerDimensions(oldArea.getWidth(), sectionHeight);
 			Vector2 innerPosition = innerPosition(trueX, trueY);
 
 			for (int i = 0; i < displayCount; i += 1) {
@@ -58,8 +58,8 @@ public class ListPanelControl extends PanelControl {
 			}
 		}
 		else {
-			int sectionWidth = oldArea.width/displayCount;
-			Vector2 innerDimensions = innerDimensions(sectionWidth, oldArea.height);
+			int sectionWidth = oldArea.getWidth() /displayCount;
+			Vector2 innerDimensions = innerDimensions(sectionWidth, oldArea.getHeight());
 			Vector2 innerPosition = innerPosition(trueX, trueY);
 
 			for (int i = 0; i < displayCount; i += 1) {

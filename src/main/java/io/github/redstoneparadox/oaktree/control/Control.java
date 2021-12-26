@@ -26,12 +26,13 @@ public class Control extends ControlElement {
 	protected boolean expand = false;
 	protected boolean visible = true;
 	protected BiConsumer<ControlGui, Control> onTick = (gui, control) -> {};
-
 	protected ControlStyle currentStyle = ControlStyle.BLANK;
 	protected Theme internalTheme = new Theme();
 
+	//Internal State
 	protected int trueX = 0;
 	protected int trueY = 0;
+	protected Rectangle trueArea = new Rectangle(0, 0, 1, 1);
 
 	public void setId(@NotNull String id) {
 		this.id = id;
@@ -69,8 +70,8 @@ public class Control extends ControlElement {
 	 * @param y The new y offset in pixels.
 	 */
 	public void setOffset(int x, int y) {
-		oldArea.x = x;
-		oldArea.y = y;
+		oldArea.setX(x);
+		oldArea.setY(y);
 	}
 
 	/**
@@ -83,12 +84,12 @@ public class Control extends ControlElement {
 	 * @param offset The offset in Vector2 form.
 	 */
 	public void setOffset(@NotNull Vector2 offset) {
-		oldArea.x = offset.getX();
-		oldArea.y = offset.getY();
+		oldArea.setX(offset.getX());
+		oldArea.setY(offset.getY());
 	}
 
 	public @NotNull Vector2 getOffset() {
-		return new Vector2(oldArea.x, oldArea.y);
+		return new Vector2(oldArea.getX(), oldArea.getY());
 	}
 
 	/**
@@ -101,8 +102,8 @@ public class Control extends ControlElement {
 	 * @param height The new height of this node in pixels.
 	 */
 	public void setSize(int width, int height) {
-		oldArea.width = width;
-		oldArea.height = height;
+		oldArea.setWidth(width);
+		oldArea.setHeight(height);
 	}
 
 	/**
@@ -114,12 +115,12 @@ public class Control extends ControlElement {
 	 * @param size The size in Vector2 form.
 	 */
 	public void setSize(@NotNull Vector2 size) {
-		oldArea.width = size.getX();
-		oldArea.height = size.getY();
+		oldArea.setWidth(size.getX());
+		oldArea.setHeight(size.getY());
 	}
 
 	public @NotNull Vector2 getSize() {
-		return new Vector2(oldArea.width, oldArea.height);
+		return new Vector2(oldArea.getWidth(), oldArea.getHeight());
 	}
 
 	public @NotNull Rectangle getArea() {
@@ -185,16 +186,32 @@ public class Control extends ControlElement {
 		return new Vector2(trueX, trueY);
 	}
 
-	public void updateTree(List<Control> zIndexedControls, int offsetX, int parentY, int containerWidth, int containerHeight) {
-		
+	public void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		if (!visible) return;
+		zIndexedControls.add(this);
+
+		if (expand) {
+			trueArea = new Rectangle(containerX, containerY, containerWidth, containerHeight);
+		}
+		else {
+			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
+			Vector2 drawOffset = anchor.getOffset(oldArea.getWidth(), oldArea.getHeight());
+
+			trueArea = new Rectangle(
+					oldArea.getX() + anchorOffset.getX() + containerX - drawOffset.getX(),
+					oldArea.getY() + anchorOffset.getY() + containerY - drawOffset.getY(),
+					oldArea.getWidth(),
+					oldArea.getHeight()
+			);
+		}
 	}
 
 	// Capture the mouse and
 	public boolean interact(int mouseX, int mouseY, float deltaTime) {
-		Vector2 containerOrigin = parent.getContainerOrigin(this);
-		Vector2 position = new Vector2(containerOrigin.getX() + oldArea.x, containerOrigin.getY() + oldArea.y);
+		int x = trueArea.getX();
+		int y = trueArea.getY();
 
-		return mouseX >= position.getX() && mouseX <= position.getX() + oldArea.width && mouseY >= position.getY() && mouseX <= position.getY() + oldArea.height;
+		return mouseX >= x && mouseX <= x + oldArea.getWidth() && mouseY >= y && mouseX <= y + oldArea.getHeight();
 	}
 
 	// Update current
@@ -225,23 +242,23 @@ public class Control extends ControlElement {
 
 		if (!expand) {
 			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-			Vector2 drawOffset = anchor.getOffset(oldArea.width, oldArea.height);
+			Vector2 drawOffset = anchor.getOffset(oldArea.getWidth(), oldArea.getHeight());
 
-			trueX = oldArea.x + anchorOffset.getX() + offsetX - drawOffset.getX();
-			trueY = oldArea.y + anchorOffset.getY() + offsetY - drawOffset.getY();
+			trueX = oldArea.getX() + anchorOffset.getX() + offsetX - drawOffset.getX();
+			trueY = oldArea.getY() + anchorOffset.getY() + offsetY - drawOffset.getY();
 		}
 		else {
 			trueX = offsetX;
 			trueY = offsetY;
 
-			oldArea.width = containerWidth;
-			oldArea.height = containerHeight;
+			oldArea.setWidth(containerWidth);
+			oldArea.setHeight(containerHeight);
 		}
 	}
 
 	@ApiStatus.Internal
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		currentStyle.draw(matrices, trueX, trueY, oldArea.width, oldArea.height);
+		currentStyle.draw(matrices, trueX, trueY, oldArea.getWidth(), oldArea.getHeight());
 	}
 
 	/*
