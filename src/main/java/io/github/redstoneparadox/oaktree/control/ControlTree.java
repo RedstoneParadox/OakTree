@@ -32,11 +32,20 @@ public class ControlTree extends ControlElement {
 		return theme.get(styleName);
 	}
 
-	public void render() {
+	public void render(int mouseX, int mouseY, float deltaTime) {
 		if (dirty) {
+			MinecraftClient client = MinecraftClient.getInstance();
+			Window window = client.getWindow();
+
 			zIndexedControls.clear();
-			root.zIndex(zIndexedControls);
+			root.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
 			dirty = false;
+		}
+
+		for (Control control: zIndexedControls) {
+			if (control.interact(mouseX, mouseY, deltaTime)) {
+				break;
+			}
 		}
 
 		for (Control control: zIndexedControls) {
@@ -50,6 +59,11 @@ public class ControlTree extends ControlElement {
 
 	@Override
 	protected Vector2 getPosition() {
+		return Vector2.ZERO;
+	}
+
+	@Override
+	protected Vector2 getContainerOrigin(ControlElement element) {
 		return Vector2.ZERO;
 	}
 

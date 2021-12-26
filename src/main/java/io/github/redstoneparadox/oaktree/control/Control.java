@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 /**
  * The base class for all controls.
  */
-public class Control {
+public class Control extends ControlElement {
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle oldArea = new Rectangle(0, 0, 1, 1);
@@ -185,6 +185,28 @@ public class Control {
 		return new Vector2(trueX, trueY);
 	}
 
+	public void updateTree(List<Control> zIndexedControls, int offsetX, int parentY, int containerWidth, int containerHeight) {
+		
+	}
+
+	// Capture the mouse and
+	public boolean interact(int mouseX, int mouseY, float deltaTime) {
+		Vector2 containerOrigin = parent.getContainerOrigin(this);
+		Vector2 position = new Vector2(containerOrigin.getX() + oldArea.x, containerOrigin.getY() + oldArea.y);
+
+		return mouseX >= position.getX() && mouseX <= position.getX() + oldArea.width && mouseY >= position.getY() && mouseX <= position.getY() + oldArea.height;
+	}
+
+	// Update current
+	public void prepare() {
+
+	}
+
+	// Draw
+	public void newDraw(MatrixStack matrices) {
+		Vector2 containerOrigin = parent.getContainerOrigin(this);
+	}
+
 	@ApiStatus.Internal
 	public void zIndex(List<Control> controls) {
 		if (!visible) return;
@@ -222,12 +244,7 @@ public class Control {
 		currentStyle.draw(matrices, trueX, trueY, oldArea.width, oldArea.height);
 	}
 
-	public boolean onMouseOver() {
-
-
-		return false;
-	}
-
+	/*
 	public void newDraw(MatrixStack matrices, int containerX, int containerY, int containerWidth, int containerHeight, ControlGui gui, ControlTree tree) {
 		int x;
 		int y;
@@ -253,6 +270,17 @@ public class Control {
 		}
 
 		currentStyle.draw(matrices, x, y, width, height);
+	}
+	*/
+
+	@Override
+	protected Vector2 getPosition() {
+		return null;
+	}
+
+	@Override
+	protected Vector2 getContainerOrigin(ControlElement element) {
+		return null;
 	}
 
 	@ApiStatus.Internal

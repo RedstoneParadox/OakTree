@@ -7,6 +7,8 @@ public abstract class ControlElement {
 
 	protected abstract Vector2 getPosition();
 
+	protected abstract Vector2 getContainerOrigin(ControlElement element);
+
 	protected abstract Vector2 getSize();
 
 	protected Vector2 getContainerSize() {
