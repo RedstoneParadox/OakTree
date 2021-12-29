@@ -32,7 +32,7 @@ public class RootControl extends AbstractControl {
 		return theme.get(styleName);
 	}
 
-	public void render(MatrixStack matricies, int mouseX, int mouseY, float deltaTime) {
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float deltaTime) {
 		if (dirty) {
 			MinecraftClient client = MinecraftClient.getInstance();
 			Window window = client.getWindow();
@@ -53,7 +53,7 @@ public class RootControl extends AbstractControl {
 		}
 
 		for (Control control: zIndexedControls) {
-			control.newDraw(matricies);
+			control.newDraw(matrices);
 		}
 	}
 }
