@@ -220,7 +220,7 @@ public class Control extends AbstractControl {
 	}
 
 	// Draw
-	public void newDraw(MatrixStack matrices) {
+	protected void newDraw(MatrixStack matrices) {
 		currentStyle.draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
@@ -260,35 +260,6 @@ public class Control extends AbstractControl {
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		currentStyle.draw(matrices, trueX, trueY, oldArea.getWidth(), oldArea.getHeight());
 	}
-
-	/*
-	public void newDraw(MatrixStack matrices, int containerX, int containerY, int containerWidth, int containerHeight, ControlGui gui, ControlTree tree) {
-		int x;
-		int y;
-		int width;
-		int height;
-
-		Rectangle rectangle = area.getRect();
-
-		if (expand) {
-			x = containerX;
-			y = containerY;
-			width = containerWidth;
-			height = containerHeight;
-		}
-		else {
-			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-			Vector2 drawOffset = anchor.getOffset(rectangle.width, rectangle.height);
-
-			x = rectangle.x + containerX + anchorOffset.getX() + drawOffset.getX();
-			y = rectangle.y + containerY + anchorOffset.getY() + drawOffset.getY();
-			width = rectangle.width;
-			height = rectangle.height;
-		}
-
-		currentStyle.draw(matrices, x, y, width, height);
-	}
-	*/
 
 	@ApiStatus.Internal
 	protected final ControlStyle getStyle(Theme theme, String name) {
