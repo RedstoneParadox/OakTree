@@ -2,12 +2,12 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.math.Vector2;
 
-public abstract class ControlElement {
-	protected ControlElement parent;
+public abstract class AbstractControl {
+	protected AbstractControl parent;
 
 	protected abstract Vector2 getPosition();
 
-	protected abstract Vector2 getContainerOrigin(ControlElement element);
+	protected abstract Vector2 getContainerOrigin(AbstractControl element);
 
 	protected abstract Vector2 getSize();
 
@@ -15,7 +15,7 @@ public abstract class ControlElement {
 		return getSize();
 	}
 
-	protected void setParent(ControlElement parent) {
+	protected void setParent(AbstractControl parent) {
 		this.parent = parent;
 	}
 

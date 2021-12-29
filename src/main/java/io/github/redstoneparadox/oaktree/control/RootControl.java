@@ -10,13 +10,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlTree extends ControlElement {
+public class RootControl extends AbstractControl {
 	private final Control root;
 	private Theme theme = Theme.vanilla();
 	private boolean dirty = true;
 	private List<Control> zIndexedControls = new ArrayList<>();
 
-	public ControlTree(Control root) {
+	public RootControl(Control root) {
 		this.root = root;
 	}
 
@@ -63,7 +63,7 @@ public class ControlTree extends ControlElement {
 	}
 
 	@Override
-	protected Vector2 getContainerOrigin(ControlElement element) {
+	protected Vector2 getContainerOrigin(AbstractControl element) {
 		return Vector2.ZERO;
 	}
 

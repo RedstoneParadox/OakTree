@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 /**
  * The base class for all controls.
  */
-public class Control extends ControlElement {
+public class Control extends AbstractControl {
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle oldArea = new Rectangle(0, 0, 1, 1);
@@ -296,7 +296,7 @@ public class Control extends ControlElement {
 	}
 
 	@Override
-	protected Vector2 getContainerOrigin(ControlElement element) {
+	protected Vector2 getContainerOrigin(AbstractControl element) {
 		return null;
 	}
 
