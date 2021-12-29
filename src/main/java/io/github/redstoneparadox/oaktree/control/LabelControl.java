@@ -61,14 +61,14 @@ public class LabelControl extends Control {
 	 */
 	public void setText(List<Text> texts) {
 		if (fitText) {
-			this.oldArea.setWidth(0);
+			this.area.setWidth(0);
 
 			for (Text text: texts) {
-				this.oldArea.setWidth(Math.max(this.oldArea.getWidth(), TextHelper.getWidth(text)));
+				this.area.setWidth(Math.max(this.area.getWidth(), TextHelper.getWidth(text)));
 			}
 
-			this.oldArea.setWidth(this.oldArea.getWidth() + 8);
-			oldArea.setHeight(TextHelper.getFontHeight() * texts.size() + 8);
+			this.area.setWidth(this.area.getWidth() + 8);
+			area.setHeight(TextHelper.getFontHeight() * texts.size() + 8);
 			this.maxDisplayedLines = texts.size();
 		}
 
@@ -135,7 +135,7 @@ public class LabelControl extends Control {
 	}
 
 	public void moveToEnd() {
-		this.firstLine = TextHelper.wrapText(text, oldArea.getWidth(), 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
+		this.firstLine = TextHelper.wrapText(text, area.getWidth(), 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
 	}
 
 	public int getFirstLine() {
@@ -164,7 +164,7 @@ public class LabelControl extends Control {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
 		if (maxDisplayedLines > 0) {
-			List<OrderedText> lines = TextHelper.wrapText(text, oldArea.getWidth(), firstLine, maxDisplayedLines, shadow, false);
+			List<OrderedText> lines = TextHelper.wrapText(text, area.getWidth(), firstLine, maxDisplayedLines, shadow, false);
 			int yOffset = 0;
 
 			for (OrderedText line: lines) {

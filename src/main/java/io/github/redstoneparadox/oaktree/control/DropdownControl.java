@@ -60,16 +60,16 @@ public class DropdownControl extends InteractiveControl implements MouseButtonLi
 
 		switch (dropdownDirection) {
 			case UP:
-				dropdownY = -dropdown.oldArea.getHeight();
+				dropdownY = -dropdown.area.getHeight();
 				break;
 			case DOWN:
-				dropdownY = oldArea.getY() + oldArea.getHeight();
+				dropdownY = area.getY() + area.getHeight();
 				break;
 			case LEFT:
-				dropdownX = -dropdown.oldArea.getWidth();
+				dropdownX = -dropdown.area.getWidth();
 				break;
 			case RIGHT:
-				dropdownX = oldArea.getX() + oldArea.getWidth();
+				dropdownX = area.getX() + area.getWidth();
 				break;
 		}
 

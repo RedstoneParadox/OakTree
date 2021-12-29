@@ -21,8 +21,7 @@ import java.util.function.Consumer;
 public class Control extends AbstractControl {
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
-	protected final @NotNull  Rectangle oldArea = new Rectangle(0, 0, 1, 1);
-	protected final @NotNull ControlArea area = createBaseArea();
+	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
 	protected boolean visible = true;
 	protected BiConsumer<ControlGui, Control> onTick = (gui, control) -> {};
@@ -70,8 +69,8 @@ public class Control extends AbstractControl {
 	 * @param y The new y offset in pixels.
 	 */
 	public void setOffset(int x, int y) {
-		oldArea.setX(x);
-		oldArea.setY(y);
+		area.setX(x);
+		area.setY(y);
 	}
 
 	/**
@@ -84,12 +83,12 @@ public class Control extends AbstractControl {
 	 * @param offset The offset in Vector2 form.
 	 */
 	public void setOffset(@NotNull Vector2 offset) {
-		oldArea.setX(offset.getX());
-		oldArea.setY(offset.getY());
+		area.setX(offset.getX());
+		area.setY(offset.getY());
 	}
 
 	public @NotNull Vector2 getOffset() {
-		return new Vector2(oldArea.getX(), oldArea.getY());
+		return new Vector2(area.getX(), area.getY());
 	}
 
 	/**
@@ -102,8 +101,8 @@ public class Control extends AbstractControl {
 	 * @param height The new height of this node in pixels.
 	 */
 	public void setSize(int width, int height) {
-		oldArea.setWidth(width);
-		oldArea.setHeight(height);
+		area.setWidth(width);
+		area.setHeight(height);
 	}
 
 	/**
@@ -115,16 +114,16 @@ public class Control extends AbstractControl {
 	 * @param size The size in Vector2 form.
 	 */
 	public void setSize(@NotNull Vector2 size) {
-		oldArea.setWidth(size.getX());
-		oldArea.setHeight(size.getY());
+		area.setWidth(size.getX());
+		area.setHeight(size.getY());
 	}
 
 	public @NotNull Vector2 getSize() {
-		return new Vector2(oldArea.getWidth(), oldArea.getHeight());
+		return new Vector2(area.getWidth(), area.getHeight());
 	}
 
 	public @NotNull Rectangle getArea() {
-		return this.oldArea;
+		return this.area;
 	}
 
 	/**
@@ -195,13 +194,13 @@ public class Control extends AbstractControl {
 		}
 		else {
 			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-			Vector2 drawOffset = anchor.getOffset(oldArea.getWidth(), oldArea.getHeight());
+			Vector2 drawOffset = anchor.getOffset(area.getWidth(), area.getHeight());
 
 			trueArea = new Rectangle(
-					oldArea.getX() + anchorOffset.getX() + containerX - drawOffset.getX(),
-					oldArea.getY() + anchorOffset.getY() + containerY - drawOffset.getY(),
-					oldArea.getWidth(),
-					oldArea.getHeight()
+					area.getX() + anchorOffset.getX() + containerX - drawOffset.getX(),
+					area.getY() + anchorOffset.getY() + containerY - drawOffset.getY(),
+					area.getWidth(),
+					area.getHeight()
 			);
 		}
 	}
@@ -211,7 +210,7 @@ public class Control extends AbstractControl {
 		int x = trueArea.getX();
 		int y = trueArea.getY();
 
-		return mouseX >= x && mouseX <= x + oldArea.getWidth() && mouseY >= y && mouseX <= y + oldArea.getHeight();
+		return mouseX >= x && mouseX <= x + area.getWidth() && mouseY >= y && mouseX <= y + area.getHeight();
 	}
 
 	// Update current
@@ -242,23 +241,23 @@ public class Control extends AbstractControl {
 
 		if (!expand) {
 			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-			Vector2 drawOffset = anchor.getOffset(oldArea.getWidth(), oldArea.getHeight());
+			Vector2 drawOffset = anchor.getOffset(area.getWidth(), area.getHeight());
 
-			trueX = oldArea.getX() + anchorOffset.getX() + offsetX - drawOffset.getX();
-			trueY = oldArea.getY() + anchorOffset.getY() + offsetY - drawOffset.getY();
+			trueX = area.getX() + anchorOffset.getX() + offsetX - drawOffset.getX();
+			trueY = area.getY() + anchorOffset.getY() + offsetY - drawOffset.getY();
 		}
 		else {
 			trueX = offsetX;
 			trueY = offsetY;
 
-			oldArea.setWidth(containerWidth);
-			oldArea.setHeight(containerHeight);
+			area.setWidth(containerWidth);
+			area.setHeight(containerHeight);
 		}
 	}
 
 	@ApiStatus.Internal
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		currentStyle.draw(matrices, trueX, trueY, oldArea.getWidth(), oldArea.getHeight());
+		currentStyle.draw(matrices, trueX, trueY, area.getWidth(), area.getHeight());
 	}
 
 	@ApiStatus.Internal

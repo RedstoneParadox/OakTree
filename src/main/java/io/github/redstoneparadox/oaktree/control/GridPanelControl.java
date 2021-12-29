@@ -102,8 +102,8 @@ public class GridPanelControl extends PanelControl {
 
 	@Override
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
-		int cellWidth = oldArea.getWidth() /columns;
-		int cellHeight = oldArea.getHeight() /rows;
+		int cellWidth = area.getWidth() /columns;
+		int cellHeight = area.getHeight() /rows;
 		Vector2 innerDimensions = innerDimensions(cellWidth, cellHeight);
 		Vector2 innerPosition = innerPosition(trueX, trueY);
 

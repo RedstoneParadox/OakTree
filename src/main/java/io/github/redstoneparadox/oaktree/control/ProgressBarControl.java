@@ -90,8 +90,8 @@ public class ProgressBarControl extends Control {
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
 
-		int barX = trueX + ((oldArea.getWidth() /2) - (barWidth/2));
-		int barY = trueY + ((oldArea.getHeight() /2) - (barHeight/2));
+		int barX = trueX + ((area.getWidth() /2) - (barWidth/2));
+		int barY = trueY + ((area.getHeight() /2) - (barHeight/2));
 
 		switch (direction) {
 			case UP:
