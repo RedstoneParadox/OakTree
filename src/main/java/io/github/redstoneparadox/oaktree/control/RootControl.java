@@ -5,6 +5,7 @@ import io.github.redstoneparadox.oaktree.style.ControlStyle;
 import io.github.redstoneparadox.oaktree.style.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
+import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class RootControl extends AbstractControl {
 		return theme.get(styleName);
 	}
 
-	public void render(int mouseX, int mouseY, float deltaTime) {
+	public void render(MatrixStack matricies, int mouseX, int mouseY, float deltaTime) {
 		if (dirty) {
 			MinecraftClient client = MinecraftClient.getInstance();
 			Window window = client.getWindow();
@@ -49,29 +50,11 @@ public class RootControl extends AbstractControl {
 		}
 
 		for (Control control: zIndexedControls) {
-			// prepare
+			control.prepare();
 		}
 
 		for (Control control: zIndexedControls) {
-			// draw
+			control.newDraw(matricies);
 		}
-	}
-
-	@Override
-	protected Vector2 getPosition() {
-		return Vector2.ZERO;
-	}
-
-	@Override
-	protected Vector2 getContainerOrigin(AbstractControl element) {
-		return Vector2.ZERO;
-	}
-
-	@Override
-	protected Vector2 getSize() {
-		MinecraftClient client = MinecraftClient.getInstance();
-		Window window = client.getWindow();
-
-		return new Vector2(window.getX(), window.getY());
 	}
 }

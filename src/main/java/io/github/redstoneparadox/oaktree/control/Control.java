@@ -216,7 +216,7 @@ public class Control extends AbstractControl {
 
 	// Update current
 	public void prepare() {
-
+		onTick.accept(null, this);
 	}
 
 	// Draw
@@ -289,16 +289,6 @@ public class Control extends AbstractControl {
 		currentStyle.draw(matrices, x, y, width, height);
 	}
 	*/
-
-	@Override
-	protected Vector2 getPosition() {
-		return null;
-	}
-
-	@Override
-	protected Vector2 getContainerOrigin(AbstractControl element) {
-		return null;
-	}
 
 	@ApiStatus.Internal
 	protected final ControlStyle getStyle(Theme theme, String name) {
