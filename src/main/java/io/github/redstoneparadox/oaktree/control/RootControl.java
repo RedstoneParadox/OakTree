@@ -14,7 +14,7 @@ public class RootControl extends AbstractControl {
 	private final Control root;
 	private Theme theme = Theme.vanilla();
 	private boolean dirty = true;
-	private List<Control> zIndexedControls = new ArrayList<>();
+	private final List<Control> zIndexedControls = new ArrayList<>();
 
 	public RootControl(Control root) {
 		this.root = root;
