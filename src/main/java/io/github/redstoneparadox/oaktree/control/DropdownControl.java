@@ -78,9 +78,9 @@ public class DropdownControl extends InteractiveControl implements MouseButtonLi
 	}
 
 	@Override
-	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-		if (dropdown.visible) dropdown.draw(matrices, mouseX, mouseY, deltaTime, gui);
+	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
+		if (dropdown.visible) dropdown.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
 	}
 
 	@Override

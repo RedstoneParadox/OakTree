@@ -234,10 +234,10 @@ public class SlotControl extends InteractiveControl implements MouseButtonListen
 	}
 
 	@Override
-	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		gui.getScreenHandler().ifPresent(screenHandler -> {
 			if (screenHandler instanceof InventoryScreenHandlerAccess) {
-				super.draw(matrices, mouseX, mouseY, deltaTime, gui);
+				super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
 				ItemStack stack = ((InventoryScreenHandlerAccess) screenHandler).getInventory(inventoryID).getStack(slot);
 				RenderHelper.drawItemStackCentered(trueX, trueY, area.getWidth(), area.getHeight(), stack);
 

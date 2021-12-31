@@ -94,7 +94,7 @@ public abstract class InteractiveControl extends Control {
 	public void drawTooltip(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		if (tooltip != null && tooltip.isVisible()) {
 			RenderHelper.setzOffset(300);
-			tooltip.draw(matrices, mouseX, mouseY, deltaTime, gui);
+			tooltip.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
 			RenderHelper.setzOffset(0);
 		}
 	}

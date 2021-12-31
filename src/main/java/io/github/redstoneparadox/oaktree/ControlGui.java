@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Deprecated
 public final class ControlGui {
 	private final ScreenHooks screen;
 	private final Control root;
@@ -104,7 +105,7 @@ public final class ControlGui {
 		}
 
 		root.preDraw(this, 0, 0, window.getScaledWidth(), window.getScaledHeight(), mouseX, mouseY);
-		root.draw(matrices, mouseX, mouseY, delta, this);
+		root.oldDraw(matrices, mouseX, mouseY, delta, this);
 		if (hovered != null) hovered.drawTooltip(matrices, mouseX, mouseY, delta, this);
 
 		screen.setSize(root.getArea().getWidth(), root.getArea().getHeight());

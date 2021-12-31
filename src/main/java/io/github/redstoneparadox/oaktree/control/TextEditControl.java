@@ -179,8 +179,8 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 
 	// Abandon hope all Ye who enter here!
 	@Override
-	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
+	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
 		updateFocused(gui);
 		if (lines.isEmpty()) lines.add("");
 		try {

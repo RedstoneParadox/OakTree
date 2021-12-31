@@ -45,8 +45,8 @@ public class EntityPreviewControl extends Control {
 	}
 	
 	@Override
-	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
+	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
 		InventoryScreen.drawEntity(this.trueX, this.trueY, this.entitySize,
 				followCursor ? mouseX : 0, followCursor ? mouseY : 0, this.entity);
 	}

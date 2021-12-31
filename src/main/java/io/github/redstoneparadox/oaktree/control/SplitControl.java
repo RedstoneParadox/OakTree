@@ -96,9 +96,9 @@ public class SplitControl extends Control {
 	}
 
 	@Override
-	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.draw(matrices, mouseX, mouseY, deltaTime, gui);
-		if (first.isVisible()) first.draw(matrices, mouseX, mouseY, deltaTime, gui);
-		if (second.isVisible() && splitSize > 0) second.draw(matrices, mouseX, mouseY, deltaTime, gui);
+	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
+		if (first.isVisible()) first.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
+		if (second.isVisible() && splitSize > 0) second.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
 	}
 }

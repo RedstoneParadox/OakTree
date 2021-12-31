@@ -224,17 +224,20 @@ public class Control extends AbstractControl {
 	}
 
 	@ApiStatus.Internal
+	@Deprecated
 	public void zIndex(List<Control> controls) {
 		if (!visible) return;
 		controls.add(this);
 	}
 
 	@ApiStatus.Internal
+	@Deprecated
 	public void setup(MinecraftClient client, ControlGui gui) {
 
 	}
 
 	@ApiStatus.Internal
+	@Deprecated
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		onTick.accept(gui, this);
 		currentStyle = getStyle(gui.getTheme(), "base");
@@ -256,7 +259,8 @@ public class Control extends AbstractControl {
 	}
 
 	@ApiStatus.Internal
-	public void draw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
+	@Deprecated
+	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		currentStyle.draw(matrices, trueX, trueY, area.getWidth(), area.getHeight());
 	}
 
@@ -269,9 +273,5 @@ public class Control extends AbstractControl {
 		}
 
 		return style;
-	}
-
-	protected ControlArea createBaseArea() {
-		return ControlArea.regular(0, 0, 1, 1);
 	}
 }
