@@ -25,11 +25,6 @@ public abstract class MixinScreen implements ScreenHooks {
 	}
 
 	@Override
-	public TextRenderer getTextRenderer() {
-		return textRenderer;
-	}
-
-	@Override
 	public MinecraftClient getClient() {
 		return client;
 	}

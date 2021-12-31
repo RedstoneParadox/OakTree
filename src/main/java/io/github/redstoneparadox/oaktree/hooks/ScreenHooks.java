@@ -7,10 +7,7 @@ import net.minecraft.screen.ScreenHandler;
 import java.util.Optional;
 
 public interface ScreenHooks {
-
 	Optional<ScreenHandler> getHandler();
-
-	TextRenderer getTextRenderer();
 
 	MinecraftClient getClient();
 
