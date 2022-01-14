@@ -5,6 +5,7 @@ import io.github.redstoneparadox.oaktree.style.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public final class RootControl extends AbstractControl {
 		this.theme = theme;
 	}
 
-	public @Nullable ControlStyle getStyle(String styleName) {
+	public @NotNull ControlStyle getStyle(String styleName) {
 		return theme.get(styleName);
 	}
 
