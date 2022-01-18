@@ -219,7 +219,7 @@ public class Control extends AbstractControl {
 	}
 
 	// Draw
-	protected void newDraw(MatrixStack matrices) {
+	protected void draw(MatrixStack matrices) {
 		currentStyle.draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
