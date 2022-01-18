@@ -11,8 +11,15 @@ public abstract class AbstractControl {
 		this.parent = parent;
 	}
 
-	protected void removeParent() {
-		parent = null;
+	protected AbstractControl getParent() {
+		return parent;
+	}
+
+	protected RootControl getTreeRoot() {
+		if (parent instanceof RootControl) {
+			return (RootControl) parent;
+		}
+		return parent.getTreeRoot();
 	}
 
 	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
