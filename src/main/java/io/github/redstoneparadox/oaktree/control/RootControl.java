@@ -59,6 +59,6 @@ public final class RootControl extends AbstractControl {
 
 	@Override
 	protected void markDirty() {
-		this.dirty = true
+		this.dirty = true;
 	}
 }
