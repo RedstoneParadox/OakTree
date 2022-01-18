@@ -22,6 +22,10 @@ public abstract class AbstractControl {
 		return parent.getTreeRoot();
 	}
 
+	protected void markDirty() {
+		parent.markDirty();
+	}
+
 	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 
 	}

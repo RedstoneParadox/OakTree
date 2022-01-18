@@ -56,4 +56,9 @@ public final class RootControl extends AbstractControl {
 			control.draw(matrices);
 		}
 	}
+
+	@Override
+	protected void markDirty() {
+		this.dirty = true
+	}
 }
