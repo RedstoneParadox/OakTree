@@ -73,11 +73,6 @@ public abstract class PaddingControl extends Control {
 		return rightPadding;
 	}
 
-	@Override
-	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-	}
-
 	Vector2 innerDimensions(int spaceWidth, int spaceHeight) {
 		int innerWidth = spaceWidth - leftPadding - rightPadding;
 		int innerHeight = spaceHeight - topPadding - bottomPadding;
