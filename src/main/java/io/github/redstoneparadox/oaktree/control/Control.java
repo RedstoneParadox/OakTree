@@ -185,7 +185,7 @@ public class Control extends AbstractControl {
 		return new Vector2(trueX, trueY);
 	}
 
-	public void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		if (!visible) return;
 		zIndexedControls.add(this);
 
@@ -206,7 +206,7 @@ public class Control extends AbstractControl {
 	}
 
 	// Capture the mouse and
-	public boolean interact(int mouseX, int mouseY, float deltaTime) {
+	protected boolean interact(int mouseX, int mouseY, float deltaTime) {
 		int x = trueArea.getX();
 		int y = trueArea.getY();
 
@@ -214,7 +214,7 @@ public class Control extends AbstractControl {
 	}
 
 	// Update current
-	public void prepare() {
+	protected void prepare() {
 		onTick.accept(null, this);
 	}
 
