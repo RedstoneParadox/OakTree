@@ -76,6 +76,15 @@ public class PanelControl extends PaddingControl {
 	}
 
 	@Override
+	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+
+		for (Control child: children) {
+			child.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+		}
+	}
+
+	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
 		for (Control child: children) {
