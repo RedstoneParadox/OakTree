@@ -44,6 +44,7 @@ public class PanelControl extends PaddingControl {
 	 */
 	public void addChild(@NotNull Control child) {
 		children.add(child);
+		markDirty();
 	}
 
 	/**
@@ -56,10 +57,14 @@ public class PanelControl extends PaddingControl {
 	 * @param function The function to supply children.
 	 */
 	public void addChildren(int count, boolean clear, Function<Integer, Control> function) {
-		children.clear();
+		if (clear) {
+			children.clear();
+		}
+
 		for (int i  = 0; i < count; i++) {
 			children.add(function.apply(i));
 		}
+		markDirty();
 	}
 
 	public @Nullable Control getChild(int index) {
@@ -68,6 +73,20 @@ public class PanelControl extends PaddingControl {
 		}
 
 		return null;
+	}
+
+	public @Nullable Control removeChild(int index) {
+		markDirty();
+		return children.remove(index);
+	}
+
+	public void clearChildren() {
+		children.clear();
+		markDirty();
+	}
+
+	public int getChildrenCount() {
+		return children.size();
 	}
 
 	public void scroll(int x, int y) {
