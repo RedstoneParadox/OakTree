@@ -40,6 +40,7 @@ public class BoxControl extends PaddingControl {
 
 	@Override
 	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		if (!visible) return;
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 
 		int innerX = trueArea.getX() + leftPadding;
