@@ -39,6 +39,12 @@ public class BoxControl extends PaddingControl {
 	}
 
 	@Override
+	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+		child.updateTree(zIndexedControls, 0, 0, 0, 0);
+	}
+
+	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
 		child.setup(client, gui);
