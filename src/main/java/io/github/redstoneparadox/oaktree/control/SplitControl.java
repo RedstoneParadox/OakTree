@@ -54,6 +54,25 @@ public class SplitControl extends Control {
 	}
 
 	@Override
+	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+
+		if (vertical) {
+			int bottomY = trueArea.getY() + splitSize;
+			int topHeight = trueArea.getHeight() - splitSize;
+
+			first.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), topHeight);
+			second.updateTree(zIndexedControls, trueArea.getX(), bottomY, trueArea.getWidth(), splitSize);
+		} else {
+			int rightX = trueArea.getX() + splitSize;
+			int leftWidth = trueArea.getWidth() - splitSize;
+
+			first.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), leftWidth, trueArea.getHeight());
+			second.updateTree(zIndexedControls, rightX, trueArea.getY(), splitSize, trueArea.getHeight());
+		}
+	}
+
+	@Override
 	public void zIndex(List<Control> controls) {
 		super.zIndex(controls);
 		controls.add(first);
