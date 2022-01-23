@@ -39,7 +39,7 @@ public final class RootControl extends AbstractControl {
 			Window window = client.getWindow();
 
 			zIndexedControls.clear();
-			root.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
+			if (root.visible) root.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
 			dirty = false;
 		}
 

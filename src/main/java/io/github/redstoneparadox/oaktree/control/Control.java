@@ -186,7 +186,6 @@ public class Control extends AbstractControl {
 	}
 
 	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		if (!visible) return;
 		zIndexedControls.add(this);
 
 		if (expand) {
