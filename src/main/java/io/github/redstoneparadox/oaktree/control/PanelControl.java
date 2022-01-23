@@ -98,8 +98,13 @@ public class PanelControl extends PaddingControl {
 	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 
+		int innerX = trueArea.getX() + leftPadding;
+		int innerY = trueArea.getY() + topPadding;
+		int innerWidth = trueArea.getWidth() + leftPadding + rightPadding;
+		int innerHeight = trueArea.getHeight() + topPadding + bottomPadding;
+
 		for (Control child: children) {
-			if (child.visible) child.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+			if (child.visible) child.updateTree(zIndexedControls, innerX, innerY, innerWidth, innerHeight);
 		}
 	}
 
