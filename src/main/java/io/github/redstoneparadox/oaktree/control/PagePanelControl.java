@@ -16,6 +16,7 @@ public class PagePanelControl extends PanelControl {
 		if (page < 0) this.page = 0;
 		else if (page >= children.size()) this.page = children.size() - 1;
 		else this.page = page;
+		markDirty();
 	}
 
 	public void toNextPage() {

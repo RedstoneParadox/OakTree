@@ -27,6 +27,7 @@ public class ListPanelControl extends PanelControl {
 	public void setDisplayCount(int displayCount) {
 		if (displayCount < 1) this.displayCount = 1;
 		else this.displayCount = Math.min(displayCount, children.size());
+		markDirty();
 	}
 
 	public int getDisplayCount() {
@@ -36,6 +37,7 @@ public class ListPanelControl extends PanelControl {
 	public void setStartIndex(int startIndex) {
 		if (startIndex < 0) this.startIndex = 0;
 		else this.startIndex = Math.min(startIndex, children.size() - displayCount);
+		markDirty();
 	}
 
 	public int getStartIndex() {

@@ -29,6 +29,7 @@ public class GridPanelControl extends PanelControl {
 	 */
 	public void setRows(int rows) {
 		this.rows = rows;
+		markDirty();
 	}
 
 	public int getRows() {
@@ -43,6 +44,7 @@ public class GridPanelControl extends PanelControl {
 	 */
 	public void setColumns(int columns) {
 		this.columns = columns;
+		markDirty();
 	}
 
 	public int getColumns() {
@@ -65,6 +67,7 @@ public class GridPanelControl extends PanelControl {
 		int index = (row - 1) * columns + column;
 		if (index >= children.size()) ListUtils.growList(children, index + 1);
 		children.set(index, child);
+		markDirty();
 	}
 
 	public @Nullable Control getChild(int row, int column) {
@@ -101,6 +104,7 @@ public class GridPanelControl extends PanelControl {
 				index += 1;
 			}
 		}
+		markDirty();
 	}
 
 	@Override
