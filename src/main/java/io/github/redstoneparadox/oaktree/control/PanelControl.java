@@ -122,6 +122,7 @@ public class PanelControl extends PaddingControl {
 		arrangeChildren(gui, mouseX, mouseY);
 	}
 
+	@Deprecated
 	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
 		Vector2 innerPosition = innerPosition(trueX, trueY);
 		Vector2 innerDimensions = innerDimensions(area.getWidth(), area.getHeight());
