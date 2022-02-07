@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Util;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import net.minecraft.client.MinecraftClient;
@@ -98,14 +99,22 @@ public class PanelControl extends PaddingControl {
 	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 
+		for (int i = 0; i < children.size(); i++) {
+			Control child = children.get(i);
+			Rectangle childArea = getChildArea(i);
+
+			if (child.visible) child.updateTree(zIndexedControls, childArea.getX(), childArea.getY(), childArea.getWidth(), childArea.getHeight());
+		}
+	}
+
+	protected Rectangle getChildArea(int index) {
+		// TODO: Figure out some way to cache the result
 		int innerX = trueArea.getX() + leftPadding;
 		int innerY = trueArea.getY() + topPadding;
 		int innerWidth = trueArea.getWidth() + leftPadding + rightPadding;
 		int innerHeight = trueArea.getHeight() + topPadding + bottomPadding;
 
-		for (Control child: children) {
-			if (child.visible) child.updateTree(zIndexedControls, innerX, innerY, innerWidth, innerHeight);
-		}
+		return new Rectangle(innerX, innerY, innerWidth, innerHeight);
 	}
 
 	@Override
