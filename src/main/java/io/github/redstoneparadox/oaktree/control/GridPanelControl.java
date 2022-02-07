@@ -1,10 +1,13 @@
 package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.util.ListUtils;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Subclass of {@link PanelControl} that lays out its children in
@@ -98,6 +101,22 @@ public class GridPanelControl extends PanelControl {
 				index += 1;
 			}
 		}
+	}
+
+	@Override
+	protected Rectangle getChildArea(int index) {
+		int y = index/columns;
+		int x = index%columns;
+
+		int divisionWidth = trueArea.getWidth()/columns;
+		int divisionHeight = trueArea.getHeight()/rows;
+
+		int cellX = trueArea.getX() + leftPadding + divisionWidth*x;
+		int cellY = trueArea.getY() + topPadding + divisionHeight*y;
+		int cellWidth = divisionWidth - leftPadding - rightPadding;
+		int cellHeight = divisionHeight - topPadding - bottomPadding;
+
+		return new Rectangle(cellX, cellY, cellWidth, cellHeight);
 	}
 
 	@Override
