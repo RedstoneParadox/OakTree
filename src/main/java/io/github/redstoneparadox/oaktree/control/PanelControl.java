@@ -93,8 +93,8 @@ public class PanelControl extends PaddingControl {
 		// TODO: Figure out some way to cache the result
 		int innerX = trueArea.getX() + leftPadding;
 		int innerY = trueArea.getY() + topPadding;
-		int innerWidth = trueArea.getWidth() + leftPadding + rightPadding;
-		int innerHeight = trueArea.getHeight() + topPadding + bottomPadding;
+		int innerWidth = trueArea.getWidth() - leftPadding - rightPadding;
+		int innerHeight = trueArea.getHeight() - topPadding - bottomPadding;
 
 		return new Rectangle(innerX, innerY, innerWidth, innerHeight);
 	}
