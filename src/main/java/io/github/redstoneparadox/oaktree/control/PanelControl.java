@@ -2,14 +2,12 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
-import io.github.redstoneparadox.oaktree.math.Util;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -22,20 +20,9 @@ import java.util.function.Function;
  */
 public class PanelControl extends PaddingControl {
 	public final List<@NotNull Control> children = new ArrayList<>();
-	protected int scrollPosX = 0;
-	protected int scrollPosY = 0;
-
-	private int scrollSpeedX = 1;
-	private int scrollSpeedY = 1;
 
 	public PanelControl() {
 		this.id = "panel";
-	}
-
-	protected PanelControl(int scrollSpeedX, int scrollSpeedY) {
-		this();
-		this.scrollSpeedX = scrollSpeedX;
-		this.scrollSpeedY = scrollSpeedY;
 	}
 
 	/**
@@ -88,11 +75,6 @@ public class PanelControl extends PaddingControl {
 
 	public int getChildrenCount() {
 		return children.size();
-	}
-
-	public void scroll(int x, int y) {
-		scrollPosX += Util.floorTo(x, scrollSpeedX);
-		scrollPosY += Util.floorTo(y, scrollSpeedY);
 	}
 
 	@Override
@@ -156,21 +138,8 @@ public class PanelControl extends PaddingControl {
 		}
 	}
 
+	@Deprecated
 	boolean shouldDraw(Control child) {
 		return true;
-	}
-
-	private static int toInterval(int value, int nearest) {
-		if (nearest == 0) {
-			return 0;
-		}
-		if (nearest < 0) {
-			throw new InvalidParameterException("Cannot floor to the nearest negative number.");
-		}
-		if (value < 0) {
-			return value + (value % nearest);
-		}
-
-		return value - (value % nearest);
 	}
 }
