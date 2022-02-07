@@ -31,7 +31,7 @@ public abstract class AbstractControl {
 	}
 
 	// Capture the mouse and
-	protected boolean interact(int mouseX, int mouseY, float deltaTime) {
+	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
 		return false;
 	}
 

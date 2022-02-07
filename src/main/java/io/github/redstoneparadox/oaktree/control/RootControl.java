@@ -8,7 +8,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public final class RootControl extends AbstractControl {
@@ -43,11 +42,14 @@ public final class RootControl extends AbstractControl {
 			dirty = false;
 		}
 
+		boolean captured = false;
 		for (int i = zIndexedControls.size() - 1; i >= 0; i--) {
 			AbstractControl control = zIndexedControls.get(i);
 
-			if (control.interact(mouseX, mouseY, deltaTime)) {
-				break;
+			if (!captured) {
+				captured = control.interact(mouseX, mouseY, deltaTime, false);
+			} else {
+				control.interact(mouseX, mouseY, deltaTime, true);
 			}
 		}
 

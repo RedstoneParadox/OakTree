@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
-import io.github.redstoneparadox.oaktree.control.util.ControlArea;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.style.ControlStyle;
@@ -205,7 +204,7 @@ public class Control extends AbstractControl {
 	}
 
 	// Capture the mouse and
-	protected boolean interact(int mouseX, int mouseY, float deltaTime) {
+	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
 		int x = trueArea.getX();
 		int y = trueArea.getY();
 
