@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.math;
 import java.util.Objects;
 
 public class Rectangle {
+	public static Rectangle DEFAULT = new Rectangle(0, 0, 1, 1);	
 	private int x;
 	private int y;
 	private int width;
