@@ -3,6 +3,8 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 
+import java.util.List;
+
 public class PagePanelControl extends PanelControl {
 	protected int page = 0;
 
@@ -26,6 +28,16 @@ public class PagePanelControl extends PanelControl {
 
 	public int getPage() {
 		return page;
+	}
+
+	@Override
+	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		for (int i = 0; i < children.size(); i++) {
+			Control child = children.get(i);
+			child.visible = i == page;
+		}
+		
+		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 	}
 
 	@Override
