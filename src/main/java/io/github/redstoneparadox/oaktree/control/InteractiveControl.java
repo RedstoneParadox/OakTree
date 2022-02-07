@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
-
+@Deprecated
 public abstract class InteractiveControl extends Control {
 	protected @Nullable Control tooltip = null;
 	protected boolean lockTooltipPos = false;
