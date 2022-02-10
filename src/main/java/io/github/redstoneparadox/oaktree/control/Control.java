@@ -194,6 +194,8 @@ public class Control {
 
 	// Capture the mouse and
 	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
+		if (captured) return false;
+
 		int x = trueArea.getX();
 		int y = trueArea.getY();
 

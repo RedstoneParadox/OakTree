@@ -1,14 +1,14 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.util.Action;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Consumer;
-
 public class HoverControl extends InteractiveControl {
-	protected @NotNull Consumer<ControlGui> onMouseEnter = (gui) -> {};
-	protected @NotNull Consumer<ControlGui> mouseExit = (gui) -> {};
-	protected @NotNull Consumer<ControlGui> whileHovered = (gui) -> {};
+	public static final PainterKey HOVERED = new PainterKey();
+
+	protected @NotNull Action onMouseEnter = () -> {};
+	protected @NotNull Action mouseExit = () -> {};
+	protected @NotNull Action whileHovered = () -> {};
 
 	private boolean mouseCurrentlyWithin = false;
 
@@ -16,38 +16,37 @@ public class HoverControl extends InteractiveControl {
 		this.id = "hover";
 	}
 
-	public void onMouseEnter(@NotNull Consumer<ControlGui> onMouseEnter) {
+	public void onMouseEnter(@NotNull Action onMouseEnter) {
 		this.onMouseEnter = onMouseEnter;
 	}
 
-	public void onMouseExit(@NotNull Consumer<ControlGui> onMouseExit) {
+	public void onMouseExit(@NotNull Action onMouseExit) {
 		this.onMouseEnter = onMouseExit;
 	}
 
-	public void whileHovered(@NotNull Consumer<ControlGui> whileHovered) {
+	public void whileHovered(@NotNull Action whileHovered) {
 		this.onMouseEnter = whileHovered;
 	}
 
 	@Override
-	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
+	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
+		captured = super.interact(mouseX, mouseY, deltaTime, captured);
 
-		if (!mouseCurrentlyWithin && isMouseWithin) {
-			mouseCurrentlyWithin = true;
-			onMouseEnter.accept(gui);
-		}
-		else if (mouseCurrentlyWithin && !isMouseWithin) {
-			mouseCurrentlyWithin = false;
-			mouseExit.accept(gui);
+		if (captured) {
+			painterKey = HOVERED;
+			if (!mouseCurrentlyWithin) {
+				onMouseEnter.run();
+				mouseCurrentlyWithin = true;
+			}
+			whileHovered.run();
+		} else {
+			painterKey = DEFAULT;
+			if (mouseCurrentlyWithin) {
+				mouseExit.run();
+				mouseCurrentlyWithin = false;
+			}
 		}
 
-		if (mouseCurrentlyWithin) {
-			whileHovered.accept(gui);
-			currentStyle = getPainter(gui.getTheme(), "hover");
-		}
-
-		if (currentStyle.blank) {
-			currentStyle = getPainter(gui.getTheme(), "base");
-		}
+		return captured;
 	}
 }
