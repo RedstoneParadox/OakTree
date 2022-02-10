@@ -3,9 +3,7 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
-import io.github.redstoneparadox.oaktree.painter.Painter;
 import net.minecraft.client.MinecraftClient;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -91,13 +89,13 @@ public class ButtonControl extends InteractiveControl implements MouseButtonList
 
 
 		if (buttonHeld) {
-			currentStyle = getPainter(gui.getTheme(), "held");
+			currentPainter = getPainter(gui.getTheme(), "held");
 		}
 		else if (isMouseWithin) {
-			currentStyle = getPainter(gui.getTheme(), "hover");
+			currentPainter = getPainter(gui.getTheme(), "hover");
 		}
-		if (currentStyle.blank) {
-			currentStyle = getPainter(gui.getTheme(), "base");
+		if (currentPainter.blank) {
+			currentPainter = getPainter(gui.getTheme(), "base");
 		}
 	}
 

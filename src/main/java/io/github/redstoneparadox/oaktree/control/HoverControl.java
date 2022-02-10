@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.ControlGui;
-import io.github.redstoneparadox.oaktree.painter.Painter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -44,11 +43,11 @@ public class HoverControl extends InteractiveControl {
 
 		if (mouseCurrentlyWithin) {
 			whileHovered.accept(gui);
-			currentStyle = getPainter(gui.getTheme(), "hover");
+			currentPainter = getPainter(gui.getTheme(), "hover");
 		}
 
-		if (currentStyle.blank) {
-			currentStyle = getPainter(gui.getTheme(), "base");
+		if (currentPainter.blank) {
+			currentPainter = getPainter(gui.getTheme(), "base");
 		}
 	}
 }
