@@ -160,6 +160,21 @@ public class LabelControl extends Control {
 	}
 
 	@Override
+	protected void draw(MatrixStack matrices) {
+		super.draw(matrices);
+		
+		if (maxDisplayedLines > 0) {
+			List<OrderedText> lines = TextHelper.wrapText(text, area.getWidth(), firstLine, maxDisplayedLines, shadow, false);
+			int yOffset = 0;
+
+			for (OrderedText line: lines) {
+				RenderHelper.drawText(matrices, line, trueX, trueY + yOffset, shadow, fontColor);
+				yOffset += TextHelper.getFontHeight();
+			}
+		}
+	}
+
+	@Override
 	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
 		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
 
