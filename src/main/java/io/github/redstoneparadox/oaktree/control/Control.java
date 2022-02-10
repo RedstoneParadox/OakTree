@@ -17,7 +17,8 @@ import java.util.function.Consumer;
 /**
  * The base class for all controls.
  */
-public class Control extends AbstractControl {
+public class Control {
+	protected Control parent;
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
@@ -219,6 +220,18 @@ public class Control extends AbstractControl {
 	// Draw
 	protected void draw(MatrixStack matrices) {
 		currentStyle.draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+	}
+
+	protected void setParent(Control parent) {
+		this.parent = parent;
+	}
+
+	protected Control getParent() {
+		return parent;
+	}
+
+	protected void markDirty() {
+		parent.markDirty();
 	}
 
 	@ApiStatus.Internal
