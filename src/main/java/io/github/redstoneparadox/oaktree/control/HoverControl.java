@@ -17,14 +17,6 @@ public class HoverControl extends InteractiveControl {
 		this.id = "hover";
 	}
 
-	public void setHoverStyle(Painter hoverStyle) {
-		internalTheme.add("self", "hover", hoverStyle);
-	}
-
-	public Painter getHoverStyle() {
-		return internalTheme.get("self/hover");
-	}
-
 	public void onMouseEnter(@NotNull Consumer<ControlGui> onMouseEnter) {
 		this.onMouseEnter = onMouseEnter;
 	}

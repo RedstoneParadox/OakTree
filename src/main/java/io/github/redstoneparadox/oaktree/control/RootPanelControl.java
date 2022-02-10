@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RootPanelControl extends PanelControl {
-	private Theme theme = Theme.vanilla();
 	private boolean dirty = true;
 	private final List<Control> zIndexedControls = new ArrayList<>();
+
+	public RootPanelControl() {
+		theme = Theme.vanilla();
+	}
 
 	public Theme getTheme() {
 		return theme.copy();

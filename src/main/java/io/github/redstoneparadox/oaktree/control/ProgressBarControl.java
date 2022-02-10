@@ -67,19 +67,6 @@ public class ProgressBarControl extends Control {
 		return direction;
 	}
 
-	/**
-	 * Sets the {@link Painter} for the progress bar.
-	 *
-	 * @param style The {@link Painter} to draw.
-	 */
-	public void setBarStyle(Painter style) {
-		internalTheme.add("self/bar", style);
-	}
-
-	public Painter getBarStyle() {
-		return internalTheme.get("self/bar");
-	}
-
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);

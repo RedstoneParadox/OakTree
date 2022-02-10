@@ -48,14 +48,6 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 		return horizontal;
 	}
 
-	public void setSliderStyle(Painter sliderStyle) {
-		internalTheme.add("self", "slider", sliderStyle);
-	}
-
-	public Painter getSliderStyle() {
-		return internalTheme.get("self/slider");
-	}
-
 	public void onSlide(@NotNull Consumer<ControlGui> onSlide) {
 		this.onSlide = ((controlGui, sliderControl) -> onSlide.accept(controlGui));
 	}

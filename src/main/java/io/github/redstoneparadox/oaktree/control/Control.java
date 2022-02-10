@@ -26,9 +26,9 @@ public class Control {
 	protected boolean visible = true;
 	protected BiConsumer<ControlGui, Control> onTick = (gui, control) -> {};
 	protected Painter currentStyle = Painter.BLANK;
-	protected Theme internalTheme = new Theme();
 
 	//Internal State
+	protected Theme theme = Theme.EMPTY;
 	protected int trueX = 0;
 	protected int trueY = 0;
 	protected Rectangle trueArea = new Rectangle(0, 0, 1, 1);
@@ -158,21 +158,6 @@ public class Control {
 	}
 
 	/**
-	 * Sets the base {@link Painter} for this node. For most
-	 * nodes, this is the only style, but some will have multiple
-	 * styles so it is considered the default style.
-	 *
-	 * @param baseStyle The StyleBox for this node.
-	 */
-	public void setBasePainter(Painter baseStyle) {
-		internalTheme.add("self", baseStyle);
-	}
-
-	public Painter getBasePainter() {
-		return internalTheme.get("self/base");
-	}
-
-	/**
 	 * Sets a function to run every time this node is ticked.
 	 *
 	 * @param onTick the function to run.
@@ -277,7 +262,7 @@ public class Control {
 
 	@ApiStatus.Internal
 	protected final Painter getPainter(Theme theme, String name) {
-		Painter style = internalTheme.get("self/" + name);
+		Painter style = this.theme.get("self/" + name);
 
 		if (style.blank) {
 			style = theme.get(id + "/" + name);

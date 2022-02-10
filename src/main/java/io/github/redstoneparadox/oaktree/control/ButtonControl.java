@@ -32,20 +32,6 @@ public class ButtonControl extends InteractiveControl implements MouseButtonList
 		return toggleable;
 	}
 
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ButtonControl heldStyle(Painter heldStyle) {
-		internalTheme.add("self", "held", heldStyle);
-		return this;
-	}
-
-	@ApiStatus.ScheduledForRemoval
-	@Deprecated
-	public ButtonControl hoverStyle(Painter hoverStyle) {
-		internalTheme.add("self", "hover", hoverStyle);
-		return this;
-	}
-
 	public void onClick(@NotNull Consumer<ControlGui> onClick) {
 		this.onClick = onClick;
 	}
