@@ -29,6 +29,7 @@ public class Control {
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
 	protected boolean visible = true;
+	protected boolean isTooltip = false;
 	protected Action onTick = () -> {};
 	protected Painter currentStyle = Painter.BLANK;
 
@@ -77,6 +78,7 @@ public class Control {
 	public void setOffset(int x, int y) {
 		area.setX(x);
 		area.setY(y);
+		if (!isTooltip) markDirty();
 	}
 
 	/**
@@ -89,8 +91,7 @@ public class Control {
 	 * @param offset The offset in Vector2 form.
 	 */
 	public void setOffset(@NotNull Vector2 offset) {
-		area.setX(offset.getX());
-		area.setY(offset.getY());
+		setOffset(offset.getX(), offset.getY());
 	}
 
 	public @NotNull Vector2 getOffset() {
@@ -109,6 +110,7 @@ public class Control {
 	public void setSize(int width, int height) {
 		area.setWidth(width);
 		area.setHeight(height);
+		if (!isTooltip) markDirty();
 	}
 
 	/**
@@ -120,8 +122,7 @@ public class Control {
 	 * @param size The size in Vector2 form.
 	 */
 	public void setSize(@NotNull Vector2 size) {
-		area.setWidth(size.getX());
-		area.setHeight(size.getY());
+		setSize(size.getX(), size.getY());
 	}
 
 	public @NotNull Vector2 getSize() {
@@ -157,18 +158,27 @@ public class Control {
 	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+		markDirty();
 	}
 
 	public boolean isVisible() {
 		return this.visible;
 	}
 
+	public void setTooltip(Control tooltip) {
+		this.tooltip = tooltip;
+	}
+
 	public Control getTooltip() {
 		return tooltip;
 	}
 
-	public void setTooltip(Control tooltip) {
-		this.tooltip = tooltip;
+	public void setIsTooltip(boolean isTooltip) {
+		this.isTooltip = isTooltip;
+	}
+
+	public boolean isTooltip() {
+		return isTooltip;
 	}
 
 	/**
@@ -186,6 +196,7 @@ public class Control {
 
 	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		zIndexedControls.add(this);
+		if (tooltip.visible) zIndexedControls.add(tooltip);
 
 		if (expand) {
 			trueArea = new Rectangle(containerX, containerY, containerWidth, containerHeight);
