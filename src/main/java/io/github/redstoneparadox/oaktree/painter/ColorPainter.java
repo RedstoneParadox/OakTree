@@ -1,21 +1,21 @@
-package io.github.redstoneparadox.oaktree.style;
+package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
-public class ColorControlStyle extends ControlStyle {
+public class ColorPainter extends Painter {
 	private Color color;
 	private Color borderColor;
 	private int borderWidth;
 
-	public ColorControlStyle(Color color, Color borderColor, int borderWidth) {
+	public ColorPainter(Color color, Color borderColor, int borderWidth) {
 		this.color = color;
 		this.borderColor = borderColor;
 		this.borderWidth = borderWidth;
 	}
 
-	public ColorControlStyle(Color color) {
+	public ColorPainter(Color color) {
 		this(color, null, 1);
 	}
 
@@ -26,7 +26,7 @@ public class ColorControlStyle extends ControlStyle {
 	}
 
 	@Override
-	public ColorControlStyle copy() {
-		return new ColorControlStyle(color, borderColor, borderWidth);
+	public ColorPainter copy() {
+		return new ColorPainter(color, borderColor, borderWidth);
 	}
 }

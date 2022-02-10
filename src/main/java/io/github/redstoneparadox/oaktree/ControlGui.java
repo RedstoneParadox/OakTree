@@ -6,7 +6,7 @@ import io.github.redstoneparadox.oaktree.hooks.KeyboardHooks;
 import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
 import io.github.redstoneparadox.oaktree.math.Vector2;
-import io.github.redstoneparadox.oaktree.style.Theme;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;

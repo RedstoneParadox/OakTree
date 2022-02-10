@@ -3,8 +3,8 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
-import io.github.redstoneparadox.oaktree.style.ControlStyle;
-import io.github.redstoneparadox.oaktree.style.Theme;
+import io.github.redstoneparadox.oaktree.painter.Painter;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
@@ -24,7 +24,7 @@ public class Control extends AbstractControl {
 	protected boolean expand = false;
 	protected boolean visible = true;
 	protected BiConsumer<ControlGui, Control> onTick = (gui, control) -> {};
-	protected ControlStyle currentStyle = ControlStyle.BLANK;
+	protected Painter currentStyle = Painter.BLANK;
 	protected Theme internalTheme = new Theme();
 
 	//Internal State
@@ -157,17 +157,17 @@ public class Control extends AbstractControl {
 	}
 
 	/**
-	 * Sets the base {@link ControlStyle} for this node. For most
+	 * Sets the base {@link Painter} for this node. For most
 	 * nodes, this is the only style, but some will have multiple
 	 * styles so it is considered the default style.
 	 *
 	 * @param baseStyle The StyleBox for this node.
 	 */
-	public void setBaseStyle(ControlStyle baseStyle) {
+	public void setBasePainter(Painter baseStyle) {
 		internalTheme.add("self", baseStyle);
 	}
 
-	public ControlStyle getBaseStyle() {
+	public Painter getBasePainter() {
 		return internalTheme.get("self/base");
 	}
 
@@ -238,7 +238,7 @@ public class Control extends AbstractControl {
 	@Deprecated
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		onTick.accept(gui, this);
-		currentStyle = getStyle(gui.getTheme(), "base");
+		currentStyle = getPainter(gui.getTheme(), "base");
 
 		if (!expand) {
 			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
@@ -263,8 +263,8 @@ public class Control extends AbstractControl {
 	}
 
 	@ApiStatus.Internal
-	protected final ControlStyle getStyle(Theme theme, String name) {
-		ControlStyle style = internalTheme.get("self/" + name);
+	protected final Painter getPainter(Theme theme, String name) {
+		Painter style = internalTheme.get("self/" + name);
 
 		if (style.blank) {
 			style = theme.get(id + "/" + name);

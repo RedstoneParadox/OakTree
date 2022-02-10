@@ -1,4 +1,4 @@
-package io.github.redstoneparadox.oaktree.style;
+package io.github.redstoneparadox.oaktree.painter;
 
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -7,21 +7,21 @@ import net.minecraft.client.util.math.MatrixStack;
  * can be drawn as a color or texture, so this class and its children were created to
  * reduce redundancy.
  */
-public abstract class ControlStyle {
-	public static final ControlStyle BLANK = new ControlStyle(true) {
+public abstract class Painter {
+	public static final Painter BLANK = new Painter(true) {
 		@Override
-		public ControlStyle copy() {
+		public Painter copy() {
 			return this;
 		}
 	};
 	
 	public final boolean blank;
 
-	private ControlStyle(boolean blank) {
+	private Painter(boolean blank) {
 		this.blank = blank;
 	}
 
-	protected ControlStyle() {
+	protected Painter() {
 		this.blank = false;
 	}
 
@@ -29,5 +29,5 @@ public abstract class ControlStyle {
 
 	}
 
-	public abstract ControlStyle copy();
+	public abstract Painter copy();
 }

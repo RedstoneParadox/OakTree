@@ -1,4 +1,4 @@
-package io.github.redstoneparadox.oaktree.style;
+package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
@@ -6,7 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class TextureControlStyle extends ControlStyle {
+public class TexturePainter extends Painter {
 	Identifier texture;
 	int drawLeft = 0;
 	int drawTop = 0;
@@ -18,15 +18,15 @@ public class TextureControlStyle extends ControlStyle {
 	private float fileHeight = 0;
 	private float scale = 2;
 
-	public TextureControlStyle(String path) {
+	public TexturePainter(String path) {
 		this.texture = new Identifier(path);
 	}
 	
-	public TextureControlStyle(Identifier texture) {
+	public TexturePainter(Identifier texture) {
 		this.texture = texture;
 	}
 
-	public TextureControlStyle drawOrigin(int left, int top) {
+	public TexturePainter drawOrigin(int left, int top) {
 		drawLeft = left;
 		drawTop = top;
 		return this;
@@ -39,24 +39,24 @@ public class TextureControlStyle extends ControlStyle {
 	 * @param tiled The value to set.
 	 * @return The StyleBox itself.
 	 */
-	public TextureControlStyle tiled(boolean tiled) {
+	public TexturePainter tiled(boolean tiled) {
 		this.tiled = tiled;
 		return this;
 	}
 
-	public TextureControlStyle textureSize(int textureWidth, int textureHeight) {
+	public TexturePainter textureSize(int textureWidth, int textureHeight) {
 		this.textureWidth = textureWidth;
 		this.textureHeight = textureHeight;
 		return this;
 	}
 
-	public TextureControlStyle fileDimensions(float fileWidth, float fileHeight) {
+	public TexturePainter fileDimensions(float fileWidth, float fileHeight) {
 		this.fileWidth = fileWidth;
 		this.fileHeight = fileHeight;
 		return this;
 	}
 
-	public TextureControlStyle tint(Color tint) {
+	public TexturePainter tint(Color tint) {
 		this.tint = tint;
 		return this;
 	}
@@ -68,7 +68,7 @@ public class TextureControlStyle extends ControlStyle {
 	 * @param scale The value to set.
 	 * @return This
 	 */
-	public TextureControlStyle scale(float scale) {
+	public TexturePainter scale(float scale) {
 		this.scale = scale;
 		return this;
 	}
@@ -89,8 +89,8 @@ public class TextureControlStyle extends ControlStyle {
 	}
 
 	@Override
-	public TextureControlStyle copy() {
-		TextureControlStyle copy = new TextureControlStyle(texture);
+	public TexturePainter copy() {
+		TexturePainter copy = new TexturePainter(texture);
 
 		copy.drawOrigin(drawLeft, drawTop);
 		copy.tiled(tiled);

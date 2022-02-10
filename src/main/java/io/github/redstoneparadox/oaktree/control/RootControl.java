@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.style.ControlStyle;
-import io.github.redstoneparadox.oaktree.style.Theme;
+import io.github.redstoneparadox.oaktree.painter.Painter;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
@@ -28,7 +28,7 @@ public final class RootControl extends AbstractControl {
 		this.theme = theme;
 	}
 
-	public @NotNull ControlStyle getStyle(String styleName) {
+	public @NotNull Painter getStyle(String styleName) {
 		return theme.get(styleName);
 	}
 

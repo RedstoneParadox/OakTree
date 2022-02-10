@@ -1,4 +1,4 @@
-package io.github.redstoneparadox.oaktree.style;
+package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.util.math.MatrixStack;
@@ -7,26 +7,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ItemControlStyle extends ControlStyle {
+public class ItemPainter extends Painter {
 	private ItemStack stack;
 
-	public ItemControlStyle(Identifier identifier, int count) {
+	public ItemPainter(Identifier identifier, int count) {
 		this.stack = new ItemStack(Registry.ITEM.get(identifier), count);
 	}
 
-	public ItemControlStyle(ItemStack stack) {
+	public ItemPainter(ItemStack stack) {
 		this.stack = stack;
 	}
 
-	public ItemControlStyle(Identifier identifier) {
+	public ItemPainter(Identifier identifier) {
 		this(identifier, 1);
 	}
 
-	public ItemControlStyle(String identifier) {
+	public ItemPainter(String identifier) {
 		this(new Identifier(identifier), 1);
 	}
 
-	public ItemControlStyle(String identifier, int count) {
+	public ItemPainter(String identifier, int count) {
 		this(new Identifier(identifier), count);
 	}
 
@@ -54,7 +54,7 @@ public class ItemControlStyle extends ControlStyle {
 	}
 
 	@Override
-	public ControlStyle copy() {
-		return new ItemControlStyle(stack);
+	public Painter copy() {
+		return new ItemPainter(stack);
 	}
 }

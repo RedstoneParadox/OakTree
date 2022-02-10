@@ -1,8 +1,8 @@
-package io.github.redstoneparadox.oaktree.style;
+package io.github.redstoneparadox.oaktree.painter;
 
 import net.minecraft.client.util.math.MatrixStack;
 
-public class NinePatchControlStyle extends TextureControlStyle {
+public class NinePatchPainter extends TexturePainter {
 	int firstWidth = 1;
 	int secondWidth = 1;
 	int thirdWidth = 1;
@@ -11,18 +11,18 @@ public class NinePatchControlStyle extends TextureControlStyle {
 	int secondHeight = 1;
 	int thirdHeight = 1;
 
-	public NinePatchControlStyle(String path) {
+	public NinePatchPainter(String path) {
 		super(path);
 	}
 
-	public NinePatchControlStyle heights(int firstHeight, int secondHeight, int thirdHeight) {
+	public NinePatchPainter heights(int firstHeight, int secondHeight, int thirdHeight) {
 		this.firstHeight = firstHeight;
 		this.secondHeight = secondHeight;
 		this.thirdHeight = thirdHeight;
 		return this;
 	}
 
-	public NinePatchControlStyle widths(int firstWidth, int secondWidth, int thirdWidth) {
+	public NinePatchPainter widths(int firstWidth, int secondWidth, int thirdWidth) {
 		this.firstWidth = firstWidth;
 		this.secondWidth = secondWidth;
 		this.thirdWidth = thirdWidth;
@@ -30,8 +30,8 @@ public class NinePatchControlStyle extends TextureControlStyle {
 	}
 
 	@Override
-	public NinePatchControlStyle copy() {
-		NinePatchControlStyle copy = (NinePatchControlStyle) super.copy();
+	public NinePatchPainter copy() {
+		NinePatchPainter copy = (NinePatchPainter) super.copy();
 
 		copy.heights(firstHeight, secondHeight, thirdHeight);
 		copy.widths(firstWidth, secondWidth, thirdWidth);

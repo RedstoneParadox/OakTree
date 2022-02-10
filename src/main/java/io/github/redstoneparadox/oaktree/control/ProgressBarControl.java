@@ -3,7 +3,7 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.math.Vector2;
-import io.github.redstoneparadox.oaktree.style.ControlStyle;
+import io.github.redstoneparadox.oaktree.painter.Painter;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -15,7 +15,7 @@ public class ProgressBarControl extends Control {
 	protected int barHeight = 1;
 	protected Direction2D direction = Direction2D.RIGHT;
 
-	private ControlStyle barStyle = null;
+	private Painter barStyle = null;
 
 	public ProgressBarControl() {
 		this.id = "progress_bar";
@@ -68,22 +68,22 @@ public class ProgressBarControl extends Control {
 	}
 
 	/**
-	 * Sets the {@link ControlStyle} for the progress bar.
+	 * Sets the {@link Painter} for the progress bar.
 	 *
-	 * @param style The {@link ControlStyle} to draw.
+	 * @param style The {@link Painter} to draw.
 	 */
-	public void setBarStyle(ControlStyle style) {
+	public void setBarStyle(Painter style) {
 		internalTheme.add("self/bar", style);
 	}
 
-	public ControlStyle getBarStyle() {
+	public Painter getBarStyle() {
 		return internalTheme.get("self/bar");
 	}
 
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-		barStyle = getStyle(gui.getTheme(), "bar");
+		barStyle = getPainter(gui.getTheme(), "bar");
 	}
 
 	@Override

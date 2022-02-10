@@ -3,7 +3,7 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
-import io.github.redstoneparadox.oaktree.style.ControlStyle;
+import io.github.redstoneparadox.oaktree.painter.Painter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +18,7 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 	protected boolean horizontal = false;
 	protected @NotNull BiConsumer<ControlGui, SliderControl> onSlide = (gui, control) -> {};
 	protected boolean held = false;
-	protected ControlStyle sliderStyle = null;
+	protected Painter sliderStyle = null;
 
 	public SliderControl() {
 		this.id = "slider";
@@ -48,11 +48,11 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 		return horizontal;
 	}
 
-	public void setSliderStyle(ControlStyle sliderStyle) {
+	public void setSliderStyle(Painter sliderStyle) {
 		internalTheme.add("self", "slider", sliderStyle);
 	}
 
-	public ControlStyle getSliderStyle() {
+	public Painter getSliderStyle() {
 		return internalTheme.get("self/slider");
 	}
 
@@ -69,7 +69,7 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 	@Override
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-		sliderStyle = getStyle(gui.getTheme(), "slider");
+		sliderStyle = getPainter(gui.getTheme(), "slider");
 
 		if (isMouseWithin && held) {
 			if (horizontal) {
