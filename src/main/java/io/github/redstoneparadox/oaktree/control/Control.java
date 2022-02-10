@@ -5,6 +5,7 @@ import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Painter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
+import io.github.redstoneparadox.oaktree.util.Action;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
@@ -26,7 +27,7 @@ public class Control {
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
 	protected boolean visible = true;
-	protected BiConsumer<ControlGui, Control> onTick = (gui, control) -> {};
+	protected Action onTick = () -> {};
 	protected Painter currentStyle = Painter.BLANK;
 
 	//Internal State
@@ -165,8 +166,8 @@ public class Control {
 	 *
 	 * @param onTick the function to run.
 	 */
-	public void onTick(@NotNull Consumer<ControlGui> onTick) {
-		this.onTick = ((controlGui, cControl) -> onTick.accept(controlGui));
+	public void onTick(@NotNull Action onTick) {
+		this.onTick = onTick;
 	}
 
 	public Vector2 getTruePosition() {
@@ -204,7 +205,7 @@ public class Control {
 
 	// Update current
 	protected void prepare() {
-		onTick.accept(null, this);
+		onTick.run();
 	}
 
 	// Draw
@@ -240,7 +241,7 @@ public class Control {
 	@ApiStatus.Internal
 	@Deprecated
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		onTick.accept(gui, this);
+		onTick.run();
 		currentStyle = getPainter(gui.getTheme(), "base");
 
 		if (!expand) {
