@@ -43,11 +43,11 @@ public class HoverControl extends InteractiveControl {
 
 		if (mouseCurrentlyWithin) {
 			whileHovered.accept(gui);
-			currentPainter = getPainter(gui.getTheme(), "hover");
+			currentStyle = getPainter(gui.getTheme(), "hover");
 		}
 
-		if (currentPainter.blank) {
-			currentPainter = getPainter(gui.getTheme(), "base");
+		if (currentStyle.blank) {
+			currentStyle = getPainter(gui.getTheme(), "base");
 		}
 	}
 }

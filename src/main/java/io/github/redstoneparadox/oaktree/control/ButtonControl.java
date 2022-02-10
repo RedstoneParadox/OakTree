@@ -89,13 +89,13 @@ public class ButtonControl extends InteractiveControl implements MouseButtonList
 
 
 		if (buttonHeld) {
-			currentPainter = getPainter(gui.getTheme(), "held");
+			currentStyle = getPainter(gui.getTheme(), "held");
 		}
 		else if (isMouseWithin) {
-			currentPainter = getPainter(gui.getTheme(), "hover");
+			currentStyle = getPainter(gui.getTheme(), "hover");
 		}
-		if (currentPainter.blank) {
-			currentPainter = getPainter(gui.getTheme(), "base");
+		if (currentStyle.blank) {
+			currentStyle = getPainter(gui.getTheme(), "base");
 		}
 	}
 

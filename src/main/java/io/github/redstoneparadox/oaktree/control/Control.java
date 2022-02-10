@@ -25,7 +25,7 @@ public class Control {
 	protected boolean expand = false;
 	protected boolean visible = true;
 	protected BiConsumer<ControlGui, Control> onTick = (gui, control) -> {};
-	protected Painter currentPainter = Painter.BLANK;
+	protected Painter currentStyle = Painter.BLANK;
 
 	//Internal State
 	protected Theme theme = Theme.EMPTY;
@@ -204,7 +204,7 @@ public class Control {
 
 	// Draw
 	protected void draw(MatrixStack matrices) {
-		currentPainter.draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+		currentStyle.draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	protected void setParent(Control parent) {
@@ -236,7 +236,7 @@ public class Control {
 	@Deprecated
 	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
 		onTick.accept(gui, this);
-		currentPainter = getPainter(gui.getTheme(), "base");
+		currentStyle = getPainter(gui.getTheme(), "base");
 
 		if (!expand) {
 			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
@@ -257,7 +257,7 @@ public class Control {
 	@ApiStatus.Internal
 	@Deprecated
 	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		currentPainter.draw(matrices, trueX, trueY, area.getWidth(), area.getHeight());
+		currentStyle.draw(matrices, trueX, trueY, area.getWidth(), area.getHeight());
 	}
 
 	@ApiStatus.Internal
