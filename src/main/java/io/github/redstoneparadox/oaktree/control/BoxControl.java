@@ -50,35 +50,4 @@ public class BoxControl extends PaddingControl {
 
 		child.updateTree(zIndexedControls, innerX, innerY, innerWidth, innerHeight);
 	}
-
-	@Override
-	public void setup(MinecraftClient client, ControlGui gui) {
-		super.setup(client, gui);
-		child.setup(client, gui);
-	}
-
-	@Override
-	public void zIndex(List<Control> controls) {
-		if (!visible) return;
-		controls.add(this);
-		child.zIndex(controls);
-	}
-
-	@Override
-	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-		Vector2 innerPosition = innerPosition(trueX, trueY);
-		Vector2 innerDimensions = innerDimensions(area.getWidth(), area.getHeight());
-
-		if (child.isVisible()) child.preDraw(gui, innerPosition.getX(), innerPosition.getY(), innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
-	}
-
-	@Override
-	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
-
-		if (child.isVisible()) {
-			child.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
-		}
-	}
 }

@@ -123,28 +123,6 @@ public class GridPanelControl extends PanelControl {
 		return new Rectangle(cellX, cellY, cellWidth, cellHeight);
 	}
 
-	@Override
-	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
-		int cellWidth = area.getWidth() /columns;
-		int cellHeight = area.getHeight() /rows;
-		Vector2 innerDimensions = innerDimensions(cellWidth, cellHeight);
-		Vector2 innerPosition = innerPosition(trueX, trueY);
-
-		int index = 0;
-
-		for (int j = 0; j < rows && index < children.size(); j += 1) {
-			for (int i = 0; i < columns && index < children.size(); i += 1) {
-				int cellX = innerPosition.getX() + (i * cellWidth);
-				int cellY = innerPosition.getY() + (j * cellHeight);
-
-				Control child = children.get(index);
-				if (child.isVisible()) child.preDraw(gui, cellX, cellY, innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
-
-				index += 1;
-			}
-		}
-	}
-
 	class GridCellOutOfBoundsException extends IndexOutOfBoundsException {
 		GridCellOutOfBoundsException(int row, int column) {
 			super("Grid cell [" + row + ", " + column + "] was out of bounds; actual grid size: [ " + rows + ", " + columns + "].");

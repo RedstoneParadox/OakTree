@@ -89,38 +89,4 @@ public class ListPanelControl extends PanelControl {
 
 		return new Rectangle(innerX, innerY, innerWidth, innerHeight);
 	}
-
-	@Override
-	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
-		if (!horizontal) {
-			int sectionHeight = area.getHeight() /displayCount;
-			Vector2 innerDimensions = innerDimensions(area.getWidth(), sectionHeight);
-			Vector2 innerPosition = innerPosition(trueX, trueY);
-
-			for (int i = 0; i < displayCount; i += 1) {
-				int entryY = innerPosition.getY() + (i * sectionHeight);
-
-				Control child = children.get(i + startIndex);
-				if (child.isVisible()) child.preDraw(gui, innerPosition.getX(), entryY, innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
-			}
-		}
-		else {
-			int sectionWidth = area.getWidth() /displayCount;
-			Vector2 innerDimensions = innerDimensions(sectionWidth, area.getHeight());
-			Vector2 innerPosition = innerPosition(trueX, trueY);
-
-			for (int i = 0; i < displayCount; i += 1) {
-				int entryX = innerPosition.getX() + (i * sectionWidth);
-
-				Control child = children.get(i + startIndex);
-				if (child.isVisible()) child.preDraw(gui, entryX, innerPosition.getY(), innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
-			}
-		}
-	}
-
-	@Override
-	boolean shouldDraw(Control child) {
-		int index = children.indexOf(child);
-		return index >= startIndex && index < startIndex + displayCount;
-	}
 }

@@ -98,49 +98,4 @@ public class PanelControl extends PaddingControl {
 
 		return new Rectangle(innerX, innerY, innerWidth, innerHeight);
 	}
-
-	@Override
-	public void setup(MinecraftClient client, ControlGui gui) {
-		super.setup(client, gui);
-		for (Control child: children) {
-			child.setup(client, gui);
-		}
-	}
-
-	@Override
-	public void zIndex(List<Control> controls) {
-		if (!visible) return;
-		controls.add(this);
-		for (Control child: children) {
-			if (child.isVisible()) child.zIndex(controls);
-		}
-	}
-
-	@Override
-	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-		arrangeChildren(gui, mouseX, mouseY);
-	}
-
-	@Deprecated
-	void arrangeChildren(ControlGui gui, int mouseX, int mouseY) {
-		Vector2 innerPosition = innerPosition(trueX, trueY);
-		Vector2 innerDimensions = innerDimensions(area.getWidth(), area.getHeight());
-		for (Control child: children) {
-			if (child.isVisible()) child.preDraw(gui, innerPosition.getX(), innerPosition.getY(), innerDimensions.getX(), innerDimensions.getY(), mouseX, mouseY);
-		}
-	}
-
-	@Override
-	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
-		for (Control child: children) {
-			if (child.isVisible() && shouldDraw(child)) child.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
-		}
-	}
-
-	@Deprecated
-	boolean shouldDraw(Control child) {
-		return true;
-	}
 }

@@ -90,35 +90,4 @@ public class ProgressBarControl extends Control {
 			case RIGHT -> barPainter.draw(matrices, barX, barY, (int) (barWidth * (this.percent / 100.0f)), barHeight);
 		}
 	}
-
-	@Override
-	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-		barStyle = getPainter(gui.getTheme(), "bar");
-	}
-
-	@Override
-	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
-
-		int barX = trueX + ((area.getWidth() /2) - (barWidth/2));
-		int barY = trueY + ((area.getHeight() /2) - (barHeight/2));
-
-		switch (direction) {
-			case UP:
-				int drawHeight = (int) (barHeight * (this.percent/100.0f));
-				barStyle.draw(matrices, barX, barY + (barHeight - drawHeight), barWidth, drawHeight);
-				break;
-			case DOWN:
-				barStyle.draw(matrices, barX, barY, barWidth, (int) (barHeight * (this.percent/100.0f)));
-				break;
-			case LEFT:
-				int drawWidth = (int) (barWidth * (this.percent/100.0f));
-				barStyle.draw(matrices, barX - drawWidth, barY, drawWidth, barHeight);
-				break;
-			case RIGHT:
-				barStyle.draw(matrices, barX, barY, (int) (barWidth * (this.percent/100.0f)), barHeight);
-				break;
-		}
-	}
 }
