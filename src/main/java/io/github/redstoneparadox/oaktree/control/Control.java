@@ -272,4 +272,8 @@ public class Control extends AbstractControl {
 
 		return style;
 	}
+
+	public static class PainterKey {
+		protected PainterKey() {}
+	}
 }
