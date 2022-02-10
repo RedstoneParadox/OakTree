@@ -39,6 +39,8 @@ public class SplitControl extends Control {
 
 	public void setFirst(@NotNull Control first) {
 		this.first = first;
+		first.setParent(this);
+		markDirty();
 	}
 
 	public @NotNull Control getFirst() {
@@ -47,6 +49,8 @@ public class SplitControl extends Control {
 
 	public void setSecond(@NotNull Control second) {
 		this.second = second;
+		second.setParent(this);
+		markDirty();
 	}
 
 	public @NotNull Control getSecond() {

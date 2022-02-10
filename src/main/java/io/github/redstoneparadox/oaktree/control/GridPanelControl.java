@@ -67,6 +67,7 @@ public class GridPanelControl extends PanelControl {
 		int index = (row - 1) * columns + column;
 		if (index >= children.size()) ListUtils.growList(children, index + 1);
 		children.set(index, child);
+		child.setParent(this);
 		markDirty();
 	}
 
@@ -96,11 +97,11 @@ public class GridPanelControl extends PanelControl {
 		int index = 0;
 		for (int j = 0; j < rows; j += 1) {
 			for (int i = 0; i < columns; i += 1) {
- 				if (!overwriteExisting && children.get(index) != null) {
+ 				if (!overwriteExisting) {
  					continue;
 				}
 
-				children.add(function.apply(j, i, index));
+				addChild(function.apply(j, i, index));
 				index += 1;
 			}
 		}

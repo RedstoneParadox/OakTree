@@ -32,6 +32,8 @@ public class BoxControl extends PaddingControl {
 	 */
 	public void setChild(@NotNull Control child) {
 		this.child = child;
+		child.setParent(this);
+		markDirty();
 	}
 
 	public @NotNull Control getChild() {

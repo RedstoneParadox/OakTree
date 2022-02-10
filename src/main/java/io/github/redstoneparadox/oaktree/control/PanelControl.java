@@ -32,6 +32,7 @@ public class PanelControl extends PaddingControl {
 	 */
 	public void addChild(@NotNull Control child) {
 		children.add(child);
+		child.setParent(this);
 		markDirty();
 	}
 
@@ -50,9 +51,8 @@ public class PanelControl extends PaddingControl {
 		}
 
 		for (int i  = 0; i < count; i++) {
-			children.add(function.apply(i));
+			addChild(function.apply(i));
 		}
-		markDirty();
 	}
 
 	public @Nullable Control getChild(int index) {
