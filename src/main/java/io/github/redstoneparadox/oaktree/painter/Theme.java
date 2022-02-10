@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.painter;
 
+import io.github.redstoneparadox.oaktree.control.Control;
 import io.github.redstoneparadox.oaktree.util.Color;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,7 +10,8 @@ import java.util.Map;
 public class Theme {
 	public static final Theme EMPTY = new Theme(true);
 
-	private Map<String, @NotNull Painter> styles = new HashMap<>();
+	private final Map<String, @NotNull Painter> styles = new HashMap<>();
+	private final Map<String, Map<Control.PainterKey, Painter>> painters = new HashMap<>();
 	private final boolean empty;
 
 	public Theme() {
@@ -20,16 +22,47 @@ public class Theme {
 		this.empty = empty;
 	}
 
+	public void put(String id, Control.PainterKey painterKey, @NotNull Painter painter) {
+		if (empty) return;
+		Map<Control.PainterKey, Painter> subMap;
+		if (painters.containsKey(id)) {
+			subMap = painters.get(id);
+		} else {
+			subMap = painters.put(id, new HashMap<>());
+		}
+
+		assert subMap != null;
+		subMap.put(painterKey, painter);
+	}
+
+	public @NotNull Painter get(String id, Control.PainterKey painterKey) {
+		if (empty) return Painter.BLANK;
+
+		if (painters.containsKey(id)) {
+			Map<Control.PainterKey, Painter> subMap = painters.get(id);
+
+			if (subMap.containsKey(painterKey)) {
+				return subMap.get(painterKey);
+			}
+			return Painter.BLANK;
+		}
+
+		return Painter.BLANK;
+	}
+
+	@Deprecated
 	public Theme add(String controlID, String controlState, @NotNull Painter style) {
 		if (!empty) styles.put(controlID + "/" + controlState, style);
 		return this;
 	}
 
+	@Deprecated
 	public Theme add(String controlID, @NotNull Painter style) {
 		if (!empty) styles.put(controlID + "/base", style);
 		return this;
 	}
 
+	@Deprecated
 	public @NotNull Painter get(String style) {
 		if (!empty && styles.containsKey(style)) {
 			return styles.get(style);

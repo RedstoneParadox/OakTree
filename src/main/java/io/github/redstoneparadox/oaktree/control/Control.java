@@ -18,6 +18,8 @@ import java.util.function.Consumer;
  * The base class for all controls.
  */
 public class Control {
+	public static PainterKey DEFAULT = new PainterKey();
+
 	protected Control parent;
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
@@ -29,6 +31,7 @@ public class Control {
 
 	//Internal State
 	protected Theme theme = Theme.EMPTY;
+	protected PainterKey painterKey = DEFAULT;
 	protected int trueX = 0;
 	protected int trueY = 0;
 	protected Rectangle trueArea = new Rectangle(0, 0, 1, 1);
@@ -204,7 +207,7 @@ public class Control {
 
 	// Draw
 	protected void draw(MatrixStack matrices) {
-		currentStyle.draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+		theme.get(id, painterKey).draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	protected void setParent(Control parent) {
