@@ -5,6 +5,7 @@ import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.painter.Painter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
+import io.github.redstoneparadox.oaktree.util.Action;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +20,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 	protected float scrollPercent = 0.0f;
 	protected int barLength = 1;
 	protected boolean horizontal = false;
-	protected @NotNull BiConsumer<ControlGui, SliderControl> onSlide = (gui, control) -> {};
+	protected @NotNull Action onSlide = () -> {};
 	protected boolean held = false;
 	protected Painter sliderStyle = null;
 
@@ -52,8 +53,8 @@ public class SliderControl extends Control implements MouseButtonListener {
 		return horizontal;
 	}
 
-	public void onSlide(@NotNull Consumer<ControlGui> onSlide) {
-		this.onSlide = ((controlGui, sliderControl) -> onSlide.accept(controlGui));
+	public void onSlide(@NotNull Action onSlide) {
+		this.onSlide = onSlide;
 	}
 
 	@Override
