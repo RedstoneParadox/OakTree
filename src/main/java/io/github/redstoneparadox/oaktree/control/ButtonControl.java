@@ -3,23 +3,28 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
+import io.github.redstoneparadox.oaktree.util.Action;
 import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Consumer;
 
-public class ButtonControl extends InteractiveControl implements MouseButtonListener {
+public class ButtonControl extends Control implements MouseButtonListener {
+	public static final PainterKey HELD = new PainterKey();
+	public static final PainterKey HOVERED = new PainterKey();
+
 	protected boolean toggleable = false;
-	protected @NotNull Consumer<ControlGui> onClick = (gui) -> {};
-	protected @NotNull Consumer<ControlGui> whileHeld = (gui) -> {};
-	protected @NotNull Consumer<ControlGui> onRelease = (gui) -> {};
+	protected @NotNull Action onClick = () -> {};
+	protected @NotNull Action whileHeld = () -> {};
+	protected @NotNull Action onRelease = () -> {};
 	private boolean mouseClicked = false;
 	private boolean mouseHeld = false;
 	private boolean buttonHeld = false;
 
 	public ButtonControl() {
 		this.id = "button";
+		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
 	public void setToggleable(boolean toggleable) {
@@ -30,73 +35,68 @@ public class ButtonControl extends InteractiveControl implements MouseButtonList
 		return toggleable;
 	}
 
-	public void onClick(@NotNull Consumer<ControlGui> onClick) {
+	public void onClick(@NotNull Action onClick) {
 		this.onClick = onClick;
 	}
 
-	public void whileHeld(@NotNull Consumer<ControlGui> whileHeld) {
+	public void whileHeld(@NotNull Action whileHeld) {
 		this.onClick = whileHeld;
 	}
 
-	public void onRelease(@NotNull Consumer<ControlGui> onRelease) {
+	public void onRelease(@NotNull Action onRelease) {
 		this.onRelease = onRelease;
 	}
 
 	@Override
-	public void setup(MinecraftClient client, ControlGui gui) {
-		super.setup(client, gui);
-		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
-	}
-
-	@Override
-	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
+	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
+		captured = super.interact(mouseX, mouseY, deltaTime, captured);
 
 		if (toggleable) {
-			if (isMouseWithin) {
+			if (captured) {
 				if (mouseClicked) {
 					buttonHeld = !buttonHeld;
 
 					if (buttonHeld) {
-						onClick.accept(gui);
+						onClick.run();
 					}
 					else {
-						onRelease.accept(gui);
+						onRelease.run();
 					}
 				}
 			}
 
 			if (buttonHeld) {
-				whileHeld.accept(gui);
+				whileHeld.run();
 			}
 		}
-		else if (isMouseWithin) {
+		else if (captured) {
 			if (mouseHeld) {
 				if (!buttonHeld) {
 					buttonHeld = true;
-					onClick.accept(gui);
+					onClick.run();
 				}
 
-				whileHeld.accept(gui);
+				whileHeld.run();
 			} else {
 				buttonHeld = false;
-				onRelease.accept(gui);
+				onRelease.run();
 			}
 		} else if (buttonHeld) {
 			buttonHeld = false;
-			onRelease.accept(gui);
+			onRelease.run();
 		}
-
 
 		if (buttonHeld) {
-			currentStyle = getPainter(gui.getTheme(), "held");
+			painterKey = HELD;
 		}
-		else if (isMouseWithin) {
-			currentStyle = getPainter(gui.getTheme(), "hover");
+		else if (captured) {
+			painterKey = HOVERED;
 		}
-		if (currentStyle.blank) {
-			currentStyle = getPainter(gui.getTheme(), "base");
+		else {
+			painterKey = DEFAULT;
 		}
+
+		return captured;
 	}
 
 	@Override
