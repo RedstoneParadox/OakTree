@@ -12,7 +12,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
-public class DropdownControl extends InteractiveControl implements MouseButtonListener {
+public class DropdownControl extends Control implements MouseButtonListener {
 	@NotNull protected Control dropdown = new Control();
 	@NotNull protected Direction2D dropdownDirection = Direction2D.DOWN;
 
@@ -75,7 +75,7 @@ public class DropdownControl extends InteractiveControl implements MouseButtonLi
 
 	@Override
 	public void onMouseButton(int button, boolean justPressed, boolean released) {
-		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && justPressed && isMouseWithin) {
+		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && justPressed) {
 			dropdownVisible = !dropdownVisible;
 		}
 	}
