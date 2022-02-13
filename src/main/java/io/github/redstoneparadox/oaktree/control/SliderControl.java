@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.painter.Painter;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class SliderControl extends InteractiveControl implements MouseButtonListener {
+	public static PainterKey SLIDER = new PainterKey();
+
 	protected float scrollPercent = 0.0f;
 	protected int barLength = 1;
 	protected boolean horizontal = false;
@@ -22,6 +25,7 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 
 	public SliderControl() {
 		this.id = "slider";
+		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
 	public void setScrollPercent(float scrollPercent) {
@@ -53,31 +57,24 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 	}
 
 	@Override
-	public void setup(MinecraftClient client, ControlGui gui) {
-		super.setup(client, gui);
-		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
-	}
+	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
+		captured = super.interact(mouseX, mouseY, deltaTime, captured);
 
-	@Override
-	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		super.preDraw(gui, offsetX, offsetY, containerWidth, containerHeight, mouseX, mouseY);
-		sliderStyle = getPainter(gui.getTheme(), "slider");
-
-		if (isMouseWithin && held) {
+		if (captured && held) {
 			if (horizontal) {
 				scrollPercent = Math.max(0.0f, Math.min(((float)mouseX - trueX)/(area.getWidth() - barLength) * 100.0f, 100.0f));
 			}
 			else {
 				scrollPercent = Math.max(0.0f, Math.min(((float)mouseY - trueY)/(area.getHeight() - barLength) * 100.0f, 100.0f));
 			}
-
-			onSlide.accept(gui, this);
 		}
+
+		return captured;
 	}
 
 	@Override
-	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
+	protected void draw(MatrixStack matrices, Theme theme) {
+		super.draw(matrices, theme);
 
 		int sliderX = trueX;
 		int sliderY = trueY;
@@ -94,7 +91,7 @@ public class SliderControl extends InteractiveControl implements MouseButtonList
 			sliderHeight = barLength;
 		}
 
-		if (sliderStyle != null) sliderStyle.draw(matrices, sliderX, sliderY, sliderWidth, sliderHeight);
+		if (sliderStyle != null) theme.get(id, SLIDER).draw(matrices, sliderX, sliderY, sliderWidth, sliderHeight);
 	}
 
 	@Override
