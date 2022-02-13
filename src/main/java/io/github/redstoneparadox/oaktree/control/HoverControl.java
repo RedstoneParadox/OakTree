@@ -3,7 +3,7 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.util.Action;
 import org.jetbrains.annotations.NotNull;
 
-public class HoverControl extends InteractiveControl {
+public class HoverControl extends Control {
 	public static final PainterKey HOVERED = new PainterKey();
 
 	protected @NotNull Action onMouseEnter = () -> {};
