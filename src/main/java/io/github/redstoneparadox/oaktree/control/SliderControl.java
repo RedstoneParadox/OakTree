@@ -13,7 +13,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class SliderControl extends InteractiveControl implements MouseButtonListener {
+public class SliderControl extends Control implements MouseButtonListener {
 	public static PainterKey SLIDER = new PainterKey();
 
 	protected float scrollPercent = 0.0f;
