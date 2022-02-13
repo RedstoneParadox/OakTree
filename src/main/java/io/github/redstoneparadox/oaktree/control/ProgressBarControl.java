@@ -1,9 +1,9 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Painter;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -70,8 +70,8 @@ public class ProgressBarControl extends Control {
 	}
 
 	@Override
-	protected void draw(MatrixStack matrices) {
-		super.draw(matrices);
+	protected void draw(MatrixStack matrices, Theme theme) {
+		super.draw(matrices, theme);
 
 		int barX = trueX + ((area.getWidth() /2) - (barWidth/2));
 		int barY = trueY + ((area.getHeight() /2) - (barHeight/2));

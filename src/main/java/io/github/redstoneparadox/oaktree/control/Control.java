@@ -11,11 +11,8 @@ import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * The base class for all controls.
@@ -241,7 +238,7 @@ public class Control {
 	}
 
 	// Draw
-	protected void draw(MatrixStack matrices) {
+	protected void draw(MatrixStack matrices, Theme theme) {
 		theme.get(id, painterKey).draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 

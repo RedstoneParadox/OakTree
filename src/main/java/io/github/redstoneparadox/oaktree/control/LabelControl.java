@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import io.github.redstoneparadox.oaktree.util.TextHelper;
@@ -160,8 +160,8 @@ public class LabelControl extends Control {
 	}
 
 	@Override
-	protected void draw(MatrixStack matrices) {
-		super.draw(matrices);
+	protected void draw(MatrixStack matrices, Theme theme) {
+		super.draw(matrices, theme);
 		
 		if (maxDisplayedLines > 0) {
 			List<OrderedText> lines = TextHelper.wrapText(text, area.getWidth(), firstLine, maxDisplayedLines, shadow, false);

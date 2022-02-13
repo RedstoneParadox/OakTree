@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RootPanelControl extends PanelControl {
+	protected Theme theme;
 	private boolean dirty = true;
 	private final List<Control> zIndexedControls = new ArrayList<>();
 
@@ -55,9 +56,9 @@ public class RootPanelControl extends PanelControl {
 			control.prepare();
 		}
 
-		draw(matrices);
+		draw(matrices, theme);
 		for (Control control: zIndexedControls) {
-			control.draw(matrices);
+			control.draw(matrices, theme);
 		}
 	}
 }

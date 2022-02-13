@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
@@ -59,8 +59,8 @@ public class EntityPreviewControl extends Control {
 	}
 
 	@Override
-	protected void draw(MatrixStack matrices) {
-		super.draw(matrices);
+	protected void draw(MatrixStack matrices, Theme theme) {
+		super.draw(matrices, theme);
 		InventoryScreen.drawEntity(this.trueArea.getX(), this.trueArea.getY(), this.entitySize,
 				followCursor ? mouseX : 0, followCursor ? mouseY : 0, this.entity);
 	}
