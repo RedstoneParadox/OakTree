@@ -1,10 +1,7 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
-import io.github.redstoneparadox.oaktree.math.Vector2;
-
-import java.util.List;
+import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 
 public class ListPanelControl extends PanelControl {
 	protected boolean horizontal = false;
@@ -50,7 +47,7 @@ public class ListPanelControl extends PanelControl {
 
 
 	@Override
-	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		for (int i = 0; i < children.size(); i++) {
 			Control child = children.get(i);
 			child.visible = (i >= startIndex) && (i < startIndex + displayCount);

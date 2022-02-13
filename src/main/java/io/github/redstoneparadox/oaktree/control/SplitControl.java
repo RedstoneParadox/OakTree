@@ -1,12 +1,8 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
+import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class SplitControl extends Control {
 	protected int splitSize = 0;
@@ -58,7 +54,7 @@ public class SplitControl extends Control {
 	}
 
 	@Override
-	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 
 		if (vertical) {

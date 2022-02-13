@@ -6,6 +6,7 @@ import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Painter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
+import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
@@ -192,10 +193,14 @@ public class Control {
 		return new Vector2(trueX, trueY);
 	}
 
-	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		zIndexedControls.add(this);
 		Window window = MinecraftClient.getInstance().getWindow();
-		if (tooltip != null && tooltip.visible) tooltip.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
+		if (tooltip != null && tooltip.visible) {
+			zIndexedControls.addOffset(300);
+			tooltip.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
+			zIndexedControls.addOffset(-300);
+		}
 
 		if (expand && !isTooltip) {
 			trueArea = new Rectangle(containerX, containerY, containerWidth, containerHeight);

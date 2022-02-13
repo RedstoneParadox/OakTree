@@ -1,10 +1,7 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
-import io.github.redstoneparadox.oaktree.math.Vector2;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
+import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -78,7 +75,7 @@ public class PanelControl extends PaddingControl {
 	}
 
 	@Override
-	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 
 		for (int i = 0; i < children.size(); i++) {
