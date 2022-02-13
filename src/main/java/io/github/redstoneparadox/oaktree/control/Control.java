@@ -7,6 +7,7 @@ import io.github.redstoneparadox.oaktree.painter.Painter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -196,9 +197,10 @@ public class Control {
 
 	protected void updateTree(List<Control> zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		zIndexedControls.add(this);
-		if (tooltip.visible) zIndexedControls.add(tooltip);
+		Window window = MinecraftClient.getInstance().getWindow();
+		if (tooltip != null && tooltip.visible) tooltip.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
 
-		if (expand) {
+		if (expand && !isTooltip) {
 			trueArea = new Rectangle(containerX, containerY, containerWidth, containerHeight);
 		}
 		else {
@@ -221,7 +223,16 @@ public class Control {
 		int x = trueArea.getX();
 		int y = trueArea.getY();
 
-		return mouseX >= x && mouseX <= x + area.getWidth() && mouseY >= y && mouseX <= y + area.getHeight();
+		captured = mouseX >= x && mouseX <= x + area.getWidth() && mouseY >= y && mouseX <= y + area.getHeight();
+
+		if (captured && tooltip != null) {
+			tooltip.visible = true;
+			tooltip.setOffset(mouseX, mouseY);
+		} else if (tooltip != null){
+			tooltip.visible = false;
+		}
+
+		return captured;
 	}
 
 	// Update current
