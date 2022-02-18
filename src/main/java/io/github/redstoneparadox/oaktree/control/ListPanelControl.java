@@ -3,6 +3,12 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 
+/**
+ * A {@link PanelControl} that arranges its children
+ * as a vertical or horizontal list. It can be set
+ * to only display some of its children at once
+ * and can be scrolled.
+ */
 public class ListPanelControl extends PanelControl {
 	protected boolean horizontal = false;
 	protected int displayCount = 1;
@@ -12,6 +18,12 @@ public class ListPanelControl extends PanelControl {
 		id = "list_panel";
 	}
 
+	/**
+	 * Sets whether this should display its children
+	 * horizontally instead of vertically.
+	 *
+	 * @param horizontal The value to set.
+	 */
 	public void setHorizontal(boolean horizontal) {
 		this.horizontal = horizontal;
 	}
@@ -20,8 +32,14 @@ public class ListPanelControl extends PanelControl {
 		return horizontal;
 	}
 
-	// TODO: Display count should only be clamped during preDraw
+	/**
+	 * Sets how many children should be displayed
+	 * at once.
+	 *
+	 * @param displayCount The count to set.
+	 */
 	public void setDisplayCount(int displayCount) {
+		// TODO: Display count should only be clamped during prepare
 		if (displayCount < 1) this.displayCount = 1;
 		else this.displayCount = Math.min(displayCount, children.size());
 		markDirty();
@@ -31,6 +49,12 @@ public class ListPanelControl extends PanelControl {
 		return displayCount;
 	}
 
+	/**
+	 * Sets the index of the first child to be
+	 * displayed.
+	 *
+	 * @param startIndex The index of the child
+	 */
 	public void setStartIndex(int startIndex) {
 		if (startIndex < 0) this.startIndex = 0;
 		else this.startIndex = Math.min(startIndex, children.size() - displayCount);
@@ -41,10 +65,14 @@ public class ListPanelControl extends PanelControl {
 		return startIndex;
 	}
 
+	/**
+	 * Scrolls the list by a certain amount
+	 *
+	 * @param amount The amount to scroll by
+	 */
 	public void scrollBy(int amount) {
 		setStartIndex(startIndex + amount);
 	}
-
 
 	@Override
 	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
