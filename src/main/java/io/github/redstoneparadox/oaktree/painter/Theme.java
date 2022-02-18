@@ -50,38 +50,10 @@ public class Theme {
 		return Painter.BLANK;
 	}
 
-	@Deprecated
-	public Theme add(String controlID, String controlState, @NotNull Painter style) {
-		if (!empty) styles.put(controlID + "/" + controlState, style);
-		return this;
-	}
-
-	@Deprecated
-	public Theme add(String controlID, @NotNull Painter style) {
-		if (!empty) styles.put(controlID + "/base", style);
-		return this;
-	}
-
-	@Deprecated
-	public @NotNull Painter get(String style) {
-		if (!empty && styles.containsKey(style)) {
-			return styles.get(style);
-		}
-		return Painter.BLANK;
-	}
-
 	public Theme copy() {
 		Theme copy = new Theme();
-
-		for (Map.Entry<String, @NotNull Painter> entry: styles.entrySet()) {
-			copy.add(entry.getKey(), entry.getValue());
-		}
-
+		copy.painters.putAll(this.painters);
 		return copy;
-	}
-
-	public boolean containsStyle(String styleID) {
-		return styles.containsKey(styleID);
 	}
 
 	public static Theme vanilla() {
