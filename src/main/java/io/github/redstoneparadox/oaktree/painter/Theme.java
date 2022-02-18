@@ -9,8 +9,7 @@ import java.util.Map;
 
 public class Theme {
 	public static final Theme EMPTY = new Theme(true);
-
-	private final Map<String, @NotNull Painter> styles = new HashMap<>();
+	
 	private final Map<String, Map<Control.PainterKey, Painter>> painters = new HashMap<>();
 	private final boolean empty;
 
