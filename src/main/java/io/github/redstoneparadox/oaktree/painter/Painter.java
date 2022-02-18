@@ -1,11 +1,11 @@
 package io.github.redstoneparadox.oaktree.painter;
 
+import io.github.redstoneparadox.oaktree.control.Control;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
- * A StyleBox represents the part of the node that actually gets drawn. Multiple Nodes
- * can be drawn as a color or texture, so this class and its children were created to
- * reduce redundancy.
+ * A Painter represents the part of the {@link Control}
+ * that actually gets drawn.
  */
 public abstract class Painter {
 	public static final Painter BLANK = new Painter(true) {

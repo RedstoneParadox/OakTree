@@ -41,11 +41,11 @@ public class Control {
 	}
 
 	/**
-	 * Anchors the position of this node relative to the parent using
+	 * Anchors the position of this Control relative to the parent using
 	 * a {@link Anchor}. For example, a value of
 	 * {@link Anchor#CENTER} and a position of (10, 0)
-	 * will result in the node being placed 10 pixels to the left of
-	 * the parent node's center.
+	 * will result in the Control being placed 10 pixels to the left of
+	 * its anchor
 	 *
 	 * @param anchor The {@link Anchor} to anchor to.
 	 */
@@ -58,9 +58,9 @@ public class Control {
 	}
 
 	/**
-	 * Sets the offset of the node on the screen relative to the anchor.
+	 * Sets the offset of the Control on the screen relative to the anchor.
 	 * Values are in pixels. Due to the way screen coordinates work,
-	 * positive y is down so a position of (10, 10) will place the node 10
+	 * positive y is down so a position of (10, 10) will place the Control 10
 	 * pixels to the left and 10 pixels below the top-left corner of the
 	 * screen.
 	 *
@@ -74,11 +74,11 @@ public class Control {
 	}
 
 	/**
-	 * Sets the offset of the node on the screen relative to the anchor.
+	 * Sets the offset of the Control on the screen relative to the anchor.
 	 * Values are in pixels. Due to the way screen coordinates work,
-	 * positive y is down so a position of (10, 10) will place the node 10
+	 * positive y is down so a position of (10, 10) will place the Control 10
 	 * pixels to the left and 10 pixels below the top-left corner of the
-	 * screen.
+	 * parent Control.
 	 *
 	 * @param offset The offset in Vector2 form.
 	 */
@@ -91,13 +91,13 @@ public class Control {
 	}
 
 	/**
-	 * Sets the width and height of this node. Values are in pixels.
+	 * Sets the width and height of this Control. Values are in pixels.
 	 * Due to the way screen coordinates work, positive y is down so a
-	 * size of (10, 10) would mean that the node extends 10 pixels to the
-	 * left of and 10 pixels down from it's position.
+	 * size of (10, 10) would mean that the Control extends 10 pixels to the
+	 * left of and 10 pixels down from its position.
 	 *
-	 * @param width The new width of this node in pixels.
-	 * @param height The new height of this node in pixels.
+	 * @param width The new width of this Control in pixels.
+	 * @param height The new height of this Control in pixels.
 	 */
 	public void setSize(int width, int height) {
 		area.setWidth(width);
@@ -106,9 +106,9 @@ public class Control {
 	}
 
 	/**
-	 * Sets the width and height of this node. Values are in pixels.
+	 * Sets the width and height of this Control. Values are in pixels.
 	 * Due to the way screen coordinates work, positive y is down so a
-	 * size of (10, 10) would mean that the node extends 10 pixels to the
+	 * size of (10, 10) would mean that the Control extends 10 pixels to the
 	 * left of and 10 pixels down from it's position.
 	 *
 	 * @param size The size in Vector2 form.
@@ -127,8 +127,8 @@ public class Control {
 
 	/**
 	 * Sets whether or not this should automatically expand to the
-	 * size of the parent node. If set to true, any size and position settings
-	 * will be ignored when drawing the node.
+	 * size of the parent Control. If set to true, any size and position settings
+	 * will be ignored when drawing the Control.
 	 *
 	 * @param expand The value to set
 	 */
@@ -141,12 +141,11 @@ public class Control {
 	}
 
 	/**
-	 * Sets whether or not this node should be visible. Any nodes that
+	 * Sets whether or not this Control should be visible. Any Controls that
 	 * are not visible will not be drawn, cannot be interacted with,
 	 * and will cause their children to not be drawn (if they have any).
 	 *
-	 * @param visible Whether or not this node should be visible.
-	 * @return The node itself.
+	 * @param visible Whether or not this Control should be visible.
 	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
@@ -174,7 +173,7 @@ public class Control {
 	}
 
 	/**
-	 * Sets a function to run every time this node is ticked.
+	 * Sets a function to run every time this Control is ticked.
 	 *
 	 * @param onTick the function to run.
 	 */

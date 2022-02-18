@@ -4,11 +4,11 @@ import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * BoxControl is a type of PaddingControl that
- * can have a single child node.
+ * BoxControl is a type of {@link PaddingControl}
+ * that can have a single child {@link Control}.
  *
  * While {@link PanelControl} could also be used,
- * BoxControl is specialized for dealing with a
+ * this class is specialized for dealing with a
  * single child.
  */
 public class BoxControl extends PaddingControl {
@@ -19,11 +19,12 @@ public class BoxControl extends PaddingControl {
 	}
 
 	/**
-	 * Sets the child node of this node. The child node
-	 * will be drawn relative to this node within the box
-	 * created by the internal margins.
+	 * Sets the child of this control. The child
+	 * will be drawn within the internal
+	 * margins.
 	 *
-	 * @param child The node that is being added as a child.
+	 * @param child The {@link } that is being
+	 *           	added as a child.
 	 */
 	public void setChild(@NotNull Control child) {
 		this.child = child;

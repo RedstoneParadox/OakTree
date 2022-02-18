@@ -7,7 +7,8 @@ import io.github.redstoneparadox.oaktree.painter.Theme;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
- * A node representing a percent-based progress bar.
+ * A {@link Control} that acts as a percentage
+ * based progress bar.
  */
 public class ProgressBarControl extends Control {
 	public static PainterKey BAR = new PainterKey();
@@ -38,7 +39,7 @@ public class ProgressBarControl extends Control {
 
 	/**
 	 * Sets the width and height of the progress bar. It
-	 * is suggested to make it smaller than the node
+	 * is suggested to make it smaller than the control
 	 * itself.
 	 *
 	 * @param width The width of the progress bar.
