@@ -1,6 +1,11 @@
 package io.github.redstoneparadox.oaktree.painter;
 
+import io.github.redstoneparadox.oaktree.control.ButtonControl;
 import io.github.redstoneparadox.oaktree.control.Control;
+import io.github.redstoneparadox.oaktree.control.RootPanelControl;
+import io.github.redstoneparadox.oaktree.control.SliderControl;
+import io.github.redstoneparadox.oaktree.control.SlotControl;
+import io.github.redstoneparadox.oaktree.control.TextEditControl;
 import io.github.redstoneparadox.oaktree.util.Color;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,63 +63,55 @@ public class Theme {
 	public static Theme vanilla() {
 		Theme vanilla = new Theme();
 
+		NinePatchPainter ninePatchUI = new NinePatchPainter("oaktree:textures/gui/ui.png");
+
+		NinePatchPainter base = ninePatchUI.copy();
+		base.setWidths(4, 2, 4);
+		base.setHeights(4, 2, 4);
+		vanilla.put("base", Control.DEFAULT, base);
+
+		TexturePainter background = new TexturePainter("textures/gui/options_background.png");
+		background.setTextureSize(16, 16);
+		background.setFileDimensions(16, 16);
+		background.setTint(Color.rgb(64, 64, 64));
+		background.setTiled(true);
+		vanilla.put("background", Control.DEFAULT, background);
+
+		NinePatchPainter button = ninePatchUI.copy();
+		button.setWidths(3, 12, 3);
+		button.setHeights(3, 12, 3);
+		button.setDrawOrigin(0, 18);
+		vanilla.put("button", ButtonControl.DEFAULT, button);
+
+		NinePatchPainter buttonHovered = button.copy();
+		buttonHovered.setDrawOrigin(36, 18);
+		vanilla.put("button", ButtonControl.HOVERED, buttonHovered);
+
+		NinePatchPainter buttonHeld = button.copy();
+		buttonHeld.setDrawOrigin(18, 18);
+		vanilla.put("button", ButtonControl.HELD, buttonHeld);
+
+		NinePatchPainter slider = button.copy();
+		vanilla.put("slider", SliderControl.SLIDER, slider);
+
+		NinePatchPainter sliderBackground = buttonHeld.copy();
+		vanilla.put("slider", SliderControl.DEFAULT, sliderBackground);
+
+		TexturePainter itemSlot = new TexturePainter("oaktree:textures/gui/ui.png");
+		itemSlot.setDrawOrigin(18, 0);
+		itemSlot.setTextureSize(18, 18);
+		vanilla.put("item_slot", SlotControl.DEFAULT, itemSlot);
+
+		ColorPainter textEdit = new ColorPainter(Color.BLACK, Color.rgb(0.63f, 0.63f, 0.63f));
+		vanilla.put("text_edit", TextEditControl.DEFAULT, textEdit);
+
+		NinePatchPainter tooltip = ninePatchUI.copy();
+		tooltip.setDrawOrigin(36, 0);
+		tooltip.setWidths(2, 1, 2);
+		tooltip.setHeights(2, 1, 1);
+		tooltip.setTint(Color.WHITE.withAlpha(0.95f));
+		vanilla.put("tooltip", Control.DEFAULT, tooltip);
+
 		return vanilla;
-		/*
-		return new Theme()
-				.add("item_slot", new TexturePainter("oaktree:textures/gui/ui.png")
-						.drawOrigin(18, 0)
-						.fileDimensions(256, 256)
-						.textureSize(18, 18)
-						.scale(1)
-				)
-				.add("base", new NinePatchPainter("oaktree:textures/gui/ui.png")
-						.widths(4, 2, 4)
-						.heights(4, 2, 4)
-						.fileDimensions(256, 256)
-						.scale(1f))
-				.add("text_edit", new ColorPainter(Color.BLACK, Color.rgb(0.63f, 0.63f, 0.63f), 1))
-				.add("background", new TexturePainter("textures/gui/options_background.png")
-						.textureSize(16, 16)
-						.fileDimensions(16, 16)
-						.tint(Color.rgb(64, 64, 64))
-						.tiled(true))
-				.add("button", "held", new NinePatchPainter("oaktree:textures/gui/ui.png")
-						.widths(3, 12, 3)
-						.heights(3, 12, 3)
-						.drawOrigin(18, 18)
-						.fileDimensions(256, 256)
-						.scale(1))
-				.add("button", new NinePatchPainter("oaktree:textures/gui/ui.png")
-						.widths(3, 12, 3)
-						.heights(3, 12, 3)
-						.drawOrigin(0, 18)
-						.fileDimensions(256, 256)
-						.scale(1))
-				.add("button", "hover", new NinePatchPainter("oaktree:textures/gui/ui.png")
-						.widths(3, 12, 3)
-						.heights(3, 12, 3)
-						.drawOrigin(36, 18)
-						.fileDimensions(256, 256)
-						.scale(1))
-				.add("slider", new NinePatchPainter("oaktree:textures/gui/ui.png")
-						.widths(3, 12, 3)
-						.heights(3, 12, 3)
-						.drawOrigin(18, 18)
-						.fileDimensions(256, 256)
-						.scale(1))
-				.add("slider", "slider", new NinePatchPainter("oaktree:textures/gui/ui.png")
-						.widths(3, 12, 3)
-						.heights(3, 12, 3)
-						.drawOrigin(0, 18)
-						.fileDimensions(256, 256)
-						.scale(1))
-				.add("tooltip", new NinePatchPainter("oaktree:textures/gui/ui.png")
-						.widths(2, 1, 2)
-						.heights(2, 1, 2)
-						.drawOrigin(36, 0)
-						.fileDimensions(256, 256)
-						.scale(1)
-						.tint(Color.WHITE.withAlpha(0.95f)));
-		 */
 	}
 }

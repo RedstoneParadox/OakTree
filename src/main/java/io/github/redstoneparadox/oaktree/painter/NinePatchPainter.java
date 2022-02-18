@@ -15,26 +15,24 @@ public class NinePatchPainter extends TexturePainter {
 		super(path);
 	}
 
-	public NinePatchPainter heights(int firstHeight, int secondHeight, int thirdHeight) {
-		this.firstHeight = firstHeight;
-		this.secondHeight = secondHeight;
-		this.thirdHeight = thirdHeight;
-		return this;
-	}
-
-	public NinePatchPainter widths(int firstWidth, int secondWidth, int thirdWidth) {
+	public void setWidths(int firstWidth, int secondWidth, int thirdWidth) {
 		this.firstWidth = firstWidth;
 		this.secondWidth = secondWidth;
 		this.thirdWidth = thirdWidth;
-		return this;
+	}
+
+	public void setHeights(int firstHeight, int secondHeight, int thirdHeight) {
+		this.firstHeight = firstHeight;
+		this.secondHeight = secondHeight;
+		this.thirdHeight = thirdHeight;
 	}
 
 	@Override
 	public NinePatchPainter copy() {
 		NinePatchPainter copy = (NinePatchPainter) super.copy();
 
-		copy.heights(firstHeight, secondHeight, thirdHeight);
-		copy.widths(firstWidth, secondWidth, thirdWidth);
+		copy.setWidths(firstWidth, secondWidth, thirdWidth);
+		copy.setHeights(firstHeight, secondHeight, thirdHeight);
 
 		return copy;
 	}
@@ -46,28 +44,28 @@ public class NinePatchPainter extends TexturePainter {
 
 		float secondX = x + firstWidth;
 		float secondY = y + firstHeight;
-		int secondLeft = drawLeft + firstWidth;
-		int secondTop = drawTop + firstHeight;
+		int secondLeft = left + firstWidth;
+		int secondTop = top + firstHeight;
 
 		float thirdX = x + firstWidth + fullSecondWidth;
 		float thirdY = y + firstHeight + fullSecondHeight;
-		int thirdLeft = drawLeft + firstWidth + secondHeight;
-		int thirdTop = drawTop + firstHeight + secondHeight;
+		int thirdLeft = left + firstWidth + secondHeight;
+		int thirdTop = top + firstHeight + secondHeight;
 
 		// Top left
-		drawTexture(x, y, drawLeft, drawTop, firstWidth, firstHeight);
+		drawTexture(x, y, left, top, firstWidth, firstHeight);
 		// Top Middle
-		drawTiled(secondX, y, secondLeft, drawTop, secondWidth, firstHeight, fullSecondWidth, firstHeight);
+		drawTiled(secondX, y, secondLeft, top, secondWidth, firstHeight, fullSecondWidth, firstHeight);
 		// Top Right
-		drawTexture(thirdX, y, thirdLeft, drawTop, thirdWidth, firstHeight);
+		drawTexture(thirdX, y, thirdLeft, top, thirdWidth, firstHeight);
 		// Center Left
-		drawTiled(x, secondY, drawLeft, secondTop, firstWidth, secondHeight, firstWidth, fullSecondHeight);
+		drawTiled(x, secondY, left, secondTop, firstWidth, secondHeight, firstWidth, fullSecondHeight);
 		// Center
 		drawTiled(secondX, secondY, secondLeft, secondTop, secondWidth, secondHeight, fullSecondWidth, fullSecondHeight);
 		// Center Right
 		drawTiled(thirdX, secondY, thirdLeft, secondTop, thirdWidth, secondHeight, thirdWidth, fullSecondHeight);
 		// Bottom left
-		drawTexture(x, thirdY, drawLeft, thirdTop, firstWidth, thirdHeight);
+		drawTexture(x, thirdY, left, thirdTop, firstWidth, thirdHeight);
 		// Bottom Middle
 		drawTiled(secondX, thirdY, secondLeft, thirdTop, secondWidth, thirdHeight, fullSecondWidth, thirdHeight);
 		// Bottom Right

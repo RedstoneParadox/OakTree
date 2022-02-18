@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.painter;
 
+import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.MinecraftClient;
@@ -8,14 +9,14 @@ import net.minecraft.util.Identifier;
 
 public class TexturePainter extends Painter {
 	Identifier texture;
-	int drawLeft = 0;
-	int drawTop = 0;
+	int left = 0;
+	int top = 0;
 	private boolean tiled;
 	private int textureWidth = 0;
 	private int textureHeight = 0;
 	private Color tint = Color.WHITE;
-	private float fileWidth = 0;
-	private float fileHeight = 0;
+	private int fileWidth = 256;
+	private int fileHeight = 256;
 	private float scale = 2;
 
 	public TexturePainter(String path) {
@@ -26,10 +27,13 @@ public class TexturePainter extends Painter {
 		this.texture = texture;
 	}
 
-	public TexturePainter drawOrigin(int left, int top) {
-		drawLeft = left;
-		drawTop = top;
-		return this;
+	public void setDrawOrigin(int left, int top) {
+		this.left = left;
+		this.top = top;
+	}
+
+	public Vector2 getDrawOrigin() {
+		return new Vector2(left, top);
 	}
 
 	/**
@@ -37,28 +41,39 @@ public class TexturePainter extends Painter {
 	 * should tile its texture.
 	 *
 	 * @param tiled The value to set.
-	 * @return The StyleBox itself.
 	 */
-	public TexturePainter tiled(boolean tiled) {
+	public void setTiled(boolean tiled) {
 		this.tiled = tiled;
-		return this;
 	}
 
-	public TexturePainter textureSize(int textureWidth, int textureHeight) {
+	public boolean isTiled() {
+		return tiled;
+	}
+
+	public void setTextureSize(int textureWidth, int textureHeight) {
 		this.textureWidth = textureWidth;
 		this.textureHeight = textureHeight;
-		return this;
 	}
 
-	public TexturePainter fileDimensions(float fileWidth, float fileHeight) {
+	public Vector2 getTextureSize() {
+		return new Vector2(textureWidth, textureHeight);
+	}
+
+	public void setFileDimensions(int fileWidth, int fileHeight) {
 		this.fileWidth = fileWidth;
 		this.fileHeight = fileHeight;
-		return this;
 	}
 
-	public TexturePainter tint(Color tint) {
+	public Vector2 getFileDimensions() {
+		return new Vector2(fileWidth, fileHeight);
+	}
+
+	public void setTint(Color tint) {
 		this.tint = tint;
-		return this;
+	}
+
+	public Color getTint() {
+		return tint;
 	}
 
 	/**
@@ -66,11 +81,13 @@ public class TexturePainter extends Painter {
 	 * may need to change the scale.
 	 *
 	 * @param scale The value to set.
-	 * @return This
 	 */
-	public TexturePainter scale(float scale) {
+	public void setScale(float scale) {
 		this.scale = scale;
-		return this;
+	}
+
+	public float getScale() {
+		return scale;
 	}
 
 	@Override
@@ -81,10 +98,10 @@ public class TexturePainter extends Painter {
 			int drawWidth = Math.min(width, textureWidth);
 			int drawHeight = Math.min(height, textureHeight);
 
-			drawTexture(x, y, drawLeft, drawTop, drawWidth, drawHeight);
+			drawTexture(x, y, left, top, drawWidth, drawHeight);
 		}
 		else {
-			drawTiled(x, y, drawLeft, drawTop, textureWidth, textureHeight, width, height);
+			drawTiled(x, y, left, top, textureWidth, textureHeight, width, height);
 		}
 	}
 
@@ -92,12 +109,12 @@ public class TexturePainter extends Painter {
 	public TexturePainter copy() {
 		TexturePainter copy = new TexturePainter(texture);
 
-		copy.drawOrigin(drawLeft, drawTop);
-		copy.tiled(tiled);
-		copy.textureSize(textureWidth, textureHeight);
-		copy.tint(tint);
-		copy.fileDimensions(fileWidth, fileHeight);
-		copy.scale(scale);
+		copy.setDrawOrigin(left, top);
+		copy.setTiled(tiled);
+		copy.setTextureSize(textureWidth, textureHeight);
+		copy.setTint(tint);
+		copy.setFileDimensions(fileWidth, fileHeight);
+		copy.setScale(scale);
 
 		return copy;
 	}
