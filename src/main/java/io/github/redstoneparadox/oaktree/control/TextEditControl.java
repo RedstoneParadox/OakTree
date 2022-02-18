@@ -4,6 +4,8 @@ import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.CharTypedListener;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
+import io.github.redstoneparadox.oaktree.painter.Theme;
+import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.OptionalChar;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
@@ -21,11 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @apiNote  Work in Progress!
  */
-public class TextEditControl extends InteractiveControl implements CharTypedListener, MouseButtonListener {
+public class TextEditControl extends Control implements CharTypedListener, MouseButtonListener {
 	private final List<String> lines = new ArrayList<>();
 	private int firstLine = 0;
 	private final Cursor cursor = new Cursor(true);
@@ -48,14 +51,15 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 	protected int maxLines = 1;
 	protected int displayedLines = 1;
 
-	protected @NotNull BiFunction<ControlGui, Character, @Nullable Character> onCharTyped = (gui, character) -> character;
-	protected @NotNull Consumer<ControlGui> onFocused = (gui) -> {};
-	protected @NotNull Consumer<ControlGui> onFocusLost = (gui) -> {};
-	protected @NotNull Consumer<ControlGui> onEnter = (gui) -> {};
+	protected @NotNull Function<Character, @Nullable Character> onCharTyped = (character) -> character;
+	protected @NotNull Action onFocused = () -> {};
+	protected @NotNull Action onFocusLost = () -> {};
+	protected @NotNull Action onEnter = () -> {};
 
 
 	public TextEditControl() {
 		this.id = "text_edit";
+		ClientListeners.CHAR_TYPED_LISTENERS.add(this);
 	}
 
 	/**
@@ -149,7 +153,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 	 *
 	 * @param onCharTyped The function.
 	 */
-	public void onCharTyped(@NotNull BiFunction<ControlGui, Character, @Nullable Character> onCharTyped) {
+	public void onCharTyped(@NotNull Function<Character, @Nullable Character> onCharTyped) {
 		this.onCharTyped = onCharTyped;
 	}
 
@@ -158,7 +162,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 	 *
 	 * @param onFocused The function.
 	 */
-	public void onFocused(@NotNull Consumer<ControlGui> onFocused) {
+	public void onFocused(@NotNull Action onFocused) {
 		this.onFocused = onFocused;
 	}
 
@@ -167,178 +171,186 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 	 *
 	 * @param onFocusLost The function.
 	 */
-	public void onFocusLost(@NotNull Consumer<ControlGui> onFocusLost) {
+	public void onFocusLost(@NotNull Action onFocusLost) {
 		this.onFocusLost = onFocusLost;
+	}
+
+	// Abandon hope all Ye who enter here!
+	@Override
+	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
+		captured = super.interact(mouseX, mouseY, deltaTime, captured);
+
+		updateFocused(captured);
+		if (lines.isEmpty()) lines.add("");
+
+		if (focused) {
+			int oldSize = lines.size();
+			if (selection.active) {
+				deleteSelection();
+				cursor.toSelectionStart();
+
+				if (lastChar.isPresent()) {
+					@Nullable Character character = onCharTyped.apply(lastChar.getAsChar());
+
+					if (character != null) {
+						insertCharacter(character);
+						cursor.moveRight();
+						if (oldSize + 1 == lines.size()) cursor.moveRight();
+					}
+				}
+			}
+
+			if (updateText) {
+				lines.clear();
+				lines.addAll(TextHelper.wrapLines(text, area.getWidth(), maxLines, shadow));
+				selection.cancel();
+				cursor.toEnd();
+				updateText = false;
+				text = "";
+			}
+			long handle = MinecraftClient.getInstance().getWindow().getHandle();
+
+			if (upKey(handle)) {
+				if (arrowKeyTicks == 0 || arrowKeyTicks >= 20 && arrowKeyTicks % 2 == 0) {
+					if (!selection.active && shift(handle)) selection.startHighlighting();
+					cursor.moveUp();
+					selection.moveToCursor(handle);
+				}
+				arrowKeyTicks += 1;
+			}
+			else if (downKey(handle)) {
+				if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
+					if (!selection.active && shift(handle)) selection.startHighlighting();
+					cursor.moveDown();
+					selection.moveToCursor(handle);
+				}
+				arrowKeyTicks += 1;
+			}
+			else if (leftKey(handle)) {
+				if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
+					if (!selection.active && shift(handle)) selection.startHighlighting();
+					cursor.moveLeft();
+					selection.moveToCursor(handle);
+				}
+				arrowKeyTicks += 1;
+			}
+			else if (rightKey(handle)) {
+				if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
+					if (!selection.active && shift(handle)) selection.startHighlighting();
+					cursor.moveRight();
+					selection.moveToCursor(handle);
+				}
+				arrowKeyTicks += 1;
+			}
+			else {
+				arrowKeyTicks = 0;
+			}
+
+			if (backspace(handle)) {
+				if (backspaceTicks == 0 || backspaceTicks > 20 && backspaceTicks % 2 == 0) {
+					if (selection.active) {
+						deleteSelection();
+						cursor.toSelectionStart();
+					}
+					else if (cursor.row != 0 || cursor.column != 0) {
+						removeCharacter();
+						cursor.moveLeft();
+					}
+				}
+				backspaceTicks += 1;
+			}
+			else {
+				backspaceTicks = 0;
+			}
+
+			if (enter(handle)) {
+				if (enterTicks == 0 || enterTicks > 20 && enterTicks % 2 == 0) {
+					onEnter.run();
+					if (selection.active) {
+						deleteSelection();
+						cursor.toSelectionStart();
+					}
+
+					newLine();
+					cursor.moveRight();
+					cursor.moveRight();
+				}
+				enterTicks += 1;
+			}
+			else {
+				enterTicks = 0;
+			}
+
+			if (ctrlA(handle)) {
+				selection.all();
+				cursor.toEnd();
+			}
+
+			if (copy(handle) && selection.active) {
+				if (!copied) {
+					String selectedText = getSelection();
+					if (selectedText != null) MinecraftClient.getInstance().keyboard.setClipboard(selectedText);
+				}
+				copied = true;
+			} else copied = false;
+
+			if (cut(handle)) {
+				if (!copied) {
+					String selectedText = getSelection();
+					if (selectedText != null) MinecraftClient.getInstance().keyboard.setClipboard(selectedText);
+					deleteSelection();
+					cursor.toSelectionStart();
+				}
+				copied = true;
+			} else copied = false;
+
+			if (paste(handle)) {
+				if (pasteTicks == 0 || pasteTicks > 20 && pasteTicks % 2 == 0) {
+					if (selection.active) {
+						deleteSelection();
+						cursor.toSelectionStart();
+					}
+					String st = MinecraftClient.getInstance().keyboard.getClipboard();
+					oldSize = lines.size();
+					insertString(st);
+					for (int i = 0; i < st.length(); i += 1) cursor.moveRight();
+					if (oldSize < lines.size()) cursor.moveRight();
+				}
+				pasteTicks += 1;
+			}
+			else {
+				pasteTicks = 0;
+			}
+		}
+		else {
+			selection.cancel();
+			backspaceTicks = 0;
+			enterTicks = 0;
+		}
+		if (lines.isEmpty() || (lines.size() == 1 && lines.get(0).isEmpty())) {
+			selection.cancel();
+		}
+
+		return captured;
+	}
+
+	@Override
+	protected void draw(MatrixStack matrices, Theme theme) {
+		super.draw(matrices, theme);
+
+		if (focused) {
+			if (cursorTicks < 10) drawCursor(matrices);
+			cursorTicks += 1;
+			if (cursorTicks >= 20) cursorTicks = 0;
+		}
+
+		drawText(matrices);
 	}
 
 	@Override
 	public void setup(MinecraftClient client, ControlGui gui) {
 		super.setup(client, gui);
 		ClientListeners.CHAR_TYPED_LISTENERS.add(this);
-	}
-
-	// Abandon hope all Ye who enter here!
-	@Override
-	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		super.oldDraw(matrices, mouseX, mouseY, deltaTime, gui);
-		updateFocused(gui);
-		if (lines.isEmpty()) lines.add("");
-		try {
-			if (focused) {
-				int oldSize = lines.size();
-				if (selection.active) {
-					deleteSelection(gui);
-					cursor.toSelectionStart();
-
-					if (lastChar.isPresent()) {
-						@Nullable Character character = onCharTyped.apply(gui, lastChar.getAsChar());
-
-						if (character != null) {
-							insertCharacter(character, gui);
-							cursor.moveRight();
-							if (oldSize + 1 == lines.size()) cursor.moveRight();
-						}
-					}
-				}
-
-				if (updateText) {
-					lines.clear();
-					lines.addAll(TextHelper.wrapLines(text, area.getWidth(), maxLines, shadow));
-					selection.cancel();
-					cursor.toEnd();
-					updateText = false;
-					text = "";
-				}
-				long handle = MinecraftClient.getInstance().getWindow().getHandle();
-
-				if (upKey(handle)) {
-					if (arrowKeyTicks == 0 || arrowKeyTicks >= 20 && arrowKeyTicks % 2 == 0) {
-						if (!selection.active && shift(handle)) selection.startHighlighting();
-						cursor.moveUp();
-						selection.moveToCursor(handle);
-					}
-					arrowKeyTicks += 1;
-				}
-				else if (downKey(handle)) {
-					if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
-						if (!selection.active && shift(handle)) selection.startHighlighting();
-						cursor.moveDown();
-						selection.moveToCursor(handle);
-					}
-					arrowKeyTicks += 1;
-				}
-				else if (leftKey(handle)) {
-					if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
-						if (!selection.active && shift(handle)) selection.startHighlighting();
-						cursor.moveLeft();
-						selection.moveToCursor(handle);
-					}
-					arrowKeyTicks += 1;
-				}
-				else if (rightKey(handle)) {
-					if (arrowKeyTicks == 0 || arrowKeyTicks > 20 && arrowKeyTicks % 2 == 0) {
-						if (!selection.active && shift(handle)) selection.startHighlighting();
-						cursor.moveRight();
-						selection.moveToCursor(handle);
-					}
-					arrowKeyTicks += 1;
-				}
-				else {
-					arrowKeyTicks = 0;
-				}
-
-				if (backspace(handle)) {
-					if (backspaceTicks == 0 || backspaceTicks > 20 && backspaceTicks % 2 == 0) {
-						if (selection.active) {
-							deleteSelection(gui);
-							cursor.toSelectionStart();
-						}
-						else if (cursor.row != 0 || cursor.column != 0) {
-							removeCharacter(gui);
-							cursor.moveLeft();
-						}
-					}
-					backspaceTicks += 1;
-				}
-				else {
-					backspaceTicks = 0;
-				}
-
-				if (enter(handle)) {
-					if (enterTicks == 0 || enterTicks > 20 && enterTicks % 2 == 0) {
-						onEnter.accept(gui);
-						if (selection.active) {
-							deleteSelection(gui);
-							cursor.toSelectionStart();
-						}
-
-						newLine(gui);
-						cursor.moveRight();
-						cursor.moveRight();
-					}
-					enterTicks += 1;
-				}
-				else {
-					enterTicks = 0;
-				}
-
-				if (ctrlA(handle)) {
-					selection.all();
-					cursor.toEnd();
-				}
-
-				if (copy(handle) && selection.active) {
-					if (!copied) {
-						String selectedText = getSelection();
-						if (selectedText != null) MinecraftClient.getInstance().keyboard.setClipboard(selectedText);
-					}
-					copied = true;
-				} else copied = false;
-
-				if (cut(handle)) {
-					if (!copied) {
-						String selectedText = getSelection();
-						if (selectedText != null) MinecraftClient.getInstance().keyboard.setClipboard(selectedText);
-						deleteSelection(gui);
-						cursor.toSelectionStart();
-					}
-					copied = true;
-				} else copied = false;
-
-				if (paste(handle)) {
-					if (pasteTicks == 0 || pasteTicks > 20 && pasteTicks % 2 == 0) {
-						if (selection.active) {
-							deleteSelection(gui);
-							cursor.toSelectionStart();
-						}
-						String st = MinecraftClient.getInstance().keyboard.getClipboard();
-						oldSize = lines.size();
-						insertString(st, gui);
-						for (int i = 0; i < st.length(); i += 1) cursor.moveRight();
-						if (oldSize < lines.size()) cursor.moveRight();
-					}
-					pasteTicks += 1;
-				}
-				else {
-					pasteTicks = 0;
-				}
-
-				if (cursorTicks < 10) drawCursor(matrices, gui);
-				cursorTicks += 1;
-				if (cursorTicks >= 20) cursorTicks = 0;
-			}
-			else {
-				selection.cancel();
-				backspaceTicks = 0;
-				enterTicks = 0;
-			}
-			if (lines.isEmpty() || (lines.size() == 1 && lines.get(0).isEmpty())) {
-				selection.cancel();
-			}
-			drawText(matrices);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	private boolean upKey(long handle) {
@@ -385,18 +397,18 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		return InputUtil.isKeyPressed(handle, 344) || InputUtil.isKeyPressed(handle, 340);
 	}
 
-	private void updateFocused(ControlGui gui) {
+	private void updateFocused(boolean captured) {
 		if (clicked) {
-			if (isMouseWithin && !focused) {
+			if (captured && !focused) {
 				focused = true;
-				onFocused.accept(gui);
+				onFocused.run();
 				cursorTicks = 0;
 			}
 			else if (focused) {
 				focused = false;
 				selection.cancel();
 				cursor.toStart();
-				onFocusLost.accept(gui);
+				onFocusLost.run();
 			}
 			else {
 				selection.cancel();
@@ -404,9 +416,9 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		}
 	}
 
-	private void newLine(ControlGui gui) {
+	private void newLine() {
 		if (lines.size() == maxLines) return;
-		insertCharacter('\n', gui);
+		insertCharacter('\n');
 	}
 
 	private String getSelection() {
@@ -421,7 +433,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		return text.substring(startPosition, endPosition);
 	}
 
-	private void deleteSelection(ControlGui gui) {
+	private void deleteSelection() {
 		if (lines.isEmpty()) return;
 
 		String text = TextHelper.combineStrings(lines, false);
@@ -435,7 +447,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		lines.addAll(TextHelper.wrapLines(newText, area.getWidth(), maxLines, shadow));
 	}
 
-	private void insertCharacter(char c, ControlGui gui) {
+	private void insertCharacter(char c) {
 		if (lines.isEmpty()) {
 			lines.add(String.valueOf(c));
 			return;
@@ -455,9 +467,9 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		lines.addAll(TextHelper.wrapLines(newText, area.getWidth(), maxLines, shadow));
 	}
 
-	private void insertString(String st, ControlGui gui)  {
+	private void insertString(String string)  {
 		if (lines.isEmpty()) {
-			lines.addAll(TextHelper.wrapLines(st, area.getWidth(), maxLines, shadow));
+			lines.addAll(TextHelper.wrapLines(string, area.getWidth(), maxLines, shadow));
 			return;
 		}
 
@@ -466,16 +478,16 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 
 		String newText;
 		if (cursorPosition >= text.length()) {
-			newText = text + st;
+			newText = text + string;
 		} else {
-			newText = text.substring(0, cursorPosition) + st + text.substring(cursorPosition);
+			newText = text.substring(0, cursorPosition) + string + text.substring(cursorPosition);
 		}
 
 		lines.clear();
 		lines.addAll(TextHelper.wrapLines(newText, area.getWidth(), maxLines, shadow));
 	}
 
-	private void removeCharacter(ControlGui gui) {
+	private void removeCharacter() {
 		String text = TextHelper.combineStrings(lines, false);
 		int cursorPosition = getCursorPosition(cursor);
 
@@ -537,7 +549,7 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 		}
 	}
 
-	private void drawCursor(MatrixStack matrices, ControlGui gui) {
+	private void drawCursor(MatrixStack matrices) {
 		if (lines.isEmpty()) {
 			RenderHelper.drawText(matrices, new LiteralText("_").asOrderedText(), trueX, trueY, shadow, fontColor);
 			return;
@@ -668,8 +680,8 @@ public class TextEditControl extends InteractiveControl implements CharTypedList
 	}
 
 	private class Selection {
-		private Cursor anchor = new Cursor(false);
-		private Cursor follower = new Cursor(false);
+		private final Cursor anchor = new Cursor(false);
+		private final Cursor follower = new Cursor(false);
 		private boolean active = false;
 
 		private void all() {
