@@ -85,6 +85,10 @@ public class Theme {
 	}
 
 	public static Theme vanilla() {
+		Theme vanilla = new Theme();
+
+		return vanilla;
+		/*
 		return new Theme()
 				.add("item_slot", new TexturePainter("oaktree:textures/gui/ui.png")
 						.drawOrigin(18, 0)
@@ -140,5 +144,6 @@ public class Theme {
 						.fileDimensions(256, 256)
 						.scale(1)
 						.tint(Color.WHITE.withAlpha(0.95f)));
+		 */
 	}
 }
