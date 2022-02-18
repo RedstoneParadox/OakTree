@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.CharTypedListener;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
@@ -345,12 +344,6 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 		}
 
 		drawText(matrices);
-	}
-
-	@Override
-	public void setup(MinecraftClient client, ControlGui gui) {
-		super.setup(client, gui);
-		ClientListeners.CHAR_TYPED_LISTENERS.add(this);
 	}
 
 	private boolean upKey(long handle) {

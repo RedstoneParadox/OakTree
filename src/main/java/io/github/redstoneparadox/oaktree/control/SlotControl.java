@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
@@ -8,7 +7,6 @@ import io.github.redstoneparadox.oaktree.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
-import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**

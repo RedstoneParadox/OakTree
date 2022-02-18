@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.oaktree.test;
 
-import io.github.redstoneparadox.oaktree.control.Control;
+import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -17,10 +17,10 @@ import net.minecraft.world.World;
 import java.util.function.Supplier;
 
 class TestBlock extends Block {
-	private final Supplier<Control> supplier;
+	private final Supplier<RootPanelControl> supplier;
 	private final boolean vanilla;
 
-	TestBlock(boolean vanilla, Supplier<Control> supplier) {
+	TestBlock(boolean vanilla, Supplier<RootPanelControl> supplier) {
 		super(testSettings());
 		this.vanilla = vanilla;
 		this.supplier = supplier;

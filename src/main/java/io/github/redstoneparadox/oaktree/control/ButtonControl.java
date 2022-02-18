@@ -1,14 +1,10 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.util.Action;
-import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.function.Consumer;
 
 public class ButtonControl extends Control implements MouseButtonListener {
 	public static final PainterKey HELD = new PainterKey();

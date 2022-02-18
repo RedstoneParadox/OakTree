@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 
 public abstract class PaddingControl extends Control {

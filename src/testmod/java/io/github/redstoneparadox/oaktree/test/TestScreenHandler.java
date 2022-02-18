@@ -17,7 +17,7 @@ class TestScreenHandler extends ScreenHandler implements InventoryScreenHandlerA
 	private final List<Inventory> inventories = new ArrayList<>();
 
 	protected TestScreenHandler(int syncId, PlayerEntity player) {
-		super(Tests.handlerType, syncId);
+		super(null, syncId);
 		this.player = player;
 		inventories.add(player.getInventory());
 

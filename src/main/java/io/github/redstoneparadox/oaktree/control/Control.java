@@ -1,19 +1,14 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
-import io.github.redstoneparadox.oaktree.painter.Painter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * The base class for all controls.
@@ -30,10 +25,8 @@ public class Control {
 	protected boolean visible = true;
 	protected boolean isTooltip = false;
 	protected Action onTick = () -> {};
-	protected Painter currentStyle = Painter.BLANK;
 
 	//Internal State
-	protected Theme theme = Theme.EMPTY;
 	protected PainterKey painterKey = DEFAULT;
 	protected int trueX = 0;
 	protected int trueY = 0;
@@ -257,58 +250,6 @@ public class Control {
 
 	protected void markDirty() {
 		parent.markDirty();
-	}
-
-	@ApiStatus.Internal
-	@Deprecated
-	public void zIndex(List<Control> controls) {
-		if (!visible) return;
-		controls.add(this);
-	}
-
-	@ApiStatus.Internal
-	@Deprecated
-	public void setup(MinecraftClient client, ControlGui gui) {
-
-	}
-
-	@ApiStatus.Internal
-	@Deprecated
-	public void preDraw(ControlGui gui, int offsetX, int offsetY, int containerWidth, int containerHeight, int mouseX, int mouseY) {
-		onTick.run();
-		currentStyle = getPainter(gui.getTheme(), "base");
-
-		if (!expand) {
-			Vector2 anchorOffset = anchor.getOffset(containerWidth, containerHeight);
-			Vector2 drawOffset = anchor.getOffset(area.getWidth(), area.getHeight());
-
-			trueX = area.getX() + anchorOffset.getX() + offsetX - drawOffset.getX();
-			trueY = area.getY() + anchorOffset.getY() + offsetY - drawOffset.getY();
-		}
-		else {
-			trueX = offsetX;
-			trueY = offsetY;
-
-			area.setWidth(containerWidth);
-			area.setHeight(containerHeight);
-		}
-	}
-
-	@ApiStatus.Internal
-	@Deprecated
-	public void oldDraw(MatrixStack matrices, int mouseX, int mouseY, float deltaTime, ControlGui gui) {
-		currentStyle.draw(matrices, trueX, trueY, area.getWidth(), area.getHeight());
-	}
-
-	@ApiStatus.Internal
-	protected final Painter getPainter(Theme theme, String name) {
-		Painter style = this.theme.get("self/" + name);
-
-		if (style.blank) {
-			style = theme.get(id + "/" + name);
-		}
-
-		return style;
 	}
 
 	public static class PainterKey {

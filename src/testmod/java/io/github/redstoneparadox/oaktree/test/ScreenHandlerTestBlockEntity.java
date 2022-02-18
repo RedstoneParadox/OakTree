@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 class ScreenHandlerTestBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
 	public ScreenHandlerTestBlockEntity(BlockPos pos, BlockState state) {
-		super(Tests.TEST_THREE_BLOCK_ENTITY_TYPE, pos, state);
+		super(null, pos, state);
 	}
 
 

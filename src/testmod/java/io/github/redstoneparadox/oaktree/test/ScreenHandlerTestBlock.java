@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.control.Control;
+import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
 
 class ScreenHandlerTestBlock extends TestBlock implements BlockEntityProvider {
-	ScreenHandlerTestBlock(boolean vanilla, Supplier<Control> supplier) {
+	ScreenHandlerTestBlock(boolean vanilla, Supplier<RootPanelControl> supplier) {
 		super(vanilla, supplier);
 	}
 

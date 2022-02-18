@@ -7,8 +7,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 
-import java.util.ArrayList;
-
 public class RootPanelControl extends PanelControl {
 	protected Theme theme;
 	private boolean dirty = true;

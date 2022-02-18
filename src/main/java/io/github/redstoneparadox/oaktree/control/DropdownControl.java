@@ -1,16 +1,10 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
-import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.List;
 
 public class DropdownControl extends Control implements MouseButtonListener {
 	@NotNull protected Control dropdown = new Control();

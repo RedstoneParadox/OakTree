@@ -1,24 +1,6 @@
 package io.github.redstoneparadox.oaktree.test;
 
-import io.github.redstoneparadox.oaktree.control.Anchor;
-import io.github.redstoneparadox.oaktree.control.ButtonControl;
-import io.github.redstoneparadox.oaktree.control.Control;
-import io.github.redstoneparadox.oaktree.control.DropdownControl;
-import io.github.redstoneparadox.oaktree.control.GridPanelControl;
-import io.github.redstoneparadox.oaktree.control.LabelControl;
-import io.github.redstoneparadox.oaktree.control.ListPanelControl;
-import io.github.redstoneparadox.oaktree.control.PanelControl;
-import io.github.redstoneparadox.oaktree.control.SliderControl;
-import io.github.redstoneparadox.oaktree.control.SlotControl;
-import io.github.redstoneparadox.oaktree.control.SplitControl;
-import io.github.redstoneparadox.oaktree.math.Direction2D;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.Items;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;

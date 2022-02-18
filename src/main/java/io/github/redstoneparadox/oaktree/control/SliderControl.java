@@ -1,18 +1,13 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.painter.Painter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class SliderControl extends Control implements MouseButtonListener {
 	public static PainterKey SLIDER = new PainterKey();

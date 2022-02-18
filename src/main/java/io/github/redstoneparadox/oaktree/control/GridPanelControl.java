@@ -1,13 +1,9 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.ControlGui;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
-import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.util.ListUtils;
 import io.github.redstoneparadox.oaktree.util.TriFunction;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * Subclass of {@link PanelControl} that lays out its children in
