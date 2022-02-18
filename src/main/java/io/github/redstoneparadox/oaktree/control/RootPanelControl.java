@@ -7,6 +7,12 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 
+/**
+ * A special {@link PanelControl} that manages an
+ * entire tree of {@link Control} instances.
+ * Note that mouse interaction with this control
+ * is disabled.
+ */
 public class RootPanelControl extends PanelControl {
 	protected Theme theme;
 	private boolean dirty = true;
@@ -16,20 +22,34 @@ public class RootPanelControl extends PanelControl {
 		theme = Theme.vanilla();
 	}
 
-	public Theme getTheme() {
-		return theme.copy();
-	}
-
+	/**
+	 * Sets the theme for the entire GUI
+	 *
+	 * @param theme The theme to use
+	 */
 	public void setTheme(Theme theme) {
 		this.theme = theme;
 	}
 
-	@Override
-	protected void markDirty() {
-		this.dirty = true;
+	/**
+	 * Gets the current theme.
+	 *
+	 * @return The current theme.
+	 */
+	public Theme getTheme() {
+		return theme.copy();
 	}
 
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float deltaTime) {
+	/**
+	 * Renders this control and the entire {@link Control}
+	 * tree.
+	 *
+	 * @param matrixStack The matrix stack
+	 * @param mouseX The mouse x position
+	 * @param mouseY The mouse y position
+	 * @param deltaTime The time since the last frame
+	 */
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float deltaTime) {
 		if (dirty) {
 			MinecraftClient client = MinecraftClient.getInstance();
 			Window window = client.getWindow();
@@ -56,11 +76,16 @@ public class RootPanelControl extends PanelControl {
 			entry.control().prepare();
 		}
 
-		draw(matrices, theme);
+		draw(matrixStack, theme);
 		for (ZIndexedControls.Entry entry: zIndexedControls) {
 			RenderHelper.setzOffset(entry.zOffset());
-			entry.control().draw(matrices, theme);
+			entry.control().draw(matrixStack, theme);
 			RenderHelper.setzOffset(-entry.zOffset());
 		}
+	}
+
+	@Override
+	protected void markDirty() {
+		this.dirty = true;
 	}
 }
