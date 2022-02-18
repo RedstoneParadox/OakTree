@@ -24,6 +24,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
 
 public class TestBlocks {
+	public static final Block TEST_ONE_BLOCK = new TestBlock(TestScreens::testOne);
+
+	public static void init() {
+		register(TEST_ONE_BLOCK, "one");
+	}
+
 	private static Block register(Block block, String suffix) {
 		return Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
 	}

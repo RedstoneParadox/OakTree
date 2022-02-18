@@ -1,8 +1,10 @@
 package io.github.redstoneparadox.oaktree.test;
 
+import io.github.redstoneparadox.oaktree.control.Anchor;
 import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -21,6 +23,15 @@ import java.util.List;
 import java.util.Random;
 
 public class TestScreens {
+	public static RootPanelControl testOne() {
+		RootPanelControl root = new RootPanelControl();
+
+		root.setAnchor(Anchor.CENTER);
+		root.setSize(50, 50);
+
+		return root;
+	}
+
 	private static List<Text> createText(int lines) {
 		List<Text> texts = new ArrayList<>();
 		Random random = new Random();
