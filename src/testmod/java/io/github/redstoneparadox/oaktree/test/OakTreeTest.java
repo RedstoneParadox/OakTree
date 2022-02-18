@@ -1,11 +1,10 @@
-package io.github.redstoneparadox.oaktree;
+package io.github.redstoneparadox.oaktree.test;
 
-import io.github.redstoneparadox.oaktree.test.Tests;
 import net.fabricmc.api.ModInitializer;
 
 public class OakTreeTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		Tests.init();
+
 	}
 }

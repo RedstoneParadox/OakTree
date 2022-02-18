@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.redstoneparadox.oaktree.OakTreeTest"
+      "io.github.redstoneparadox.oaktree.test.OakTreeTest"
     ],
     "client": [
-      "io.github.redstoneparadox.oaktree.OakTreeTestClient"
+      "io.github.redstoneparadox.oaktree.test.OakTreeTestClient"
     ]
   },
 
