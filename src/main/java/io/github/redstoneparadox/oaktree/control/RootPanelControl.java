@@ -71,17 +71,20 @@ public class RootPanelControl extends PanelControl {
 			}
 		}
 
-		prepare();
 		for (ZIndexedControls.Entry entry: zIndexedControls) {
 			entry.control().prepare();
 		}
 
-		draw(matrixStack, theme);
 		for (ZIndexedControls.Entry entry: zIndexedControls) {
 			RenderHelper.setzOffset(entry.zOffset());
 			entry.control().draw(matrixStack, theme);
 			RenderHelper.setzOffset(-entry.zOffset());
 		}
+	}
+
+	@Override
+	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
+		return false;
 	}
 
 	@Override
