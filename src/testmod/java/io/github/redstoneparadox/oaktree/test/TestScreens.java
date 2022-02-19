@@ -28,6 +28,7 @@ public class TestScreens {
 
 		root.setAnchor(Anchor.CENTER);
 		root.setSize(50, 50);
+		root.setId("base");
 
 		return root;
 	}
