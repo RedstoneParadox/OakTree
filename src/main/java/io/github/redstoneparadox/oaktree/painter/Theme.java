@@ -13,35 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Theme {
-	public static final Theme EMPTY = new Theme(true);
-	
 	private final Map<String, Map<Control.PainterKey, Painter>> painters = new HashMap<>();
-	private final boolean empty;
 
 	public Theme() {
-		this.empty = false;
-	}
-
-	private Theme(boolean empty) {
-		this.empty = empty;
 	}
 
 	public void put(String id, Control.PainterKey painterKey, @NotNull Painter painter) {
-		if (empty) return;
-		Map<Control.PainterKey, Painter> subMap;
-		if (painters.containsKey(id)) {
-			subMap = painters.get(id);
-		} else {
-			subMap = painters.put(id, new HashMap<>());
-		}
-
-		assert subMap != null;
-		subMap.put(painterKey, painter);
+		painters.computeIfAbsent(id, s -> new HashMap<>()).put(painterKey, painter);
 	}
 
 	public @NotNull Painter get(String id, Control.PainterKey painterKey) {
-		if (empty) return Painter.BLANK;
-
 		if (painters.containsKey(id)) {
 			Map<Control.PainterKey, Painter> subMap = painters.get(id);
 

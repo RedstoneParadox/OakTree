@@ -8,16 +8,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class TexturePainter extends Painter {
-	Identifier texture;
-	int left = 0;
-	int top = 0;
-	private boolean tiled;
-	private int textureWidth = 0;
-	private int textureHeight = 0;
-	private Color tint = Color.WHITE;
-	private int fileWidth = 256;
-	private int fileHeight = 256;
-	private float scale = 2;
+	protected Identifier texture;
+	protected int left = 0;
+	protected int top = 0;
+	protected boolean tiled;
+	protected int textureWidth = 0;
+	protected int textureHeight = 0;
+	protected Color tint = Color.WHITE;
+	protected int fileWidth = 256;
+	protected int fileHeight = 256;
+	protected float scale = 2;
 
 	public TexturePainter(String path) {
 		this.texture = new Identifier(path);

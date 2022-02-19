@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.painter;
 
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 
 public class NinePatchPainter extends TexturePainter {
 	int firstWidth = 1;
@@ -12,6 +13,10 @@ public class NinePatchPainter extends TexturePainter {
 	int thirdHeight = 1;
 
 	public NinePatchPainter(String path) {
+		super(path);
+	}
+
+	public NinePatchPainter(Identifier path) {
 		super(path);
 	}
 
@@ -29,7 +34,14 @@ public class NinePatchPainter extends TexturePainter {
 
 	@Override
 	public NinePatchPainter copy() {
-		NinePatchPainter copy = (NinePatchPainter) super.copy();
+		NinePatchPainter copy = new NinePatchPainter(texture);
+
+		copy.setDrawOrigin(left, top);
+		copy.setTiled(tiled);
+		copy.setTextureSize(textureWidth, textureHeight);
+		copy.setTint(tint);
+		copy.setFileDimensions(fileWidth, fileHeight);
+		copy.setScale(scale);
 
 		copy.setWidths(firstWidth, secondWidth, thirdWidth);
 		copy.setHeights(firstHeight, secondHeight, thirdHeight);
