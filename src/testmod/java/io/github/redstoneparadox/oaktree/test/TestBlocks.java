@@ -2,9 +2,11 @@ package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -26,14 +28,20 @@ import java.util.function.Supplier;
 public class TestBlocks {
 	public static final Block TEST_DRAW_BLOCK = new TestBlock(TestScreens::testDraw);
 	public static final Block TEST_INTERACTABLES_BLOCK = new TestBlock(TestScreens::testInteractables);
+	public static final Block TEST_INVENTORY = new TestBlockWithEntity();
 
 	public static void init() {
 		register(TEST_DRAW_BLOCK, "draw");
 		register(TEST_INTERACTABLES_BLOCK, "interactables");
+		register(TEST_INVENTORY, "inventory");
 	}
 
-	private static Block register(Block block, String suffix) {
-		return Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
+	private static void register(Block block, String suffix) {
+		Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
+	}
+
+	private static AbstractBlock.Settings testSettings() {
+		return FabricBlockSettings.of(Material.METAL);
 	}
 
 	static class TestBlock extends Block {
@@ -51,18 +59,16 @@ public class TestBlocks {
 			}
 			return ActionResult.SUCCESS;
 		}
-
-		private static Settings testSettings() {
-			return FabricBlockSettings.of(Material.METAL);
-		}
 	}
 
-	static class TestBlockWithEntity extends TestBlock implements BlockEntityProvider {
-		private final BlockEntityType<TestBlockEntities.TestBlockEntity> blockEntityType;
+	static class TestBlockWithEntity extends BlockWithEntity {
+		TestBlockWithEntity() {
+			super(testSettings());
+		}
 
-		TestBlockWithEntity(boolean vanilla, Supplier<RootPanelControl> supplier, BlockEntityType<TestBlockEntities.TestBlockEntity> blockEntityType) {
-			super(supplier);
-			this.blockEntityType = blockEntityType;
+		@Override
+		public BlockRenderType getRenderType(BlockState blockState) {
+			return BlockRenderType.MODEL;
 		}
 
 		@Override
@@ -79,7 +85,7 @@ public class TestBlocks {
 
 		@Override
 		public @Nullable BlockEntity createBlockEntity(BlockPos blockPos, BlockState blockState) {
-			return new TestBlockEntities.TestBlockEntity(blockEntityType, blockPos, blockState);
+			return new TestBlockEntities.TestBlockEntity(blockPos, blockState);
 		}
 
 		@Override

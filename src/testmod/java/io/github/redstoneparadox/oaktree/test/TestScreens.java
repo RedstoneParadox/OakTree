@@ -5,27 +5,31 @@ import io.github.redstoneparadox.oaktree.control.ButtonControl;
 import io.github.redstoneparadox.oaktree.control.LabelControl;
 import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.control.SliderControl;
-import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
-import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
 import io.github.redstoneparadox.oaktree.util.Color;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class TestScreens {
+	public static void init() {
+		ScreenRegistry.register(
+				TestScreenHandlers.TEST_INVENTORY_SCREEN_HANDLER,
+				// TODO: Find out why the compiler doesn't like not having the cast here
+				(ScreenRegistry.Factory<TestScreenHandlers.TestScreenHandler, HandledTestScreen>) (handler, inventory, text) -> new HandledTestScreen(handler, inventory, text, testInventory(inventory))
+		);
+	}
+
 	public static RootPanelControl testDraw() {
 		RootPanelControl root = new RootPanelControl();
 
@@ -79,6 +83,16 @@ public class TestScreens {
 		return root;
 	}
 
+	public static RootPanelControl testInventory(Inventory inventory) {
+		RootPanelControl root = new RootPanelControl();
+
+		root.setAnchor(Anchor.CENTER);
+		root.setSize(160, 160);
+		root.setId("base");
+
+		return root;
+	}
+
 	private static List<Text> createText(int lines) {
 		List<Text> texts = new ArrayList<>();
 		Random random = new Random();
@@ -119,11 +133,11 @@ public class TestScreens {
 		}
 	}
 
-	static class HandledTestScreen extends HandledScreen<TestScreenHandler> {
+	static class HandledTestScreen extends HandledScreen<TestScreenHandlers.TestScreenHandler> implements ScreenHandlerProvider<TestScreenHandlers.TestScreenHandler> {
 		private final RootPanelControl root;
 
-		public HandledTestScreen(TestScreenHandler handler, Text title, RootPanelControl root) {
-			super(handler, handler.getPlayer().getInventory(), title);
+		public HandledTestScreen(TestScreenHandlers.TestScreenHandler handler, PlayerInventory playerInventory, Text title, RootPanelControl root) {
+			super(handler, playerInventory, title);
 			this.root = root;
 		}
 
@@ -146,48 +160,6 @@ public class TestScreens {
 		@Override
 		public void onClose() {
 			super.onClose();
-			handler.close(handler.getPlayer());
-		}
-	}
-
-	static class TestScreenHandler extends ScreenHandler implements InventoryScreenHandlerAccess {
-		private final PlayerEntity player;
-		private final List<Inventory> inventories = new ArrayList<>();
-
-		protected TestScreenHandler(int syncId, PlayerEntity player) {
-			super(null, syncId);
-			this.player = player;
-			inventories.add(player.getInventory());
-
-			if (!player.world.isClient) OakTreeServerNetworking.listenForStackSync(this);
-			inventories.add(new SimpleInventory(ItemStack.EMPTY, ItemStack.EMPTY));
-		}
-
-		@Override
-		public boolean canUse(PlayerEntity player) {
-			return true;
-		}
-
-		@NotNull
-		@Override
-		public Inventory getInventory(int inventoryID) {
-			return inventories.get(inventoryID);
-		}
-
-		@Override
-		public @NotNull PlayerEntity getPlayer() {
-			return player;
-		}
-
-		@Override
-		public int getSyncID() {
-			return syncId;
-		}
-
-		@Override
-		public void close(PlayerEntity player) {
-			super.close(player);
-			OakTreeServerNetworking.stopListening(this);
 		}
 	}
 }
