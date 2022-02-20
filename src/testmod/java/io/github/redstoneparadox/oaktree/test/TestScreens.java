@@ -27,7 +27,7 @@ public class TestScreens {
 		RootPanelControl root = new RootPanelControl();
 
 		root.setAnchor(Anchor.CENTER);
-		root.setSize(50, 50);
+		root.setSize(160, 160);
 		root.setId("base");
 
 		return root;

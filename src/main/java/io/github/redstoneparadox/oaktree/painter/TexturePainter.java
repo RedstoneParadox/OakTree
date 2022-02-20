@@ -17,7 +17,7 @@ public class TexturePainter extends Painter {
 	protected Color tint = Color.WHITE;
 	protected int fileWidth = 256;
 	protected int fileHeight = 256;
-	protected float scale = 2;
+	protected float scale = 1;
 
 	public TexturePainter(String path) {
 		this.texture = new Identifier(path);

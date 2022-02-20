@@ -55,7 +55,7 @@ public class RootPanelControl extends PanelControl {
 			Window window = client.getWindow();
 
 			zIndexedControls.clear();
-			updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
+			updateTree(zIndexedControls, 0, 0, window.getScaledWidth(), window.getScaledHeight());
 			dirty = false;
 		}
 
