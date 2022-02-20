@@ -1,10 +1,12 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.control.Anchor;
+import io.github.redstoneparadox.oaktree.control.ButtonControl;
+import io.github.redstoneparadox.oaktree.control.LabelControl;
 import io.github.redstoneparadox.oaktree.control.RootPanelControl;
+import io.github.redstoneparadox.oaktree.control.SliderControl;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -23,12 +25,53 @@ import java.util.List;
 import java.util.Random;
 
 public class TestScreens {
-	public static RootPanelControl testOne() {
+	public static RootPanelControl testDraw() {
 		RootPanelControl root = new RootPanelControl();
 
 		root.setAnchor(Anchor.CENTER);
 		root.setSize(160, 160);
 		root.setId("base");
+
+		return root;
+	}
+
+	public static RootPanelControl testInteractables() {
+		RootPanelControl root = new RootPanelControl();
+		ButtonControl button = new ButtonControl();
+		LabelControl label1 = new LabelControl();
+		SliderControl slider = new SliderControl();
+		LabelControl label2 = new LabelControl();
+
+		root.setAnchor(Anchor.CENTER);
+		root.setSize(160, 180);
+		root.setId("base");
+		root.addChild(button);
+		root.addChild(label1);
+		root.addChild(slider);
+		root.addChild(label2);
+
+		button.setAnchor(Anchor.TOP_CENTER);
+		button.setSize(120, 20);
+		button.setOffset(0, 20);
+		button.onClick(() -> label1.setText("Button Pressed."));
+		button.onRelease(() -> label1.setText("Button Released."));
+
+		label1.setAnchor(Anchor.TOP_CENTER);
+		label1.setSize(80, 20);
+		label1.setOffset(0, 60);
+		label1.setText("Button Not Pressed");
+
+		slider.setAnchor(Anchor.TOP_CENTER);
+		slider.setSize(120, 20);
+		slider.setBarLength(10);
+		slider.setHorizontal(true);
+		slider.setOffset(0, 100);
+		slider.onSlide(() -> label2.setText("Scroll Percent = " + slider.getScrollPercent() + "."));
+
+		label2.setAnchor(Anchor.TOP_CENTER);
+		label2.setSize(120, 20);
+		label2.setOffset(0, 140);
+		label2.setText("Bar Not Scrolled.");
 
 		return root;
 	}

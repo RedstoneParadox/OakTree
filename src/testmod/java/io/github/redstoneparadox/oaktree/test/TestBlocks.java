@@ -24,10 +24,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
 
 public class TestBlocks {
-	public static final Block TEST_ONE_BLOCK = new TestBlock(TestScreens::testOne);
+	public static final Block TEST_DRAW_BLOCK = new TestBlock(TestScreens::testDraw);
+	public static final Block TEST_INTERACTABLES_BLOCK = new TestBlock(TestScreens::testInteractables);
 
 	public static void init() {
-		register(TEST_ONE_BLOCK, "one");
+		register(TEST_DRAW_BLOCK, "draw");
+		register(TEST_INTERACTABLES_BLOCK, "interactables");
 	}
 
 	private static Block register(Block block, String suffix) {
