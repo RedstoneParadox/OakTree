@@ -17,7 +17,6 @@ public class SliderControl extends Control implements MouseButtonListener {
 	protected boolean horizontal = false;
 	protected @NotNull Action onSlide = () -> {};
 	protected boolean held = false;
-	protected Painter sliderStyle = null;
 
 	public SliderControl() {
 		this.id = "slider";
@@ -57,12 +56,17 @@ public class SliderControl extends Control implements MouseButtonListener {
 		captured = super.interact(mouseX, mouseY, deltaTime, captured);
 
 		if (captured && held) {
+			float percent = scrollPercent;
+
 			if (horizontal) {
-				scrollPercent = Math.max(0.0f, Math.min(((float)mouseX - trueX)/(area.getWidth() - barLength) * 100.0f, 100.0f));
+				scrollPercent = ((float) mouseX - trueArea.getX())/(trueArea.getWidth() - barLength) * 100.0f;
 			}
 			else {
-				scrollPercent = Math.max(0.0f, Math.min(((float)mouseY - trueY)/(area.getHeight() - barLength) * 100.0f, 100.0f));
+				scrollPercent = ((float)mouseY - trueArea.getY())/(trueArea.getHeight() - barLength) * 100.0f;
 			}
+
+			scrollPercent = Math.max(0.0f, Math.min(100.0f, scrollPercent));
+			if (scrollPercent != percent) onSlide.run();
 		}
 
 		return captured;
@@ -72,22 +76,22 @@ public class SliderControl extends Control implements MouseButtonListener {
 	protected void draw(MatrixStack matrices, Theme theme) {
 		super.draw(matrices, theme);
 
-		int sliderX = trueX;
-		int sliderY = trueY;
+		int sliderX = trueArea.getX();
+		int sliderY = trueArea.getY();
 
-		int sliderWidth = area.getWidth();
-		int sliderHeight = area.getHeight();
+		int sliderWidth = trueArea.getWidth();
+		int sliderHeight = trueArea.getHeight();
 
 		if (horizontal) {
-			sliderX += (int)((scrollPercent)/100 * (area.getWidth() - barLength));
+			sliderX += (int)((scrollPercent)/100 * (trueArea.getWidth() - barLength));
 			sliderWidth = barLength;
 		}
 		else {
-			sliderY += (int)((scrollPercent)/100 * (area.getHeight() - barLength));
+			sliderY += (int)((scrollPercent)/100 * (trueArea.getHeight() - barLength));
 			sliderHeight = barLength;
 		}
 
-		if (sliderStyle != null) theme.get(id, SLIDER).draw(matrices, sliderX, sliderY, sliderWidth, sliderHeight);
+		theme.get(id, SLIDER).draw(matrices, sliderX, sliderY, sliderWidth, sliderHeight);
 	}
 
 	@Override
