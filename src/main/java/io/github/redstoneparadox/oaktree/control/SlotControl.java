@@ -212,7 +212,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 			stackInSlot = inventory.getStack(slot);
 
 			if (stackChanged) {
-				OakTreeClientNetworking.syncStack(slot, inventoryID, handler.syncId, inventory.getStack(slot));
+				inventory.markDirty();
 			}
 			if (tooltip instanceof LabelControl) {
 				if (!stackInSlot.isEmpty()) {
