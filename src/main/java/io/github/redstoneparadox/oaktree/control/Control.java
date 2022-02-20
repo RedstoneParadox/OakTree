@@ -248,7 +248,7 @@ public class Control {
 	}
 
 	protected void markDirty() {
-		parent.markDirty();
+		if (parent != null) parent.markDirty();
 	}
 
 	public static class PainterKey {
