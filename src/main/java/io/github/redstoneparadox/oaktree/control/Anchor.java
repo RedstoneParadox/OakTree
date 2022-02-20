@@ -26,11 +26,11 @@ public enum Anchor {
 
 		if (this == CENTER_LEFT || this == CENTER || this == CENTER_RIGHT)
 		{
-			y = width/2;
+			y = height/2;
 		}
 		else if (this == BOTTOM_LEFT || this == BOTTOM_CENTER || this == BOTTOM_RIGHT)
 		{
-			y = width;
+			y = height;
 		}
 
 		return new Vector2(x, y);
