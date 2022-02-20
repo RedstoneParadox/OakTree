@@ -216,8 +216,10 @@ public class Control {
 
 		int x = trueArea.getX();
 		int y = trueArea.getY();
+		int width = trueArea.getWidth();
+		int height = trueArea.getHeight();
 
-		captured = mouseX >= x && mouseX <= x + area.getWidth() && mouseY >= y && mouseX <= y + area.getHeight();
+		captured = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseX <= y + height;
 
 		if (captured && tooltip != null) {
 			tooltip.visible = true;
