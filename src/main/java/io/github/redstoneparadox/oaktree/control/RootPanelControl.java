@@ -78,7 +78,7 @@ public class RootPanelControl extends PanelControl {
 		for (ZIndexedControls.Entry entry: zIndexedControls) {
 			RenderHelper.setzOffset(entry.zOffset());
 			entry.control().draw(matrixStack, theme);
-			RenderHelper.setzOffset(-entry.zOffset());
+			RenderHelper.setzOffset(0);
 		}
 	}
 
