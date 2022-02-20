@@ -7,6 +7,7 @@ import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.control.SliderControl;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import io.github.redstoneparadox.oaktree.networking.OakTreeServerNetworking;
+import io.github.redstoneparadox.oaktree.util.Color;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -57,21 +58,23 @@ public class TestScreens {
 		button.onRelease(() -> label1.setText("Button Released."));
 
 		label1.setAnchor(Anchor.TOP_CENTER);
-		label1.setSize(80, 20);
+		label1.setSize(120, 20);
 		label1.setOffset(0, 60);
 		label1.setText("Button Not Pressed");
+		label1.setFontColor(Color.BLACK);
 
 		slider.setAnchor(Anchor.TOP_CENTER);
 		slider.setSize(120, 20);
 		slider.setBarLength(10);
 		slider.setHorizontal(true);
 		slider.setOffset(0, 100);
-		slider.onSlide(() -> label2.setText("Scroll Percent = " + slider.getScrollPercent() + "."));
+		slider.onSlide(() -> label2.setText("Scroll Percent = " + (int) slider.getScrollPercent() + "."));
 
 		label2.setAnchor(Anchor.TOP_CENTER);
 		label2.setSize(120, 20);
 		label2.setOffset(0, 140);
 		label2.setText("Bar Not Scrolled.");
+		label2.setFontColor(Color.BLACK);
 
 		return root;
 	}
