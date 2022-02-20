@@ -87,11 +87,5 @@ public class TestBlocks {
 		public @Nullable BlockEntity createBlockEntity(BlockPos blockPos, BlockState blockState) {
 			return new TestBlockEntities.TestBlockEntity(blockPos, blockState);
 		}
-
-		@Override
-		public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState blockState, World world, BlockPos blockPos) {
-			BlockEntity blockEntity = world.getBlockEntity(blockPos);
-			return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory) blockEntity : null;
-		}
 	}
 }

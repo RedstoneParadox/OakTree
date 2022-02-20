@@ -31,7 +31,7 @@ public class TestScreenHandlers {
 		public final PlayerInventory playerInventory;
 
 		protected TestScreenHandler(int syncId, PlayerInventory playerInventory) {
-			super(null, syncId);
+			super(TEST_INVENTORY_SCREEN_HANDLER, syncId);
 			this.playerInventory = playerInventory;
 		}
 
