@@ -74,8 +74,8 @@ public class ProgressBarControl extends Control {
 	protected void draw(MatrixStack matrices, Theme theme) {
 		super.draw(matrices, theme);
 
-		int barX = trueX + ((area.getWidth() /2) - (barWidth/2));
-		int barY = trueY + ((area.getHeight() /2) - (barHeight/2));
+		int barX = trueArea.getX() + ((trueArea.getWidth() /2) - (barWidth/2));
+		int barY = trueArea.getY() + ((trueArea.getHeight() /2) - (barHeight/2));
 		Painter barPainter = theme.get(id, BAR);
 
 		switch (direction) {

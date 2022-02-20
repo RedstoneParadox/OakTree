@@ -518,8 +518,8 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 		for (int row = firstLine; row < firstLine + length; row += 1) {
 			String line = lines.get(row);
 			if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
-			int lineY = trueY + (row - firstLine) * TextHelper.getFontHeight();
-			RenderHelper.drawText(matrices, new LiteralText(line).asOrderedText(), trueX, lineY, shadow, fontColor);
+			int lineY = trueArea.getY() + (row - firstLine) * TextHelper.getFontHeight();
+			RenderHelper.drawText(matrices, new LiteralText(line).asOrderedText(), trueArea.getX(), lineY, shadow, fontColor);
 			drawHighlights(matrices, line, lineY, row);
 		}
 	}
@@ -536,7 +536,7 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 
 			if (startIndex == endIndex) return;
 
-			int x = trueX + TextHelper.getWidth(line.substring(0, startIndex));
+			int x = trueArea.getX() + TextHelper.getWidth(line.substring(0, startIndex));
 			String highlightedPortion = line.substring(startIndex, endIndex);
 			RenderHelper.drawRectangle(matrices, x, lineY, TextHelper.getWidth(highlightedPortion), TextHelper.getFontHeight(), highlightColor);
 		}
@@ -544,14 +544,14 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 
 	private void drawCursor(MatrixStack matrices) {
 		if (lines.isEmpty()) {
-			RenderHelper.drawText(matrices, new LiteralText("_").asOrderedText(), trueX, trueY, shadow, fontColor);
+			RenderHelper.drawText(matrices, new LiteralText("_").asOrderedText(), trueArea.getX(), trueArea.getY(), shadow, fontColor);
 			return;
 		}
 
 		int actualRow = cursor.row - firstLine;
 		String cursorLine = lines.get(cursor.row);
-		int cursorX = (int) (trueX + TextHelper.getWidth(cursorLine.substring(0, cursor.column)));
-		int cursorY = (int) (trueY + actualRow * TextHelper.getFontHeight());
+		int cursorX = trueArea.getX() + TextHelper.getWidth(cursorLine.substring(0, cursor.column));
+		int cursorY = trueArea.getY() + actualRow * TextHelper.getFontHeight();
 
 		String cursorString = "_";
 		if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine)) cursorString = "|";

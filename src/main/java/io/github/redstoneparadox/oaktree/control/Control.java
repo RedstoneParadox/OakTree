@@ -28,8 +28,6 @@ public class Control {
 
 	//Internal State
 	protected PainterKey painterKey = DEFAULT;
-	protected int trueX = 0;
-	protected int trueY = 0;
 	protected Rectangle trueArea = new Rectangle(0, 0, 1, 1);
 
 	public void setId(@NotNull String id) {
@@ -179,10 +177,6 @@ public class Control {
 	 */
 	public void onTick(@NotNull Action onTick) {
 		this.onTick = onTick;
-	}
-
-	public Vector2 getTruePosition() {
-		return new Vector2(trueX, trueY);
 	}
 
 	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {

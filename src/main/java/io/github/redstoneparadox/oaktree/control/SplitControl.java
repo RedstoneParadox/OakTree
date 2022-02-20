@@ -10,9 +10,6 @@ public class SplitControl extends Control {
 	protected @NotNull Control first = new Control();
 	protected @NotNull Control second = new Control();
 
-	private final Rectangle firstArea = new Rectangle(trueX, trueY, area.getWidth(), area.getHeight());
-	private final Rectangle secondArea = new Rectangle(trueX + firstArea.getWidth(), trueY, 0, area.getHeight());
-
 	public SplitControl() {
 		this.id = "split";
 	}
