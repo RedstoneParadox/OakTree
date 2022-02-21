@@ -2,15 +2,18 @@ package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.control.Anchor;
 import io.github.redstoneparadox.oaktree.control.ButtonControl;
+import io.github.redstoneparadox.oaktree.control.GridPanelControl;
 import io.github.redstoneparadox.oaktree.control.LabelControl;
 import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.control.SliderControl;
+import io.github.redstoneparadox.oaktree.control.SlotControl;
 import io.github.redstoneparadox.oaktree.util.Color;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.text.LiteralText;
@@ -83,12 +86,24 @@ public class TestScreens {
 		return root;
 	}
 
-	public static RootPanelControl testInventory(Inventory inventory) {
+	public static RootPanelControl testInventory(PlayerInventory inventory) {
 		RootPanelControl root = new RootPanelControl();
+		GridPanelControl grid = new GridPanelControl();
+		PlayerEntity player = inventory.player;
 
 		root.setAnchor(Anchor.CENTER);
-		root.setSize(160, 160);
+		root.setSize(178, 88);
 		root.setId("base");
+
+		grid.setSize(162, 72);
+		grid.setAnchor(Anchor.CENTER);
+		grid.setRows(4);
+		grid.setColumns(9);
+		grid.addChildren(36, false, integer -> {
+			int index = integer < 27 ? integer + 9 : integer - 27;
+			return new SlotControl(index, player, inventory);
+		});
+		root.addChild(grid);
 
 		return root;
 	}
