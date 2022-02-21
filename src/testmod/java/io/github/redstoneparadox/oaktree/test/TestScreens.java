@@ -163,6 +163,16 @@ public class TestScreens {
 		}
 
 		@Override
+		protected boolean isClickOutsideBounds(double d, double e, int i, int j, int k) {
+			return false;
+		}
+
+		@Override
+		protected boolean isPointWithinBounds(int i, int j, int k, int l, double d, double e) {
+			return true;
+		}
+
+		@Override
 		protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
 
 		}
