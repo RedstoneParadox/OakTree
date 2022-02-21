@@ -3,7 +3,6 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
-import io.github.redstoneparadox.oaktree.networking.OakTreeClientNetworking;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
@@ -41,7 +40,6 @@ public class SlotControl extends Control implements MouseButtonListener {
 	protected boolean locked = false;
 
 	private final int slot;
-	private final int inventoryID;
 	private final PlayerEntity player;
 	private final Inventory inventory;
 	private boolean leftClicked = false;
@@ -51,21 +49,23 @@ public class SlotControl extends Control implements MouseButtonListener {
 	/**
 	 * @param slot The index of the "slot" in your
 	 *             {@link Inventory} implementation.
-	 * @param inventoryID The integer ID of the inventory;
-	 *                    See {@link InventoryScreenHandlerAccess}
 	 * @param player The player interacting with this control.
 	 * @param inventory The inventory to access.
 	 */
-	public SlotControl(int slot, int inventoryID, PlayerEntity player, Inventory inventory) {
+	public SlotControl(int slot, PlayerEntity player, Inventory inventory) {
 		this.slot = slot;
-		this.inventoryID = inventoryID;
 		this.player = player;
 		this.inventory = inventory;
 		this.id = "item_slot";
-		this.tooltip = new LabelControl();
-		this.tooltip.setId("tooltip");
-		((LabelControl)this.tooltip).setShadow(true);
-		((LabelControl)this.tooltip).setFitText(true);
+
+		LabelControl tooltip = new LabelControl();
+		tooltip.setId("tooltip");
+		tooltip.setText("");
+		tooltip.setShadow(true);
+		tooltip.setFitText(true);
+		tooltip.visible = false;
+
+		this.tooltip = tooltip;
 		this.setSize(18, 18);
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
@@ -218,6 +218,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 				if (!stackInSlot.isEmpty()) {
 					List<Text> texts = stackInSlot.getTooltip(player, TooltipContext.Default.NORMAL);
 					((LabelControl) tooltip).setText(texts);
+					tooltip.setVisible(true);
 				}
 				else {
 					((LabelControl) tooltip).clearText();
@@ -226,6 +227,9 @@ public class SlotControl extends Control implements MouseButtonListener {
 			}
 
 			if (stackInSlot.isEmpty() && tooltip != null) tooltip.visible = false;
+		} else {
+			tooltip.setVisible(false);
+			highlighted = false;
 		}
 
 		return captured;
@@ -242,7 +246,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 		RenderHelper.drawItemStackCentered(x, y, trueArea.getWidth(), trueArea.getHeight(), stack);
 
 		if (highlighted) {
-			RenderHelper.setzOffset(1.0);
+			RenderHelper.setzOffset(200.0);
 			RenderHelper.drawRectangle(matrices, x + slotBorder, y + slotBorder, trueArea.getWidth() - (2 * slotBorder), trueArea.getHeight() - (2 * slotBorder), highlightColor);
 			RenderHelper.setzOffset(0.0);
 		}

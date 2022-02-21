@@ -7,6 +7,7 @@ import io.github.redstoneparadox.oaktree.control.LabelControl;
 import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.control.SliderControl;
 import io.github.redstoneparadox.oaktree.control.SlotControl;
+import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.util.Color;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.screen.Screen;
@@ -154,6 +155,11 @@ public class TestScreens {
 		public HandledTestScreen(TestScreenHandlers.TestScreenHandler handler, PlayerInventory playerInventory, Text title, RootPanelControl root) {
 			super(handler, playerInventory, title);
 			this.root = root;
+
+			Rectangle area = root.getArea();
+
+			this.backgroundWidth = area.getWidth();
+			this.backgroundHeight = area.getHeight();
 		}
 
 		@Override
