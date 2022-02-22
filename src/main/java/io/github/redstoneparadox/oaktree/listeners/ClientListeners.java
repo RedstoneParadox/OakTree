@@ -16,7 +16,6 @@ public class ClientListeners {
 				listener.onMouseButton(button, justPressed, false);
 			}
 		}
-		System.out.println("Just pressed: " + justPressed);
 	}
 
 	public static void onCharTyped(char c) {
