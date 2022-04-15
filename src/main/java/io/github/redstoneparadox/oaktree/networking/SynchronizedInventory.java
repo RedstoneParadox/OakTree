@@ -1,11 +1,14 @@
 package io.github.redstoneparadox.oaktree.networking;
 
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
 
@@ -91,5 +94,32 @@ public final class SynchronizedInventory implements Inventory {
 	@Override
 	public void clear() {
 		synced.clear();
+	}
+
+	@ApiStatus.Internal
+	@Environment(EnvType.SERVER)
+	public void transferStack(int slot, int count) {
+		ScreenHandler handler = player.currentScreenHandler;
+		ItemStack cursorStack = handler.getCursorStack();
+		ItemStack slotStack = synced.getStack(slot);
+
+		if (cursorStack.isEmpty() && !slotStack.isEmpty()) {
+			handler.setCursorStack(synced.removeStack(slot, count));
+		} else if (!cursorStack.isEmpty() && slotStack.isEmpty()) {
+			synced.setStack(slot, cursorStack.split(count));
+		} else if (!cursorStack.isEmpty() && slotStack.getItem() == cursorStack.getItem()) {
+			if (cursorStack.getCount() + slotStack.getCount() < 64) {
+				slotStack.setCount(cursorStack.getCount() + slotStack.getCount());
+				handler.setCursorStack(ItemStack.EMPTY);
+			} else if (slotStack.getCount() < 64){
+				int remaining = 64 - slotStack.getCount();
+				cursorStack.decrement(remaining);
+				slotStack.setCount(64);
+			}
+		}
+
+		int[] slots = new int[] { -1, slot };
+		ItemStack[] stacks = new ItemStack[] { handler.getCursorStack(), synced.getStack(slot) };
+		NeoOakTreeServerNetworking.updateSlots((ServerPlayerEntity) player, slots, stacks);
 	}
 }
