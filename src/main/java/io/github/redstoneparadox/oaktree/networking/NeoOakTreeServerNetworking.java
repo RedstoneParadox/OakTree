@@ -27,8 +27,11 @@ public class NeoOakTreeServerNetworking {
 		}));
 	}
 
-	public static void updateSlots(ServerPlayerEntity player, int[] slots, ItemStack[] stacks) {
+	public static void updateSlots(ServerPlayerEntity player, int syncID, int inventoryID,  int[] slots, ItemStack[] stacks) {
 		PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+
+		buffer.writeInt(syncID);
+		buffer.writeInt(inventoryID);
 		buffer.writeIntArray(slots);
 		buffer.writeInt(stacks.length);
 

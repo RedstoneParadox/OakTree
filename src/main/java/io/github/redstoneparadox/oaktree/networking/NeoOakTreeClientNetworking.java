@@ -1,9 +1,11 @@
 package io.github.redstoneparadox.oaktree.networking;
 
+import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -16,16 +18,36 @@ public class NeoOakTreeClientNetworking {
 
 	public static void initPackets() {
 		ClientPlayNetworking.registerGlobalReceiver(PacketIdentifiers.UPDATE_STACKS, ((client, handler, buf, responseSender) -> {
+			int syncID = buf.readInt();
+			int inventoryID = buf.readInt();
 			int[] slots = buf.readIntArray();
 			int length = buf.readInt();
-			List<ItemStack> stacks = new ArrayList<>();
 
-			for (int i = 0; i < length; i++) stacks.add(buf.readItemStack());
+			var list = INVENTORIES.get(syncID);
+			var inventory = list.get(inventoryID);
 
+			for (int i = 0; i < length; i++) {
+				int slot = slots[i];
+				ItemStack stack = buf.readItemStack();
 
+				inventory.setStack(slot, stack);
+			}
 		}));
 	}
 
+	@ApiStatus.Internal
+	public static void grabStack(int syncID, int inventoryID, int slot, int count) {
+		PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+
+		buffer.writeInt(syncID);
+		buffer.writeInt(inventoryID);
+		buffer.writeInt(slot);
+		buffer.writeInt(syncID);
+
+		ClientPlayNetworking.send(PacketIdentifiers.TRANSFER_STACK, buffer);
+	}
+
+	@ApiStatus.Internal
 	public static int getNextInventoryID(int syncID) {
 		var list = get(syncID);
 

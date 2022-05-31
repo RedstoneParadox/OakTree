@@ -78,6 +78,10 @@ public final class SynchronizedInventory implements Inventory {
 
 	@Override
 	public void setStack(int i, ItemStack itemStack) {
+		if (i == -2) {
+			player.currentScreenHandler.setCursorStack(itemStack);
+		}
+
 		synced.setStack(i, itemStack);
 	}
 
@@ -94,6 +98,24 @@ public final class SynchronizedInventory implements Inventory {
 	@Override
 	public void clear() {
 		synced.clear();
+	}
+
+	@Override
+	public void onClose(PlayerEntity playerEntity) {
+		Inventory.super.onClose(playerEntity);
+		synced.onClose(playerEntity);
+
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			NeoOakTreeClientNetworking.removeInventories(syncID);
+		} else if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
+			NeoOakTreeServerNetworking.removeInventories(syncID);
+		}
+	}
+
+	@ApiStatus.Internal
+	@Environment(EnvType.CLIENT)
+	public void grabStack(int slot, int count) {
+		NeoOakTreeClientNetworking.grabStack(syncID, inventoryID, slot, count);
 	}
 
 	@ApiStatus.Internal
@@ -118,8 +140,8 @@ public final class SynchronizedInventory implements Inventory {
 			}
 		}
 
-		int[] slots = new int[] { -1, slot };
+		int[] slots = new int[] { -2, slot };
 		ItemStack[] stacks = new ItemStack[] { handler.getCursorStack(), synced.getStack(slot) };
-		NeoOakTreeServerNetworking.updateSlots((ServerPlayerEntity) player, slots, stacks);
+		NeoOakTreeServerNetworking.updateSlots((ServerPlayerEntity) player, syncID, inventoryID, slots, stacks);
 	}
 }
