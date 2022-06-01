@@ -15,7 +15,7 @@ public class NeoOakTreeServerNetworking {
 	private static final Int2ObjectArrayMap<List<SynchronizedInventory>> INVENTORIES = new Int2ObjectArrayMap<>();
 
 	public static void initPackets() {
-		ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.TRANSFER_STACK, ((server, player, handler, buf, responseSender) -> {
+		ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.PICKUP_STACK, ((server, player, handler, buf, responseSender) -> {
 			int syncID = buf.readInt();
 			int inventoryID = buf.readInt();
 			int slot = buf.readInt();
@@ -23,7 +23,17 @@ public class NeoOakTreeServerNetworking {
 
 			var list = INVENTORIES.get(syncID);
 			var inventory = list.get(inventoryID);
-			inventory.transferStack(slot, count);
+			inventory.verifyPickupStack(slot, count);
+		}));
+		ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.PLACE_STACK, ((server, player, handler, buf, responseSender) -> {
+			int syncID = buf.readInt();
+			int inventoryID = buf.readInt();
+			int slot = buf.readInt();
+			int count = buf.readInt();
+
+			var list = INVENTORIES.get(syncID);
+			var inventory = list.get(inventoryID);
+			inventory.verifyPlaceStack(slot, count);
 		}));
 	}
 

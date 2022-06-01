@@ -36,15 +36,27 @@ public class NeoOakTreeClientNetworking {
 	}
 
 	@ApiStatus.Internal
-	public static void grabStack(int syncID, int inventoryID, int slot, int count) {
+	public static void pickupStack(int syncID, int inventoryID, int slot, int count) {
 		PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
 
 		buffer.writeInt(syncID);
 		buffer.writeInt(inventoryID);
 		buffer.writeInt(slot);
-		buffer.writeInt(syncID);
+		buffer.writeInt(count);
 
-		ClientPlayNetworking.send(PacketIdentifiers.TRANSFER_STACK, buffer);
+		ClientPlayNetworking.send(PacketIdentifiers.PICKUP_STACK, buffer);
+	}
+
+	@ApiStatus.Internal
+	public static void placeStack(int syncID, int inventoryID, int slot, int count) {
+		PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+
+		buffer.writeInt(syncID);
+		buffer.writeInt(inventoryID);
+		buffer.writeInt(slot);
+		buffer.writeInt(count);
+
+		ClientPlayNetworking.send(PacketIdentifiers.PLACE_STACK, buffer);
 	}
 
 	@ApiStatus.Internal

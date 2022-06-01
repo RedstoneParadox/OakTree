@@ -7,9 +7,6 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.Internal
 public class PacketIdentifiers {
 	public static final Identifier UPDATE_STACKS = id("update_stacks");
-	@Deprecated
-	public static final Identifier TRANSFER_STACK = new Identifier("oaktree","transfer_stack");
-
 	public static final Identifier PICKUP_STACK = id("pickup_stack");
 	public static final Identifier PLACE_STACK = id("place_stack");
 	public static final Identifier MOVE_TO_HOTBAR = id("move_to_hotbar"); // used for offhand

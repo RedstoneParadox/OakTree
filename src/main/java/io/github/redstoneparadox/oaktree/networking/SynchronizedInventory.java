@@ -120,34 +120,64 @@ public final class SynchronizedInventory implements Inventory {
 
 	@ApiStatus.Internal
 	@Environment(EnvType.CLIENT)
-	public void grabStack(int slot, int count) {
-		NeoOakTreeClientNetworking.grabStack(syncID, inventoryID, slot, count);
+	public void tryPickupStack(int slot, int count) {
+		NeoOakTreeClientNetworking.pickupStack(syncID, inventoryID, slot, count);
 	}
 
 	@ApiStatus.Internal
 	@Environment(EnvType.SERVER)
-	public void transferStack(int slot, int count) {
+	public void verifyPickupStack(int slot, int count) {
 		ScreenHandler handler = player.currentScreenHandler;
 		ItemStack cursorStack = handler.getCursorStack();
 		ItemStack slotStack = synced.getStack(slot);
 
 		if (cursorStack.isEmpty() && !slotStack.isEmpty()) {
 			handler.setCursorStack(synced.removeStack(slot, count));
-		} else if (!cursorStack.isEmpty() && slotStack.isEmpty()) {
-			synced.setStack(slot, cursorStack.split(count));
-		} else if (!cursorStack.isEmpty() && slotStack.getItem() == cursorStack.getItem()) {
-			if (cursorStack.getCount() + slotStack.getCount() < 64) {
-				slotStack.setCount(cursorStack.getCount() + slotStack.getCount());
-				handler.setCursorStack(ItemStack.EMPTY);
-			} else if (slotStack.getCount() < 64){
-				int remaining = 64 - slotStack.getCount();
-				cursorStack.decrement(remaining);
-				slotStack.setCount(64);
-			}
-		}
 
-		int[] slots = new int[] { -2, slot };
-		ItemStack[] stacks = new ItemStack[] { handler.getCursorStack(), synced.getStack(slot) };
-		NeoOakTreeServerNetworking.updateSlots((ServerPlayerEntity) player, syncID, inventoryID, slots, stacks);
+			int[] slots = new int[] { -2, slot };
+			ItemStack[] stacks = new ItemStack[] { handler.getCursorStack(), synced.getStack(slot) };
+
+			NeoOakTreeServerNetworking.updateSlots((ServerPlayerEntity) player, syncID, inventoryID, slots, stacks);
+		}
+	}
+
+	@ApiStatus.Internal
+	@Environment(EnvType.CLIENT)
+	public void tryPlaceStack(int slot, int count) {
+		NeoOakTreeClientNetworking.placeStack(syncID, inventoryID, slot, count);
+	}
+
+	@ApiStatus.Internal
+	@Environment(EnvType.SERVER)
+	public void verifyPlaceStack(int slot, int count) {
+		ScreenHandler handler = player.currentScreenHandler;
+		ItemStack cursorStack = handler.getCursorStack();
+		ItemStack slotStack = synced.getStack(slot);
+
+		if (!cursorStack.isEmpty()) {
+			if (slotStack.isEmpty()) {
+				synced.setStack(slot, cursorStack.split(count));
+			} else {
+				combineStacks(cursorStack, slotStack, count);
+			}
+
+			int[] slots = new int[] { -2, slot };
+			ItemStack[] stacks = new ItemStack[] { handler.getCursorStack(), synced.getStack(slot) };
+
+			NeoOakTreeServerNetworking.updateSlots((ServerPlayerEntity) player, syncID, inventoryID, slots, stacks);
+		}
+	}
+
+	private void combineStacks(ItemStack from, ItemStack to, int amount) {
+		if (from.getCount() < amount) {
+			combineStacks(from, to, from.getCount());
+		}
+		else if (to.getMaxCount() - to.getCount() < amount) {
+			combineStacks(from, to, to.getMaxCount() - to.getCount());
+		}
+		else if (ItemStack.areItemsEqual(from, to)) {
+			from.decrement(amount);
+			to.increment(amount);
+		}
 	}
 }
