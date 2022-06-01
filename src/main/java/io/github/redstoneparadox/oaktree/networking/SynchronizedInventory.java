@@ -13,6 +13,7 @@ import org.jetbrains.annotations.ApiStatus;
 import java.util.List;
 
 public final class SynchronizedInventory implements Inventory {
+	public boolean active = true;
 	private final int syncID;
 	private final int inventoryID;
 	private final Inventory synced;
@@ -110,6 +111,11 @@ public final class SynchronizedInventory implements Inventory {
 		} else if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
 			NeoOakTreeServerNetworking.removeInventories(syncID);
 		}
+	}
+
+	@Environment(EnvType.CLIENT)
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@ApiStatus.Internal
