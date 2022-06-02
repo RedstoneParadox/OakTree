@@ -8,6 +8,7 @@ import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.control.SliderControl;
 import io.github.redstoneparadox.oaktree.control.SlotControl;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
+import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,6 +17,7 @@ import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -23,13 +25,15 @@ import net.minecraft.util.Formatting;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 public class TestScreens {
 	public static void init() {
 		ScreenRegistry.register(
 				TestScreenHandlers.TEST_INVENTORY_SCREEN_HANDLER,
 				// TODO: Find out why the compiler doesn't like not having the cast here
-				(ScreenRegistry.Factory<TestScreenHandlers.TestScreenHandler, HandledTestScreen>) (handler, inventory, text) -> new HandledTestScreen(handler, inventory, text, testInventory(inventory))
+				(ScreenRegistry.Factory<TestScreenHandlers.TestScreenHandler, HandledTestScreen>)
+						(handler, inventory, text) -> new HandledTestScreen(handler, inventory, text, (slots -> testInventory(slots, inventory.player)))
 		);
 	}
 
@@ -86,10 +90,9 @@ public class TestScreens {
 		return root;
 	}
 
-	public static RootPanelControl testInventory(PlayerInventory inventory) {
+	public static RootPanelControl testInventory(List<BackingSlot> slots, PlayerEntity player) {
 		RootPanelControl root = new RootPanelControl();
 		GridPanelControl grid = new GridPanelControl();
-		PlayerEntity player = inventory.player;
 
 		root.setAnchor(Anchor.CENTER);
 		root.setSize(178, 88);
@@ -101,7 +104,7 @@ public class TestScreens {
 		grid.setColumns(9);
 		grid.addChildren(36, false, integer -> {
 			int index = integer < 27 ? integer + 9 : integer - 27;
-			return new SlotControl(null, null);
+			return new SlotControl(player, slots.get(index));
 		});
 		root.addChild(grid);
 
@@ -151,11 +154,17 @@ public class TestScreens {
 	static class HandledTestScreen extends HandledScreen<TestScreenHandlers.TestScreenHandler> implements ScreenHandlerProvider<TestScreenHandlers.TestScreenHandler> {
 		private final RootPanelControl root;
 
-		public HandledTestScreen(TestScreenHandlers.TestScreenHandler handler, PlayerInventory playerInventory, Text title, RootPanelControl root) {
+		public HandledTestScreen(
+				TestScreenHandlers.TestScreenHandler handler,
+				PlayerInventory playerInventory,
+				Text title,
+				Function<List<BackingSlot>, RootPanelControl> root
+		) {
 			super(handler, playerInventory, title);
-			this.root = root;
 
-			Rectangle area = root.getArea();
+			this.root = root.apply(handler.getBackingSlots());
+
+			Rectangle area = this.root.getArea();
 
 			this.backgroundWidth = area.getWidth();
 			this.backgroundHeight = area.getHeight();
