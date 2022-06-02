@@ -9,10 +9,10 @@ import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -39,23 +39,15 @@ public class SlotControl extends Control implements MouseButtonListener {
 	protected @NotNull Predicate<ItemStack> canTake = (stack) -> true;
 	protected boolean locked = false;
 
-	private final int slot;
 	private final PlayerEntity player;
-	private final Inventory inventory;
+	private final Slot slot;
 	private boolean leftClicked = false;
 	private boolean rightClicked = false;
 	private boolean highlighted = false;
 
-	/**
-	 * @param slot The index of the "slot" in your
-	 *             {@link Inventory} implementation.
-	 * @param player The player interacting with this control.
-	 * @param inventory The inventory to access.
-	 */
-	public SlotControl(int slot, PlayerEntity player, Inventory inventory) {
-		this.slot = slot;
+	public SlotControl(PlayerEntity player, Slot slot) {
 		this.player = player;
-		this.inventory = inventory;
+		this.slot = slot;
 		this.id = "item_slot";
 
 		LabelControl tooltip = new LabelControl();
@@ -161,62 +153,42 @@ public class SlotControl extends Control implements MouseButtonListener {
 		if (captured) {
 			highlighted = true;
 			boolean stackChanged = false;
-			ItemStack stackInSlot = inventory.getStack(slot);
 			ScreenHandler handler = player.currentScreenHandler;
+			ItemStack slotStack = slot.getStack();
+			ItemStack cursorStack = handler.getCursorStack();
 
-			if (handler.getCursorStack().isEmpty()) {
-				if (!locked && canTake.test(stackInSlot)) {
-					if (leftClicked) {
-						handler.setCursorStack(inventory.removeStack(slot));
+			if (slotStack.isEmpty()) {
+				if (!locked) {
+					if (leftClicked && slot.canTakeItems(player)) {
+						slot.takeStack(slotStack.getCount());
 						stackChanged = true;
-					}
-					else if (rightClicked) {
-						handler.setCursorStack(inventory.removeStack(slot, Math.max(stackInSlot.getCount()/2, 1)));
+					} else if (rightClicked && slot.canTakePartial(player)) {
+						slot.takeStack(divide(slotStack.getCount()));
 						stackChanged = true;
 					}
 				}
-			}
-			else {
-				ItemStack cursorStack = handler.getCursorStack();
-
-				if (!locked && canInsert.test(cursorStack)) {
+			} else {
+				if (!locked && slot.canInsert(cursorStack)) {
 					if (leftClicked) {
-						if (stackInSlot.isEmpty()) {
-							inventory.setStack(slot, handler.getCursorStack());
-							handler.setCursorStack(ItemStack.EMPTY);
-							stackChanged = true;
-						}
-						else {
-							combineStacks(cursorStack, stackInSlot, cursorStack.getCount());
-							stackChanged = true;
-						}
-					}
-					else if (rightClicked) {
-						if (stackInSlot.isEmpty()) {
-							inventory.setStack(slot, handler.getCursorStack().split(1));
-							stackChanged = true;
-						}
-						else {
-							combineStacks(cursorStack, stackInSlot, 1);
-							stackChanged = true;
-						}
+						slot.insertStack(cursorStack);
+						stackChanged = true;
+					} else if (rightClicked) {
+						slot.insertStack(cursorStack, 1);
+						stackChanged = true;
 					}
 				}
-
 			}
 
 			//TODO: Find out why I actually need to do this and fix the problem at the source.
 			leftClicked = false;
 			rightClicked = false;
 
-			stackInSlot = inventory.getStack(slot);
-
 			if (stackChanged) {
-				inventory.markDirty();
+				slot.markDirty();
 			}
 			if (tooltip instanceof LabelControl) {
-				if (!stackInSlot.isEmpty()) {
-					List<Text> texts = stackInSlot.getTooltip(player, TooltipContext.Default.NORMAL);
+				if (!slotStack.isEmpty()) {
+					List<Text> texts = slotStack.getTooltip(player, TooltipContext.Default.NORMAL);
 					((LabelControl) tooltip).setText(texts);
 					tooltip.setVisible(true);
 				}
@@ -226,7 +198,8 @@ public class SlotControl extends Control implements MouseButtonListener {
 				}
 			}
 
-			if (stackInSlot.isEmpty() && tooltip != null) tooltip.visible = false;
+			if (slotStack.isEmpty() && tooltip != null) tooltip.visible = false;
+
 		} else {
 			tooltip.setVisible(false);
 			highlighted = false;
@@ -242,7 +215,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 		int x = trueArea.getX();
 		int y = trueArea.getY();
 
-		ItemStack stack = inventory.getStack(slot);
+		ItemStack stack = slot.getStack();
 		RenderHelper.drawItemStackCentered(x, y, trueArea.getWidth(), trueArea.getHeight(), stack);
 
 		if (highlighted) {
@@ -252,17 +225,9 @@ public class SlotControl extends Control implements MouseButtonListener {
 		}
 	}
 
-	private void combineStacks(ItemStack from, ItemStack to, int amount) {
-		if (from.getCount() < amount) {
-			combineStacks(from, to, from.getCount());
-		}
-		else if (to.getMaxCount() - to.getCount() < amount) {
-			combineStacks(from, to, to.getMaxCount() - to.getCount());
-		}
-		else if (ItemStack.areItemsEqual(from, to)) {
-			from.decrement(amount);
-			to.increment(amount);
-		}
+	private int divide(int num) {
+		double result = ((double) num)/((double) 2);
+		return (int) (result - Math.floor(result) <= 0.5 ? Math.floor(result) : Math.ceil(result));
 	}
 
 	@Override

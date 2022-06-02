@@ -16,7 +16,6 @@ import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -102,7 +101,7 @@ public class TestScreens {
 		grid.setColumns(9);
 		grid.addChildren(36, false, integer -> {
 			int index = integer < 27 ? integer + 9 : integer - 27;
-			return new SlotControl(index, player, inventory);
+			return new SlotControl(null, null);
 		});
 		root.addChild(grid);
 
