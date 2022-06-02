@@ -37,7 +37,7 @@ public class TestScreenHandlers {
 			super(TEST_INVENTORY_SCREEN_HANDLER, syncId);
 			this.playerInventory = playerInventory;
 
-			for (int i = 0; i < 36; i++) addSlot(new BackingSlot(playerInventory, 0));
+			for (int i = 0; i < 36; i++) addSlot(new BackingSlot(playerInventory, i));
 		}
 
 		@Override
