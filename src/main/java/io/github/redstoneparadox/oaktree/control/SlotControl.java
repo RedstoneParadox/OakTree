@@ -4,8 +4,10 @@ import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import io.github.redstoneparadox.oaktree.painter.Theme;
+import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
+import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,12 +42,12 @@ public class SlotControl extends Control implements MouseButtonListener {
 	protected boolean locked = false;
 
 	private final PlayerEntity player;
-	private final Slot slot;
+	private final BackingSlot slot;
 	private boolean leftClicked = false;
 	private boolean rightClicked = false;
 	private boolean highlighted = false;
 
-	public SlotControl(PlayerEntity player, Slot slot) {
+	public SlotControl(PlayerEntity player, BackingSlot slot) {
 		this.player = player;
 		this.slot = slot;
 		this.id = "item_slot";
@@ -61,6 +63,12 @@ public class SlotControl extends Control implements MouseButtonListener {
 		this.setSize(18, 18);
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
+	}
+
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		slot.setEnabled(visible);
 	}
 
 	/**
@@ -144,6 +152,13 @@ public class SlotControl extends Control implements MouseButtonListener {
 
 	public boolean isLocked() {
 		return locked;
+	}
+
+	@Override
+	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+		slot.x = trueArea.getX() + (trueArea.getWidth() - 18)/2;
+		slot.y = trueArea.getY() + (trueArea.getHeight() - 18)/2;
 	}
 
 	@Override
