@@ -189,10 +189,6 @@ public class SlotControl extends Control implements MouseButtonListener {
 				}
 			}
 
-			//TODO: Find out why I actually need to do this and fix the problem at the source.
-			leftClicked = false;
-			rightClicked = false;
-
 			if (stackChanged) {
 				slot.markDirty();
 			}
@@ -208,12 +204,16 @@ public class SlotControl extends Control implements MouseButtonListener {
 				}
 			}
 
-			if (slotStack.isEmpty() && tooltip != null) tooltip.visible = false;
+			if (slotStack.isEmpty() && tooltip != null) tooltip.setVisible(true);
 
 		} else {
 			tooltip.setVisible(false);
 			highlighted = false;
 		}
+
+		//TODO: Find out why I actually need to do this and fix the problem at the source.
+		leftClicked = false;
+		rightClicked = false;
 
 		return captured;
 	}
@@ -242,11 +242,11 @@ public class SlotControl extends Control implements MouseButtonListener {
 
 	@Override
 	public void onMouseButton(int button, boolean justPressed, boolean released) {
-		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
-			leftClicked = justPressed;
+		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && justPressed) {
+			leftClicked = true;
 		}
 		else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
-			rightClicked = justPressed;
+			rightClicked = true;
 		}
 	}
 }
