@@ -8,6 +8,7 @@ import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -172,32 +174,20 @@ public class SlotControl extends Control implements MouseButtonListener {
 		captured = super.interact(mouseX, mouseY, deltaTime, captured);
 
 		if (captured) {
+
 			highlighted = true;
 			boolean stackChanged = false;
 			ScreenHandler handler = player.currentScreenHandler;
 			ItemStack slotStack = slot.getStack();
 			ItemStack cursorStack = handler.getCursorStack();
 
-			if (leftClicked) {
-				if (cursorStack.isEmpty() && slot.canTakeItems(player)) {
-					handler.setCursorStack(slot.takeStack(slotStack.getCount()));
-					stackChanged = true;
-				} else if (slot.canInsert(cursorStack)) {
-					slot.insertStack(cursorStack);
-				}
-			} else if (rightClicked) {
-				if (cursorStack.isEmpty() && slot.canTakePartial(player)) {
-					handler.setCursorStack(slot.takeStack(divide(slotStack.getCount())));
-					stackChanged = true;
-				} else if (slot.canInsert(cursorStack)) {
-					slot.insertStack(cursorStack, 1);
-					stackChanged = true;
-				}
-			}
-
-			if (stackChanged) {
+			if (leftClicked || rightClicked) {
+				MinecraftClient client = MinecraftClient.getInstance();
+				assert client.interactionManager != null;
+				client.interactionManager.clickSlot(handler.syncId, slot.id, 0, SlotActionType.PICKUP, client.player);
 				slot.markDirty();
 			}
+
 			if (tooltip instanceof LabelControl) {
 				if (!slotStack.isEmpty()) {
 					List<Text> texts = slotStack.getTooltip(player, TooltipContext.Default.NORMAL);
@@ -210,7 +200,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 				}
 			}
 
-			if (slotStack.isEmpty() && tooltip != null) tooltip.setVisible(true);
+			if (!slot.getStack().isEmpty() && tooltip != null) tooltip.setVisible(true);
 
 		} else {
 			tooltip.setVisible(false);
