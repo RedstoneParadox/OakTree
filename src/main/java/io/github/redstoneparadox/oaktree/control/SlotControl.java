@@ -172,25 +172,20 @@ public class SlotControl extends Control implements MouseButtonListener {
 			ItemStack slotStack = slot.getStack();
 			ItemStack cursorStack = handler.getCursorStack();
 
-			if (slotStack.isEmpty()) {
-				if (!locked) {
-					if (leftClicked && slot.canTakeItems(player)) {
-						slot.takeStack(slotStack.getCount());
-						stackChanged = true;
-					} else if (rightClicked && slot.canTakePartial(player)) {
-						slot.takeStack(divide(slotStack.getCount()));
-						stackChanged = true;
-					}
+			if (leftClicked) {
+				if (cursorStack.isEmpty() && slot.canTakeItems(player)) {
+					handler.setCursorStack(slot.takeStack(slotStack.getCount()));
+					stackChanged = true;
+				} else if (slot.canInsert(cursorStack)) {
+					slot.insertStack(cursorStack);
 				}
-			} else {
-				if (!locked && slot.canInsert(cursorStack)) {
-					if (leftClicked) {
-						slot.insertStack(cursorStack);
-						stackChanged = true;
-					} else if (rightClicked) {
-						slot.insertStack(cursorStack, 1);
-						stackChanged = true;
-					}
+			} else if (rightClicked) {
+				if (cursorStack.isEmpty() && slot.canTakePartial(player)) {
+					handler.setCursorStack(slot.takeStack(divide(slotStack.getCount())));
+					stackChanged = true;
+				} else if (slot.canInsert(cursorStack)) {
+					slot.insertStack(cursorStack, 1);
+					stackChanged = true;
 				}
 			}
 
