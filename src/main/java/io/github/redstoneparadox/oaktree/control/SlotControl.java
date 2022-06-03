@@ -94,6 +94,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 		return slotBorder;
 	}
 
+	@Deprecated
 	public void canInsert(@NotNull Predicate<ItemStack> canInsert) {
 		this.canInsert = canInsert;
 	}
@@ -107,6 +108,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 	 * @param items The items to allow/deny.
 	 * @return The {@link SlotControl} for further modification.
 	 */
+	@Deprecated
 	public SlotControl filter(boolean allow, Item... items) {
 		this.canInsert = ((stack) -> {
 			for (Item item: items) {
@@ -126,6 +128,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 	 * @param tags The item tags to match against.
 	 * @return The {@link SlotControl} for further modification.
 	 */
+	@Deprecated
 	public SlotControl filter(boolean allow, Tag<Item>... tags) {
 		this.canInsert = ((stack) -> {
 			for (Tag<Item> tag: tags) {
@@ -136,6 +139,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 		return this;
 	}
 
+	@Deprecated
 	public void canTake(@NotNull Predicate<ItemStack> canTake) {
 		this.canTake = canTake;
 	}
@@ -146,10 +150,12 @@ public class SlotControl extends Control implements MouseButtonListener {
 	 *
 	 * @param locked Whether the slot should be locked.
 	 */
+	@Deprecated
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
 
+	@Deprecated
 	public boolean isLocked() {
 		return locked;
 	}
