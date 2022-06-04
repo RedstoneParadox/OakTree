@@ -8,6 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class LabelControl extends Control {
 	 */
 	public void setText(@NotNull Text text) {
 		this.text = text;
+		if (fitText) markDirty();
 	}
 
 	/**
@@ -49,6 +51,7 @@ public class LabelControl extends Control {
 	 */
 	public void setText(String text) {
 		this.text = new LiteralText(text);
+		if (fitText) markDirty();
 	}
 
 	/**
@@ -57,22 +60,15 @@ public class LabelControl extends Control {
 	 * {@link List<Text>} and don't want to add
 	 * the newlines yourself.</p>
 	 *
+	 * @deprecated Use {@link TextHelper#combine(List, boolean)}
+	 *
 	 * @param texts A {@link List<Text>}
 	 */
+	@Deprecated
+	@ApiStatus.ScheduledForRemoval
 	public void setText(List<Text> texts) {
-		if (fitText) {
-			this.area.setWidth(0);
-
-			for (Text text: texts) {
-				this.area.setWidth(Math.max(this.area.getWidth(), TextHelper.getWidth(text)));
-			}
-
-			this.area.setWidth(this.area.getWidth() + 8);
-			area.setHeight(TextHelper.getFontHeight() * texts.size() + 8);
-			this.maxDisplayedLines = texts.size();
-		}
-
 		this.text = TextHelper.combine(texts, true);
+		if (fitText) markDirty();
 	}
 
 	/**
@@ -80,6 +76,7 @@ public class LabelControl extends Control {
 	 */
 	public void clearText() {
 		this.text = LiteralText.EMPTY;
+		if (fitText) markDirty();
 	}
 
 	public @NotNull Text getText() {
@@ -143,11 +140,15 @@ public class LabelControl extends Control {
 	}
 
 	/**
-	 * Sets whether or not this {@link LabelControl}
+	 * <p>Sets whether or not this Label Control
 	 * should resize to fit its text. The only way
 	 * to get newlines in this mode is to insert
 	 * them yourself or pass a list to.
-	 * {@link LabelControl#setText(Text)}
+	 * {@link LabelControl#setText(Text)}</p>
+	 *
+	 * <p>Note that the size of this control
+	 * will be constrained by the size of its
+	 * parent.</p>
 	 *
 	 * @param fitText The value itself
 	 */
@@ -157,6 +158,15 @@ public class LabelControl extends Control {
 
 	public boolean shouldFitText() {
 		return fitText;
+	}
+
+	@Override
+	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		if (fitText) {
+			area.setWidth(Math.min(TextHelper.getWidth(text), containerWidth));
+		}
+
+		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 	}
 
 	@Override
