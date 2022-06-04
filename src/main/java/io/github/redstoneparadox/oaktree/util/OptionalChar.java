@@ -1,13 +1,11 @@
 package io.github.redstoneparadox.oaktree.util;
 
 import it.unimi.dsi.fastutil.chars.CharConsumer;
-import org.jetbrains.annotations.ApiStatus;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-@ApiStatus.Internal
 public class OptionalChar {
 	private final boolean isPresent;
 	private final char value;

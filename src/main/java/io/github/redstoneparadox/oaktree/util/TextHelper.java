@@ -7,12 +7,10 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ApiStatus.Internal
 public class TextHelper {
 	public static int getFontHeight() {
 		return MinecraftClient.getInstance().textRenderer.fontHeight;

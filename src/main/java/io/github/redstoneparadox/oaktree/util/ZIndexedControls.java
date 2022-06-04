@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.util;
 
 import io.github.redstoneparadox.oaktree.control.Control;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-@ApiStatus.Internal
 public class ZIndexedControls implements Iterable<ZIndexedControls.Entry> {
 	private final List<Entry> entries = new ArrayList<>();
 	private int offset = 0;
