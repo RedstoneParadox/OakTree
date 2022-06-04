@@ -11,17 +11,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * <p>A {@link Control} that can be used for interacting
@@ -31,9 +28,6 @@ import java.util.function.Predicate;
 public class SlotControl extends Control implements MouseButtonListener {
 	protected @NotNull Color highlightColor = Color.rgba(0.75f, 0.75f, 0.75f, 0.5f);
 	protected int slotBorder = 1;
-	protected @NotNull Predicate<ItemStack> canInsert = (stack) -> true;
-	protected @NotNull Predicate<ItemStack> canTake = (stack) -> true;
-	protected boolean locked = false;
 
 	private final PlayerEntity player;
 	private final BackingSlot slot;
@@ -86,72 +80,6 @@ public class SlotControl extends Control implements MouseButtonListener {
 
 	public int getSlotBorder() {
 		return slotBorder;
-	}
-
-	@Deprecated
-	public void canInsert(@NotNull Predicate<ItemStack> canInsert) {
-		this.canInsert = canInsert;
-	}
-
-	/**
-	 * Helper method for setting a list of {@link Item }
-	 * to match against when inserting into slot.
-	 *
-	 * @param allow Whether matching an item in the list
-	 *              should allow or deny inserting a stack.
-	 * @param items The items to allow/deny.
-	 * @return The {@link SlotControl} for further modification.
-	 */
-	@Deprecated
-	public SlotControl filter(boolean allow, Item... items) {
-		this.canInsert = ((stack) -> {
-			for (Item item: items) {
-				if (stack.getItem() == item) return allow;
-			}
-			return !allow;
-		});
-		return this;
-	}
-
-	/**
-	 * Helper method for setting a list of {@link Tag<Item>}
-	 * to match against when inserting into slot.
-	 *
-	 * @param allow Whether matching an item tag in the list
-	 *              should allow or deny inserting a stack.
-	 * @param tags The item tags to match against.
-	 * @return The {@link SlotControl} for further modification.
-	 */
-	@Deprecated
-	public SlotControl filter(boolean allow, Tag<Item>... tags) {
-		this.canInsert = ((stack) -> {
-			for (Tag<Item> tag: tags) {
-				if (tag.contains(stack.getItem())) return allow;
-			}
-			return !allow;
-		});
-		return this;
-	}
-
-	@Deprecated
-	public void canTake(@NotNull Predicate<ItemStack> canTake) {
-		this.canTake = canTake;
-	}
-
-	/**
-	 * Used to disable or enable interactions with
-	 * this {@link SlotControl}.
-	 *
-	 * @param locked Whether the slot should be locked.
-	 */
-	@Deprecated
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-	}
-
-	@Deprecated
-	public boolean isLocked() {
-		return locked;
 	}
 
 	@Override
