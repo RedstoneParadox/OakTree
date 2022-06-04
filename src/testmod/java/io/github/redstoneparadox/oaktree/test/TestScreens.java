@@ -2,12 +2,16 @@ package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.control.Anchor;
 import io.github.redstoneparadox.oaktree.control.ButtonControl;
+import io.github.redstoneparadox.oaktree.control.Control;
 import io.github.redstoneparadox.oaktree.control.GridPanelControl;
 import io.github.redstoneparadox.oaktree.control.LabelControl;
+import io.github.redstoneparadox.oaktree.control.ListPanelControl;
 import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.control.SliderControl;
 import io.github.redstoneparadox.oaktree.control.SlotControl;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
+import io.github.redstoneparadox.oaktree.painter.ColorPainter;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
@@ -86,6 +90,40 @@ public class TestScreens {
 		label2.setOffset(0, 140);
 		label2.setText("Bar Not Scrolled.");
 		label2.setFontColor(Color.BLACK);
+
+		return root;
+	}
+
+	public static RootPanelControl testColors() {
+		RootPanelControl root = new RootPanelControl();
+		ListPanelControl list = new ListPanelControl();
+		Theme theme = new Theme();
+
+		theme.put("red", Control.DEFAULT, new ColorPainter(Color.RED));
+		theme.put("green", Control.DEFAULT, new ColorPainter(Color.GREEN));
+		theme.put("blue", Control.DEFAULT, new ColorPainter(Color.BLUE));
+		root.setTheme(theme);
+		root.setSize(100, 80);
+		root.setAnchor(Anchor.CENTER);
+
+		list.addChildren(3, true, (integer -> {
+			Control rectangle = new Control();
+			String id;
+
+			rectangle.setSize(80, 20);
+			switch (integer) {
+				case 0 -> id = "red";
+				case 1 -> id = "green";
+				default -> id = "blue";
+			}
+			rectangle.setId(id);
+
+			return rectangle;
+		}));
+		list.setSize(80, 60);
+		list.setAnchor(Anchor.CENTER);
+		list.setDisplayCount(3);
+		root.addChild(list);
 
 		return root;
 	}

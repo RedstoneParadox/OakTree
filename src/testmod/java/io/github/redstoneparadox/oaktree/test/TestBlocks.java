@@ -28,11 +28,13 @@ import java.util.function.Supplier;
 public class TestBlocks {
 	public static final Block TEST_DRAW_BLOCK = new TestBlock(TestScreens::testDraw);
 	public static final Block TEST_INTERACTABLES_BLOCK = new TestBlock(TestScreens::testInteractables);
+	public static final Block TEST_COLORS_BLOCK = new TestBlock(TestScreens::testColors);
 	public static final Block TEST_INVENTORY = new TestBlockWithEntity();
 
 	public static void init() {
 		register(TEST_DRAW_BLOCK, "draw");
 		register(TEST_INTERACTABLES_BLOCK, "interactables");
+		register(TEST_COLORS_BLOCK, "colors");
 		register(TEST_INVENTORY, "inventory");
 	}
 

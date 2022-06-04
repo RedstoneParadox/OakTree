@@ -30,7 +30,7 @@ public class RenderHelper {
 		int b = (int) (color.blue * 255.0f);
 		int a = (int) (color.alpha * 255.0f);
 
-		int c = (r << 24) + (g << 16) + (b << 8) + a;
+		int c = (a << 24) + (r << 16) + (g << 8) + b;
 
 		if (width >= 1 && height >= 1) DrawableHelper.fill(matrices, x, y, x + width, y + height, c);
 	}
