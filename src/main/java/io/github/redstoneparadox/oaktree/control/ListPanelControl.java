@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.math.Rectangle;
-import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 
 /**
  * A {@link PanelControl} that arranges its children
@@ -75,7 +74,7 @@ public class ListPanelControl extends PanelControl {
 	}
 
 	@Override
-	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		for (int i = 0; i < children.size(); i++) {
 			Control child = children.get(i);
 			child.visible = (i >= startIndex) && (i < startIndex + displayCount);

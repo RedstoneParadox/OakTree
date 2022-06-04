@@ -6,7 +6,6 @@ import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
-import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
@@ -83,7 +82,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
-	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 		slot.x = trueArea.getX() + (trueArea.getWidth() - 18)/2;
 		slot.y = trueArea.getY() + (trueArea.getHeight() - 18)/2;

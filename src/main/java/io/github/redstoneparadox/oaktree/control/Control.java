@@ -4,7 +4,6 @@ import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
-import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
@@ -179,7 +178,7 @@ public class Control {
 		this.onTick = onTick;
 	}
 
-	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		zIndexedControls.add(this);
 		Window window = MinecraftClient.getInstance().getWindow();
 		if (tooltip != null && tooltip.visible) {

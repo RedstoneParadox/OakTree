@@ -1,7 +1,5 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
-
 public class PagePanelControl extends PanelControl {
 	protected int page = 0;
 
@@ -29,7 +27,7 @@ public class PagePanelControl extends PanelControl {
 	}
 
 	@Override
-	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		for (int i = 0; i < children.size(); i++) {
 			Control child = children.get(i);
 			child.visible = i == page;

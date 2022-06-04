@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -37,7 +36,7 @@ public class BoxControl extends PaddingControl {
 	}
 
 	@Override
-	protected void updateTree(ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 		if (!child.visible) return;
 
