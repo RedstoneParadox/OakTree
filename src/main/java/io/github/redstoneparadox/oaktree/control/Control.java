@@ -23,6 +23,7 @@ public class Control {
 	protected boolean expand = false;
 	protected boolean visible = true;
 	protected boolean isTooltip = false;
+	protected boolean capture = true;
 	protected Action onTick = () -> {};
 
 	//Internal State
@@ -138,7 +139,7 @@ public class Control {
 	}
 
 	/**
-	 * Sets whether or not this Control should be visible. Any Controls that
+	 * Sets whether this Control should be visible. Any Controls that
 	 * are not visible will not be drawn, cannot be interacted with,
 	 * and will cause their children to not be drawn (if they have any).
 	 *
@@ -167,6 +168,21 @@ public class Control {
 
 	public boolean isTooltip() {
 		return isTooltip;
+	}
+
+	/**
+	 * Sets whether this Control should capture
+	 * the mouse
+	 *
+	 * @param capture If the mouse should be
+	 *                   captured.
+	 */
+	public void setCapture(boolean capture) {
+		this.capture = capture;
+	}
+
+	public boolean isCapture() {
+		return capture;
 	}
 
 	/**
@@ -205,7 +221,7 @@ public class Control {
 
 	// Capture the mouse and
 	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
-		if (captured) return false;
+		if (captured || !capture) return false;
 
 		int x = trueArea.getX();
 		int y = trueArea.getY();
