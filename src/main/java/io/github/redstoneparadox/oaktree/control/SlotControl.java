@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
-import io.github.redstoneparadox.oaktree.networking.InventoryScreenHandlerAccess;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
@@ -26,14 +25,8 @@ import java.util.function.Predicate;
 
 /**
  * <p>A {@link Control} that can be used for interacting
- * with items in an inventory. Rather than delegating to
- * a vanilla {@link net.minecraft.screen.slot.Slot}, it
- * is implemented from scratch and requires your
- * {@link net.minecraft.screen.ScreenHandler} to
- * implement {@link InventoryScreenHandlerAccess} in order to
- * work. Syncing inventory contents is also handled
- * through the same interface so avoid implementing that
- * yourself.</p>
+ * with items in an inventory. Requires a
+ * {@link BackingSlot} to use.</p>
  */
 public class SlotControl extends Control implements MouseButtonListener {
 	protected @NotNull Color highlightColor = Color.rgba(0.75f, 0.75f, 0.75f, 0.5f);
