@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.control.ButtonControl;
 import io.github.redstoneparadox.oaktree.control.Control;
-import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.control.SliderControl;
 import io.github.redstoneparadox.oaktree.control.SlotControl;
 import io.github.redstoneparadox.oaktree.control.TextEditControl;

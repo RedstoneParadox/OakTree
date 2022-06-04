@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.util.ZIndexedControls;
 import org.jetbrains.annotations.NotNull;
 
