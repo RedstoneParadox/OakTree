@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.tag.Tag;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
@@ -31,6 +32,7 @@ public class BackingSlot extends Slot {
 		return enabled;
 	}
 
+	@ApiStatus.Internal
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
