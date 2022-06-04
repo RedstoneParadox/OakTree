@@ -15,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
@@ -45,8 +44,8 @@ public class SlotControl extends Control implements MouseButtonListener {
 
 	private final PlayerEntity player;
 	private final BackingSlot slot;
-	private boolean leftClicked = false;
-	private boolean rightClicked = false;
+	private boolean leftJustClicked = false;
+	private boolean rightJustClicked = false;
 	private boolean highlighted = false;
 
 	public SlotControl(PlayerEntity player, BackingSlot slot) {
@@ -174,17 +173,20 @@ public class SlotControl extends Control implements MouseButtonListener {
 		captured = super.interact(mouseX, mouseY, deltaTime, captured);
 
 		if (captured) {
-
 			highlighted = true;
-			boolean stackChanged = false;
 			ScreenHandler handler = player.currentScreenHandler;
 			ItemStack slotStack = slot.getStack();
-			ItemStack cursorStack = handler.getCursorStack();
+			MinecraftClient client = MinecraftClient.getInstance();
 
-			if (leftClicked || rightClicked) {
-				MinecraftClient client = MinecraftClient.getInstance();
-				assert client.interactionManager != null;
-				client.interactionManager.clickSlot(handler.syncId, slot.id, 0, SlotActionType.PICKUP, client.player);
+			assert client.interactionManager != null;
+
+			if (leftJustClicked) {
+				client.interactionManager.clickSlot(handler.syncId, slot.id, GLFW.GLFW_MOUSE_BUTTON_LEFT, SlotActionType.PICKUP, client.player);
+
+				slot.markDirty();
+			} else if (rightJustClicked) {
+				client.interactionManager.clickSlot(handler.syncId, slot.id, GLFW.GLFW_MOUSE_BUTTON_RIGHT, SlotActionType.PICKUP, client.player);
+
 				slot.markDirty();
 			}
 
@@ -207,9 +209,8 @@ public class SlotControl extends Control implements MouseButtonListener {
 			highlighted = false;
 		}
 
-		//TODO: Find out why I actually need to do this and fix the problem at the source.
-		leftClicked = false;
-		rightClicked = false;
+		leftJustClicked = false;
+		rightJustClicked = false;
 
 		return captured;
 	}
@@ -231,18 +232,13 @@ public class SlotControl extends Control implements MouseButtonListener {
 		}
 	}
 
-	private int divide(int num) {
-		double result = ((double) num)/((double) 2);
-		return (int) (result - Math.floor(result) <= 0.5 ? Math.floor(result) : Math.ceil(result));
-	}
-
 	@Override
 	public void onMouseButton(int button, boolean justPressed, boolean released) {
 		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && justPressed) {
-			leftClicked = true;
+			leftJustClicked = true;
 		}
-		else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
-			rightClicked = true;
+		else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && justPressed) {
+			rightJustClicked = true;
 		}
 	}
 }
