@@ -36,8 +36,9 @@ public class TextHelper {
 	}
 
 	public static List<OrderedText> wrapText(StringVisitable text, int width, int start, int max, boolean shadow, boolean pastEnd) {
-		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+		if (text.getString().isEmpty()) return new ArrayList<>();
 
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 		List<OrderedText> lines;
 
 		if (shadow) {
