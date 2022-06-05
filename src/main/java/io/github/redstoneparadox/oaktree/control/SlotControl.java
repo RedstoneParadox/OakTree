@@ -110,7 +110,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 				slot.markDirty();
 			}
 
-			if (tooltip instanceof LabelControl) {
+			if (tooltip != null && tooltip instanceof LabelControl) {
 				if (!slotStack.isEmpty()) {
 					List<Text> texts = slotStack.getTooltip(player, TooltipContext.Default.NORMAL);
 					((LabelControl) tooltip).setText(texts);
@@ -121,11 +121,8 @@ public class SlotControl extends Control implements MouseButtonListener {
 					tooltip.setVisible(false);
 				}
 			}
-
-			if (!slot.getStack().isEmpty() && tooltip != null) tooltip.setVisible(true);
-
 		} else {
-			tooltip.setVisible(false);
+			if (tooltip != null) tooltip.setVisible(false);
 			highlighted = false;
 		}
 

@@ -198,9 +198,9 @@ public class Control {
 		zIndexedControls.add(this);
 		Window window = MinecraftClient.getInstance().getWindow();
 		if (tooltip != null && tooltip.visible) {
-			zIndexedControls.addOffset(300);
+			zIndexedControls.addOffset(1000);
 			tooltip.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
-			zIndexedControls.addOffset(-300);
+			zIndexedControls.addOffset(-1000);
 		}
 
 		if (expand && !isTooltip) {
@@ -233,6 +233,7 @@ public class Control {
 		if (captured && tooltip != null) {
 			tooltip.visible = true;
 			tooltip.setOffset(mouseX, mouseY);
+			markDirty();
 		} else if (tooltip != null){
 			tooltip.visible = false;
 		}
