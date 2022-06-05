@@ -201,6 +201,7 @@ public class Control {
 			zIndexedControls.addOffset(1000);
 			tooltip.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
 			zIndexedControls.addOffset(-1000);
+			tooltip.capture = false;
 		}
 
 		if (expand && !isTooltip) {
