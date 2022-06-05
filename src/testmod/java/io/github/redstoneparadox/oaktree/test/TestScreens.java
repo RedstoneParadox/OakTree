@@ -61,15 +61,16 @@ public class TestScreens {
 		root.setSize(160, 180);
 		root.setId("base");
 		root.addChild(button);
-		root.addChild(label1);
+		// root.addChild(label1);
 		root.addChild(slider);
-		root.addChild(label2);
+		// root.addChild(label2);
 
 		button.setAnchor(Anchor.TOP_CENTER);
 		button.setSize(120, 20);
 		button.setOffset(0, 20);
-		button.onClick(() -> label1.setText("Button Pressed."));
-		button.onRelease(() -> label1.setText("Button Released."));
+		button.onClick(() -> button.setText("Button Pressed"));
+		button.onRelease(() -> button.setText("Button Released"));
+		button.setText("Button not Pressed");
 
 		label1.setAnchor(Anchor.TOP_CENTER);
 		label1.setSize(120, 20);
@@ -82,7 +83,8 @@ public class TestScreens {
 		slider.setBarLength(10);
 		slider.setHorizontal(true);
 		slider.setOffset(0, 100);
-		slider.onSlide(() -> label2.setText("Scroll Percent = " + (int) slider.getScrollPercent() + "."));
+		slider.onSlide(() -> slider.setText("" + (int) slider.getScrollPercent() + "%"));
+		slider.setText("0%");
 
 		label2.setAnchor(Anchor.TOP_CENTER);
 		label2.setSize(120, 20);

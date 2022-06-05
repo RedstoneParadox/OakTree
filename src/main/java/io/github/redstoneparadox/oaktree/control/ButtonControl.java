@@ -3,6 +3,9 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.util.Action;
+import io.github.redstoneparadox.oaktree.util.Color;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -17,9 +20,18 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	private boolean mouseClicked = false;
 	private boolean mouseHeld = false;
 	private boolean buttonHeld = false;
+	private final LabelControl label = new LabelControl();
 
 	public ButtonControl() {
 		this.id = "button";
+
+		label.fitText = true;
+		label.capture = false;
+		label.setFontColor(Color.WHITE);
+		label.setAnchor(Anchor.CENTER);
+		label.setParent(this);
+		label.setOffset(-4, -4);
+
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
@@ -29,6 +41,18 @@ public class ButtonControl extends Control implements MouseButtonListener {
 
 	public boolean isToggleable() {
 		return toggleable;
+	}
+
+	public void setText(String text) {
+		label.setText(new LiteralText(text));
+	}
+
+	public void setText(Text text) {
+		label.setText(text);
+	}
+
+	public Text getText() {
+		return label.getText();
 	}
 
 	public void onClick(@NotNull Action onClick) {
@@ -41,6 +65,12 @@ public class ButtonControl extends Control implements MouseButtonListener {
 
 	public void onRelease(@NotNull Action onRelease) {
 		this.onRelease = onRelease;
+	}
+
+	@Override
+	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+		label.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	@Override
