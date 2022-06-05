@@ -55,4 +55,12 @@ public class Vector2 {
 	public int hashCode() {
 		return Objects.hash(getX(), getY());
 	}
+
+	@Override
+	public String toString() {
+		return "Vector2{" +
+				"x=" + x +
+				", y=" + y +
+				'}';
+	}
 }

@@ -42,11 +42,6 @@ public class Rectangle {
 		return x == rectangle.x && y == rectangle.y && width == rectangle.width && height == rectangle.height;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(x, y, width, height);
-	}
-
 	public int getX() {
 		return x;
 	}
@@ -77,5 +72,20 @@ public class Rectangle {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	@Override
+	public String toString() {
+		return "Rectangle{" +
+				"x=" + x +
+				", y=" + y +
+				", width=" + width +
+				", height=" + height +
+				'}';
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y, width, height);
 	}
 }
