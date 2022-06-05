@@ -140,10 +140,10 @@ public class SlotControl extends Control implements MouseButtonListener {
 		int y = trueArea.getY();
 
 		ItemStack stack = slot.getStack();
-		RenderHelper.drawItemStackCentered(x, y, trueArea.getWidth(), trueArea.getHeight(), stack);
+		if (!stack.isEmpty()) RenderHelper.drawItemStackCentered(x, y, trueArea.getWidth(), trueArea.getHeight(), stack);
 
 		if (highlighted) {
-			RenderHelper.setzOffset(200.0);
+			if (!stack.isEmpty()) RenderHelper.setzOffset(200.0);
 			RenderHelper.drawRectangle(matrices, x + slotBorder, y + slotBorder, trueArea.getWidth() - (2 * slotBorder), trueArea.getHeight() - (2 * slotBorder), highlightColor);
 			RenderHelper.setzOffset(0.0);
 		}
