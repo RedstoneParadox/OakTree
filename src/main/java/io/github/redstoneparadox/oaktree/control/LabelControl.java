@@ -167,8 +167,8 @@ public class LabelControl extends Control {
 		if (fitText) {
 			List<OrderedText> lines = TextHelper.wrapText(text, area.getWidth(), firstLine, maxDisplayedLines, shadow, false);
 
-			area.setWidth(Math.min(TextHelper.getWidth(text), containerWidth));
-			area.setHeight(MinecraftClient.getInstance().textRenderer.fontHeight * lines.size());
+			area.setWidth(Math.min(TextHelper.getWidth(text) + 8, containerWidth));
+			area.setHeight(Math.min(MinecraftClient.getInstance().textRenderer.fontHeight * lines.size() + 8, containerHeight));
 		}
 
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);

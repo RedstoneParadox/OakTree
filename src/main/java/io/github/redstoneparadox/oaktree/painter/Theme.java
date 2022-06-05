@@ -88,7 +88,7 @@ public class Theme {
 		NinePatchPainter tooltip = ninePatchUI.copy();
 		tooltip.setDrawOrigin(36, 0);
 		tooltip.setWidths(2, 1, 2);
-		tooltip.setHeights(2, 1, 1);
+		tooltip.setHeights(2, 1, 2);
 		tooltip.setTint(Color.WHITE.withAlpha(0.95f));
 		vanilla.put("tooltip", Control.DEFAULT, tooltip);
 
