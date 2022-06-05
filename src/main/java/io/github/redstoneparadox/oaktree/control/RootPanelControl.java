@@ -62,6 +62,8 @@ public class RootPanelControl extends PanelControl {
 
 			zIndexedControls.clear();
 			updateTree(zIndexedControls, 0, 0, window.getScaledWidth(), window.getScaledHeight());
+			zIndexedControls.moveTooltipsToEnd();
+
 			dirty = false;
 		}
 
@@ -122,6 +124,22 @@ public class RootPanelControl extends PanelControl {
 
 		public void clear() {
 			entries.clear();
+		}
+
+		public void moveTooltipsToEnd() {
+			List<Entry> tooltips = new ArrayList<>();
+			List<Entry> nonTooltips = new ArrayList<>();
+
+			for (Entry entry: entries) {
+				Control control = entry.control;
+
+				if (control.isTooltip) tooltips.add(entry);
+				else nonTooltips.add(entry);
+			}
+
+			entries.clear();
+			entries.addAll(nonTooltips);
+			entries.addAll(tooltips);
 		}
 
 		@NotNull
