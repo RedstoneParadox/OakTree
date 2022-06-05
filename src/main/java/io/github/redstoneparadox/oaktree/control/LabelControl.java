@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import io.github.redstoneparadox.oaktree.util.TextHelper;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
@@ -154,6 +155,7 @@ public class LabelControl extends Control {
 	 */
 	public void setFitText(boolean fitText) {
 		this.fitText = fitText;
+		markDirty();
 	}
 
 	public boolean shouldFitText() {
@@ -163,7 +165,10 @@ public class LabelControl extends Control {
 	@Override
 	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		if (fitText) {
+			List<OrderedText> lines = TextHelper.wrapText(text, area.getWidth(), firstLine, maxDisplayedLines, shadow, false);
+
 			area.setWidth(Math.min(TextHelper.getWidth(text), containerWidth));
+			area.setHeight(MinecraftClient.getInstance().textRenderer.fontHeight * lines.size());
 		}
 
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
