@@ -45,6 +45,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 		tooltip.setShadow(true);
 		tooltip.setFitText(true);
 		tooltip.visible = false;
+		tooltip.setIsTooltip(true);
 
 		this.tooltip = tooltip;
 		this.setSize(18, 18);
@@ -140,10 +141,10 @@ public class SlotControl extends Control implements MouseButtonListener {
 		int y = trueArea.getY();
 
 		ItemStack stack = slot.getStack();
-		if (!stack.isEmpty()) RenderHelper.drawItemStackCentered(x, y, trueArea.getWidth(), trueArea.getHeight(), stack);
+		RenderHelper.drawItemStackCentered(x, y, trueArea.getWidth(), trueArea.getHeight(), stack);
 
 		if (highlighted) {
-			if (!stack.isEmpty()) RenderHelper.setzOffset(200.0);
+			if (!stack.isEmpty()) RenderHelper.setzOffset(1.0);
 			RenderHelper.drawRectangle(matrices, x + slotBorder, y + slotBorder, trueArea.getWidth() - (2 * slotBorder), trueArea.getHeight() - (2 * slotBorder), highlightColor);
 			RenderHelper.setzOffset(0.0);
 		}

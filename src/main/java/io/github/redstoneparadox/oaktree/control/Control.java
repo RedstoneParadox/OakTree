@@ -198,9 +198,9 @@ public class Control {
 		zIndexedControls.add(this);
 		Window window = MinecraftClient.getInstance().getWindow();
 		if (tooltip != null && tooltip.visible) {
-			zIndexedControls.addOffset(1000);
+			zIndexedControls.addOffset(300);
 			tooltip.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
-			zIndexedControls.addOffset(-1000);
+			zIndexedControls.addOffset(-300);
 			tooltip.capture = false;
 		}
 
