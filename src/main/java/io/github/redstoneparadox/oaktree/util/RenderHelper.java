@@ -42,8 +42,12 @@ public class RenderHelper {
 		ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
+		itemRenderer.zOffset = (float) zOffset;
+
 		itemRenderer.renderGuiItemIcon(stack, x + offsetX, y + offsetY);
 		itemRenderer.renderGuiItemOverlay(textRenderer, stack, x + offsetX, y + offsetY);
+
+		itemRenderer.zOffset = -(float) zOffset;
 	}
 
 	public static void drawTexture(float x, float y, float left, float top, float width, float height, float fileWidth, float fileHeight, float scale, Identifier texture, Color tint) {

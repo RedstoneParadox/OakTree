@@ -25,7 +25,7 @@ import java.util.List;
  * {@link BackingSlot} to use.</p>
  */
 public class SlotControl extends Control implements MouseButtonListener {
-	protected @NotNull Color highlightColor = Color.rgba(0.75f, 0.75f, 0.75f, 0.5f);
+	protected @NotNull Color highlightColor = Color.rgba(0.9f, 0.9f, 0.9f, 0.5f);
 	protected int slotBorder = 1;
 
 	private final PlayerEntity player;
