@@ -5,7 +5,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.OrderedText;
-import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -16,11 +15,24 @@ public class TextHelper {
 		return MinecraftClient.getInstance().textRenderer.fontHeight;
 	}
 
-	public static int getWidth(String string) { return MinecraftClient.getInstance().textRenderer.getWidth(string); }
+	public static int getWrappedWidth(Text text) {
+		String[] lines = text.getString().split("\n");
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+		int width = 0;
 
-	public static int getWidth(Text text) {
-		return MinecraftClient.getInstance().textRenderer.getWidth(text);
+		for (String line: lines) {
+			width = Math.max(width, textRenderer.getWidth(line));
+		}
+
+		return width;
 	}
+
+	public static int getWrappedHeight(Text text) {
+		String[] lines = text.getString().split("\n");
+		return lines.length * getFontHeight();
+	}
+
+	public static int getWidth(String string) { return MinecraftClient.getInstance().textRenderer.getWidth(string); }
 
 	public static Text combine(List<Text> texts, boolean newline) {
 		if (texts.isEmpty()) return new LiteralText("");
@@ -28,34 +40,21 @@ public class TextHelper {
 		MutableText text = texts.get(0).shallowCopy();
 
 		for (int index = 1; index < texts.size(); index += 1) {
-			if (newline) text.append(new LiteralText("\n"));
+			if (newline) text.append("\n");
 			text.append(texts.get(index));
 		}
 
 		return text;
 	}
 
-	public static List<OrderedText> wrapText(StringVisitable text, int width, int start, int max, boolean shadow, boolean pastEnd) {
+	public static List<OrderedText> wrapText(Text text, int width, int start, int max, boolean shadow, boolean pastEnd) {
 		if (text.getString().isEmpty()) return new ArrayList<>();
 
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-		List<OrderedText> lines;
+		List<OrderedText> lines = textRenderer.wrapLines(text, shadow ? width - 1 : width);
+		int end = Math.min(max + start, lines.size());
 
-		if (shadow) {
-			lines = textRenderer.wrapLines(text, width - 1);
-		} else {
-			lines = textRenderer.wrapLines(text, width);
-		}
-
-		if (!pastEnd && start + max >= lines.size()) {
-			start = lines.size() - max;
-		}
-
-		if (start + max <= lines.size()) {
-			return lines.subList(start, start + max);
-		} else if (start < lines.size()) {
-			return lines.subList(start, lines.size());
-		}
+		lines = lines.subList(start, end);
 
 		return lines;
 	}

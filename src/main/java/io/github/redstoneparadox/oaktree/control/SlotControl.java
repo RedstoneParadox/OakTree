@@ -46,6 +46,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 		tooltip.setFitText(true);
 		tooltip.visible = false;
 		tooltip.setIsTooltip(true);
+		tooltip.setMaxDisplayedLines(999);
 
 		this.tooltip = tooltip;
 		this.setSize(18, 18);

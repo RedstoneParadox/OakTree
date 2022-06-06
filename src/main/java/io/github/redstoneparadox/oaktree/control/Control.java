@@ -233,7 +233,7 @@ public class Control {
 
 		if (captured && tooltip != null) {
 			tooltip.visible = true;
-			tooltip.setOffset(mouseX, mouseY);
+			tooltip.setOffset(mouseX + 8, mouseY - 16);
 			markDirty();
 		} else if (tooltip != null){
 			tooltip.visible = false;

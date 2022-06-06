@@ -165,10 +165,8 @@ public class LabelControl extends Control {
 	@Override
 	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		if (fitText) {
-			List<OrderedText> lines = TextHelper.wrapText(text, area.getWidth(), firstLine, maxDisplayedLines, shadow, false);
-
-			area.setWidth(Math.min(TextHelper.getWidth(text) + 8, containerWidth));
-			area.setHeight(Math.min(MinecraftClient.getInstance().textRenderer.fontHeight * lines.size() + 8, containerHeight));
+			area.setWidth(Math.min(TextHelper.getWrappedWidth(text) + 8, containerWidth));
+			area.setHeight(Math.min(TextHelper.getWrappedHeight(text) + 8, containerHeight));
 		}
 
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
