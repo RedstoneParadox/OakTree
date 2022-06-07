@@ -85,6 +85,13 @@ public class PanelControl extends PaddingControl {
 		}
 	}
 
+	@Override
+	protected void cleanup() {
+		super.cleanup();
+
+		children.forEach(Control::cleanup);
+	}
+
 	protected Rectangle getChildArea(int index) {
 		// TODO: Figure out some way to cache the result
 		int innerX = trueArea.getX() + leftPadding;

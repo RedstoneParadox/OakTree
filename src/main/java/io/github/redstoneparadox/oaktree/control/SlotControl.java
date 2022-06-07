@@ -152,6 +152,12 @@ public class SlotControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
+	protected void cleanup() {
+		super.cleanup();
+		ClientListeners.MOUSE_BUTTON_LISTENERS.remove(this);
+	}
+
+	@Override
 	public void onMouseButton(int button, boolean justPressed, boolean released) {
 		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && justPressed) {
 			leftJustClicked = true;

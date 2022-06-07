@@ -36,6 +36,12 @@ public class BoxControl extends PaddingControl {
 	}
 
 	@Override
+	protected void cleanup() {
+		super.cleanup();
+		child.cleanup();
+	}
+
+	@Override
 	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
 		if (!child.visible) return;

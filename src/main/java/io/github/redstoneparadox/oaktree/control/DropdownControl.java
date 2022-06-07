@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.control;
 
+import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.math.Direction2D;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +16,8 @@ public class DropdownControl extends Control implements MouseButtonListener {
 	public DropdownControl() {
 		this.dropdown.setVisible(false);
 		this.id = "dropdown";
+
+		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
 	public void setDropdown(@NotNull Control dropdown) {
@@ -64,6 +67,12 @@ public class DropdownControl extends Control implements MouseButtonListener {
 		}
 
 		return captured;
+	}
+
+	@Override
+	protected void cleanup() {
+		super.cleanup();
+		ClientListeners.MOUSE_BUTTON_LISTENERS.remove(this);
 	}
 
 	@Override

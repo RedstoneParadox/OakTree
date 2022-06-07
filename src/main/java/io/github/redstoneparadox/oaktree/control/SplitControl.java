@@ -66,4 +66,11 @@ public class SplitControl extends Control {
 			if (second.visible) second.updateTree(zIndexedControls, rightX, trueArea.getY(), splitSize, trueArea.getHeight());
 		}
 	}
+
+	@Override
+	protected void cleanup() {
+		super.cleanup();
+		first.cleanup();
+		second.cleanup();
+	}
 }

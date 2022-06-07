@@ -188,6 +188,12 @@ public class TestScreens {
 		public boolean isPauseScreen() {
 			return false;
 		}
+
+		@Override
+		public void onClose() {
+			root.close();
+			super.onClose();
+		}
 	}
 
 	static class HandledTestScreen extends HandledScreen<TestScreenHandlers.TestScreenHandler> implements ScreenHandlerProvider<TestScreenHandlers.TestScreenHandler> {
@@ -237,6 +243,7 @@ public class TestScreens {
 
 		@Override
 		public void onClose() {
+			root.close();
 			super.onClose();
 		}
 	}

@@ -346,6 +346,12 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 		drawText(matrices);
 	}
 
+	@Override
+	protected void cleanup() {
+		super.cleanup();
+		ClientListeners.CHAR_TYPED_LISTENERS.remove(this);
+	}
+
 	private boolean upKey(long handle) {
 		return InputUtil.isKeyPressed(handle, 265);
 	}

@@ -252,6 +252,10 @@ public class Control {
 		theme.get(id, painterKey).draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
+	protected void cleanup() {
+		tooltip.cleanup();
+	}
+
 	protected void setParent(Control parent) {
 		this.parent = parent;
 	}

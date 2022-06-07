@@ -95,6 +95,10 @@ public class RootPanelControl extends PanelControl {
 		return false;
 	}
 
+	public void close() {
+		cleanup();
+	}
+
 	@Override
 	protected void markDirty() {
 		this.dirty = true;
