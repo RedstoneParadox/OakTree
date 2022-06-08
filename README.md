@@ -6,21 +6,16 @@ Discord: https://discord.gg/crZpcjtdJR
 
 ### Adding Oak Tree To Your Project
 
-(**Note: If this doesn't work, use JitPack instead.**)
-
 build.gradle:
 
 ```gradle
 repositories {
-    maven {
-        url = "https://dl.bintray.com/redstoneparadox/mods"
-    }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    modApi("io.github.redstoneparadox:OakTree:${project.oak_tree_version}") {
+    modImplementation("com.github.RedstoneParadox:OakTree:${project.oak_tree_version}") {
         exclude group: 'net.fabricmc.fabric-api'
     }
-    include "io.github.redstoneparadox:OakTree:${project.oak_tree_version}"
 }
 ```
