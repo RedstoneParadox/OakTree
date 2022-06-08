@@ -5,6 +5,7 @@
 
   "name": "Oak Tree",
   "description": "Oak Tree is a GUI toolkit for Minecraft Fabric.",
+  "icon": "assets/oaktree/icon.png",
   "authors": [
     "RedstoneParadox"
   ],
