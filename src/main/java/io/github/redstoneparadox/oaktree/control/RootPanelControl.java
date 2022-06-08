@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
@@ -14,10 +15,13 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 
 /**
- * A special {@link PanelControl} that manages an
+ * <p>A special {@link PanelControl} that manages an
  * entire tree of {@link Control} instances.
  * Note that mouse interaction with this control
- * is disabled.
+ * is disabled.</p>
+ *
+ * <p>When your {@link Screen} is closed, make sure
+ * to call {@link RootPanelControl#close()}</p>
  */
 public class RootPanelControl extends PanelControl {
 	protected Theme theme;
@@ -104,7 +108,7 @@ public class RootPanelControl extends PanelControl {
 		this.dirty = true;
 	}
 
-	public static class ZIndexedControls implements Iterable<ZIndexedControls.Entry> {
+	protected static class ZIndexedControls implements Iterable<ZIndexedControls.Entry> {
 		private final List<Entry> entries = new ArrayList<>();
 		private int offset = 0;
 
