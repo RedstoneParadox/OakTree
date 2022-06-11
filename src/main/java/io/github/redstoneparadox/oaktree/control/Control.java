@@ -253,7 +253,7 @@ public class Control {
 	}
 
 	protected void cleanup() {
-		tooltip.cleanup();
+		if (tooltip != null) tooltip.cleanup();
 	}
 
 	protected void setParent(Control parent) {
