@@ -6,5 +6,6 @@ public class OakTreeTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		TestBlocks.init();
+		TestBlockEntities.init();
 	}
 }

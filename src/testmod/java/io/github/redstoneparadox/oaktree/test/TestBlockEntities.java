@@ -15,13 +15,13 @@ import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 public class TestBlockEntities {
-	public static final BlockEntityType<TestBlockEntity> TEST_INVENTORY;
+	public static final BlockEntityType<TestBlockEntity> TEST_INVENTORY = FabricBlockEntityTypeBuilder.create(TestBlockEntity::new, TestBlocks.TEST_INVENTORY).build();
 
-	static {
-		TEST_INVENTORY = Registry.register(
+	public static void init() {
+		Registry.register(
 				Registry.BLOCK_ENTITY_TYPE,
 				new Identifier("oaktree", "test_inventory"),
-				FabricBlockEntityTypeBuilder.create(TestBlockEntity::new, TestBlocks.TEST_INVENTORY).build()
+				TEST_INVENTORY
 		);
 	}
 
