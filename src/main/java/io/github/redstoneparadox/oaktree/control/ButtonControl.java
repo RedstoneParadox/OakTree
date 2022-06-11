@@ -29,7 +29,6 @@ public class ButtonControl extends Control implements MouseButtonListener {
 		label.setFontColor(Color.WHITE);
 		label.setAnchor(Anchor.CENTER);
 		label.setParent(this);
-		label.setOffset(-4, -4);
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
