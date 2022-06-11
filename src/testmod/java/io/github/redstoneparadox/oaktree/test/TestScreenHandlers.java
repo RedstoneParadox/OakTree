@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
@@ -38,6 +39,11 @@ public class TestScreenHandlers {
 		protected Slot addSlot(Slot slot) {
 			if (slot instanceof BackingSlot) backingSlots.add((BackingSlot) slot);
 			return super.addSlot(slot);
+		}
+
+		@Override
+		public ItemStack transferSlot(PlayerEntity playerEntity, int i) {
+			return null;
 		}
 
 		public List<BackingSlot> getBackingSlots() {

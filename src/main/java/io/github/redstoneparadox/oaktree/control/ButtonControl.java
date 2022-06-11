@@ -4,7 +4,6 @@ import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.Color;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
@@ -44,7 +43,7 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	}
 
 	public void setText(String text) {
-		label.setText(new LiteralText(text));
+		label.setText(Text.literal(text));
 	}
 
 	public void setText(Text text) {

@@ -86,7 +86,7 @@ public class RenderHelper {
 		bufferBuilder.vertex(x * scale, y * scale, zOffset).texture(u1, v1).next();
 
 		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 		RenderSystem.disableBlend();
 	}
 

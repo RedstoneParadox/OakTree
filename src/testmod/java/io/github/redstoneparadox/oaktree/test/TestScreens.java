@@ -21,7 +21,7 @@ import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -155,7 +155,7 @@ public class TestScreens {
 		Random random = new Random();
 
 		for (int i = 0; i < lines; i += 1) {
-			LiteralText text = new LiteralText("Text.");
+			MutableText text = Text.literal("Text.");
 			int j = random.nextInt(3);
 			Text formatted = switch (j) {
 				case 0 -> text.formatted(Formatting.BOLD);
@@ -185,14 +185,14 @@ public class TestScreens {
 		}
 
 		@Override
-		public boolean isPauseScreen() {
+		public boolean shouldPause() {
 			return false;
 		}
 
 		@Override
-		public void onClose() {
+		public void close() {
 			root.close();
-			super.onClose();
+			super.close();
 		}
 	}
 
@@ -237,14 +237,14 @@ public class TestScreens {
 		}
 
 		@Override
-		public boolean isPauseScreen() {
-			return super.isPauseScreen();
+		public boolean shouldPause() {
+			return super.shouldPause();
 		}
 
 		@Override
-		public void onClose() {
+		public void close() {
 			root.close();
-			super.onClose();
+			super.close();
 		}
 	}
 }

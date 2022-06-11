@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.util;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
@@ -35,9 +34,9 @@ public class TextHelper {
 	public static int getWidth(String string) { return MinecraftClient.getInstance().textRenderer.getWidth(string); }
 
 	public static Text combine(List<Text> texts, boolean newline) {
-		if (texts.isEmpty()) return new LiteralText("");
+		if (texts.isEmpty()) return Text.literal("");
 
-		MutableText text = texts.get(0).shallowCopy();
+		MutableText text = texts.get(0).copy();
 
 		for (int index = 1; index < texts.size(); index += 1) {
 			if (newline) text.append("\n");

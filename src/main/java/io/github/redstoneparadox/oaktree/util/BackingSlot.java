@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,7 +64,7 @@ public class BackingSlot extends Slot {
 	}
 
 	/**
-	 * Helper method for setting a list of {@link Tag <Item>}
+	 * Helper method for setting a list of {@link TagKey<Item>}
 	 * to match against when inserting into slot.
 	 *
 	 * @param allow Whether matching an item tag in the list
@@ -72,10 +72,10 @@ public class BackingSlot extends Slot {
 	 * @param tags The item tags to match against.
 	 */
 	@SafeVarargs
-	public final void insertFilter(boolean allow, Tag<Item>... tags) {
+	public final void insertFilter(boolean allow, TagKey<Item>... tags) {
 		this.canInsert = ((stack) -> {
-			for (Tag<Item> tag: tags) {
-				if (tag.contains(stack.getItem())) return allow;
+			for (TagKey<Item> tag: tags) {
+				if (stack.isIn(tag)) return allow;
 			}
 			return !allow;
 		});

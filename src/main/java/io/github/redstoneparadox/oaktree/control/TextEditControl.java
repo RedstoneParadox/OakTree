@@ -13,7 +13,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -525,7 +524,7 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 			String line = lines.get(row);
 			if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
 			int lineY = trueArea.getY() + (row - firstLine) * TextHelper.getFontHeight();
-			RenderHelper.drawText(matrices, new LiteralText(line).asOrderedText(), trueArea.getX(), lineY, shadow, fontColor);
+			RenderHelper.drawText(matrices, Text.literal(line).asOrderedText(), trueArea.getX(), lineY, shadow, fontColor);
 			drawHighlights(matrices, line, lineY, row);
 		}
 	}
@@ -550,7 +549,7 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 
 	private void drawCursor(MatrixStack matrices) {
 		if (lines.isEmpty()) {
-			RenderHelper.drawText(matrices, new LiteralText("_").asOrderedText(), trueArea.getX(), trueArea.getY(), shadow, fontColor);
+			RenderHelper.drawText(matrices, Text.literal("_").asOrderedText(), trueArea.getX(), trueArea.getY(), shadow, fontColor);
 			return;
 		}
 
@@ -562,7 +561,7 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 		String cursorString = "_";
 		if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine)) cursorString = "|";
 
-		RenderHelper.drawText(matrices, new LiteralText(cursorString).asOrderedText(), cursorX, cursorY, shadow, fontColor);
+		RenderHelper.drawText(matrices, Text.literal(cursorString).asOrderedText(), cursorX, cursorY, shadow, fontColor);
 	}
 
 	private boolean lineOccupiesFullSpace(String cursorLine) {

@@ -12,7 +12,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -56,7 +56,7 @@ public class TestBlocks {
 		@Override
 		public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 			if (world.isClient) {
-				MinecraftClient.getInstance().setScreen(new TestScreens.TestScreen(new LiteralText("test screen"), supplier.get()));
+				MinecraftClient.getInstance().setScreen(new TestScreens.TestScreen(Text.literal("test screen"), supplier.get()));
 			}
 			return ActionResult.SUCCESS;
 		}

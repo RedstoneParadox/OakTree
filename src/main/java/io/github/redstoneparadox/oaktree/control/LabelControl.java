@@ -4,9 +4,7 @@ import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import io.github.redstoneparadox.oaktree.util.TextHelper;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.ApiStatus;
@@ -20,7 +18,7 @@ import java.util.List;
  * you can apply formatting.
  */
 public class LabelControl extends Control {
-	protected  @NotNull Text text = LiteralText.EMPTY;
+	protected  @NotNull Text text = Text.empty();
 	protected boolean shadow = false;
 	public @NotNull Color fontColor = Color.WHITE;
 	protected int maxDisplayedLines = 1;
@@ -46,12 +44,12 @@ public class LabelControl extends Control {
 	 * Sets the text for this LabelControl
 	 * to display. Useful if you want to
 	 * display a string without creating
-	 * a {@link LiteralText} instance.
+	 * a {@link Text} instance.
 	 *
 	 * @param text The text to display
 	 */
 	public void setText(String text) {
-		this.text = new LiteralText(text);
+		this.text = Text.literal(text);
 		if (fitText) markDirty();
 	}
 
@@ -76,7 +74,7 @@ public class LabelControl extends Control {
 	 * Clears the LabelControl.
 	 */
 	public void clearText() {
-		this.text = LiteralText.EMPTY;
+		this.text = Text.empty();
 		if (fitText) markDirty();
 	}
 
