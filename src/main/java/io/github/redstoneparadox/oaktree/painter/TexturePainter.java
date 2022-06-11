@@ -98,10 +98,10 @@ public class TexturePainter extends Painter {
 			int drawWidth = Math.min(width, textureWidth);
 			int drawHeight = Math.min(height, textureHeight);
 
-			drawTexture(x, y, left, top, drawWidth, drawHeight);
+			drawTexture(matrices, x, y, left, top, drawWidth, drawHeight);
 		}
 		else {
-			drawTiled(x, y, left, top, textureWidth, textureHeight, width, height);
+			drawTiled(matrices, x, y, left, top, textureWidth, textureHeight, width, height);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class TexturePainter extends Painter {
 		return copy;
 	}
 
-	void drawTiled(float x, float y, int left, int top, int drawWidth, int drawHeight, int width, int height) {
+	void drawTiled(MatrixStack matrices, float x, float y, int left, int top, int drawWidth, int drawHeight, int width, int height) {
 		int remainingWidth = width;
 		int remainingHeight = height;
 
@@ -130,7 +130,7 @@ public class TexturePainter extends Painter {
 			float minWidth = Math.min(remainingWidth, drawWidth);
 			float minHeight = Math.min(remainingHeight, drawHeight);
 
-			drawTexture(currentX, currentY, left, top, minWidth, minHeight);
+			drawTexture(matrices, currentX, currentY, left, top, minWidth, minHeight);
 
 			remainingWidth -= drawWidth;
 			if (remainingWidth < 0) {
@@ -140,7 +140,7 @@ public class TexturePainter extends Painter {
 		}
 	}
 
-	void drawTexture(float x, float y, float left, float top, float width, float height) {
-		RenderHelper.drawTexture(x, y, left, top, width, height, fileWidth, fileHeight, scale, texture, tint);
+	void drawTexture(MatrixStack matrices, float x, float y, float left, float top, float width, float height) {
+		RenderHelper.drawTexture(matrices, x, y, left, top, width, height, fileWidth, fileHeight, scale, texture, tint);
 	}
 }

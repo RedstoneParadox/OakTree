@@ -15,13 +15,14 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Matrix4f;
 import org.jetbrains.annotations.NotNull;
 
 public class RenderHelper {
-	private static double zOffset = 0.0;
+	private static float zOffset = 0.0f;
 
 	public static void setzOffset(double zOffset) {
-		RenderHelper.zOffset = zOffset;
+		RenderHelper.zOffset = (float) zOffset;
 	}
 
 	public static void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, @NotNull Color color) {
@@ -42,15 +43,15 @@ public class RenderHelper {
 		ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
-		itemRenderer.zOffset = (float) zOffset;
+		itemRenderer.zOffset = zOffset;
 
 		itemRenderer.renderGuiItemIcon(stack, x + offsetX, y + offsetY);
 		itemRenderer.renderGuiItemOverlay(textRenderer, stack, x + offsetX, y + offsetY);
 
-		itemRenderer.zOffset = -(float) zOffset;
+		itemRenderer.zOffset = -zOffset;
 	}
 
-	public static void drawTexture(float x, float y, float left, float top, float width, float height, float fileWidth, float fileHeight, float scale, Identifier texture, Color tint) {
+	public static void drawTexture(MatrixStack matrices, float x, float y, float left, float top, float width, float height, float fileWidth, float fileHeight, float scale, Identifier texture, Color tint) {
 		float r = (tint.red);
 		float g = (tint.green);
 		float b = (tint.blue);
@@ -58,6 +59,7 @@ public class RenderHelper {
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
+		Matrix4f model = matrices.peek().getPositionMatrix();
 
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderTexture(0, texture);
@@ -80,12 +82,11 @@ public class RenderHelper {
 
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
 
-		bufferBuilder.vertex(x * scale, (y + height) * scale, zOffset).texture(u1, v2).next();
-		bufferBuilder.vertex((x + width) * scale, (y + height) * scale, zOffset).texture(u2, v2).next();
-		bufferBuilder.vertex((x + width) * scale, y * scale, zOffset).texture(u2, v1).next();
-		bufferBuilder.vertex(x * scale, y * scale, zOffset).texture(u1, v1).next();
+		bufferBuilder.vertex(model, x * scale, (y + height) * scale, zOffset).texture(u1, v2).next();
+		bufferBuilder.vertex(model, (x + width) * scale, (y + height) * scale, zOffset).texture(u2, v2).next();
+		bufferBuilder.vertex(model, (x + width) * scale, y * scale, zOffset).texture(u2, v1).next();
+		bufferBuilder.vertex(model, x * scale, y * scale, zOffset).texture(u1, v1).next();
 
-		bufferBuilder.end();
 		BufferRenderer.drawWithShader(bufferBuilder.end());
 		RenderSystem.disableBlend();
 	}

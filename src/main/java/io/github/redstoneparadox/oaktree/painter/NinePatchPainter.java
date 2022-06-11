@@ -65,22 +65,22 @@ public class NinePatchPainter extends TexturePainter {
 		int thirdTop = top + firstHeight + secondHeight;
 
 		// Top left
-		drawTexture(x, y, left, top, firstWidth, firstHeight);
+		drawTexture(matrices, x, y, left, top, firstWidth, firstHeight);
 		// Top Middle
-		drawTiled(secondX, y, secondLeft, top, secondWidth, firstHeight, fullSecondWidth, firstHeight);
+		drawTiled(matrices, secondX, y, secondLeft, top, secondWidth, firstHeight, fullSecondWidth, firstHeight);
 		// Top Right
-		drawTexture(thirdX, y, thirdLeft, top, thirdWidth, firstHeight);
+		drawTexture(matrices, thirdX, y, thirdLeft, top, thirdWidth, firstHeight);
 		// Center Left
-		drawTiled(x, secondY, left, secondTop, firstWidth, secondHeight, firstWidth, fullSecondHeight);
+		drawTiled(matrices, x, secondY, left, secondTop, firstWidth, secondHeight, firstWidth, fullSecondHeight);
 		// Center
-		drawTiled(secondX, secondY, secondLeft, secondTop, secondWidth, secondHeight, fullSecondWidth, fullSecondHeight);
+		drawTiled(matrices, secondX, secondY, secondLeft, secondTop, secondWidth, secondHeight, fullSecondWidth, fullSecondHeight);
 		// Center Right
-		drawTiled(thirdX, secondY, thirdLeft, secondTop, thirdWidth, secondHeight, thirdWidth, fullSecondHeight);
+		drawTiled(matrices, thirdX, secondY, thirdLeft, secondTop, thirdWidth, secondHeight, thirdWidth, fullSecondHeight);
 		// Bottom left
-		drawTexture(x, thirdY, left, thirdTop, firstWidth, thirdHeight);
+		drawTexture(matrices, x, thirdY, left, thirdTop, firstWidth, thirdHeight);
 		// Bottom Middle
-		drawTiled(secondX, thirdY, secondLeft, thirdTop, secondWidth, thirdHeight, fullSecondWidth, thirdHeight);
+		drawTiled(matrices, secondX, thirdY, secondLeft, thirdTop, secondWidth, thirdHeight, fullSecondWidth, thirdHeight);
 		// Bottom Right
-		drawTexture(thirdX, thirdY, thirdLeft, thirdTop, thirdWidth, thirdHeight);
+		drawTexture(matrices, thirdX, thirdY, thirdLeft, thirdTop, thirdWidth, thirdHeight);
 	}
 }
