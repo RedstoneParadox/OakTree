@@ -75,12 +75,28 @@ jar {
 // configure the maven publication
 publishing {
 	publications {
-		components.java
+		maven(MavenPublication) {
+			groupId = group
+			artifactId = archivesBaseName
+			version = project.mod_version
+
+			from components.java
+		}
 	}
 
 	// select the repositories you want to publish to
 	repositories {
 		// uncomment to publish to the local maven
 		// mavenLocal()
+
+		maven {
+			name = "JamalamMavenRelease"
+			url = uri("https://maven.jamalam.tech/releases")
+
+			credentials {
+				username = System.getenv("MAVEN_USER")
+				password = System.getenv("MAVEN_PASSWORD")
+			}
+		}
 	}
 }
