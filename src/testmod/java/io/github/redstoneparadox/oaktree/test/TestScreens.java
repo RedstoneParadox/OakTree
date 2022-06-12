@@ -185,14 +185,14 @@ public class TestScreens {
 		}
 
 		@Override
-		public boolean shouldPause() {
+		public boolean isPauseScreen() {
 			return false;
 		}
 
 		@Override
-		public void close() {
+		public void closeScreen() {
 			root.close();
-			super.close();
+			super.closeScreen();
 		}
 	}
 
@@ -237,14 +237,14 @@ public class TestScreens {
 		}
 
 		@Override
-		public boolean shouldPause() {
-			return super.shouldPause();
+		public boolean isPauseScreen() {
+			return false;
 		}
 
 		@Override
-		public void close() {
+		public void closeScreen() {
 			root.close();
-			super.close();
+			super.closeScreen();
 		}
 	}
 }

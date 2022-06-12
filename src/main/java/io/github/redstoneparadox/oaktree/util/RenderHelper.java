@@ -1,15 +1,15 @@
 package io.github.redstoneparadox.oaktree.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferRenderer;
+import com.mojang.blaze3d.vertex.Tessellator;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormats;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -58,8 +58,8 @@ public class RenderHelper {
 		float a = (tint.alpha);
 
 		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		Matrix4f model = matrices.peek().getPositionMatrix();
+		BufferBuilder bufferBuilder = tessellator.getBufferBuilder();
+		Matrix4f model = matrices.peek().getPosition();
 
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderTexture(0, texture);
@@ -82,10 +82,10 @@ public class RenderHelper {
 
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
 
-		bufferBuilder.vertex(model, x * scale, (y + height) * scale, zOffset).texture(u1, v2).next();
-		bufferBuilder.vertex(model, (x + width) * scale, (y + height) * scale, zOffset).texture(u2, v2).next();
-		bufferBuilder.vertex(model, (x + width) * scale, y * scale, zOffset).texture(u2, v1).next();
-		bufferBuilder.vertex(model, x * scale, y * scale, zOffset).texture(u1, v1).next();
+		bufferBuilder.vertex(model, x * scale, (y + height) * scale, zOffset).uv(u1, v2).next();
+		bufferBuilder.vertex(model, (x + width) * scale, (y + height) * scale, zOffset).uv(u2, v2).next();
+		bufferBuilder.vertex(model, (x + width) * scale, y * scale, zOffset).uv(u2, v1).next();
+		bufferBuilder.vertex(model, x * scale, y * scale, zOffset).uv(u1, v1).next();
 
 		BufferRenderer.drawWithShader(bufferBuilder.end());
 		RenderSystem.disableBlend();

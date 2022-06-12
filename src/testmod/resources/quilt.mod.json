@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "io.github.redstoneparadox",
+    "id": "oaktree_test",
+    "version": "${version}",
+    "metadata": {
+      "name": "Oak Tree Test Mod",
+      "description": "You should not be seeing this mod if you're not an Oak Tree dev",
+      "contributors": {
+        "RedstoneParadox": "Owner"
+      },
+      "contact": {
+        "homepage": "https://github.com/RedstoneParadox/OakTree",
+        "issues": "https://github.com/RedstoneParadox/OakTree/issues",
+        "sources": "https://github.com/RedstoneParadox/OakTree"
+      },
+      "icon": "assets/oaktree/icon.png"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "io.github.redstoneparadox.oaktree.test.OakTreeTest",
+      "client": "io.github.redstoneparadox.oaktree.test.OakTreeTestClient"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.17.0-"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=2.0.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.19"
+      }
+    ]
+  },
+  "mixin": "oaktree.mixins.json"
+}
