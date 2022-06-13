@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * @apiNote  Work in Progress!
+ * Work in Progress!
  */
 public class TextEditControl extends Control implements CharTypedListener, MouseButtonListener {
 	private final List<String> lines = new ArrayList<>();
