@@ -10,12 +10,15 @@ build.gradle:
 
 ```gradle
 repositories {
-    maven { url 'https://jitpack.io' }
+    maven {
+		name = "JamalamMavenRelease"
+		url = uri("https://maven.jamalam.tech/releases")
+	}
 }
 
 dependencies {
-    modImplementation("com.github.RedstoneParadox:OakTree:${project.oak_tree_version}") {
-        exclude group: 'net.fabricmc.fabric-api'
-    }
+    modImplementation("io.github.redstoneparadox:OakTree:<version>")
 }
 ```
+
+Note that versions prior to 0.5.0-beta are not on the maven.
