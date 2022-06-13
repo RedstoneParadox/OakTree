@@ -20,7 +20,7 @@
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
       "init": "io.github.redstoneparadox.oaktree.test.OakTreeTest",
-      "client": "io.github.redstoneparadox.oaktree.test.OakTreeTestClient"
+      "client_init": "io.github.redstoneparadox.oaktree.test.OakTreeTestClient"
     },
     "depends": [
       {
@@ -36,6 +36,5 @@
         "versions": ">=1.19"
       }
     ]
-  },
-  "mixin": "oaktree.mixins.json"
+  }
 }
