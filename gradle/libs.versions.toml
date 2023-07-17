@@ -1,10 +1,10 @@
 [versions]
 # The latest versions are available at https://lambdaurora.dev/tools/import_quilt.html
-minecraft = "1.19"
-quilt_mappings = "1.19+build.1"
-quilt_loader = "0.17.1-beta.1"
+minecraft = "1.20.1"
+quilt_mappings = "1.20.1+build.20"
+quilt_loader = "0.19.3-beta.1"
 
-quilted_fabric_api = "2.0.0-alpha.2+0.55.3-1.19"
+quilted_fabric_api = "6.0.4+1.20.1"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
