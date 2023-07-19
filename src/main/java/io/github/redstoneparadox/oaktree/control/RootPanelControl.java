@@ -5,6 +5,7 @@ import com.mojang.blaze3d.glfw.Window;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
@@ -60,7 +61,7 @@ public class RootPanelControl extends PanelControl {
 	 * @param mouseY The mouse y position
 	 * @param deltaTime The time since the last frame
 	 */
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float deltaTime) {
+	public void render(GuiGraphics graphics, MatrixStack matrixStack, int mouseX, int mouseY, float deltaTime) {
 		if (dirty) {
 			MinecraftClient client = MinecraftClient.getInstance();
 			Window window = client.getWindow();
@@ -90,7 +91,7 @@ public class RootPanelControl extends PanelControl {
 
 		for (ZIndexedControls.Entry entry: zIndexedControls) {
 			RenderHelper.setzOffset(entry.zOffset());
-			entry.control().draw(matrixStack, theme);
+			entry.control().draw(null, matrixStack, theme);
 			RenderHelper.setzOffset(0);
 		}
 	}

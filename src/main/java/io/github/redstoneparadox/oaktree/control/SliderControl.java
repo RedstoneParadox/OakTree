@@ -5,6 +5,7 @@ import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.Color;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -100,8 +101,8 @@ public class SliderControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
-	protected void draw(MatrixStack matrices, Theme theme) {
-		super.draw(matrices, theme);
+	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+		super.draw(graphics, matrices, theme);
 
 		int sliderX = trueArea.getX();
 		int sliderY = trueArea.getY();
@@ -118,7 +119,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 			sliderHeight = barLength;
 		}
 
-		theme.get(id, SLIDER).draw(matrices, sliderX, sliderY, sliderWidth, sliderHeight);
+		theme.get(id, SLIDER).draw(graphics, matrices, sliderX, sliderY, sliderWidth, sliderHeight);
 	}
 
 	@Override

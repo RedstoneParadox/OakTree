@@ -2,8 +2,10 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Color;
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import io.github.redstoneparadox.oaktree.util.TextHelper;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
@@ -171,15 +173,18 @@ public class LabelControl extends Control {
 	}
 
 	@Override
-	protected void draw(MatrixStack matrices, Theme theme) {
-		super.draw(matrices, theme);
+	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+		super.draw(graphics, matrices, theme);
+
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 		
 		if (maxDisplayedLines > 0) {
 			List<OrderedText> lines = TextHelper.wrapText(text, area.getWidth(), firstLine, maxDisplayedLines, shadow, false);
 			int yOffset = 0;
 
 			for (OrderedText line: lines) {
-				RenderHelper.drawText(matrices, line, trueArea.getX(), trueArea.getY() + yOffset, shadow, fontColor);
+				graphics.drawText(textRenderer, line, trueArea.getX(), trueArea.getY() + yOffset, fontColor.toInt(), shadow);
+
 				yOffset += TextHelper.getFontHeight();
 			}
 		}

@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.control;
 
+import com.mojang.blaze3d.platform.InputUtil;
 import io.github.redstoneparadox.oaktree.listeners.CharTypedListener;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
@@ -7,11 +8,11 @@ import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.Color;
 import io.github.redstoneparadox.oaktree.util.OptionalChar;
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import io.github.redstoneparadox.oaktree.util.TextHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
-import com.mojang.blaze3d.platform.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -333,16 +334,16 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 	}
 
 	@Override
-	protected void draw(MatrixStack matrices, Theme theme) {
-		super.draw(matrices, theme);
+	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+		super.draw(graphics, matrices, theme);
 
 		if (focused) {
-			if (cursorTicks < 10) drawCursor(matrices);
+			if (cursorTicks < 10) drawCursor(graphics);
 			cursorTicks += 1;
 			if (cursorTicks >= 20) cursorTicks = 0;
 		}
 
-		drawText(matrices);
+		drawText(graphics);
 	}
 
 	@Override
@@ -517,19 +518,20 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 		return cursorPosition;
 	}
 
-	private void drawText(MatrixStack matrices) {
+	private void drawText(GuiGraphics graphics) {
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 		int length = Math.min(lines.size(), displayedLines);
 
 		for (int row = firstLine; row < firstLine + length; row += 1) {
 			String line = lines.get(row);
 			if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
 			int lineY = trueArea.getY() + (row - firstLine) * TextHelper.getFontHeight();
-			RenderHelper.drawText(matrices, Text.literal(line).asOrderedText(), trueArea.getX(), lineY, shadow, fontColor);
-			drawHighlights(matrices, line, lineY, row);
+			graphics.drawText(textRenderer, Text.literal(line), trueArea.getX(), lineY, fontColor.toInt(), shadow);
+			drawHighlights(graphics, line, lineY, row);
 		}
 	}
 
-	private void drawHighlights(MatrixStack matrices, String line, int lineY, int row) {
+	private void drawHighlights(GuiGraphics graphics, String line, int lineY, int row) {
 		if (selection.isHighlighted(row)) {
 			int startIndex;
 			if (selection.start().row != row) startIndex = 0;
@@ -543,13 +545,16 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 
 			int x = trueArea.getX() + TextHelper.getWidth(line.substring(0, startIndex));
 			String highlightedPortion = line.substring(startIndex, endIndex);
-			RenderHelper.drawRectangle(matrices, x, lineY, TextHelper.getWidth(highlightedPortion), TextHelper.getFontHeight(), highlightColor);
+
+			graphics.fill(x, lineY, x + TextHelper.getWidth(highlightedPortion), lineY + TextHelper.getFontHeight(), highlightColor.toInt());
 		}
 	}
 
-	private void drawCursor(MatrixStack matrices) {
+	private void drawCursor(GuiGraphics graphics) {
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+
 		if (lines.isEmpty()) {
-			RenderHelper.drawText(matrices, Text.literal("_").asOrderedText(), trueArea.getX(), trueArea.getY(), shadow, fontColor);
+			graphics.drawText(textRenderer, Text.literal("_"), trueArea.getX(), trueArea.getY(), fontColor.toInt(), shadow);
 			return;
 		}
 
@@ -561,7 +566,7 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 		String cursorString = "_";
 		if (cursor.row < lines.size() - 1 || cursor.column < cursorLine.length() || lineOccupiesFullSpace(cursorLine)) cursorString = "|";
 
-		RenderHelper.drawText(matrices, Text.literal(cursorString).asOrderedText(), cursorX, cursorY, shadow, fontColor);
+		graphics.drawText(textRenderer, Text.literal(cursorString), cursorX, cursorY, fontColor.toInt(), shadow);
 	}
 
 	private boolean lineOccupiesFullSpace(String cursorLine) {

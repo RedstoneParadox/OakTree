@@ -6,6 +6,7 @@ import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Control {
 	public static PainterKey DEFAULT = new PainterKey();
-
 	protected Control parent;
 	protected Control tooltip = null;
 	protected @NotNull String id = "control";
@@ -248,8 +248,8 @@ public class Control {
 	}
 
 	// Draw
-	protected void draw(MatrixStack matrices, Theme theme) {
-		theme.get(id, painterKey).draw(matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+		theme.get(id, painterKey).draw(graphics, matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	protected void cleanup() {

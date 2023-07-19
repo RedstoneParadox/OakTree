@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.control.Control;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -33,7 +34,7 @@ public abstract class Painter {
 	}
 
 	@ApiStatus.Internal
-	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
 
 	}
 

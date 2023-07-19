@@ -1,7 +1,7 @@
 package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.util.Color;
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class ColorPainter extends Painter {
@@ -24,9 +24,9 @@ public class ColorPainter extends Painter {
 	}
 
 	@Override
-	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
-		if (borderColor != null) RenderHelper.drawRectangle(matrices,x - borderWidth, y - borderWidth, width + 2 * borderWidth, height + 2* borderWidth, color);
-		RenderHelper.drawRectangle(matrices, x, y, width, height, color);
+	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
+		if (borderColor != null) graphics.fill(x - borderWidth, y - borderWidth, x + width + borderWidth, y + height + borderWidth, color.toInt());
+		graphics.fill(x, y, x + width, y + height, color.toInt());
 	}
 
 	@Override

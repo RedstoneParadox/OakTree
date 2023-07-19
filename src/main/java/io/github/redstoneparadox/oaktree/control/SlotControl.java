@@ -5,8 +5,8 @@ import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -114,7 +114,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 
 			if (tooltip != null && tooltip instanceof LabelControl) {
 				if (!slotStack.isEmpty()) {
-					List<Text> texts = slotStack.getTooltip(player, TooltipContext.Default.NORMAL);
+					List<Text> texts = slotStack.getTooltip(player, TooltipContext.Default.HIDE_ADVANCED_DETAILS);
 					((LabelControl) tooltip).setText(texts);
 					tooltip.setVisible(true);
 				}
@@ -135,19 +135,25 @@ public class SlotControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
-	protected void draw(MatrixStack matrices, Theme theme) {
-		super.draw(matrices, theme);
+	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+		super.draw(graphics, matrices, theme);
 
 		int x = trueArea.getX();
 		int y = trueArea.getY();
 
 		ItemStack stack = slot.getStack();
-		RenderHelper.drawItemStackCentered(x, y, trueArea.getWidth(), trueArea.getHeight(), stack);
+		graphics.drawItem(stack, x + trueArea.getWidth()/2, y + trueArea.getHeight()/2);
 
 		if (highlighted) {
-			if (!stack.isEmpty()) RenderHelper.setzOffset(1.0);
-			RenderHelper.drawRectangle(matrices, x + slotBorder, y + slotBorder, trueArea.getWidth() - (2 * slotBorder), trueArea.getHeight() - (2 * slotBorder), highlightColor);
-			RenderHelper.setzOffset(0.0);
+			int highlightX = x + slotBorder;
+			int highlightY = y + slotBorder;
+			int highlightWidth = trueArea.getWidth() - (2 * slotBorder);
+			int highlightHeight = trueArea.getHeight() - (2 * slotBorder);
+			int z = 0;
+
+			if (!stack.isEmpty()) z = 1;
+
+			graphics.fill(highlightX, highlightY, highlightX + highlightWidth, highlightY + highlightHeight, z, highlightColor.toInt());
 		}
 	}
 

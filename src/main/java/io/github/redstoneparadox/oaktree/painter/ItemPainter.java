@@ -1,17 +1,17 @@
 package io.github.redstoneparadox.oaktree.painter;
 
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class ItemPainter extends Painter {
 	private ItemStack stack;
 
 	public ItemPainter(Identifier identifier, int count) {
-		this.stack = new ItemStack(Registry.ITEM.get(identifier), count);
+		this.stack = new ItemStack(Registries.ITEM.get(identifier), count);
 	}
 
 	public ItemPainter(ItemStack stack) {
@@ -47,9 +47,12 @@ public class ItemPainter extends Painter {
 	}
 
 	@Override
-	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
 		if (!stack.isEmpty()) {
-			RenderHelper.drawItemStackCentered(x, y, width, height, stack);
+			int offsetX = width/2;
+			int offsetY = height/2;
+
+			graphics.drawItem(stack, x + offsetX, y + offsetY);
 		}
 	}
 

@@ -1,23 +1,5 @@
 package io.github.redstoneparadox.oaktree.util;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferRenderer;
-import com.mojang.blaze3d.vertex.Tessellator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormats;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.OrderedText;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix4f;
-import org.jetbrains.annotations.NotNull;
-
 public class RenderHelper {
 	private static float zOffset = 0.0f;
 
@@ -25,6 +7,7 @@ public class RenderHelper {
 		RenderHelper.zOffset = (float) zOffset;
 	}
 
+	/*
 	public static void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, @NotNull Color color) {
 		int r = (int) (color.red * 255.0f);
 		int g = (int) (color.green * 255.0f);
@@ -35,6 +18,7 @@ public class RenderHelper {
 
 		if (width >= 1 && height >= 1) DrawableHelper.fill(matrices, x, y, x + width, y + height, c);
 	}
+
 
 	public static void drawItemStackCentered(int x, int y, int width, int height, ItemStack stack) {
 		int offsetX = width/2 - 8;
@@ -59,7 +43,7 @@ public class RenderHelper {
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBufferBuilder();
-		Matrix4f model = matrices.peek().getPosition();
+		Matrix4f model = matrices.peek().getModel().getPosition();
 
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderTexture(0, texture);
@@ -78,7 +62,6 @@ public class RenderHelper {
 				GlStateManager.SrcFactor.ONE.value,
 				GlStateManager.DstFactor.ZERO.value
 		);
-		*/
 
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
 
@@ -110,4 +93,5 @@ public class RenderHelper {
 
 		matrices.translate(0.0, 0.0, -zOffset);
 	}
+	*/
 }

@@ -4,6 +4,7 @@ import io.github.redstoneparadox.oaktree.math.Direction2D;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Painter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -71,8 +72,8 @@ public class ProgressBarControl extends Control {
 	}
 
 	@Override
-	protected void draw(MatrixStack matrices, Theme theme) {
-		super.draw(matrices, theme);
+	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+		super.draw(graphics, matrices, theme);
 
 		int barX = trueArea.getX() + ((trueArea.getWidth() /2) - (barWidth/2));
 		int barY = trueArea.getY() + ((trueArea.getHeight() /2) - (barHeight/2));
@@ -81,14 +82,14 @@ public class ProgressBarControl extends Control {
 		switch (direction) {
 			case UP -> {
 				int drawHeight = (int) (barHeight * (this.percent / 100.0f));
-				barPainter.draw(matrices, barX, barY + (barHeight - drawHeight), barWidth, drawHeight);
+				barPainter.draw(graphics, matrices, barX, barY + (barHeight - drawHeight), barWidth, drawHeight);
 			}
-			case DOWN -> barPainter.draw(matrices, barX, barY, barWidth, (int) (barHeight * (this.percent / 100.0f)));
+			case DOWN -> barPainter.draw(graphics, matrices, barX, barY, barWidth, (int) (barHeight * (this.percent / 100.0f)));
 			case LEFT -> {
 				int drawWidth = (int) (barWidth * (this.percent / 100.0f));
-				barPainter.draw(matrices, barX - drawWidth, barY, drawWidth, barHeight);
+				barPainter.draw(graphics, matrices, barX - drawWidth, barY, drawWidth, barHeight);
 			}
-			case RIGHT -> barPainter.draw(matrices, barX, barY, (int) (barWidth * (this.percent / 100.0f)), barHeight);
+			case RIGHT -> barPainter.draw(graphics, matrices, barX, barY, (int) (barWidth * (this.percent / 100.0f)), barHeight);
 		}
 	}
 }

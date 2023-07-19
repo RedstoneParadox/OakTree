@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.oaktree.painter;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -50,37 +51,10 @@ public class NinePatchPainter extends TexturePainter {
 	}
 
 	@Override
-	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
 		int fullSecondWidth = width - firstWidth - thirdWidth;
 		int fullSecondHeight = height - firstHeight - thirdHeight;
 
-		float secondX = x + firstWidth;
-		float secondY = y + firstHeight;
-		int secondLeft = left + firstWidth;
-		int secondTop = top + firstHeight;
-
-		float thirdX = x + firstWidth + fullSecondWidth;
-		float thirdY = y + firstHeight + fullSecondHeight;
-		int thirdLeft = left + firstWidth + secondHeight;
-		int thirdTop = top + firstHeight + secondHeight;
-
-		// Top left
-		drawTexture(matrices, x, y, left, top, firstWidth, firstHeight);
-		// Top Middle
-		drawTiled(matrices, secondX, y, secondLeft, top, secondWidth, firstHeight, fullSecondWidth, firstHeight);
-		// Top Right
-		drawTexture(matrices, thirdX, y, thirdLeft, top, thirdWidth, firstHeight);
-		// Center Left
-		drawTiled(matrices, x, secondY, left, secondTop, firstWidth, secondHeight, firstWidth, fullSecondHeight);
-		// Center
-		drawTiled(matrices, secondX, secondY, secondLeft, secondTop, secondWidth, secondHeight, fullSecondWidth, fullSecondHeight);
-		// Center Right
-		drawTiled(matrices, thirdX, secondY, thirdLeft, secondTop, thirdWidth, secondHeight, thirdWidth, fullSecondHeight);
-		// Bottom left
-		drawTexture(matrices, x, thirdY, left, thirdTop, firstWidth, thirdHeight);
-		// Bottom Middle
-		drawTiled(matrices, secondX, thirdY, secondLeft, thirdTop, secondWidth, thirdHeight, fullSecondWidth, thirdHeight);
-		// Bottom Right
-		drawTexture(matrices, thirdX, thirdY, thirdLeft, thirdTop, thirdWidth, thirdHeight);
+		graphics.drawNineSlicedTexture(texture, x, y, width, height, firstWidth, firstHeight, thirdWidth, thirdHeight, fullSecondWidth, fullSecondHeight, left, top);
 	}
 }

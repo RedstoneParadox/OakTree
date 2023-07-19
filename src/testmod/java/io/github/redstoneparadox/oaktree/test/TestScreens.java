@@ -15,6 +15,7 @@ import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
@@ -179,9 +180,9 @@ public class TestScreens {
 		}
 
 		@Override
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-			super.render(matrices, mouseX, mouseY, delta);
-			root.render(matrices, mouseX, mouseY, delta);
+		public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+			super.render(graphics, mouseX, mouseY, delta);
+			root.render(graphics.getMatrices(), mouseX, mouseY, delta);
 		}
 
 		@Override
@@ -226,14 +227,14 @@ public class TestScreens {
 		}
 
 		@Override
-		protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
+		protected void drawBackground(GuiGraphics graphics, float delta, int mouseX, int mouseY) {
 
 		}
 
 		@Override
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-			super.render(matrices, mouseX, mouseY, delta);
-			root.render(matrices, mouseX, mouseY, delta);
+		public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+			super.render(graphics, mouseX, mouseY, delta);
+			root.render(graphics.getMatrices(), mouseX, mouseY, delta);
 		}
 
 		@Override

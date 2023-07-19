@@ -2,8 +2,8 @@ package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.util.Color;
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -91,17 +91,17 @@ public class TexturePainter extends Painter {
 	}
 
 	@Override
-	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
 		MinecraftClient.getInstance().getTextureManager().bindTexture(texture);
 
 		if (!tiled) {
 			int drawWidth = Math.min(width, textureWidth);
 			int drawHeight = Math.min(height, textureHeight);
 
-			drawTexture(matrices, x, y, left, top, drawWidth, drawHeight);
+			graphics.drawTexture(texture, x, y, drawWidth, drawHeight, left, top, textureWidth, textureHeight, fileWidth, fileHeight);
 		}
 		else {
-			drawTiled(matrices, x, y, left, top, textureWidth, textureHeight, width, height);
+			graphics.drawRepeatingTexture(texture, x, y, width, height, left, top, fileWidth, fileHeight);
 		}
 	}
 
@@ -117,30 +117,5 @@ public class TexturePainter extends Painter {
 		copy.setScale(scale);
 
 		return copy;
-	}
-
-	void drawTiled(MatrixStack matrices, float x, float y, int left, int top, int drawWidth, int drawHeight, int width, int height) {
-		int remainingWidth = width;
-		int remainingHeight = height;
-
-		while (remainingHeight > 0) {
-			float currentX = x + (width - remainingWidth);
-			float currentY = y + (height - remainingHeight);
-
-			float minWidth = Math.min(remainingWidth, drawWidth);
-			float minHeight = Math.min(remainingHeight, drawHeight);
-
-			drawTexture(matrices, currentX, currentY, left, top, minWidth, minHeight);
-
-			remainingWidth -= drawWidth;
-			if (remainingWidth < 0) {
-				remainingWidth = width;
-				remainingHeight -= drawHeight;
-			}
-		}
-	}
-
-	void drawTexture(MatrixStack matrices, float x, float y, float left, float top, float width, float height) {
-		RenderHelper.drawTexture(matrices, x, y, left, top, width, height, fileWidth, fileHeight, scale, texture, tint);
 	}
 }
