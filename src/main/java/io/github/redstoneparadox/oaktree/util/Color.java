@@ -112,6 +112,15 @@ public final class Color {
 		return new Color(this.red, this.blue, this.green, alpha);
 	}
 
+	public int toInt() {
+		int r = (int) (red * 255.0f);
+		int g = (int) (green * 255.0f);
+		int b = (int) (blue * 255.0f);
+		int a = (int) (alpha * 255.0f);
+
+		return (a << 24) + (r << 16) + (g << 8) + b;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
