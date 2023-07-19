@@ -102,7 +102,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 
 	@Override
 	protected void draw(GuiGraphics graphics, Theme theme) {
-		super.draw(graphics, matrices, theme);
+		super.draw(graphics, theme);
 
 		int sliderX = trueArea.getX();
 		int sliderY = trueArea.getY();

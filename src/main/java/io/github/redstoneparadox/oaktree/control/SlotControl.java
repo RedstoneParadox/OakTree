@@ -136,7 +136,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 
 	@Override
 	protected void draw(GuiGraphics graphics, Theme theme) {
-		super.draw(graphics, matrices, theme);
+		super.draw(graphics, theme);
 
 		int x = trueArea.getX();
 		int y = trueArea.getY();

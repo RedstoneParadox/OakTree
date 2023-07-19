@@ -73,7 +73,7 @@ public class ProgressBarControl extends Control {
 
 	@Override
 	protected void draw(GuiGraphics graphics, Theme theme) {
-		super.draw(graphics, matrices, theme);
+		super.draw(graphics, theme);
 
 		int barX = trueArea.getX() + ((trueArea.getWidth() /2) - (barWidth/2));
 		int barY = trueArea.getY() + ((trueArea.getHeight() /2) - (barHeight/2));

@@ -61,7 +61,7 @@ public class EntityPreviewControl extends Control {
 
 	@Override
 	protected void draw(GuiGraphics graphics, Theme theme) {
-		super.draw(graphics, matrices, theme);
+		super.draw(graphics, theme);
 		InventoryScreen.drawEntity(graphics, this.trueArea.getX(), this.trueArea.getY(), this.entitySize,
 				followCursor ? mouseX : 0f, followCursor ? mouseY : 0f, this.entity);
 	}
