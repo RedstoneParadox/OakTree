@@ -72,7 +72,7 @@ public class ProgressBarControl extends Control {
 	}
 
 	@Override
-	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+	protected void draw(GuiGraphics graphics, Theme theme) {
 		super.draw(graphics, matrices, theme);
 
 		int barX = trueArea.getX() + ((trueArea.getWidth() /2) - (barWidth/2));
@@ -82,14 +82,14 @@ public class ProgressBarControl extends Control {
 		switch (direction) {
 			case UP -> {
 				int drawHeight = (int) (barHeight * (this.percent / 100.0f));
-				barPainter.draw(graphics, matrices, barX, barY + (barHeight - drawHeight), barWidth, drawHeight);
+				barPainter.draw(graphics, barX, barY + (barHeight - drawHeight), barWidth, drawHeight);
 			}
-			case DOWN -> barPainter.draw(graphics, matrices, barX, barY, barWidth, (int) (barHeight * (this.percent / 100.0f)));
+			case DOWN -> barPainter.draw(graphics, barX, barY, barWidth, (int) (barHeight * (this.percent / 100.0f)));
 			case LEFT -> {
 				int drawWidth = (int) (barWidth * (this.percent / 100.0f));
-				barPainter.draw(graphics, matrices, barX - drawWidth, barY, drawWidth, barHeight);
+				barPainter.draw(graphics, barX - drawWidth, barY, drawWidth, barHeight);
 			}
-			case RIGHT -> barPainter.draw(graphics, matrices, barX, barY, (int) (barWidth * (this.percent / 100.0f)), barHeight);
+			case RIGHT -> barPainter.draw(graphics, barX, barY, (int) (barWidth * (this.percent / 100.0f)), barHeight);
 		}
 	}
 }

@@ -51,7 +51,7 @@ public class NinePatchPainter extends TexturePainter {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
 		int fullSecondWidth = width - firstWidth - thirdWidth;
 		int fullSecondHeight = height - firstHeight - thirdHeight;
 

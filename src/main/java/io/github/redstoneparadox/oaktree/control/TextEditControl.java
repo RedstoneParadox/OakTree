@@ -334,7 +334,7 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 	}
 
 	@Override
-	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+	protected void draw(GuiGraphics graphics, Theme theme) {
 		super.draw(graphics, matrices, theme);
 
 		if (focused) {

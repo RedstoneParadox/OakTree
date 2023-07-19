@@ -56,12 +56,11 @@ public class RootPanelControl extends PanelControl {
 	 * Renders this control and the entire {@link Control}
 	 * tree.
 	 *
-	 * @param matrixStack The matrix stack
 	 * @param mouseX The mouse x position
 	 * @param mouseY The mouse y position
 	 * @param deltaTime The time since the last frame
 	 */
-	public void render(GuiGraphics graphics, MatrixStack matrixStack, int mouseX, int mouseY, float deltaTime) {
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float deltaTime) {
 		if (dirty) {
 			MinecraftClient client = MinecraftClient.getInstance();
 			Window window = client.getWindow();
@@ -91,7 +90,7 @@ public class RootPanelControl extends PanelControl {
 
 		for (ZIndexedControls.Entry entry: zIndexedControls) {
 			RenderHelper.setzOffset(entry.zOffset());
-			entry.control().draw(graphics, matrixStack, theme);
+			entry.control().draw(graphics, theme);
 			RenderHelper.setzOffset(0);
 		}
 	}

@@ -101,7 +101,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
-	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
+	protected void draw(GuiGraphics graphics, Theme theme) {
 		super.draw(graphics, matrices, theme);
 
 		int sliderX = trueArea.getX();
@@ -119,7 +119,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 			sliderHeight = barLength;
 		}
 
-		theme.get(id, SLIDER).draw(graphics, matrices, sliderX, sliderY, sliderWidth, sliderHeight);
+		theme.get(id, SLIDER).draw(graphics, sliderX, sliderY, sliderWidth, sliderHeight);
 	}
 
 	@Override

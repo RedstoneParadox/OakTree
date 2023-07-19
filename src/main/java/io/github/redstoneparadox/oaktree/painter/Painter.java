@@ -34,7 +34,7 @@ public abstract class Painter {
 	}
 
 	@ApiStatus.Internal
-	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
 
 	}
 

@@ -91,7 +91,7 @@ public class TexturePainter extends Painter {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
 		MinecraftClient.getInstance().getTextureManager().bindTexture(texture);
 
 		if (!tiled) {

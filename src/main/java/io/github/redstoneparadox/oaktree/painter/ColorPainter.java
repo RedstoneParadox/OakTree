@@ -24,7 +24,7 @@ public class ColorPainter extends Painter {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
 		if (borderColor != null) graphics.fill(x - borderWidth, y - borderWidth, x + width + borderWidth, y + height + borderWidth, color.toInt());
 		graphics.fill(x, y, x + width, y + height, color.toInt());
 	}

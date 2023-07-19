@@ -248,8 +248,8 @@ public class Control {
 	}
 
 	// Draw
-	protected void draw(GuiGraphics graphics, MatrixStack matrices, Theme theme) {
-		theme.get(id, painterKey).draw(graphics, matrices, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+	protected void draw(GuiGraphics graphics, Theme theme) {
+		theme.get(id, painterKey).draw(graphics, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	protected void cleanup() {

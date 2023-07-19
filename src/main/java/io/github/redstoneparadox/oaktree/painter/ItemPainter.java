@@ -47,7 +47,7 @@ public class ItemPainter extends Painter {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, MatrixStack matrices, int x, int y, int width, int height) {
+	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
 		if (!stack.isEmpty()) {
 			int offsetX = width/2;
 			int offsetY = height/2;
