@@ -5,10 +5,14 @@ import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
+import io.github.redstoneparadox.oaktree.util.Tooltip;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.tooltip.DefaultTooltipPositioner;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 /**
  * The base class for all controls.
@@ -17,6 +21,7 @@ public class Control {
 	public static PainterKey DEFAULT = new PainterKey();
 	protected Control parent;
 	protected Control tooltip = null;
+	protected Tooltip newTooltip = new Tooltip(new ArrayList<>(), DefaultTooltipPositioner.INSTANCE);
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
@@ -234,8 +239,11 @@ public class Control {
 		if (captured && tooltip != null) {
 			tooltip.visible = true;
 			tooltip.setOffset(mouseX + 8, mouseY - 16);
+			newTooltip.setVisible(true);
+			newTooltip.setPosition(mouseX + 8, mouseY - 16);
 			markDirty();
 		} else if (tooltip != null){
+			newTooltip.setVisible(false);
 			tooltip.visible = false;
 		}
 
@@ -250,6 +258,14 @@ public class Control {
 	// Draw
 	protected void draw(GuiGraphics graphics, Theme theme) {
 		theme.get(id, painterKey).draw(graphics, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+	}
+
+	protected void drawTooltip(GuiGraphics graphics) {
+		if (tooltip.visible && !newTooltip.isEmpty()) {
+			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+
+			graphics.drawTooltip(textRenderer, newTooltip.getTexts(), newTooltip.getData(), 0, 0);
+		}
 	}
 
 	protected void cleanup() {
