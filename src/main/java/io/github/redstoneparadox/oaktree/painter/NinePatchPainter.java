@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.painter;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class NinePatchPainter extends TexturePainter {

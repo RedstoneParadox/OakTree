@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.util.Color;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.util.math.MatrixStack;
 
 public class ColorPainter extends Painter {
 	private final Color color;

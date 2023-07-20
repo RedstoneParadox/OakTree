@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.mixin.client;
 
-import io.github.redstoneparadox.oaktree.hooks.MouseHooks;
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import net.minecraft.client.Mouse;
 import org.lwjgl.glfw.GLFW;
@@ -10,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Mouse.class)
-public abstract class MixinMouse implements MouseHooks {
+public abstract class MixinMouse {
 	private boolean rightButton = false;
 	private boolean leftButton = false;
 
@@ -39,15 +38,5 @@ public abstract class MixinMouse implements MouseHooks {
 
 			ClientListeners.onMouseButton(button, false, true);
 		}
-	}
-
-	@Override
-	public boolean leftButton() {
-		return leftButton;
-	}
-
-	@Override
-	public boolean rightButton() {
-		return rightButton;
 	}
 }

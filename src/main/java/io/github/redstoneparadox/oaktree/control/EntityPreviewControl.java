@@ -3,7 +3,6 @@ package io.github.redstoneparadox.oaktree.control;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 
 /**

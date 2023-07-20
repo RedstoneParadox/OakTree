@@ -3,7 +3,6 @@ package io.github.redstoneparadox.oaktree.util;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipPositioner;
 import net.minecraft.client.item.TooltipData;
-import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 
 import java.util.List;

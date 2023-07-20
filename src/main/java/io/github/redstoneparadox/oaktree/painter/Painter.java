@@ -2,7 +2,6 @@ package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.control.Control;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
