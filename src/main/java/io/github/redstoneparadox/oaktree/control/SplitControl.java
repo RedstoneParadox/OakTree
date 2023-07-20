@@ -2,6 +2,8 @@ package io.github.redstoneparadox.oaktree.control;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class SplitControl extends Control {
 	protected int splitSize = 0;
 	protected boolean vertical = false;
@@ -49,21 +51,21 @@ public class SplitControl extends Control {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
 
 		if (vertical) {
 			int bottomY = trueArea.getY() + splitSize;
 			int topHeight = trueArea.getHeight() - splitSize;
 
-			if (first.visible) first.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), topHeight);
-			if (second.visible) second.updateTree(zIndexedControls, trueArea.getX(), bottomY, trueArea.getWidth(), splitSize);
+			if (first.visible) first.updateTree(orderedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), topHeight);
+			if (second.visible) second.updateTree(orderedControls, trueArea.getX(), bottomY, trueArea.getWidth(), splitSize);
 		} else {
 			int rightX = trueArea.getX() + splitSize;
 			int leftWidth = trueArea.getWidth() - splitSize;
 
-			if (first.visible) first.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), leftWidth, trueArea.getHeight());
-			if (second.visible) second.updateTree(zIndexedControls, rightX, trueArea.getY(), splitSize, trueArea.getHeight());
+			if (first.visible) first.updateTree(orderedControls, trueArea.getX(), trueArea.getY(), leftWidth, trueArea.getHeight());
+			if (second.visible) second.updateTree(orderedControls, rightX, trueArea.getY(), splitSize, trueArea.getHeight());
 		}
 	}
 

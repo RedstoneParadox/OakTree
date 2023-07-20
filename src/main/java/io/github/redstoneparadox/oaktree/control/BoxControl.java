@@ -2,6 +2,8 @@ package io.github.redstoneparadox.oaktree.control;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * BoxControl is a type of {@link PaddingControl}
  * that can have a single child {@link Control}.
@@ -42,8 +44,8 @@ public class BoxControl extends PaddingControl {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
 		if (!child.visible) return;
 
 		int innerX = trueArea.getX() + leftPadding;
@@ -51,6 +53,6 @@ public class BoxControl extends PaddingControl {
 		int innerWidth = trueArea.getWidth() + leftPadding + rightPadding;
 		int innerHeight = trueArea.getHeight() + topPadding + bottomPadding;
 
-		child.updateTree(zIndexedControls, innerX, innerY, innerWidth, innerHeight);
+		child.updateTree(orderedControls, innerX, innerY, innerWidth, innerHeight);
 	}
 }

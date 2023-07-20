@@ -6,10 +6,11 @@ import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.Color;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.List;
 
 public class SliderControl extends Control implements MouseButtonListener {
 	public static PainterKey SLIDER = new PainterKey();
@@ -74,9 +75,9 @@ public class SliderControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
-		label.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
+		label.updateTree(orderedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	@Override

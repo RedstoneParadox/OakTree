@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.oaktree.control;
 
-import com.mojang.blaze3d.glfw.Window;
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Theme;
@@ -13,6 +12,7 @@ import net.minecraft.client.gui.tooltip.DefaultTooltipPositioner;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The base class for all controls.
@@ -189,8 +189,8 @@ public class Control {
 		this.onTick = onTick;
 	}
 
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		zIndexedControls.add(this);
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		orderedControls.add(this);
 
 		if (expand) {
 			trueArea = new Rectangle(containerX, containerY, containerWidth, containerHeight);

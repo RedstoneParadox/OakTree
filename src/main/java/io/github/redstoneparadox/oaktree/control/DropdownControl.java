@@ -6,6 +6,8 @@ import io.github.redstoneparadox.oaktree.math.Direction2D;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.List;
+
 public class DropdownControl extends Control implements MouseButtonListener {
 	@NotNull protected Control dropdown = new Control();
 	@NotNull protected Direction2D dropdownDirection = Direction2D.DOWN;
@@ -38,8 +40,8 @@ public class DropdownControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
 
 		int dropdownX = 0;
 		int dropdownY = 0;
@@ -53,7 +55,7 @@ public class DropdownControl extends Control implements MouseButtonListener {
 
 		dropdown.expand = false;
 
-		dropdown.updateTree(zIndexedControls, dropdownX, dropdownY, 999999, 999999);
+		dropdown.updateTree(orderedControls, dropdownX, dropdownY, 999999, 999999);
 	}
 
 	@Override

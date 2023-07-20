@@ -2,6 +2,8 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.math.Rectangle;
 
+import java.util.List;
+
 /**
  * A {@link PanelControl} that arranges its children
  * as a vertical or horizontal list. It can be set
@@ -74,13 +76,13 @@ public class ListPanelControl extends PanelControl {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		for (int i = 0; i < children.size(); i++) {
 			Control child = children.get(i);
 			child.visible = (i >= startIndex) && (i < startIndex + displayCount);
 		}
 
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
 	}
 
 	@Override

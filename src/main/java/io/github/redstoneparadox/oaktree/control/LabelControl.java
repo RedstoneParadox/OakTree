@@ -6,7 +6,6 @@ import io.github.redstoneparadox.oaktree.util.TextHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.ApiStatus;
@@ -163,13 +162,13 @@ public class LabelControl extends Control {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		if (fitText) {
 			area.setWidth(Math.min(TextHelper.getWrappedWidth(text) + 8, containerWidth));
 			area.setHeight(Math.min(TextHelper.getWrappedHeight(text) + 8, containerHeight));
 		}
 
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
 	}
 
 	@Override

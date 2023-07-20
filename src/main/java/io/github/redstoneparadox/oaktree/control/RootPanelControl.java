@@ -3,11 +3,9 @@ package io.github.redstoneparadox.oaktree.control;
 
 import com.mojang.blaze3d.glfw.Window;
 import io.github.redstoneparadox.oaktree.painter.Theme;
-import io.github.redstoneparadox.oaktree.util.RenderHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ import java.util.function.Consumer;
 public class RootPanelControl extends PanelControl {
 	protected Theme theme;
 	private boolean dirty = true;
-	private final ZIndexedControls zIndexedControls = new ZIndexedControls();
+	private final List<Control> orderedControls = new ArrayList<>();
 
 	public RootPanelControl() {
 		theme = Theme.vanilla();
@@ -65,17 +63,16 @@ public class RootPanelControl extends PanelControl {
 			MinecraftClient client = MinecraftClient.getInstance();
 			Window window = client.getWindow();
 
-			zIndexedControls.clear();
-			updateTree(zIndexedControls, 0, 0, window.getScaledWidth(), window.getScaledHeight());
-			zIndexedControls.moveTooltipsToEnd();
+			orderedControls.clear();
+			updateTree(orderedControls, 0, 0, window.getScaledWidth(), window.getScaledHeight());
 
 			dirty = false;
 		}
 
 		boolean captured = false;
 
-		for (int i = zIndexedControls.size() - 1; i >= 0; i--) {
-			Control control = zIndexedControls.get(i).control();
+		for (int i = orderedControls.size() - 1; i >= 0; i--) {
+			Control control = orderedControls.get(i);
 
 			if (!captured) {
 				captured = control.interact(mouseX, mouseY, deltaTime, false);
@@ -84,14 +81,12 @@ public class RootPanelControl extends PanelControl {
 			}
 		}
 
-		for (ZIndexedControls.Entry entry: zIndexedControls) {
-			entry.control().prepare();
+		for (Control control: orderedControls) {
+			control.prepare();
 		}
 
-		for (ZIndexedControls.Entry entry: zIndexedControls) {
-			RenderHelper.setzOffset(entry.zOffset());
-			entry.control().draw(graphics, theme);
-			RenderHelper.setzOffset(0);
+		for (Control control: orderedControls) {
+			control.draw(graphics, theme);
 		}
 	}
 
@@ -107,65 +102,5 @@ public class RootPanelControl extends PanelControl {
 	@Override
 	protected void markDirty() {
 		this.dirty = true;
-	}
-
-	protected static class ZIndexedControls implements Iterable<ZIndexedControls.Entry> {
-		private final List<Entry> entries = new ArrayList<>();
-		private int offset = 0;
-
-		protected ZIndexedControls() {}
-
-		public int size() {
-			return entries.size();
-		}
-
-		public Entry get(int index) {
-			return entries.get(index);
-		}
-
-		public void add(Control control) {
-			entries.add(new Entry(control, offset));
-		}
-
-		public void addOffset(int offset) {
-			this.offset += offset;
-		}
-
-		public void clear() {
-			entries.clear();
-		}
-
-		public void moveTooltipsToEnd() {
-			List<Entry> tooltips = new ArrayList<>();
-			List<Entry> nonTooltips = new ArrayList<>();
-
-			for (Entry entry: entries) {
-				Control control = entry.control;
-
-				nonTooltips.add(entry);
-			}
-
-			entries.clear();
-			entries.addAll(nonTooltips);
-			entries.addAll(tooltips);
-		}
-
-		@NotNull
-		@Override
-		public Iterator<Entry> iterator() {
-			return entries.listIterator();
-		}
-
-		@Override
-		public void forEach(Consumer<? super Entry> action) {
-			Iterable.super.forEach(action);
-		}
-
-		@Override
-		public Spliterator<Entry> spliterator() {
-			return Iterable.super.spliterator();
-		}
-
-		public record Entry(Control control, int zOffset) { }
 	}
 }

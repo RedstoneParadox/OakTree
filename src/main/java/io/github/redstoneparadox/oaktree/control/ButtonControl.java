@@ -8,6 +8,8 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.List;
+
 public class ButtonControl extends Control implements MouseButtonListener {
 	public static final PainterKey HELD = new PainterKey();
 	public static final PainterKey HOVERED = new PainterKey();
@@ -66,9 +68,9 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
-		label.updateTree(zIndexedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
+		label.updateTree(orderedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	@Override

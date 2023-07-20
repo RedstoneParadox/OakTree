@@ -15,6 +15,8 @@ import net.minecraft.screen.slot.SlotActionType;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.List;
+
 /**
  * <p>A {@link Control} that can be used for interacting
  * with items in an inventory. Requires a
@@ -69,8 +71,8 @@ public class SlotControl extends Control implements MouseButtonListener {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
 		slot.x = trueArea.getX() + (trueArea.getWidth() - 18)/2;
 		slot.y = trueArea.getY() + (trueArea.getHeight() - 18)/2;
 	}

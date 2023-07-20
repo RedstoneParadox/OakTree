@@ -74,14 +74,14 @@ public class PanelControl extends PaddingControl {
 	}
 
 	@Override
-	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(zIndexedControls, containerX, containerY, containerWidth, containerHeight);
+	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
+		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
 
 		for (int i = 0; i < children.size(); i++) {
 			Control child = children.get(i);
 			Rectangle childArea = getChildArea(i);
 
-			if (child.visible) child.updateTree(zIndexedControls, childArea.getX(), childArea.getY(), childArea.getWidth(), childArea.getHeight());
+			if (child.visible) child.updateTree(orderedControls, childArea.getX(), childArea.getY(), childArea.getWidth(), childArea.getHeight());
 		}
 	}
 
