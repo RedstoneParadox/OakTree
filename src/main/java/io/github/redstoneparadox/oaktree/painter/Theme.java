@@ -85,13 +85,6 @@ public class Theme {
 		ColorPainter textEdit = new ColorPainter(Color.BLACK, Color.rgb(0.63f, 0.63f, 0.63f));
 		vanilla.put("text_edit", TextEditControl.DEFAULT, textEdit);
 
-		NinePatchPainter tooltip = ninePatchUI.copy();
-		tooltip.setDrawOrigin(36, 0);
-		tooltip.setWidths(2, 1, 2);
-		tooltip.setHeights(2, 1, 2);
-		tooltip.setTint(Color.WHITE.withAlpha(0.95f));
-		vanilla.put("tooltip", Control.DEFAULT, tooltip);
-
 		return vanilla;
 	}
 }

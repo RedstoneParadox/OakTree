@@ -20,14 +20,12 @@ import java.util.ArrayList;
 public class Control {
 	public static PainterKey DEFAULT = new PainterKey();
 	protected Control parent;
-	protected Control tooltip = null;
-	protected Tooltip newTooltip = new Tooltip(new ArrayList<>(), DefaultTooltipPositioner.INSTANCE);
+	protected Tooltip tooltip = new Tooltip(new ArrayList<>(), DefaultTooltipPositioner.INSTANCE);
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
 	protected boolean visible = true;
-	protected boolean isTooltip = false;
 	protected boolean capture = true;
 	protected Action onTick = () -> {};
 
@@ -73,7 +71,7 @@ public class Control {
 	public void setOffset(int x, int y) {
 		area.setX(x);
 		area.setY(y);
-		if (!isTooltip) markDirty();
+		markDirty();
 	}
 
 	/**
@@ -105,7 +103,7 @@ public class Control {
 	public void setSize(int width, int height) {
 		area.setWidth(width);
 		area.setHeight(height);
-		if (!isTooltip) markDirty();
+		markDirty();
 	}
 
 	/**
@@ -159,20 +157,12 @@ public class Control {
 		return this.visible;
 	}
 
-	public void setTooltip(Control tooltip) {
+	public void setTooltip(Tooltip tooltip) {
 		this.tooltip = tooltip;
 	}
 
-	public Control getTooltip() {
+	public Tooltip getTooltip() {
 		return tooltip;
-	}
-
-	public void setIsTooltip(boolean isTooltip) {
-		this.isTooltip = isTooltip;
-	}
-
-	public boolean isTooltip() {
-		return isTooltip;
 	}
 
 	/**
@@ -201,15 +191,8 @@ public class Control {
 
 	protected void updateTree(RootPanelControl.ZIndexedControls zIndexedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		zIndexedControls.add(this);
-		Window window = MinecraftClient.getInstance().getWindow();
-		if (tooltip != null && tooltip.visible) {
-			zIndexedControls.addOffset(300);
-			tooltip.updateTree(zIndexedControls, 0, 0, window.getWidth(), window.getHeight());
-			zIndexedControls.addOffset(-300);
-			tooltip.capture = false;
-		}
 
-		if (expand && !isTooltip) {
+		if (expand) {
 			trueArea = new Rectangle(containerX, containerY, containerWidth, containerHeight);
 		}
 		else {
@@ -236,15 +219,12 @@ public class Control {
 
 		captured = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
 
-		if (captured && tooltip != null) {
-			tooltip.visible = true;
-			tooltip.setOffset(mouseX + 8, mouseY - 16);
-			newTooltip.setVisible(true);
-			newTooltip.setPosition(mouseX + 8, mouseY - 16);
+		if (captured) {
+			tooltip.setVisible(true);
+			tooltip.setPosition(mouseX + 8, mouseY - 16);
 			markDirty();
-		} else if (tooltip != null){
-			newTooltip.setVisible(false);
-			tooltip.visible = false;
+		} else {
+			tooltip.setVisible(false);
 		}
 
 		return captured;
@@ -258,18 +238,16 @@ public class Control {
 	// Draw
 	protected void draw(GuiGraphics graphics, Theme theme) {
 		theme.get(id, painterKey).draw(graphics, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
-	}
 
-	protected void drawTooltip(GuiGraphics graphics) {
-		if (tooltip.visible && !newTooltip.isEmpty()) {
+		if (tooltip.isVisible() && !tooltip.isEmpty()) {
 			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
-			graphics.drawTooltip(textRenderer, newTooltip.getTexts(), newTooltip.getData(), 0, 0);
+			graphics.drawTooltip(textRenderer, tooltip.getComponents(), tooltip.getX(), tooltip.getY(), tooltip.getPositioner());
 		}
 	}
 
 	protected void cleanup() {
-		if (tooltip != null) tooltip.cleanup();
+
 	}
 
 	protected void setParent(Control parent) {

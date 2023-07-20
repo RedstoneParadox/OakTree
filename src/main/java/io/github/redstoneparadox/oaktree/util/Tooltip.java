@@ -11,8 +11,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Tooltip {
-	private final List<Text> texts;
-	private final Optional<TooltipData> data;
+	private List<Text> texts;
+	private Optional<TooltipData> data;
 	private final TooltipPositioner positioner;
 	private boolean visible = false;
 	private int x = 0;
@@ -42,12 +42,19 @@ public class Tooltip {
 		return texts.isEmpty();
 	}
 
-	public List<Text> getTexts() {
-		return texts;
+	public void setTexts(List<Text> texts) {
+		this.texts = texts;
 	}
 
-	public Optional<TooltipData> getData() {
-		return data;
+	public void setData(Optional<TooltipData> data) {
+		this.data = data;
+	}
+
+	public List<TooltipComponent> getComponents() {
+		List<TooltipComponent> list = texts.stream().map(Text::asOrderedText).map(TooltipComponent::of).collect(Collectors.toList());
+		data.ifPresent(datax -> list.add(1, TooltipComponent.of(datax)));
+
+		return list;
 	}
 
 	public TooltipPositioner getPositioner() {
@@ -57,5 +64,13 @@ public class Tooltip {
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 }

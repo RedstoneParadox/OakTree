@@ -8,16 +8,12 @@ import io.github.redstoneparadox.oaktree.util.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.List;
 
 /**
  * <p>A {@link Control} that can be used for interacting
@@ -38,17 +34,6 @@ public class SlotControl extends Control implements MouseButtonListener {
 		this.player = player;
 		this.slot = slot;
 		this.id = "item_slot";
-
-		LabelControl tooltip = new LabelControl();
-		tooltip.setId("tooltip");
-		tooltip.setText("");
-		tooltip.setShadow(true);
-		tooltip.setFitText(true);
-		tooltip.visible = false;
-		tooltip.setIsTooltip(true);
-		tooltip.setMaxDisplayedLines(999);
-
-		this.tooltip = tooltip;
 		this.setSize(18, 18);
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
@@ -112,19 +97,19 @@ public class SlotControl extends Control implements MouseButtonListener {
 				slot.markDirty();
 			}
 
-			if (tooltip != null && tooltip instanceof LabelControl) {
-				if (!slotStack.isEmpty()) {
-					List<Text> texts = slotStack.getTooltip(player, TooltipContext.Default.HIDE_ADVANCED_DETAILS);
-					((LabelControl) tooltip).setText(texts);
-					tooltip.setVisible(true);
-				}
-				else {
-					((LabelControl) tooltip).clearText();
-					tooltip.setVisible(false);
-				}
+			if (!slotStack.isEmpty()) {
+				tooltip.setVisible(true);
+
+				TooltipContext context = client.options.advancedItemTooltips ? TooltipContext.SHOW_ADVANCED_DETAILS : TooltipContext.HIDE_ADVANCED_DETAILS;
+
+				tooltip.setTexts(slotStack.getTooltip(player, context));
+				tooltip.setData(slotStack.getTooltipData());
+			} else {
+				tooltip.setVisible(false);
 			}
+
 		} else {
-			if (tooltip != null) tooltip.setVisible(false);
+			tooltip.setVisible(false);
 			highlighted = false;
 		}
 

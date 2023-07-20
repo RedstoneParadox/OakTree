@@ -142,8 +142,7 @@ public class RootPanelControl extends PanelControl {
 			for (Entry entry: entries) {
 				Control control = entry.control;
 
-				if (control.isTooltip) tooltips.add(entry);
-				else nonTooltips.add(entry);
+				nonTooltips.add(entry);
 			}
 
 			entries.clear();
