@@ -51,7 +51,7 @@ public class ItemPainter extends Painter {
 			int offsetX = width/2;
 			int offsetY = height/2;
 
-			graphics.drawItem(stack, x + offsetX, y + offsetY);
+			graphics.drawItem(stack, x + offsetX - 8, y + offsetY - 8);
 		}
 	}
 

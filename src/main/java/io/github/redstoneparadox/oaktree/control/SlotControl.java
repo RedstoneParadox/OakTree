@@ -129,7 +129,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 		int y = trueArea.getY();
 
 		ItemStack stack = slot.getStack();
-		graphics.drawItem(stack, x + trueArea.getWidth()/2, y + trueArea.getHeight()/2);
+		graphics.drawItem(stack, x + trueArea.getWidth()/2 - 8, y + trueArea.getHeight()/2 - 8);
 
 		if (highlighted) {
 			int highlightX = x + slotBorder;
