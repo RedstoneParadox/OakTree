@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.mixin.client.gui.screen.ingame;
 
 import io.github.redstoneparadox.oaktree.hooks.ScreenHooks;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenHandler;
@@ -36,7 +37,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> implements Scr
 	}
 
 	@Inject(method = "drawSlot", at = @At("HEAD"), cancellable = true)
-	private void drawSlot(MatrixStack matrixStack, Slot slot, CallbackInfo ci) {
+	private void drawSlot(GuiGraphics graphics, Slot slot, CallbackInfo ci) {
 		if (slot instanceof BackingSlot) {
 			ci.cancel();
 		}
