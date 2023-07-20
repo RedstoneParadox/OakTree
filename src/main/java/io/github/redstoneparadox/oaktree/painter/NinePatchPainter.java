@@ -20,16 +20,16 @@ public class NinePatchPainter extends TexturePainter {
 		super(path);
 	}
 
-	public void setWidths(int firstWidth, int secondWidth, int thirdWidth) {
-		this.leftWidth = firstWidth;
-		this.centerWidth = secondWidth;
-		this.rightWidth = thirdWidth;
+	public void setWidths(int leftWidth, int centerWidth, int rightWidth) {
+		this.leftWidth = leftWidth;
+		this.centerWidth = centerWidth;
+		this.rightWidth = rightWidth;
 	}
 
-	public void setHeights(int firstHeight, int secondHeight, int thirdHeight) {
-		this.topHeight = firstHeight;
-		this.centerHeight = secondHeight;
-		this.bottomHeight = thirdHeight;
+	public void setHeights(int topHeight, int centerHeight, int bottomHeight) {
+		this.topHeight = topHeight;
+		this.centerHeight = centerHeight;
+		this.bottomHeight = bottomHeight;
 	}
 
 	@Override
@@ -51,8 +51,6 @@ public class NinePatchPainter extends TexturePainter {
 
 	@Override
 	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
-
-
 		graphics.drawNineSlicedTexture(
 				texture,
 				x,
@@ -63,8 +61,8 @@ public class NinePatchPainter extends TexturePainter {
 				topHeight,
 				rightWidth,
 				bottomHeight,
-				centerWidth,
-				centerHeight,
+				centerWidth + rightWidth + leftWidth,
+				centerHeight + topHeight + bottomHeight,
 				left,
 				top
 		);
