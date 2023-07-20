@@ -14,12 +14,11 @@ import io.github.redstoneparadox.oaktree.painter.ColorPainter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.MutableText;
@@ -33,11 +32,9 @@ import java.util.function.Function;
 
 public class TestScreens {
 	public static void init() {
-		ScreenRegistry.register(
+		HandledScreens.register(
 				TestScreenHandlers.TEST_INVENTORY_SCREEN_HANDLER,
-				// TODO: Find out why the compiler doesn't like not having the cast here
-				(ScreenRegistry.Factory<TestScreenHandlers.TestScreenHandler, HandledTestScreen>)
-						(handler, inventory, text) -> new HandledTestScreen(handler, inventory, text, (slots -> testInventory(slots, inventory.player)))
+				(handler, inventory, text) -> new HandledTestScreen(handler, inventory, text, (slots -> testInventory(slots, inventory.player)))
 		);
 	}
 
@@ -84,7 +81,7 @@ public class TestScreens {
 		slider.setBarLength(10);
 		slider.setHorizontal(true);
 		slider.setOffset(0, 100);
-		slider.onSlide(() -> slider.setText("" + (int) slider.getScrollPercent() + "%"));
+		slider.onSlide(() -> slider.setText((int) slider.getScrollPercent() + "%"));
 		slider.setText("0%");
 
 		label2.setAnchor(Anchor.TOP_CENTER);
@@ -235,11 +232,6 @@ public class TestScreens {
 		public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
 			super.render(graphics, mouseX, mouseY, delta);
 			root.render(graphics, mouseX, mouseY, delta);
-		}
-
-		@Override
-		public boolean isPauseScreen() {
-			return false;
 		}
 
 		@Override

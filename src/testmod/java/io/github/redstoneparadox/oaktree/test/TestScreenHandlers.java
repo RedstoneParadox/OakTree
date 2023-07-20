@@ -1,10 +1,12 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.feature_flags.FeatureFlags;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
@@ -17,7 +19,8 @@ public class TestScreenHandlers {
 	public static final ScreenHandlerType<TestScreenHandler> TEST_INVENTORY_SCREEN_HANDLER;
 
 	static {
-		TEST_INVENTORY_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(""), (TestScreenHandler::new));
+		ScreenHandlerType<TestScreenHandler> type = new ScreenHandlerType<>(TestScreenHandler::new, FeatureFlags.DEFAULT_SET);
+		TEST_INVENTORY_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER_TYPE, new Identifier(""), type);
 	}
 
 	public static void init() {
@@ -42,7 +45,7 @@ public class TestScreenHandlers {
 		}
 
 		@Override
-		public ItemStack transferSlot(PlayerEntity playerEntity, int i) {
+		public ItemStack quickTransfer(PlayerEntity player, int fromIndex) {
 			return null;
 		}
 

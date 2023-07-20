@@ -1,16 +1,16 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.control.RootPanelControl;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -18,9 +18,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
 import java.util.function.Supplier;
 
@@ -38,11 +38,11 @@ public class TestBlocks {
 	}
 
 	private static void register(Block block, String suffix) {
-		Registry.register(Registry.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
+		Registry.register(Registries.BLOCK, new Identifier("oaktree", "test_" + suffix), block);
 	}
 
 	private static AbstractBlock.Settings testSettings() {
-		return FabricBlockSettings.of(Material.METAL);
+		return QuiltBlockSettings.create();
 	}
 
 	static class TestBlock extends Block {
