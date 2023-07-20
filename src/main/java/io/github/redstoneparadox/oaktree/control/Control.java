@@ -221,7 +221,7 @@ public class Control {
 
 		if (captured) {
 			tooltip.setVisible(true);
-			tooltip.setPosition(mouseX + 8, mouseY - 16);
+			tooltip.setPosition(mouseX, mouseY);
 			markDirty();
 		} else {
 			tooltip.setVisible(false);
