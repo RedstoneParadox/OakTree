@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.feature_flags.FeatureFlags;
