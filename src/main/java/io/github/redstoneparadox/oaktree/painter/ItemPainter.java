@@ -6,25 +6,64 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
+/**
+ * A {@code Painter} used to draw an {@link ItemStack} on screen.
+ */
 public class ItemPainter extends Painter {
 	private ItemStack stack;
 
+	/**
+	 * Creates a {@code ItemPainter} instance from an item
+	 * identifier and a stack size. Note that if the id is
+	 * invalid, the painter will "draw" air.
+	 *
+	 * @param identifier The item identifier
+	 * @param count The number of items in the stack
+	 */
 	public ItemPainter(Identifier identifier, int count) {
 		this.stack = new ItemStack(Registries.ITEM.get(identifier), count);
 	}
 
+	/**
+	 * Creates an {@code ItemPainter} instance from an
+	 * item stack.
+	 *
+	 * @param stack The stack to daw
+	 */
 	public ItemPainter(ItemStack stack) {
 		this.stack = stack;
 	}
 
+	/**
+	 * Creates a {@code ItemPainter} instance from an item
+	 * identifier. Note that if the id is
+	 * invalid, the painter will "draw" air.
+	 *
+	 * @param identifier The item identifier
+	 */
 	public ItemPainter(Identifier identifier) {
 		this(identifier, 1);
 	}
 
+	/**
+	 * Creates a {@code ItemPainter} instance from an item
+	 * identifier. Note that if the id is
+	 * invalid, the painter will "draw" air.
+	 *
+	 * @param identifier The item identifier
+	 */
 	public ItemPainter(String identifier) {
 		this(new Identifier(identifier), 1);
 	}
 
+	/**
+	 * Creates a {@code ItemPainter} instance from an item
+	 * identifier and a stack size. Note that if the id is
+	 * invalid, the painter will "draw" air.
+	 *
+	 * @param identifier The item identifier
+	 * @param count The number of items in the stack
+	 */
 	public ItemPainter(String identifier, int count) {
 		this(new Identifier(identifier), count);
 	}
@@ -33,6 +72,11 @@ public class ItemPainter extends Painter {
 		return stack.getCount();
 	}
 
+	/**
+	 * Sets the size of the item stack.
+	 *
+	 * @param count The item count
+	 */
 	public void setCount(int count) {
 		stack.setCount(count);
 	}
@@ -41,6 +85,11 @@ public class ItemPainter extends Painter {
 		return stack.getItem();
 	}
 
+	/**
+	 * Sets the item to draw.
+	 *
+	 * @param item The item to draw.
+	 */
 	public void setItem(Item item) {
 		stack = new ItemStack(item, stack.getCount());
 	}

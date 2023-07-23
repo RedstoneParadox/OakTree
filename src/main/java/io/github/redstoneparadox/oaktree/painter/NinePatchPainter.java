@@ -3,6 +3,10 @@ package io.github.redstoneparadox.oaktree.painter;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Identifier;
 
+/**
+ * A {@code TexturePainter} capable of drawing nine-patch
+ * textures.
+ */
 public class NinePatchPainter extends TexturePainter {
 	int leftWidth = 1;
 	int centerWidth = 1;
@@ -20,12 +24,26 @@ public class NinePatchPainter extends TexturePainter {
 		super(path);
 	}
 
+	/**
+	 * Sets the slice widths of the nine-patch
+	 *
+	 * @param leftWidth The left slice width.
+	 * @param centerWidth The center slice width.
+	 * @param rightWidth The right slice width.
+	 */
 	public void setWidths(int leftWidth, int centerWidth, int rightWidth) {
 		this.leftWidth = leftWidth;
 		this.centerWidth = centerWidth;
 		this.rightWidth = rightWidth;
 	}
 
+	/**
+	 * Sets the slice heights of the nine-patch
+	 *
+	 * @param topHeight The top slice height.
+	 * @param centerHeight The center slice height.
+	 * @param bottomHeight The bottom slice height.
+	 */
 	public void setHeights(int topHeight, int centerHeight, int bottomHeight) {
 		this.topHeight = topHeight;
 		this.centerHeight = centerHeight;

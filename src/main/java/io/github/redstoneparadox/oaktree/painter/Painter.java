@@ -37,5 +37,10 @@ public abstract class Painter {
 
 	}
 
+	/**
+	 * Creates a copy of this {@code Painter}
+	 *
+	 * @return The copy
+	 */
 	public abstract Painter copy();
 }

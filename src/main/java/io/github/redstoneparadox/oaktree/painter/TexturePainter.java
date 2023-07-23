@@ -6,7 +6,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Identifier;
 
-
+/**
+ * A {@code Painter} that can draw a texture.
+ * Can optionally be tinted.
+ */
 public class TexturePainter extends Painter {
 	protected Identifier texture;
 	protected int u = 0;
@@ -26,6 +29,13 @@ public class TexturePainter extends Painter {
 		this.texture = texture;
 	}
 
+	/**
+	 * Sets the texture coordinates to start
+	 * drawing from.
+	 *
+	 * @param u The horizontal coordinate
+	 * @param v The vertical coordinate
+	 */
 	public void setOrigin(int u, int v) {
 		this.u = u;
 		this.v = v;
@@ -36,10 +46,11 @@ public class TexturePainter extends Painter {
 	}
 
 	/**
-	 * Sets whether or not the StyleBox
+	 * Sets whether the {@code TexturePainter}
 	 * should tile its texture.
 	 *
-	 * @param tiled The value to set.
+	 * @param tiled Whether the texture should
+	 *              be tiled.
 	 */
 	public void setTiled(boolean tiled) {
 		this.tiled = tiled;
@@ -49,24 +60,49 @@ public class TexturePainter extends Painter {
 		return tiled;
 	}
 
-	public void setRegionSize(int textureWidth, int textureHeight) {
-		this.regionWidth = textureWidth;
-		this.regionHeight = textureHeight;
+	/**
+	 * Sets the size of the region on the texture
+	 * that will be drawn.
+	 *
+	 * @param regionWidth The region width
+	 * @param regionHeight The region height
+	 */
+	public void setRegionSize(int regionWidth, int regionHeight) {
+		this.regionWidth = regionWidth;
+		this.regionHeight = regionHeight;
 	}
 
 	public Vector2 getRegionSize() {
 		return new Vector2(regionWidth, regionHeight);
 	}
 
-	public void setTextureSize(int fileWidth, int fileHeight) {
-		this.textureWidth = fileWidth;
-		this.textureHeight = fileHeight;
+	/**
+	 * Sets the size of the texture file itself.
+	 * By default, this is 256x256 as that is
+	 * what Minecraft uses for all GUI textures.
+	 * Unless it needs to be smaller or larger, it
+	 * is recommended to stick to that standard.
+	 *
+	 * @param textureWidth The texture file width
+	 * @param textureHeight The texture file height
+	 */
+	public void setTextureSize(int textureWidth, int textureHeight) {
+		this.textureWidth = textureWidth;
+		this.textureHeight = textureHeight;
 	}
 
 	public Vector2 getTextureSize() {
 		return new Vector2(textureWidth, textureHeight);
 	}
 
+	/**
+	 * Sets the color to tint the texture with.
+	 * By default, this is {@link Color#WHITE},
+	 * which results in the texture drawing with
+	 * normal colors.
+	 *
+	 * @param tint The tint color.
+	 */
 	public void setTint(Color tint) {
 		this.tint = tint;
 	}

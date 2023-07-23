@@ -2,6 +2,8 @@ package io.github.redstoneparadox.oaktree.painter;
 
 import io.github.redstoneparadox.oaktree.control.ButtonControl;
 import io.github.redstoneparadox.oaktree.control.Control;
+import io.github.redstoneparadox.oaktree.control.Control.PainterKey;
+import io.github.redstoneparadox.oaktree.control.RootPanelControl;
 import io.github.redstoneparadox.oaktree.control.SliderControl;
 import io.github.redstoneparadox.oaktree.control.SlotControl;
 import io.github.redstoneparadox.oaktree.control.TextEditControl;
@@ -11,19 +13,38 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A {@code Theme} is a collection of {@link Painter} instances.
+ *
+ * @see RootPanelControl
+ */
 public class Theme {
-	private final Map<String, Map<Control.PainterKey, Painter>> painters = new HashMap<>();
+	private final Map<String, Map<PainterKey, Painter>> painters = new HashMap<>();
 
 	public Theme() {
 	}
 
-	public void put(String id, Control.PainterKey painterKey, @NotNull Painter painter) {
+	/**
+	 * Adds a new {@link Painter} to this theme, stored by a unique id
+	 * and a {@link PainterKey} specific to the {@link Control} class.
+	 * For example, adding a {@code Painter} with an id of "foobar" and
+	 * a {@code PainterKey} {@link ButtonControl#HELD} will only draw it
+	 * for {@link ButtonControl} instances that are held down and have
+	 * "foobar" as their id.
+	 *
+	 * @param id The {@link Control} id
+	 * @param painterKey The painter key from the {@link Control} class
+	 * @param painter The {@link Painter}
+	 *
+	 * @see Control#setId(String)
+	 */
+	public void put(String id, PainterKey painterKey, @NotNull Painter painter) {
 		painters.computeIfAbsent(id, s -> new HashMap<>()).put(painterKey, painter);
 	}
 
-	public @NotNull Painter get(String id, Control.PainterKey painterKey) {
+	public @NotNull Painter get(String id, PainterKey painterKey) {
 		if (painters.containsKey(id)) {
-			Map<Control.PainterKey, Painter> subMap = painters.get(id);
+			Map<PainterKey, Painter> subMap = painters.get(id);
 
 			if (subMap.containsKey(painterKey)) {
 				return subMap.get(painterKey);
@@ -34,12 +55,24 @@ public class Theme {
 		return Painter.BLANK;
 	}
 
+	/**
+	 * Creates a copy of this theme
+	 *
+	 * @return The copy
+	 */
 	public Theme copy() {
 		Theme copy = new Theme();
 		copy.painters.putAll(this.painters);
 		return copy;
 	}
 
+	/**
+	 * Creates a theme containing {@link Painter} instances
+	 * that draw vanilla textures. Useful if you want to make
+	 * a vanilla-themed gui without much effort.
+	 *
+	 * @return The vanilla theme
+	 */
 	public static Theme vanilla() {
 		Theme vanilla = new Theme();
 
