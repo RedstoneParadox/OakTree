@@ -4,8 +4,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * A control that can display two children
+ * on either side of a horizontal or vertical
+ * split. The first child is displayed to the
+ * left or on the top and the second child is
+ * displayed to the right or on the bottom.
+ */
 public class SplitControl extends Control {
-	protected int splitSize = 0;
+	protected int splitPosition = 0;
 	protected boolean vertical = false;
 	protected @NotNull Control first = new Control();
 	protected @NotNull Control second = new Control();
@@ -14,14 +21,26 @@ public class SplitControl extends Control {
 		this.id = "split";
 	}
 
-	public void setSplitSize(int splitSize) {
-		this.splitSize = splitSize;
+	/**
+	 * Sets how far from the right or top
+	 * the split should be.
+	 *
+	 * @param splitPosition The position.
+	 */
+	public void setSplitPosition(int splitPosition) {
+		this.splitPosition = splitPosition;
 	}
 
-	public int getSplitSize() {
-		return splitSize;
+	public int getSplitPosition() {
+		return splitPosition;
 	}
 
+	/**
+	 * Sets whether this control is oriented
+	 * horizontally or vertically.
+	 *
+	 * @param vertical The orientation.
+	 */
 	public void setVertical(boolean vertical) {
 		this.vertical = vertical;
 	}
@@ -30,6 +49,13 @@ public class SplitControl extends Control {
 		return vertical;
 	}
 
+	/**
+	 * Sets the first child, which is drawn
+	 * either in the left or top half
+	 * depending on the orientation.
+	 *
+	 * @param first The first child.
+	 */
 	public void setFirst(@NotNull Control first) {
 		this.first = first;
 		first.setParent(this);
@@ -40,6 +66,13 @@ public class SplitControl extends Control {
 		return first;
 	}
 
+	/**
+	 * Sets the second child, which is
+	 * drawn either in the right or bottom
+	 * half depending on the orientation.
+	 *
+	 * @param second The second child.
+	 */
 	public void setSecond(@NotNull Control second) {
 		this.second = second;
 		second.setParent(this);
@@ -55,17 +88,17 @@ public class SplitControl extends Control {
 		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
 
 		if (vertical) {
-			int bottomY = trueArea.getY() + splitSize;
-			int topHeight = trueArea.getHeight() - splitSize;
+			int bottomY = trueArea.getY() + splitPosition;
+			int topHeight = trueArea.getHeight() - splitPosition;
 
 			if (first.visible) first.updateTree(orderedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), topHeight);
-			if (second.visible) second.updateTree(orderedControls, trueArea.getX(), bottomY, trueArea.getWidth(), splitSize);
+			if (second.visible) second.updateTree(orderedControls, trueArea.getX(), bottomY, trueArea.getWidth(), splitPosition);
 		} else {
-			int rightX = trueArea.getX() + splitSize;
-			int leftWidth = trueArea.getWidth() - splitSize;
+			int rightX = trueArea.getX() + splitPosition;
+			int leftWidth = trueArea.getWidth() - splitPosition;
 
 			if (first.visible) first.updateTree(orderedControls, trueArea.getX(), trueArea.getY(), leftWidth, trueArea.getHeight());
-			if (second.visible) second.updateTree(orderedControls, rightX, trueArea.getY(), splitSize, trueArea.getHeight());
+			if (second.visible) second.updateTree(orderedControls, rightX, trueArea.getY(), splitPosition, trueArea.getHeight());
 		}
 	}
 

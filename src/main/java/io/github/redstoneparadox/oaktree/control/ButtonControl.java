@@ -10,6 +10,10 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
+/**
+ * A Control that can be interacted with by
+ * the user.
+ */
 public class ButtonControl extends Control implements MouseButtonListener {
 	public static final PainterKey HELD = new PainterKey();
 	public static final PainterKey HOVERED = new PainterKey();
@@ -35,6 +39,12 @@ public class ButtonControl extends Control implements MouseButtonListener {
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
+	/**
+	 * Sets whether this control behaves like
+	 * a toggle button or a regular button.
+	 *
+	 * @param toggleable Whether this button is toggleable
+	 */
 	public void setToggleable(boolean toggleable) {
 		this.toggleable = toggleable;
 	}
@@ -43,10 +53,22 @@ public class ButtonControl extends Control implements MouseButtonListener {
 		return toggleable;
 	}
 
+	/**
+	 * Sets the text for this button to
+	 * display.
+	 *
+	 * @param text The text to display
+	 */
 	public void setText(String text) {
 		label.setText(Text.literal(text));
 	}
 
+	/**
+	 * Sets the text for this button to
+	 * display.
+	 *
+	 * @param text The text to display
+	 */
 	public void setText(Text text) {
 		label.setText(text);
 	}
@@ -55,14 +77,32 @@ public class ButtonControl extends Control implements MouseButtonListener {
 		return label.getText();
 	}
 
+	/**
+	 * Sets an {@link Action} to be run
+	 * when this button is clicked.
+	 *
+	 * @param onClick The action to run
+	 */
 	public void onClick(@NotNull Action onClick) {
 		this.onClick = onClick;
 	}
 
+	/**
+	 * Sets an {@link Action} to be run
+	 * while this button is held
+	 *
+	 * @param whileHeld The action to run
+	 */
 	public void whileHeld(@NotNull Action whileHeld) {
 		this.onClick = whileHeld;
 	}
 
+	/**
+	 * Sets an {@link Action} to be run
+	 * when this button is released.
+	 *
+	 * @param onRelease The action to run.
+	 */
 	public void onRelease(@NotNull Action onRelease) {
 		this.onRelease = onRelease;
 	}

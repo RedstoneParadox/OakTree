@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class SlotControl extends Control implements MouseButtonListener {
 	protected @NotNull Color highlightColor = Color.rgba(0.9f, 0.9f, 0.9f, 0.5f);
-	protected int slotBorder = 1;
+	protected int borderSize = 1;
 
 	private final PlayerEntity player;
 	private final BackingSlot slot;
@@ -62,12 +62,19 @@ public class SlotControl extends Control implements MouseButtonListener {
 		return highlightColor;
 	}
 
-	public void setSlotBorder(int slotBorder) {
-		this.slotBorder = slotBorder;
+	/**
+	 * Sets the border size around this slot. Used
+	 * to determine how big the highlight square
+	 * should be.
+	 *
+	 * @param borderSize The size.
+	 */
+	public void setBorderSize(int borderSize) {
+		this.borderSize = borderSize;
 	}
 
-	public int getSlotBorder() {
-		return slotBorder;
+	public int getBorderSize() {
+		return borderSize;
 	}
 
 	@Override
@@ -132,10 +139,10 @@ public class SlotControl extends Control implements MouseButtonListener {
 		graphics.drawItem(stack, x + trueArea.getWidth()/2 - 8, y + trueArea.getHeight()/2 - 8);
 
 		if (highlighted) {
-			int highlightX = x + slotBorder;
-			int highlightY = y + slotBorder;
-			int highlightWidth = trueArea.getWidth() - (2 * slotBorder);
-			int highlightHeight = trueArea.getHeight() - (2 * slotBorder);
+			int highlightX = x + borderSize;
+			int highlightY = y + borderSize;
+			int highlightWidth = trueArea.getWidth() - (2 * borderSize);
+			int highlightHeight = trueArea.getHeight() - (2 * borderSize);
 			int z = 0;
 
 			if (!stack.isEmpty()) z = 1;

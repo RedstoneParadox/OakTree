@@ -111,7 +111,7 @@ public class LabelControl extends Control {
 	}
 
 	/**
-	 * Sets the maximum number of lines.
+	 * Sets the maximum number of lines to display.
 	 *
 	 * @param maxDisplayedLines The max number of lines.
 	 */
@@ -119,18 +119,33 @@ public class LabelControl extends Control {
 		this.maxDisplayedLines = Math.max(0, maxDisplayedLines);
 	}
 
+
 	public int getMaxDisplayedLines() {
 		return maxDisplayedLines;
 	}
 
+	/**
+	 * Sets the first line in the label text
+	 * to be displayed.
+	 *
+	 * @param firstLine The line number
+	 */
 	public void setFirstLine(int firstLine) {
 		this.firstLine = Math.max(0, firstLine);
 	}
 
+	/**
+	 * Sets the first line to be displayed
+	 * to the first line of the label text.
+	 */
 	public void moveToStart() {
 		this.firstLine = 0;
 	}
 
+	/**
+	 * Sets the first line to be displayed
+	 * to the last line of the label text.
+	 */
 	public void moveToEnd() {
 		this.firstLine = TextHelper.wrapText(text, area.getWidth(), 0, Integer.MAX_VALUE, shadow, true).size() - maxDisplayedLines;
 	}

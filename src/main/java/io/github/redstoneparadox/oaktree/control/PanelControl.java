@@ -51,6 +51,12 @@ public class PanelControl extends PaddingControl {
 		}
 	}
 
+	/**
+	 * Gets the child at the specified index.
+	 *
+	 * @param index The index.
+	 * @return The child control.
+	 */
 	public @Nullable Control getChild(int index) {
 		if (index < children.size()) {
 			return children.get(index);
@@ -59,16 +65,28 @@ public class PanelControl extends PaddingControl {
 		return null;
 	}
 
+	/**
+	 * Removes the child at the specified index.
+	 *
+	 * @param index The index.
+	 * @return The child.
+	 */
 	public @Nullable Control removeChild(int index) {
 		markDirty();
 		return children.remove(index);
 	}
 
+	/**
+	 * Removes all children from this panel.
+	 */
 	public void clearChildren() {
 		children.clear();
 		markDirty();
 	}
 
+	/**
+	 * @return The number of children this panel has.
+	 */
 	public int getChildrenCount() {
 		return children.size();
 	}

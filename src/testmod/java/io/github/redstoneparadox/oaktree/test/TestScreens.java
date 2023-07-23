@@ -14,13 +14,11 @@ import io.github.redstoneparadox.oaktree.painter.ColorPainter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.MutableText;
@@ -81,7 +79,7 @@ public class TestScreens {
 
 		slider.setAnchor(Anchor.TOP_CENTER);
 		slider.setSize(120, 20);
-		slider.setBarLength(10);
+		slider.setThumbSize(10);
 		slider.setHorizontal(true);
 		slider.setOffset(0, 100);
 		slider.onSlide(() -> slider.setText("" + (int) slider.getScrollPercent() + "%"));

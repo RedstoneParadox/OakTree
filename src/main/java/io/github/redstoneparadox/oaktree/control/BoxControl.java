@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * BoxControl is a type of {@link PaddingControl}
  * that can have a single child {@link Control}.
- *
+ * <p>
  * While {@link PanelControl} could also be used,
  * this class is specialized for dealing with a
  * single child.
@@ -22,7 +22,7 @@ public class BoxControl extends PaddingControl {
 	/**
 	 * Sets the child of this control. The child
 	 * will be drawn within the internal
-	 * margins.
+	 * padding.
 	 *
 	 * @param child The {@link } that is being
 	 *           	added as a child.

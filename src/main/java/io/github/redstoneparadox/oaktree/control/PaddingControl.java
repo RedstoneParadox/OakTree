@@ -2,6 +2,12 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.math.Vector2;
 
+/**
+ * A Control that has internal padding. Serves
+ * as the parent for controls such as
+ * {@link BoxControl} and {@link PanelControl},
+ * which can all have child Controls.
+ */
 public abstract class PaddingControl extends Control {
 	protected int topPadding = 0;
 	protected int bottomPadding = 0;

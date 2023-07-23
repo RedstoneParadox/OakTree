@@ -127,9 +127,10 @@ public class Control {
 	}
 
 	/**
-	 * Sets whether or not this should automatically expand to the
-	 * size of the parent Control. If set to true, any size and position settings
-	 * will be ignored when drawing the Control.
+	 * Sets whether this should automatically expand to the
+	 * size of the parent Control. If set to true,
+	 * any size and position settings will be ignored
+	 * when drawing the Control.
 	 *
 	 * @param expand The value to set
 	 */
@@ -146,7 +147,7 @@ public class Control {
 	 * are not visible will not be drawn, cannot be interacted with,
 	 * and will cause their children to not be drawn (if they have any).
 	 *
-	 * @param visible Whether or not this Control should be visible.
+	 * @param visible Whether this Control should be visible.
 	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
@@ -157,6 +158,12 @@ public class Control {
 		return this.visible;
 	}
 
+	/**
+	 * Sets a {@link Tooltip} to be displayed when
+	 * a mouse hovers over this Control.
+	 *
+	 * @param tooltip The tooltip to display
+	 */
 	public void setTooltip(Tooltip tooltip) {
 		this.tooltip = tooltip;
 	}
@@ -181,9 +188,9 @@ public class Control {
 	}
 
 	/**
-	 * Sets a function to run every time this Control is ticked.
+	 * Sets an {@link Action} to run every tick.
 	 *
-	 * @param onTick the function to run.
+	 * @param onTick the action to run.
 	 */
 	public void onTick(@NotNull Action onTick) {
 		this.onTick = onTick;

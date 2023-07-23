@@ -2,6 +2,12 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.math.Vector2;
 
+/**
+ * Use to set the relative offset of a {@link Control}
+ * to its parent. For example, {@link Anchor#CENTER}
+ * will automatically center a Control on its parent
+ * regardless of the parent's size.
+ */
 public enum Anchor {
 	TOP_LEFT,
 	TOP_CENTER,

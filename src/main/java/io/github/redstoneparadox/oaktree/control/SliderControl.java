@@ -12,11 +12,14 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
+/**
+ * A control representing a slider or a scrollbar.
+ */
 public class SliderControl extends Control implements MouseButtonListener {
 	public static PainterKey SLIDER = new PainterKey();
 
 	protected float scrollPercent = 0.0f;
-	protected int barLength = 1;
+	protected int thumbSize = 1;
 	protected boolean horizontal = false;
 	protected @NotNull Action onSlide = () -> {};
 	protected boolean held = false;
@@ -34,6 +37,12 @@ public class SliderControl extends Control implements MouseButtonListener {
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
+	/**
+	 * Sets how far this bar is scrolled from
+	 * 0% to 100%.
+	 *
+	 * @param scrollPercent The percentage
+	 */
 	public void setScrollPercent(float scrollPercent) {
 		this.scrollPercent = scrollPercent;
 	}
@@ -42,14 +51,27 @@ public class SliderControl extends Control implements MouseButtonListener {
 		return scrollPercent;
 	}
 
-	public void setBarLength(int barLength) {
-		this.barLength = barLength;
+	/**
+	 * Sets the size of the thumb (the
+	 * part you grab and move). If the
+	 * slider is set to draw
+	 * horizontally, the thumb's size is
+	 * its height. If not, the size is
+	 * the width.
+	 *
+	 * @param thumbSize The size
+	 */
+	public void setThumbSize(int thumbSize) {
+		this.thumbSize = thumbSize;
 	}
 
-	public int getBarLength() {
-		return barLength;
+	public int getThumbSize() {
+		return thumbSize;
 	}
 
+	/**
+	 * @param horizontal If this should draw horizontally.
+	 */
 	public void setHorizontal(boolean horizontal) {
 		this.horizontal = horizontal;
 	}
@@ -58,10 +80,22 @@ public class SliderControl extends Control implements MouseButtonListener {
 		return horizontal;
 	}
 
+	/**
+	 * Sets the text to display. The text will
+	 * be drawn over the top of the thumb.
+	 *
+	 * @param text The text.
+	 */
 	public void setText(String text) {
 		label.setText(Text.literal(text));
 	}
 
+	/**
+	 * Sets the text to display. The text will
+	 * be drawn over the top of the thumb.
+	 *
+	 * @param text The text.
+	 */
 	public void setText(Text text) {
 		label.setText(text);
 	}
@@ -70,6 +104,12 @@ public class SliderControl extends Control implements MouseButtonListener {
 		return label.getText();
 	}
 
+	/**
+	 * Sets an {@link Action} to run whenever
+	 * the slider thumb is moved.
+	 *
+	 * @param onSlide The action to run.
+	 */
 	public void onSlide(@NotNull Action onSlide) {
 		this.onSlide = onSlide;
 	}
@@ -88,10 +128,10 @@ public class SliderControl extends Control implements MouseButtonListener {
 			float percent = scrollPercent;
 
 			if (horizontal) {
-				scrollPercent = ((float) mouseX - trueArea.getX())/(trueArea.getWidth() - barLength) * 100.0f;
+				scrollPercent = ((float) mouseX - trueArea.getX())/(trueArea.getWidth() - thumbSize) * 100.0f;
 			}
 			else {
-				scrollPercent = ((float)mouseY - trueArea.getY())/(trueArea.getHeight() - barLength) * 100.0f;
+				scrollPercent = ((float)mouseY - trueArea.getY())/(trueArea.getHeight() - thumbSize) * 100.0f;
 			}
 
 			scrollPercent = Math.max(0.0f, Math.min(100.0f, scrollPercent));
@@ -112,12 +152,12 @@ public class SliderControl extends Control implements MouseButtonListener {
 		int sliderHeight = trueArea.getHeight();
 
 		if (horizontal) {
-			sliderX += (int)((scrollPercent)/100 * (trueArea.getWidth() - barLength));
-			sliderWidth = barLength;
+			sliderX += (int)((scrollPercent)/100 * (trueArea.getWidth() - thumbSize));
+			sliderWidth = thumbSize;
 		}
 		else {
-			sliderY += (int)((scrollPercent)/100 * (trueArea.getHeight() - barLength));
-			sliderHeight = barLength;
+			sliderY += (int)((scrollPercent)/100 * (trueArea.getHeight() - thumbSize));
+			sliderHeight = thumbSize;
 		}
 
 		theme.get(id, SLIDER).draw(graphics, sliderX, sliderY, sliderWidth, sliderHeight);

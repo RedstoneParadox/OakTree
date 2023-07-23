@@ -24,7 +24,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Work in Progress!
+ * A control that acts as an editable text
+ * field. Has most of the features that the
+ * vanilla book and quill screen has, but
+ * can be used for single-line text fields
+ * as well.
  */
 public class TextEditControl extends Control implements CharTypedListener, MouseButtonListener {
 	private final List<String> lines = new ArrayList<>();

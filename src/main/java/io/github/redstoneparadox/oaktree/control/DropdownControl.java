@@ -8,6 +8,11 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
+/**
+ * A control that displays another control
+ * when clicked on, similar to a dropdown
+ * menu.
+ */
 public class DropdownControl extends Control implements MouseButtonListener {
 	@NotNull protected Control dropdown = new Control();
 	@NotNull protected Direction2D dropdownDirection = Direction2D.DOWN;
@@ -22,6 +27,15 @@ public class DropdownControl extends Control implements MouseButtonListener {
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
 
+	/**
+	 * Sets the control to be displayed when
+	 * this dropdown is opened. It is
+	 * recommended to use a
+	 * {@link ListPanelControl} To display
+	 * multiple items
+	 *
+	 * @param dropdown The dropdown
+	 */
 	public void setDropdown(@NotNull Control dropdown) {
 		this.dropdown = dropdown;
 		this.dropdown.setVisible(false);
@@ -31,6 +45,13 @@ public class DropdownControl extends Control implements MouseButtonListener {
 		return dropdown;
 	}
 
+	/**
+	 * Sets which direction this dropdown
+	 * should open in. Default is
+	 * {@link Direction2D#DOWN}
+	 *
+	 * @param dropdownDirection The direction
+	 */
 	public void setDropdownDirection(@NotNull Direction2D dropdownDirection) {
 		this.dropdownDirection = dropdownDirection;
 	}
