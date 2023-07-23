@@ -51,8 +51,8 @@ public class Theme {
 		vanilla.put("base", Control.DEFAULT, base);
 
 		TexturePainter background = new TexturePainter("textures/gui/options_background.png");
+		background.setRegionSize(16, 16);
 		background.setTextureSize(16, 16);
-		background.setFileDimensions(16, 16);
 		background.setTint(Color.rgb(64, 64, 64));
 		background.setTiled(true);
 		vanilla.put("background", Control.DEFAULT, background);
@@ -60,15 +60,15 @@ public class Theme {
 		NinePatchPainter button = ninePatchUI.copy();
 		button.setWidths(3, 12, 3);
 		button.setHeights(3, 12, 3);
-		button.setDrawOrigin(0, 18);
+		button.setOrigin(0, 18);
 		vanilla.put("button", ButtonControl.DEFAULT, button);
 
 		NinePatchPainter buttonHovered = button.copy();
-		buttonHovered.setDrawOrigin(36, 18);
+		buttonHovered.setOrigin(36, 18);
 		vanilla.put("button", ButtonControl.HOVERED, buttonHovered);
 
 		NinePatchPainter buttonHeld = button.copy();
-		buttonHeld.setDrawOrigin(18, 18);
+		buttonHeld.setOrigin(18, 18);
 		vanilla.put("button", ButtonControl.HELD, buttonHeld);
 
 		NinePatchPainter slider = button.copy();
@@ -78,8 +78,8 @@ public class Theme {
 		vanilla.put("slider", SliderControl.DEFAULT, sliderBackground);
 
 		TexturePainter itemSlot = new TexturePainter("oaktree:textures/gui/ui.png");
-		itemSlot.setDrawOrigin(18, 0);
-		itemSlot.setTextureSize(18, 18);
+		itemSlot.setOrigin(18, 0);
+		itemSlot.setRegionSize(18, 18);
 		vanilla.put("item_slot", SlotControl.DEFAULT, itemSlot);
 
 		ColorPainter textEdit = new ColorPainter(Color.BLACK, Color.rgb(0.63f, 0.63f, 0.63f));

@@ -36,12 +36,11 @@ public class NinePatchPainter extends TexturePainter {
 	public NinePatchPainter copy() {
 		NinePatchPainter copy = new NinePatchPainter(texture);
 
-		copy.setDrawOrigin(left, top);
+		copy.setOrigin(u, v);
 		copy.setTiled(tiled);
-		copy.setTextureSize(textureWidth, textureHeight);
+		copy.setRegionSize(regionWidth, regionHeight);
 		copy.setTint(tint);
-		copy.setFileDimensions(fileWidth, fileHeight);
-		copy.setScale(scale);
+		copy.setTextureSize(textureWidth, textureHeight);
 
 		copy.setWidths(leftWidth, centerWidth, rightWidth);
 		copy.setHeights(topHeight, centerHeight, bottomHeight);
@@ -63,8 +62,8 @@ public class NinePatchPainter extends TexturePainter {
 				bottomHeight,
 				centerWidth + rightWidth + leftWidth,
 				centerHeight + topHeight + bottomHeight,
-				left,
-				top
+				u,
+				v
 		);
 	}
 }
