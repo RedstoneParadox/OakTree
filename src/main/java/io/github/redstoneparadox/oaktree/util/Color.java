@@ -3,7 +3,9 @@ package io.github.redstoneparadox.oaktree.util;
 import java.util.Objects;
 
 /**
- * A class for storing color values.
+ * Represents a non-mutable color value. Can be constructed
+ * using RGB(A), HSV(A), or integer values. Can be converted
+ * into an integer for use by Minecraft's internals.
  */
 public final class Color {
 	public static final Color BLACK = rgb(0.0f, 0.0f, 0.0f);
@@ -35,26 +37,82 @@ public final class Color {
 		this.alpha = alpha;
 	}
 
+	/**
+	 * Constructs a color using RGB values. Inputs
+	 * should be in the range of 0-255.
+	 *
+	 * @param red The value of the red channel
+	 * @param green The value of the green channel
+	 * @param blue The value of the blue channel
+	 * @return A {@code Color} instance.
+	 */
 	public static Color rgb(int red, int green, int blue) {
 		return rgba(red, green, blue, 1.0f);
 	}
 
+	/**
+	 * Constructs a color using RGB values. Inputs
+	 * should be in the range of 0-1.
+	 *
+	 * @param red The value of the red channel
+	 * @param green The value of the green channel
+	 * @param blue The value of the blue channel
+	 * @return A {@code Color} instance.
+	 */
 	public static Color rgb(float red, float green, float blue) {
 		return rgba(red, green, blue, 1.0f);
 	}
 
+	/**
+	 * Constructs a color using RGBA values. Color channel
+	 * inputs should be in the range of 0-255 and alpha
+	 * should be in the range of 0-1.
+	 *
+	 * @param red The value of the red channel
+	 * @param green The value of the green channel
+	 * @param blue The value of the blue channel
+	 * @param alpha The value of the alpha channel
+	 * @return A {@code Color} instance.
+	 */
 	public static Color rgba(int red, int green, int blue, float alpha) {
 		return rgba(red/255.0f, green/255.0f, blue/255.0f, alpha);
 	}
 
+	/**
+	 * Constructs a color using RGB values. Inputs
+	 * should be in the range of 0-1.
+	 *
+	 * @param red The value of the red channel
+	 * @param green The value of the green channel
+	 * @param blue The value of the blue channel
+	 * @param alpha The value of the alpha channel
+	 * @return A {@code Color} instance.
+	 */
 	public static Color rgba(float red, float green, float blue, float alpha) {
 		return new Color(clamp(red), clamp(green), clamp(blue), clamp(alpha));
 	}
 
+	/**
+	 * Constructs a color using HSV values.
+	 *
+	 * @param hue The value of the hue channel
+	 * @param saturation The value of the saturation channel
+	 * @param value The value of the value
+	 * @return A {@code Color} instance.
+	 */
 	public static Color hsv(float hue, int saturation, int value) {
 		return hsv(hue, saturation, value, 1.0f);
 	}
 
+	/**
+	 * Constructs a color using HSVA values.
+	 *
+	 * @param hue The value of the hue channel
+	 * @param saturation The value of the saturation channel
+	 * @param value The value of the value
+	 * @param alpha The value of the alpha channel
+	 * @return A {@code Color} instance.
+	 */
 	public static Color hsv(float hue, int saturation, int value, float alpha) {
 		hue = Math.max(0.0f, Math.min(hue, 360.0f));
 		saturation = Math.max(0, Math.min(saturation, 100));
@@ -96,6 +154,14 @@ public final class Color {
 		return ret;
 	}
 
+	/**
+	 * Constructs a {@code Color} using an integer.
+	 * Note that integers are what Minecraft uses
+	 * to represent colors.
+	 *
+	 * @param integer The color integer
+	 * @return A {@code Color} instance.
+	 */
 	public static Color rgb(int integer) {
 		int red = (integer >> 16) & 0xff;
 		int green = (integer >> 8) & 0xff;
@@ -108,10 +174,23 @@ public final class Color {
 		return rgba((byte) (r * 255.0) + 128, (byte) (r * 255.0) + 128, (byte) (r * 255.0) + 128, a);
 	}
 
+	/**
+	 * Returns a copy of a {@code Color} with the
+	 * specified alpha value.
+	 *
+	 * @param alpha The value of the alpha channel.
+	 * @return The new color
+	 */
 	public Color withAlpha(float alpha) {
-		return new Color(this.red, this.blue, this.green, alpha);
+		return new Color(this.red, this.blue, this.green, clamp(alpha));
 	}
 
+	/**
+	 * Converts this {@code Color} instance to
+	 * an integer representation.
+	 *
+	 * @return The integer representation.
+	 */
 	public int toInt() {
 		int r = (int) (red * 255.0f);
 		int g = (int) (green * 255.0f);
