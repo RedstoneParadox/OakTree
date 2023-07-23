@@ -2,8 +2,13 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
+import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.Color;
+import io.github.redstoneparadox.oaktree.util.TextHelper;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
@@ -17,24 +22,17 @@ import java.util.List;
 public class ButtonControl extends Control implements MouseButtonListener {
 	public static final PainterKey HELD = new PainterKey();
 	public static final PainterKey HOVERED = new PainterKey();
-
 	protected boolean toggleable = false;
+	protected Text text = Text.empty();
 	protected @NotNull Action onClick = () -> {};
 	protected @NotNull Action whileHeld = () -> {};
 	protected @NotNull Action onRelease = () -> {};
 	private boolean mouseClicked = false;
 	private boolean mouseHeld = false;
 	private boolean buttonHeld = false;
-	private final LabelControl label = new LabelControl();
 
 	public ButtonControl() {
 		this.id = "button";
-
-		label.fitText = true;
-		label.capture = false;
-		label.setFontColor(Color.WHITE);
-		label.setAnchor(Anchor.CENTER);
-		label.setParent(this);
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
@@ -60,7 +58,7 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	 * @param text The text to display
 	 */
 	public void setText(String text) {
-		label.setText(Text.literal(text));
+		this.text = Text.of(text);
 	}
 
 	/**
@@ -70,11 +68,11 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	 * @param text The text to display
 	 */
 	public void setText(Text text) {
-		label.setText(text);
+		this.text = text;
 	}
 
 	public Text getText() {
-		return label.getText();
+		return text;
 	}
 
 	/**
@@ -105,12 +103,6 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	 */
 	public void onRelease(@NotNull Action onRelease) {
 		this.onRelease = onRelease;
-	}
-
-	@Override
-	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
-		label.updateTree(orderedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	@Override
@@ -163,6 +155,17 @@ public class ButtonControl extends Control implements MouseButtonListener {
 		}
 
 		return captured;
+	}
+
+	@Override
+	protected void draw(GuiGraphics graphics, Theme theme) {
+		super.draw(graphics, theme);
+
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+		int textX = trueArea.getX() + trueArea.getWidth()/2 - textRenderer.getWidth(text)/2;
+		int textY = trueArea.getY() + trueArea.getHeight()/2 - textRenderer.fontHeight/2;
+
+		graphics.drawText(textRenderer, text, textX, textY, Color.WHITE.toInt(), false);
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.Color;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -21,18 +23,13 @@ public class SliderControl extends Control implements MouseButtonListener {
 	protected float scrollPercent = 0.0f;
 	protected int thumbSize = 1;
 	protected boolean horizontal = false;
+
+	protected Text text = Text.empty();
 	protected @NotNull Action onSlide = () -> {};
 	protected boolean held = false;
-	private final LabelControl label = new LabelControl();
 
 	public SliderControl() {
 		this.id = "slider";
-
-		label.fitText = true;
-		label.capture = false;
-		label.setFontColor(Color.WHITE);
-		label.setAnchor(Anchor.CENTER);
-		label.setParent(this);
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
@@ -87,7 +84,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 	 * @param text The text.
 	 */
 	public void setText(String text) {
-		label.setText(Text.literal(text));
+		this.text = Text.of(text);
 	}
 
 	/**
@@ -97,11 +94,11 @@ public class SliderControl extends Control implements MouseButtonListener {
 	 * @param text The text.
 	 */
 	public void setText(Text text) {
-		label.setText(text);
+		this.text = text;
 	}
 
 	public Text getText() {
-		return label.getText();
+		return text;
 	}
 
 	/**
@@ -112,12 +109,6 @@ public class SliderControl extends Control implements MouseButtonListener {
 	 */
 	public void onSlide(@NotNull Action onSlide) {
 		this.onSlide = onSlide;
-	}
-
-	@Override
-	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
-		super.updateTree(orderedControls, containerX, containerY, containerWidth, containerHeight);
-		label.updateTree(orderedControls, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 	}
 
 	@Override
@@ -161,6 +152,12 @@ public class SliderControl extends Control implements MouseButtonListener {
 		}
 
 		theme.get(id, SLIDER).draw(graphics, sliderX, sliderY, sliderWidth, sliderHeight);
+
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+		int textX = trueArea.getX() + trueArea.getWidth()/2 - textRenderer.getWidth(text)/2;
+		int textY = trueArea.getY() + trueArea.getHeight()/2 - textRenderer.fontHeight/2;
+
+		graphics.drawText(textRenderer, text, textX, textY, Color.WHITE.toInt(), false);
 	}
 
 	@Override
