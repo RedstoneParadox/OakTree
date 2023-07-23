@@ -12,13 +12,11 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.List;
-
 /**
  * A control representing a slider or a scrollbar.
  */
 public class SliderControl extends Control implements MouseButtonListener {
-	public static PainterKey SLIDER = new PainterKey();
+	public static PainterKey THUMB = new PainterKey();
 
 	protected float scrollPercent = 0.0f;
 	protected int thumbSize = 1;
@@ -151,7 +149,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 			sliderHeight = thumbSize;
 		}
 
-		theme.get(id, SLIDER).draw(graphics, sliderX, sliderY, sliderWidth, sliderHeight);
+		theme.get(id, THUMB).draw(graphics, sliderX, sliderY, sliderWidth, sliderHeight);
 
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 		int textX = trueArea.getX() + trueArea.getWidth()/2 - textRenderer.getWidth(text)/2;

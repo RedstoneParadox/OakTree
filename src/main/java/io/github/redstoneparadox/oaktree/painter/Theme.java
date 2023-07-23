@@ -72,7 +72,7 @@ public class Theme {
 		vanilla.put("button", ButtonControl.HELD, buttonHeld);
 
 		NinePatchPainter slider = button.copy();
-		vanilla.put("slider", SliderControl.SLIDER, slider);
+		vanilla.put("slider", SliderControl.THUMB, slider);
 
 		NinePatchPainter sliderBackground = buttonHeld.copy();
 		vanilla.put("slider", SliderControl.DEFAULT, sliderBackground);
