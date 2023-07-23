@@ -1,4 +1,4 @@
-package io.github.redstoneparadox.oaktree.util;
+package io.github.redstoneparadox.oaktree.control;
 
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipPositioner;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class Tooltip {
+public class ControlTooltip {
 	private List<Text> texts;
 	private Optional<TooltipData> data;
 	private final TooltipPositioner positioner;
@@ -17,13 +17,13 @@ public class Tooltip {
 	private int x = 0;
 	private int y = 0;
 
-	public Tooltip(List<Text> texts, TooltipData data, TooltipPositioner positioner) {
+	public ControlTooltip(List<Text> texts, TooltipData data, TooltipPositioner positioner) {
 		this.texts = texts;
 		this.data = Optional.of(data);
 		this.positioner = positioner;
 	}
 
-	public Tooltip(List<Text> texts, TooltipPositioner positioner) {
+	public ControlTooltip(List<Text> texts, TooltipPositioner positioner) {
 		this.texts = texts;
 		this.data = Optional.empty();
 		this.positioner = positioner;

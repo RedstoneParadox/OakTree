@@ -4,7 +4,6 @@ import io.github.redstoneparadox.oaktree.math.Rectangle;
 import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
-import io.github.redstoneparadox.oaktree.util.Tooltip;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,7 +19,7 @@ import java.util.List;
 public class Control {
 	public static PainterKey DEFAULT = new PainterKey();
 	protected Control parent;
-	protected Tooltip tooltip = new Tooltip(new ArrayList<>(), DefaultTooltipPositioner.INSTANCE);
+	protected ControlTooltip tooltip = new ControlTooltip(new ArrayList<>(), DefaultTooltipPositioner.INSTANCE);
 	protected @NotNull String id = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
@@ -159,16 +158,16 @@ public class Control {
 	}
 
 	/**
-	 * Sets a {@link Tooltip} to be displayed when
+	 * Sets a {@link ControlTooltip} to be displayed when
 	 * a mouse hovers over this Control.
 	 *
 	 * @param tooltip The tooltip to display
 	 */
-	public void setTooltip(Tooltip tooltip) {
+	public void setTooltip(ControlTooltip tooltip) {
 		this.tooltip = tooltip;
 	}
 
-	public Tooltip getTooltip() {
+	public ControlTooltip getTooltip() {
 		return tooltip;
 	}
 
