@@ -21,7 +21,7 @@ public class ProgressBarControl extends Control {
 	private Painter barStyle = null;
 
 	public ProgressBarControl() {
-		this.id = "progress_bar";
+		this.name = "progress_bar";
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class ProgressBarControl extends Control {
 
 		int barX = trueArea.getX() + ((trueArea.getWidth() /2) - (barWidth/2));
 		int barY = trueArea.getY() + ((trueArea.getHeight() /2) - (barHeight/2));
-		Painter barPainter = theme.get(id, BAR);
+		Painter barPainter = theme.get(name, BAR);
 
 		switch (direction) {
 			case UP -> {

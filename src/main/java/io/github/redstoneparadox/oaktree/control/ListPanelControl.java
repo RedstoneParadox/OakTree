@@ -16,7 +16,7 @@ public class ListPanelControl extends PanelControl {
 	protected int startIndex = 0;
 
 	public ListPanelControl() {
-		id = "list_panel";
+		name = "list_panel";
 	}
 
 	/**

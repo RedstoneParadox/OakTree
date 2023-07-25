@@ -44,7 +44,7 @@ public class TestScreens {
 
 		root.setAnchor(Anchor.CENTER);
 		root.setSize(160, 160);
-		root.setId("base");
+		root.setName("base");
 
 		return root;
 	}
@@ -58,7 +58,7 @@ public class TestScreens {
 
 		root.setAnchor(Anchor.CENTER);
 		root.setSize(160, 180);
-		root.setId("base");
+		root.setName("base");
 		root.addChild(button);
 		// root.addChild(label1);
 		root.addChild(slider);
@@ -116,7 +116,7 @@ public class TestScreens {
 				case 1 -> id = "green";
 				default -> id = "blue";
 			}
-			rectangle.setId(id);
+			rectangle.setName(id);
 
 			return rectangle;
 		}));
@@ -134,7 +134,7 @@ public class TestScreens {
 
 		root.setAnchor(Anchor.CENTER);
 		root.setSize(178, 88);
-		root.setId("base");
+		root.setName("base");
 
 		grid.setSize(162, 72);
 		grid.setAnchor(Anchor.CENTER);

@@ -22,7 +22,7 @@ public class DropdownControl extends Control implements MouseButtonListener {
 
 	public DropdownControl() {
 		this.dropdown.setVisible(false);
-		this.id = "dropdown";
+		this.name = "dropdown";
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}

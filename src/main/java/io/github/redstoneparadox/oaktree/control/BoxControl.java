@@ -16,7 +16,7 @@ public class BoxControl extends PaddingControl {
 	protected  @NotNull Control child = new Control();
 
 	public BoxControl() {
-		this.id = "box";
+		this.name = "box";
 	}
 
 	/**

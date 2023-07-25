@@ -18,7 +18,7 @@ public class HoverControl extends Control {
 	private boolean mouseCurrentlyWithin = false;
 
 	public HoverControl() {
-		this.id = "hover";
+		this.name = "hover";
 	}
 
 	/**

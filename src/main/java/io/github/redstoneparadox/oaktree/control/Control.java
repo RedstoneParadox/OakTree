@@ -20,7 +20,7 @@ public class Control {
 	public static PainterKey DEFAULT = new PainterKey();
 	protected Control parent;
 	protected ControlTooltip tooltip = new ControlTooltip(new ArrayList<>(), DefaultTooltipPositioner.INSTANCE);
-	protected @NotNull String id = "control";
+	protected @NotNull String name = "control";
 	protected @NotNull Anchor anchor = Anchor.TOP_LEFT;
 	protected final @NotNull  Rectangle area = new Rectangle(0, 0, 1, 1);
 	protected boolean expand = false;
@@ -32,12 +32,12 @@ public class Control {
 	protected PainterKey painterKey = DEFAULT;
 	protected Rectangle trueArea = new Rectangle(0, 0, 1, 1);
 
-	public void setId(@NotNull String id) {
-		this.id = id;
+	public void setName(@NotNull String name) {
+		this.name = name;
 	}
 
-	public @NotNull String getId() {
-		return this.id;
+	public @NotNull String getName() {
+		return this.name;
 	}
 
 	/**
@@ -243,7 +243,7 @@ public class Control {
 
 	// Draw
 	protected void draw(GuiGraphics graphics, Theme theme) {
-		theme.get(id, painterKey).draw(graphics, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+		theme.get(name, painterKey).draw(graphics, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 
 		if (tooltip.isVisible() && !tooltip.isEmpty()) {
 			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;

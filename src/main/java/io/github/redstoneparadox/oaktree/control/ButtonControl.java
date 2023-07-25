@@ -29,7 +29,7 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	private boolean buttonHeld = false;
 
 	public ButtonControl() {
-		this.id = "button";
+		this.name = "button";
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}

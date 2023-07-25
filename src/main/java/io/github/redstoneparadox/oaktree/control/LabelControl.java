@@ -27,7 +27,7 @@ public class LabelControl extends Control {
 	protected boolean fitText = false;
 
 	public LabelControl() {
-		this.id = "label";
+		this.name = "label";
 	}
 
 	/**

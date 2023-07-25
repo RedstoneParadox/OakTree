@@ -14,7 +14,7 @@ public class GridPanelControl extends PanelControl {
 	protected int columns = 1;
 
 	public GridPanelControl() {
-		this.id = "grid_panel";
+		this.name = "grid_panel";
 	}
 
 	/**

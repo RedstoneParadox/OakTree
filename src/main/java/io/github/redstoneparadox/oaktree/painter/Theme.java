@@ -27,24 +27,33 @@ public class Theme {
 	/**
 	 * Adds a new {@link Painter} to this theme, stored by a unique id
 	 * and a {@link PainterKey} specific to the {@link Control} class.
-	 * For example, adding a {@code Painter} with an id of "foobar" and
+	 * For example, adding a {@code Painter} with a name of "foobar" and
 	 * a {@code PainterKey} {@link ButtonControl#HELD} will only draw it
-	 * for {@link ButtonControl} instances that are held down and have
-	 * "foobar" as their id.
+	 * for {@link ButtonControl} instances that are held down and are
+	 * named "foobar"
 	 *
-	 * @param id The {@link Control} id
+	 * @param name The {@link Control} name
 	 * @param painterKey The painter key from the {@link Control} class
 	 * @param painter The {@link Painter}
 	 *
-	 * @see Control#setId(String)
+	 * @see Control#setName(String)
 	 */
-	public void put(String id, PainterKey painterKey, @NotNull Painter painter) {
-		painters.computeIfAbsent(id, s -> new HashMap<>()).put(painterKey, painter);
+	public void put(String name, PainterKey painterKey, @NotNull Painter painter) {
+		painters.computeIfAbsent(name, s -> new HashMap<>()).put(painterKey, painter);
 	}
 
-	public @NotNull Painter get(String id, PainterKey painterKey) {
-		if (painters.containsKey(id)) {
-			Map<PainterKey, Painter> subMap = painters.get(id);
+	/**
+	 * Returns a {@link Painter} for the given {@link Control}
+	 * name and {@link PainterKey}. If no {@code Painter}
+	 * is found, {@link Painter#BLANK} is returned instead.
+	 *
+	 * @param name The {@link Control} name
+	 * @param painterKey The {@link PainterKey}
+	 * @return The {@link Painter}
+	 */
+	public @NotNull Painter get(String name, PainterKey painterKey) {
+		if (painters.containsKey(name)) {
+			Map<PainterKey, Painter> subMap = painters.get(name);
 
 			if (subMap.containsKey(painterKey)) {
 				return subMap.get(painterKey);

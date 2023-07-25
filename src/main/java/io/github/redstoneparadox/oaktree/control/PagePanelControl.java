@@ -10,7 +10,7 @@ public class PagePanelControl extends PanelControl {
 	protected int page = 0;
 
 	public PagePanelControl() {
-		this.id = "page_panel";
+		this.name = "page_panel";
 	}
 
 	/**

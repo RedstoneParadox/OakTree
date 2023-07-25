@@ -60,7 +60,7 @@ public class TextEditControl extends Control implements CharTypedListener, Mouse
 
 
 	public TextEditControl() {
-		this.id = "text_edit";
+		this.name = "text_edit";
 		ClientListeners.CHAR_TYPED_LISTENERS.add(this);
 	}
 

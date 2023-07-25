@@ -35,7 +35,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 	public SlotControl(PlayerEntity player, BackingSlot slot) {
 		this.player = player;
 		this.slot = slot;
-		this.id = "item_slot";
+		this.name = "item_slot";
 		this.setSize(18, 18);
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);

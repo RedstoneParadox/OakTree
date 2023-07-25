@@ -18,7 +18,7 @@ public class SplitControl extends Control {
 	protected @NotNull Control second = new Control();
 
 	public SplitControl() {
-		this.id = "split";
+		this.name = "split";
 	}
 
 	/**

@@ -27,7 +27,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 	protected boolean held = false;
 
 	public SliderControl() {
-		this.id = "slider";
+		this.name = "slider";
 
 		ClientListeners.MOUSE_BUTTON_LISTENERS.add(this);
 	}
@@ -149,7 +149,7 @@ public class SliderControl extends Control implements MouseButtonListener {
 			sliderHeight = thumbSize;
 		}
 
-		theme.get(id, THUMB).draw(graphics, sliderX, sliderY, sliderWidth, sliderHeight);
+		theme.get(name, THUMB).draw(graphics, sliderX, sliderY, sliderWidth, sliderHeight);
 
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 		int textX = trueArea.getX() + trueArea.getWidth()/2 - textRenderer.getWidth(text)/2;

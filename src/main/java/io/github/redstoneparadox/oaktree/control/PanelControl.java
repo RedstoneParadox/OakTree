@@ -18,7 +18,7 @@ public class PanelControl extends PaddingControl {
 	public final List<@NotNull Control> children = new ArrayList<>();
 
 	public PanelControl() {
-		this.id = "panel";
+		this.name = "panel";
 	}
 
 	/**
