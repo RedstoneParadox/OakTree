@@ -8,6 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.tooltip.DefaultTooltipPositioner;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -195,6 +196,7 @@ public class Control {
 		this.onTick = onTick;
 	}
 
+	@ApiStatus.OverrideOnly
 	protected void updateTree(List<Control> orderedControls, int containerX, int containerY, int containerWidth, int containerHeight) {
 		orderedControls.add(this);
 
@@ -214,7 +216,7 @@ public class Control {
 		}
 	}
 
-	// Capture the mouse and
+	@ApiStatus.OverrideOnly
 	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
 		if (captured || !capture) return false;
 
@@ -236,12 +238,12 @@ public class Control {
 		return captured;
 	}
 
-	// Update current
+	@ApiStatus.OverrideOnly
 	protected void prepare() {
 		onTick.run();
 	}
 
-	// Draw
+	@ApiStatus.OverrideOnly
 	protected void draw(GuiGraphics graphics, Theme theme) {
 		theme.get(name, painterKey).draw(graphics, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
 
@@ -252,6 +254,7 @@ public class Control {
 		}
 	}
 
+	@ApiStatus.OverrideOnly
 	protected void cleanup() {
 
 	}

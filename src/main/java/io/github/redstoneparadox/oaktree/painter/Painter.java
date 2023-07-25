@@ -32,7 +32,7 @@ public abstract class Painter {
 		this.blank = false;
 	}
 
-	@ApiStatus.Internal
+	@ApiStatus.OverrideOnly
 	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
 
 	}
