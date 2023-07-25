@@ -6,6 +6,7 @@ import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -135,8 +136,10 @@ public class SlotControl extends Control implements MouseButtonListener {
 		int x = trueArea.getX();
 		int y = trueArea.getY();
 
+		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 		ItemStack stack = slot.getStack();
 		graphics.drawItem(stack, x + trueArea.getWidth()/2 - 8, y + trueArea.getHeight()/2 - 8);
+		graphics.drawItemInSlot(textRenderer, stack, x + trueArea.getWidth()/2 - 8, y + trueArea.getHeight()/2 - 8);
 
 		if (highlighted) {
 			int highlightX = x + borderSize;

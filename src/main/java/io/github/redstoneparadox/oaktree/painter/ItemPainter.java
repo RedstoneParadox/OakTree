@@ -1,5 +1,7 @@
 package io.github.redstoneparadox.oaktree.painter;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -97,10 +99,12 @@ public class ItemPainter extends Painter {
 	@Override
 	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
 		if (!stack.isEmpty()) {
+			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 			int offsetX = width/2;
 			int offsetY = height/2;
 
 			graphics.drawItem(stack, x + offsetX - 8, y + offsetY - 8);
+			graphics.drawItemInSlot(textRenderer, stack, x + offsetX - 8, y + offsetY - 8);
 		}
 	}
 
