@@ -148,7 +148,7 @@ public class SlotControl extends Control implements MouseButtonListener {
 			int highlightHeight = trueArea.getHeight() - (2 * borderSize);
 			int z = 0;
 
-			if (!stack.isEmpty()) z = 1;
+			if (!stack.isEmpty()) z = 200;
 
 			graphics.fill(highlightX, highlightY, highlightX + highlightWidth, highlightY + highlightHeight, z, highlightColor.toInt());
 		}
