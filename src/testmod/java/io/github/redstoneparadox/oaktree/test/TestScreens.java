@@ -179,7 +179,6 @@ public class TestScreens {
 
 		@Override
 		public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-			super.render(graphics, mouseX, mouseY, delta);
 			root.render(graphics, mouseX, mouseY, delta);
 		}
 
@@ -231,8 +230,13 @@ public class TestScreens {
 
 		@Override
 		public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-			super.render(graphics, mouseX, mouseY, delta);
 			root.render(graphics, mouseX, mouseY, delta);
+			super.render(graphics, mouseX, mouseY, delta);
+		}
+
+		@Override
+		protected void drawForeground(GuiGraphics graphics, int mouseX, int mouseY) {
+
 		}
 
 		@Override
