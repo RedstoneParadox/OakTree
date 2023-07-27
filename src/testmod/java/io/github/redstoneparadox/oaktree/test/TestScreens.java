@@ -14,6 +14,8 @@ import io.github.redstoneparadox.oaktree.painter.ColorPainter;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
 import io.github.redstoneparadox.oaktree.util.Color;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -124,6 +126,23 @@ public class TestScreens {
 		list.setAnchor(Anchor.CENTER);
 		list.setDisplayCount(3);
 		root.addChild(list);
+
+		return root;
+	}
+
+	public static RootPanelControl testTutorialOne() {
+		RootPanelControl root = new RootPanelControl();
+		LabelControl label = new LabelControl();
+
+		root.setAnchor(Anchor.CENTER);
+		root.setSize(100, 30);
+		root.setName("base");
+
+		label.setText("Hello, world!");
+		label.setAnchor(Anchor.CENTER);
+		label.setFontColor(Color.DARK_GREY);
+		label.setSize(62, 9);
+		root.addChild(label);
 
 		return root;
 	}

@@ -27,7 +27,7 @@ import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import java.util.function.Supplier;
 
 public class TestBlocks {
-	public static final Block TEST_DRAW_BLOCK = new TestBlock(TestScreens::testDraw);
+	public static final Block TEST_DRAW_BLOCK = new TestBlock(TestScreens::testTutorialOne);
 	public static final Block TEST_INTERACTABLES_BLOCK = new TestBlock(TestScreens::testInteractables);
 	public static final Block TEST_COLORS_BLOCK = new TestBlock(TestScreens::testColors);
 	public static final Block TEST_INVENTORY = new TestBlockWithEntity();
