@@ -22,7 +22,7 @@ import java.util.List;
 public class RootPanelControl extends PanelControl {
 	protected Theme theme;
 	private boolean dirty = true;
-	private final List<Control> orderedControls = new ArrayList<>();
+	private final List<Control> controls = new ArrayList<>();
 
 	public RootPanelControl() {
 		theme = Theme.vanilla();
@@ -59,16 +59,16 @@ public class RootPanelControl extends PanelControl {
 			MinecraftClient client = MinecraftClient.getInstance();
 			Window window = client.getWindow();
 
-			orderedControls.clear();
-			updateTree(orderedControls, 0, 0, window.getScaledWidth(), window.getScaledHeight());
+			controls.clear();
+			updateTree(controls, 0, 0, window.getScaledWidth(), window.getScaledHeight());
 
 			dirty = false;
 		}
 
 		boolean captured = false;
 
-		for (int i = orderedControls.size() - 1; i >= 0; i--) {
-			Control control = orderedControls.get(i);
+		for (int i = controls.size() - 1; i >= 0; i--) {
+			Control control = controls.get(i);
 
 			if (!captured) {
 				captured = control.interact(mouseX, mouseY, deltaTime, false);
@@ -77,12 +77,16 @@ public class RootPanelControl extends PanelControl {
 			}
 		}
 
-		for (Control control: orderedControls) {
+		for (Control control: controls) {
 			control.prepare();
 		}
 
-		for (Control control: orderedControls) {
+		for (Control control: controls) {
 			control.draw(graphics, theme);
+		}
+
+		for (Control control: controls) {
+			control.drawTooltip(graphics);
 		}
 	}
 

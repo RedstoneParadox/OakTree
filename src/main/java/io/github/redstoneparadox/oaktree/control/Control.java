@@ -246,7 +246,10 @@ public class Control {
 	@ApiStatus.OverrideOnly
 	protected void draw(GuiGraphics graphics, Theme theme) {
 		theme.get(name, painterKey).draw(graphics, trueArea.getX(), trueArea.getY(), trueArea.getWidth(), trueArea.getHeight());
+	}
 
+	@ApiStatus.OverrideOnly
+	protected void drawTooltip(GuiGraphics graphics) {
 		if (tooltip.isVisible() && !tooltip.isEmpty()) {
 			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
