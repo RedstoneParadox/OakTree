@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.oaktree.test;
 
 import io.github.redstoneparadox.oaktree.util.BackingSlot;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.feature_flags.FeatureFlags;
@@ -20,12 +19,11 @@ public class TestScreenHandlers {
 	public static final ScreenHandlerType<TestScreenHandler> TEST_INVENTORY_SCREEN_HANDLER;
 
 	static {
-		ScreenHandlerType<TestScreenHandler> type = new ScreenHandlerType<>(TestScreenHandler::new, FeatureFlags.DEFAULT_SET);
-		TEST_INVENTORY_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER_TYPE, new Identifier(""), type);
+		TEST_INVENTORY_SCREEN_HANDLER = new ScreenHandlerType<>(TestScreenHandler::new, FeatureFlags.DEFAULT_SET);
 	}
 
 	public static void init() {
-
+		Registry.register(Registries.SCREEN_HANDLER_TYPE, new Identifier("oaktree:test"), TEST_INVENTORY_SCREEN_HANDLER);
 	}
 
 	static class TestScreenHandler extends ScreenHandler {

@@ -8,5 +8,6 @@ public class OakTreeTest implements ModInitializer {
 	public void onInitialize(ModContainer mod) {
 		TestBlocks.init();
 		TestBlockEntities.init();
+		TestScreenHandlers.init();
 	}
 }

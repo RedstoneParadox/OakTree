@@ -68,6 +68,7 @@ public class NinePatchPainter extends TexturePainter {
 
 	@Override
 	public void draw(GuiGraphics graphics, int x, int y, int width, int height) {
+		/*
 		graphics.drawNineSlicedTexture(
 				texture,
 				x,
@@ -83,5 +84,6 @@ public class NinePatchPainter extends TexturePainter {
 				u,
 				v
 		);
+		*/
 	}
 }

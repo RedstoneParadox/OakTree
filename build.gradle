@@ -2,6 +2,7 @@ plugins {
 	id 'maven-publish'
 	//id 'checkstyle'
 	alias(libs.plugins.quilt.loom)
+	id 'io.github.juuxel.loom-quiltflower' version '1.8.+'
 }
 
 archivesBaseName = project.archives_base_name
@@ -16,6 +17,10 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	maven {
+		name = 'Quilt-Snapshot'
+		url = 'https://maven.quiltmc.org/repository/snapshot/'
+	}
 }
 
 
@@ -26,9 +31,7 @@ loom {
 sourceSets {
 	testmod {
 		compileClasspath += main.compileClasspath
-		compileClasspath += main.output
 		runtimeClasspath += main.runtimeClasspath
-		runtimeClasspath += main.output
 	}
 }
 
@@ -41,7 +44,11 @@ dependencies {
 	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
 	// Quilted Fabric API will automatically pull in the correct QSL version.
 	modImplementation libs.quilt.standard.libraries
-	modImplementation libs.quilted.fabric.api
+	// modImplementation libs.quilted.fabric.api
+
+	afterEvaluate {
+		testmodImplementation sourceSets.main.output
+	}
 }
 
 /*
