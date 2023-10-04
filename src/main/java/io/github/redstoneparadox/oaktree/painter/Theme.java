@@ -85,11 +85,7 @@ public class Theme {
 	public static Theme vanilla() {
 		Theme vanilla = new Theme();
 
-		NinePatchPainter ninePatchUI = new NinePatchPainter("oaktree:textures/gui/ui.png");
-
-		NinePatchPainter base = ninePatchUI.copy();
-		base.setWidths(4, 2, 4);
-		base.setHeights(4, 2, 4);
+		TexturePainter base = new TexturePainter("oaktree:background/ui_base");
 		vanilla.put("base", Control.DEFAULT, base);
 
 		TexturePainter background = new TexturePainter("textures/gui/options_background.png");
@@ -99,24 +95,19 @@ public class Theme {
 		background.setTiled(true);
 		vanilla.put("background", Control.DEFAULT, background);
 
-		NinePatchPainter button = ninePatchUI.copy();
-		button.setWidths(3, 12, 3);
-		button.setHeights(3, 12, 3);
-		button.setOrigin(0, 18);
+		TexturePainter button = new TexturePainter("widget/button");
 		vanilla.put("button", ButtonControl.DEFAULT, button);
 
-		NinePatchPainter buttonHovered = button.copy();
-		buttonHovered.setOrigin(36, 18);
+		TexturePainter buttonHovered = new TexturePainter("widget/button_highlighted");
 		vanilla.put("button", ButtonControl.HOVERED, buttonHovered);
 
-		NinePatchPainter buttonHeld = button.copy();
-		buttonHeld.setOrigin(18, 18);
+		TexturePainter buttonHeld = new TexturePainter("widget/button_disabled");
 		vanilla.put("button", ButtonControl.HELD, buttonHeld);
 
-		NinePatchPainter slider = button.copy();
+		TexturePainter slider = new TexturePainter("widget/slider_handle");
 		vanilla.put("slider", SliderControl.THUMB, slider);
 
-		NinePatchPainter sliderBackground = buttonHeld.copy();
+		TexturePainter sliderBackground = new TexturePainter("widget/slider");
 		vanilla.put("slider", SliderControl.DEFAULT, sliderBackground);
 
 		TexturePainter itemSlot = new TexturePainter("oaktree:textures/gui/ui.png");

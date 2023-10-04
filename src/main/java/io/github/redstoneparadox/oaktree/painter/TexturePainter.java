@@ -119,7 +119,8 @@ public class TexturePainter extends Painter {
 			int drawWidth = Math.min(width, regionWidth);
 			int drawHeight = Math.min(height, regionHeight);
 
-			graphics.drawTexture(texture, x, y, drawWidth, drawHeight, u, v, regionWidth, regionHeight, textureWidth, textureHeight);
+			graphics.drawGuiTexture(texture, x, y, width, height);
+			// graphics.drawTexture(texture, x, y, drawWidth, drawHeight, u, v, regionWidth, regionHeight, textureWidth, textureHeight);
 		}
 		else {
 			// graphics.drawRepeatingTexture(texture, x, y, width, height, u, v, textureWidth, textureHeight);
