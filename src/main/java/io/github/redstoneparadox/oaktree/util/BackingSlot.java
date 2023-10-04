@@ -89,4 +89,9 @@ public class BackingSlot extends Slot {
 	public void setCanTake(Predicate<PlayerEntity> canTake) {
 		this.canTake = canTake;
 	}
+
+	@Override
+	public boolean isHighlightable() {
+		return false;
+	}
 }
