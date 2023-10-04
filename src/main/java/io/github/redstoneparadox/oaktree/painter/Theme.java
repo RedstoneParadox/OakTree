@@ -88,13 +88,6 @@ public class Theme {
 		TexturePainter base = new TexturePainter("oaktree:background/ui_base");
 		vanilla.put("base", Control.DEFAULT, base);
 
-		TexturePainter background = new TexturePainter("textures/gui/options_background.png");
-		background.setRegionSize(16, 16);
-		background.setTextureSize(16, 16);
-		background.setTint(Color.rgb(64, 64, 64));
-		background.setTiled(true);
-		vanilla.put("background", Control.DEFAULT, background);
-
 		TexturePainter button = new TexturePainter("widget/button");
 		vanilla.put("button", ButtonControl.DEFAULT, button);
 
@@ -110,12 +103,10 @@ public class Theme {
 		TexturePainter sliderBackground = new TexturePainter("widget/slider");
 		vanilla.put("slider", SliderControl.DEFAULT, sliderBackground);
 
-		TexturePainter itemSlot = new TexturePainter("oaktree:textures/gui/ui.png");
-		itemSlot.setOrigin(18, 0);
-		itemSlot.setRegionSize(18, 18);
+		TexturePainter itemSlot = new TexturePainter("container/slot");
 		vanilla.put("item_slot", SlotControl.DEFAULT, itemSlot);
 
-		ColorPainter textEdit = new ColorPainter(Color.BLACK, Color.rgb(0.63f, 0.63f, 0.63f));
+		TexturePainter textEdit = new TexturePainter("widget/text_edit");
 		vanilla.put("text_edit", TextEditControl.DEFAULT, textEdit);
 
 		return vanilla;
