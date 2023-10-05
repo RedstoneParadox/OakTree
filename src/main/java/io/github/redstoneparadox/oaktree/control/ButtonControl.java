@@ -8,6 +8,12 @@ import io.github.redstoneparadox.oaktree.util.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.sound.Sound;
+import net.minecraft.client.sound.SoundInstance;
+import net.minecraft.registry.Holder;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
@@ -21,6 +27,7 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	public static final PainterKey HOVERED = new PainterKey();
 	protected boolean toggleable = false;
 	protected Text text = Text.empty();
+	protected Holder.Reference<SoundEvent> clickSound = SoundEvents.UI_BUTTON_CLICK;
 	protected @NotNull Action onClick = () -> {};
 	protected @NotNull Action whileHeld = () -> {};
 	protected @NotNull Action onRelease = () -> {};
@@ -70,6 +77,21 @@ public class ButtonControl extends Control implements MouseButtonListener {
 
 	public Text getText() {
 		return text;
+	}
+
+	/**
+	 * Sets the sound to be played when this
+	 * button is clicked. By default, it will
+	 * play the vanilla click sound.
+	 *
+	 * @param clickSound The sound event reference
+	 */
+	public void setClickSound(Holder.Reference<SoundEvent> clickSound) {
+		this.clickSound = clickSound;
+	}
+
+	public Holder.Reference<SoundEvent> getClickSound() {
+		return clickSound;
 	}
 
 	/**
@@ -176,6 +198,11 @@ public class ButtonControl extends Control implements MouseButtonListener {
 		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
 			mouseClicked = justPressed && !released;
 			mouseHeld = !released;
+
+			if (mouseClicked) {
+				MinecraftClient client = MinecraftClient.getInstance();
+				client.getSoundManager().play(PositionedSoundInstance.create(clickSound, 1.0F));
+			}
 		}
 	}
 }
