@@ -116,8 +116,8 @@ public class EntityPreviewControl extends Control {
 				y + height,
 				this.entitySize,
 				yOffset, // Not actually lookX, despite what the mappings state
-				followCursor ? (-mouseX + this.trueArea.getX()) : 0f,
-				followCursor ? (-mouseY + this.trueArea.getY()) : 0f, 
+				followCursor ? mouseX : 0f,
+				followCursor ? mouseY : 0f,
 				this.entity
 		);
 	}

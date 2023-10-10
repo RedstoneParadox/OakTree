@@ -3,6 +3,7 @@ package io.github.redstoneparadox.oaktree.test;
 import io.github.redstoneparadox.oaktree.control.Anchor;
 import io.github.redstoneparadox.oaktree.control.ButtonControl;
 import io.github.redstoneparadox.oaktree.control.Control;
+import io.github.redstoneparadox.oaktree.control.EntityPreviewControl;
 import io.github.redstoneparadox.oaktree.control.GridPanelControl;
 import io.github.redstoneparadox.oaktree.control.LabelControl;
 import io.github.redstoneparadox.oaktree.control.ListPanelControl;
@@ -162,6 +163,20 @@ public class TestScreens {
 			return new SlotControl(player, slots.get(index));
 		});
 		root.addChild(grid);
+
+		return root;
+	}
+
+	public static RootPanelControl testEntityPreview(PlayerEntity player) {
+		RootPanelControl root = new RootPanelControl();
+		EntityPreviewControl entityPreview = new EntityPreviewControl(player);
+
+		root.setSize(60, 80);
+		root.setAnchor(Anchor.CENTER);
+		root.setName("base");
+		entityPreview.setSize(50, 70);
+		entityPreview.setAnchor(Anchor.CENTER);
+		root.addChild(entityPreview);
 
 		return root;
 	}

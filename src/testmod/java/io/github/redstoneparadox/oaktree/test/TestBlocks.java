@@ -22,18 +22,20 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 public class TestBlocks {
-	public static final Block TEST_DRAW_BLOCK = new TestBlock(TestScreens::testTutorialOne);
-	public static final Block TEST_INTERACTABLES_BLOCK = new TestBlock(TestScreens::testInteractables);
-	public static final Block TEST_COLORS_BLOCK = new TestBlock(TestScreens::testColors);
+	public static final Block TEST_DRAW_BLOCK = new TestBlock(player -> TestScreens.testTutorialOne());
+	public static final Block TEST_INTERACTABLES_BLOCK = new TestBlock(player -> TestScreens.testInteractables());
+	public static final Block TEST_COLORS_BLOCK = new TestBlock(player -> TestScreens.testColors());
+	public static final Block TEST_ENTITY_PREVIEW_BLOCK = new TestBlock(TestScreens::testEntityPreview);
 	public static final Block TEST_INVENTORY = new TestBlockWithEntity();
 
 	public static void init() {
 		register(TEST_DRAW_BLOCK, "draw");
 		register(TEST_INTERACTABLES_BLOCK, "interactables");
 		register(TEST_COLORS_BLOCK, "colors");
+		register(TEST_ENTITY_PREVIEW_BLOCK, "entity_preview");
 		register(TEST_INVENTORY, "inventory");
 	}
 
@@ -46,17 +48,17 @@ public class TestBlocks {
 	}
 
 	static class TestBlock extends Block {
-		private final Supplier<RootPanelControl> supplier;
+		private final Function<PlayerEntity, RootPanelControl> function;
 
-		TestBlock(Supplier<RootPanelControl> supplier) {
+		TestBlock(Function<PlayerEntity, RootPanelControl> function) {
 			super(testSettings());
-			this.supplier = supplier;
+			this.function = function;
 		}
 
 		@Override
 		public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 			if (world.isClient) {
-				MinecraftClient.getInstance().setScreen(new TestScreens.TestScreen(Text.literal("test screen"), supplier.get()));
+				MinecraftClient.getInstance().setScreen(new TestScreens.TestScreen(Text.literal("test screen"), function.apply(player)));
 			}
 			return ActionResult.SUCCESS;
 		}
