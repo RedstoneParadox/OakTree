@@ -2,6 +2,7 @@ package io.github.redstoneparadox.oaktree.control;
 
 import io.github.redstoneparadox.oaktree.listeners.ClientListeners;
 import io.github.redstoneparadox.oaktree.listeners.MouseButtonListener;
+import io.github.redstoneparadox.oaktree.math.Vector2;
 import io.github.redstoneparadox.oaktree.painter.Theme;
 import io.github.redstoneparadox.oaktree.util.Action;
 import io.github.redstoneparadox.oaktree.util.Color;
@@ -34,6 +35,8 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	private boolean mouseClicked = false;
 	private boolean mouseHeld = false;
 	private boolean buttonHeld = false;
+	protected Vector2 mousePose = null;
+	protected Vector2 mousePressPose = null;
 
 	public ButtonControl() {
 		this.name = "button";
@@ -127,13 +130,22 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	@Override
 	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
 		captured = super.interact(mouseX, mouseY, deltaTime, captured);
+		mousePose = new Vector2(mouseX, mouseY);
 
+		int x = trueArea.getX();
+		int y = trueArea.getY();
+		int width = trueArea.getWidth();
+		int height = trueArea.getHeight();
+		boolean pressOnButton = false;
+		if (mousePressPose != null) {
+			pressOnButton = mousePressPose.getX() >= x && mousePressPose.getX() <= x + width && mousePressPose.getY() >= y && mousePressPose.getY() <= y + height;
+		}
 		if (toggleable) {
 			if (captured) {
 				if (mouseClicked) {
 					buttonHeld = !buttonHeld;
 
-					if (buttonHeld) {
+					if (buttonHeld && pressOnButton) {
 						onClick.run();
 					}
 					else {
@@ -148,7 +160,7 @@ public class ButtonControl extends Control implements MouseButtonListener {
 		}
 		else if (captured) {
 			if (mouseHeld) {
-				if (!buttonHeld) {
+				if (!buttonHeld && pressOnButton) {
 					buttonHeld = true;
 					onClick.run();
 				}
