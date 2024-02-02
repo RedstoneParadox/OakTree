@@ -112,16 +112,12 @@ publishing {
 
 	// select the repositories you want to publish to
 	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
-
+		def env = System.getenv()
 		maven {
-			name = "JamalamMavenRelease"
-			url = uri("https://maven.jamalam.tech/releases")
-
+			url = "https://maven.redstoneparadox.xyz/releases"
 			credentials {
-				username = System.getenv("MAVEN_USER")
-				password = System.getenv("MAVEN_PASSWORD")
+				username = env.MAVEN_USER_RP
+				password = env.MAVEN_PASSWORD_RP
 			}
 		}
 	}
