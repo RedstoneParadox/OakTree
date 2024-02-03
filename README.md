@@ -6,19 +6,30 @@ Discord: https://discord.gg/crZpcjtdJR
 
 ### Adding Oak Tree To Your Project
 
-build.gradle:
+`build.gradle`:
 
 ```gradle
-repositories {
-    maven {
-		name = "JamalamMavenRelease"
-		url = uri("https://maven.jamalam.tech/releases")
-	}
+maven {
+    name "redstoneparadoxRepositoryReleases"
+    url "https://maven.redstoneparadox.xyz/releases"
 }
 
 dependencies {
-    modImplementation("io.github.redstoneparadox:OakTree:<version>")
+    modImplementation "io.github.redstoneparadox:OakTree:<version>"
 }
 ```
 
-Note that versions prior to 0.5.0-beta are not on the maven.
+`build.gradle.kts`:
+
+```kotlin
+maven {
+    name = "redstoneparadoxRepositoryReleases"
+    url = uri("https://maven.redstoneparadox.xyz/releases")
+}
+
+dependencies {
+	modImplementation("io.github.redstoneparadox:OakTree:0.5.1-beta")
+}
+```
+
+Note that versions before 0.5.0-beta are not on the maven.
