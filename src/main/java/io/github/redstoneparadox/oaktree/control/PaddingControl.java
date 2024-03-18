@@ -7,7 +7,10 @@ import io.github.redstoneparadox.oaktree.math.Vector2;
  * as the parent for controls such as
  * {@link BoxControl} and {@link PanelControl},
  * which can all have child Controls.
+ *
+ * @deprecated Will be folded into {@link PanelControl}
  */
+@Deprecated
 public abstract class PaddingControl extends Control {
 	protected int topPadding = 0;
 	protected int bottomPadding = 0;

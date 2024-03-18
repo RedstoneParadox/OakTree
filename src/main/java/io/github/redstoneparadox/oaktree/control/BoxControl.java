@@ -11,7 +11,10 @@ import java.util.List;
  * While {@link PanelControl} could also be used,
  * this class is specialized for dealing with a
  * single child.
+ *
+ * @deprecated Use {@link  PanelControl}
  */
+@Deprecated
 public class BoxControl extends PaddingControl {
 	protected  @NotNull Control child = new Control();
 
