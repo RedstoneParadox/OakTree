@@ -128,48 +128,29 @@ public class ButtonControl extends Control implements MouseButtonListener {
 	protected boolean interact(int mouseX, int mouseY, float deltaTime, boolean captured) {
 		captured = super.interact(mouseX, mouseY, deltaTime, captured);
 
-		if (toggleable) {
-			if (captured) {
-				if (mouseClicked) {
-					buttonHeld = !buttonHeld;
+		if (captured) {
+			if (mouseClicked && !buttonHeld) {
+				MinecraftClient client = MinecraftClient.getInstance();
+				client.getSoundManager().play(PositionedSoundInstance.create(clickSound, 1.0F));
 
-					if (buttonHeld) {
-						onClick.run();
-					}
-					else {
-						onRelease.run();
-					}
-				}
+				onClick.run();
 			}
+
+			if (mouseClicked && toggleable) {
+				buttonHeld = !buttonHeld;
+			} else buttonHeld = mouseHeld;
 
 			if (buttonHeld) {
-				whileHeld.run();
-			}
-		}
-		else if (captured) {
-			if (mouseHeld) {
-				if (!buttonHeld) {
-					buttonHeld = true;
-					onClick.run();
-				}
+				painterKey = HELD;
 
 				whileHeld.run();
 			} else {
-				buttonHeld = false;
-				onRelease.run();
+				painterKey = HOVERED;
 			}
-		} else if (buttonHeld) {
-			buttonHeld = false;
+		} else if (!toggleable && buttonHeld) {
 			onRelease.run();
-		}
 
-		if (buttonHeld) {
-			painterKey = HELD;
-		}
-		else if (captured) {
-			painterKey = HOVERED;
-		}
-		else {
+			buttonHeld = false;
 			painterKey = DEFAULT;
 		}
 
@@ -198,11 +179,6 @@ public class ButtonControl extends Control implements MouseButtonListener {
 		if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
 			mouseClicked = justPressed && !released;
 			mouseHeld = !released;
-
-			if (mouseClicked) {
-				MinecraftClient client = MinecraftClient.getInstance();
-				client.getSoundManager().play(PositionedSoundInstance.create(clickSound, 1.0F));
-			}
 		}
 	}
 }
